@@ -1,0 +1,47 @@
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.exe.config
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.exe
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.pdb
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.csprojResolveAssemblyReference.cache
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\MainWindow.g.cs
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\App.g.cs
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation_MarkupCompile.cache
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation_MarkupCompile.lref
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\MainWindow.baml
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.g.resources
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.Properties.Resources.resources
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.csproj.GenerateResource.Cache
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.exe
+D:\Program\C#程序\C# GUI程序\JLQ_MBE_BattleSimulation\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.pdb
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.exe.config
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.exe
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.pdb
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.exe
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.pdb
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.csprojResolveAssemblyReference.cache
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\MainWindow.g.cs
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\App.g.cs
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation_MarkupCompile.cache
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation_MarkupCompile.lref
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\MainWindow.baml
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.g.resources
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.Properties.Resources.resources
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.csproj.GenerateResource.Cache
+=======
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.exe.config
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.exe
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.pdb
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.exe
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.pdb
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.csprojResolveAssemblyReference.cache
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\MainWindow.g.cs
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\App.g.cs
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation_MarkupCompile.cache
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation_MarkupCompile.lref
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\MainWindow.baml
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.g.resources
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\JLQ_MBE_BattleSimulation.Properties.Resources.resources
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.csproj.GenerateResource.Cache
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.XML
+D:\Program\C#程序\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\A.学习【Learning】\A2.Mathematics\github\-The-Mirror-Bridge-to-Euphoria\JLQ_MBE_BattleSimulation\bin\Debug\JLQ_MBE_BattleSimulation.XML

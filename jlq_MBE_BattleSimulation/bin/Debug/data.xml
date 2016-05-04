@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- The datas of shoujyoudachi from jlq_MBE-->
+<data>
+  <datas>
+    <charc id="Reimu">
+      <display>梦</display>
+      <maxHp>125</maxHp>
+      <att>105</att>
+      <def>90</def>
+      <hit>90</hit>
+      <dod>67</dod>
+      <clo>1.0</clo>
+      <spd>14</spd>
+      <mov>3</mov>
+      <rang>4</rang>
+    </charc>
+    <charc id="Marisa">
+      <display>魔</display>
+      <maxHp>115</maxHp>
+      <att>115</att>
+      <def>85</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.0</clo>
+      <spd>28</spd>
+      <mov>4</mov>
+      <rang>5</rang>
+    </charc>
+    <charc id="Rin">
+      <display>麟</display>
+      <maxHp>140</maxHp>
+      <att>100</att>
+      <def>95</def>
+      <hit>80</hit>
+      <dod>65</dod>
+      <clo>1.2</clo>
+      <spd>31</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Rumia">
+      <display>⑩</display>
+      <maxHp>100</maxHp>
+      <att>85</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.2</clo>
+      <spd>28</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+    <charc id="Daiyousei">
+      <display>大酱</display>
+      <maxHp>75</maxHp>
+      <att>75</att>
+      <def>60</def>
+      <hit>75</hit>
+      <dod>62</dod>
+      <clo>0.5</clo>
+      <spd>29</spd>
+      <mov>4</mov>
+      <rang>2</rang>
+    </charc>
+    <charc id="Cirno">
+      <display>⑨</display>
+      <maxHp>140</maxHp>
+      <att>90</att>
+      <def>83</def>
+      <hit>80</hit>
+      <dod>57</dod>
+      <clo>1.1</clo>
+      <spd>30</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+    <charc id="Meirin">
+      <display>红</display>
+      <maxHp>140</maxHp>
+      <att>95</att>
+      <def>97</def>
+      <hit>80</hit>
+      <dod>57</dod>
+      <clo>1.3</clo>
+      <spd>30</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+    <charc id="Koakuma">
+      <display>小</display>
+      <maxHp>100</maxHp>
+      <att>80</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>55</dod>
+      <clo>1.0</clo>
+      <spd>28</spd>
+      <mov>4</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Patchouli">
+      <display>帕</display>
+      <maxHp>100</maxHp>
+      <att>120</att>
+      <def>80</def>
+      <hit>85</hit>
+      <dod>40</dod>
+      <clo>0.1</clo>
+      <spd>40</spd>
+      <mov>2</mov>
+      <rang>4</rang>
+    </charc>
+    <charc id="Sakuya">
+      <display>16</display>
+      <maxHp>120</maxHp>
+      <att>101</att>
+      <def>82</def>
+      <hit>80</hit>
+      <dod>70</dod>
+      <clo>1.2</clo>
+      <spd>25</spd>
+      <mov>4</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Reimiria">
+      <display>蕾</display>
+      <maxHp>140</maxHp>
+      <att>105</att>
+      <def>80</def>
+      <hit>100</hit>
+      <dod>65</dod>
+      <clo>1.2</clo>
+      <spd>31</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+    <charc id="Flandre">
+      <display>芙</display>
+      <maxHp>150</maxHp>
+      <att>130</att>
+      <def>90</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.2</clo>
+      <spd>39</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+    <charc id="Letty">
+      <display>蕾蒂</display>
+      <maxHp>130</maxHp>
+      <att>90</att>
+      <def>80</def>
+      <hit>70</hit>
+      <dod>55</dod>
+      <clo>0.9</clo>
+      <spd>27</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Chen">
+      <display>橙</display>
+      <maxHp>120</maxHp>
+      <att>95</att>
+      <def>85</def>
+      <hit>75</hit>
+      <dod>65</dod>
+      <clo>1.2</clo>
+      <spd>26</spd>
+      <mov>4</mov>
+      <rang>2</rang>
+    </charc>
+    <charc id="Alice">
+      <display>爱</display>
+      <maxHp>130</maxHp>
+      <att>97</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>54</dod>
+      <clo>0.9</clo>
+      <spd>30</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="LilyWhite">
+      <display>莉</display>
+      <maxHp>65</maxHp>
+      <att>75</att>
+      <def>60</def>
+      <hit>55</hit>
+      <dod>55</dod>
+      <clo>0.5</clo>
+      <spd>29</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Lunasa">
+      <display>弦</display>
+      <maxHp>105</maxHp>
+      <att>85</att>
+      <def>75</def>
+      <hit>75</hit>
+      <dod>55</dod>
+      <clo>0.7</clo>
+      <spd>30</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Merlin">
+      <display>管</display>
+      <maxHp>110</maxHp>
+      <att>85</att>
+      <def>80</def>
+      <hit>70</hit>
+      <dod>55</dod>
+      <clo>0.7</clo>
+      <spd>29</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Lyrica">
+      <display>键</display>
+      <maxHp>100</maxHp>
+      <att>85</att>
+      <def>75</def>
+      <hit>70</hit>
+      <dod>58</dod>
+      <clo>0.7</clo>
+      <spd>26</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Leira">
+      <display>蕾拉</display>
+      <maxHp>65</maxHp>
+      <att>50</att>
+      <def>70</def>
+      <hit>65</hit>
+      <dod>50</dod>
+      <clo>0.2</clo>
+      <spd>25</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Youmu">
+      <display>妖梦</display>
+      <maxHp>140</maxHp>
+      <att>100</att>
+      <def>70</def>
+      <hit>80</hit>
+      <dod>65</dod>
+      <clo>1.4</clo>
+      <spd>23</spd>
+      <mov>4</mov>
+      <rang>2</rang>
+    </charc>
+    <charc id="Yuyuko">
+      <display>幽</display>
+      <maxHp>190</maxHp>
+      <att>110</att>
+      <def>105</def>
+      <hit>65</hit>
+      <dod>50</dod>
+      <clo>1.0</clo>
+      <spd>40</spd>
+      <mov>2</mov>
+      <rang>4</rang>
+    </charc>
+    <charc id="Ran">
+      <display>蓝</display>
+      <maxHp>175</maxHp>
+      <att>105</att>
+      <def>110</def>
+      <hit>80</hit>
+      <dod>50</dod>
+      <clo>0.8</clo>
+      <spd>33</spd>
+      <mov>4</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Yukari">
+      <display>紫</display>
+      <maxHp>185</maxHp>
+      <att>110</att>
+      <def>100</def>
+      <hit>75</hit>
+      <dod>70</dod>
+      <clo>0.8</clo>
+      <spd>37</spd>
+      <mov>5</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Suika">
+      <display>萃</display>
+      <maxHp>220</maxHp>
+      <att>125</att>
+      <def>130</def>
+      <hit>65</hit>
+      <dod>40</dod>
+      <clo>1.5</clo>
+      <spd>37</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+    <charc id="Wriggle">
+      <display>虫</display>
+      <maxHp>140</maxHp>
+      <att>85</att>
+      <def>65</def>
+      <hit>60</hit>
+      <dod>50</dod>
+      <clo>1.1</clo>
+      <spd>29</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Mystia">
+      <display>雀</display>
+      <maxHp>120</maxHp>
+      <att>90</att>
+      <def>65</def>
+      <hit>80</hit>
+      <dod>65</dod>
+      <clo>1.0</clo>
+      <spd>27</spd>
+      <mov>4</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Keine">
+      <display>慧</display>
+      <maxHp>155</maxHp>
+      <att>96</att>
+      <def>95</def>
+      <hit>75</hit>
+      <dod>50</dod>
+      <clo>1.1</clo>
+      <spd>37</spd>
+      <mov>3</mov>
+      <rang>2</rang>
+    </charc>
+    <charc id="Tewi">
+      <display>帝</display>
+      <maxHp>125</maxHp>
+      <att>85</att>
+      <def>75</def>
+      <hit>90</hit>
+      <dod>65</dod>
+      <clo>1.0</clo>
+      <spd>27</spd>
+      <mov>4</mov>
+      <rang>3</rang>
+    </charc>
+    <charc id="Reisen">
+      <display>兔</display>
+      <maxHp>130</maxHp>
+      <att>98</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>0.8</clo>
+      <spd>33</spd>
+      <mov>3</mov>
+      <rang>4</rang>
+    </charc>
+    <charc id="Eirin">
+      <display>永</display>
+      <maxHp>185</maxHp>
+      <att>105</att>
+      <def>100</def>
+      <hit>90</hit>
+      <dod>53</dod>
+      <clo>0.7</clo>
+      <spd>33</spd>
+      <mov>3</mov>
+      <rang>4</rang>
+    </charc>
+    <charc id="Kaguya">
+      <display>辉</display>
+      <maxHp>165</maxHp>
+      <att>115</att>
+      <def>85</def>
+      <hit>75</hit>
+      <dod>46</dod>
+      <clo>0.5</clo>
+      <spd>38</spd>
+      <mov>2</mov>
+      <rang>4</rang>
+    </charc>
+    <charc id="Mokou">
+      <display>妹</display>
+      <maxHp>205</maxHp>
+      <att>110</att>
+      <def>115</def>
+      <hit>80</hit>
+      <dod>55</dod>
+      <clo>1.3</clo>
+      <spd>34</spd>
+      <mov>3</mov>
+      <rang>2</rang>
+    </charc>
+    <charc id="Gedama">
+      <display>毛</display>
+      <maxHp>120</maxHp>
+      <att>100</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.0</clo>
+      <spd>30</spd>
+      <mov>3</mov>
+      <rang>3</rang>
+    </charc>
+  </datas>
+  <sc>
+    <charc id="Reimu">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Marisa">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Rin">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">风符「乘着风」</name>
+      <name id="2">花符「孤独绽放的」</name>
+      <name id="3">花符「盛开的恶之花」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">乘着风</disc>
+      <disc id="2">孤独绽放的</disc>
+      <disc id="3">盛开的恶之花</disc>
+    </charc>
+    <charc id="Rumia">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Daiyousei">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">妖精「贴心的妖精」</name>
+      <name id="2">花符「花仙炮」</name>
+      <name id="3">妖精「妖精狂欢」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">贴心的妖精</disc>
+      <disc id="2">花仙炮</disc>
+      <disc id="3">妖精狂欢</disc>
+    </charc>
+    <charc id="Cirno">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Meirin">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Koakuma">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Patchouli">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Sakuya">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Reimiria">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Flandre">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Letty">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Chen">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Alice">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="LilyWhite">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Lunasa">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Merlin">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Lyrica">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Leira">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Youmu">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Yuyuko">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Ran">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Yukari">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Suika">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Wriggle">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Mystia">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Keine">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Tewi">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Reisen">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Eirin">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Kaguya">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Mokou">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+    <charc id="Gedama">
+      <name id="0">飞翔于天空中不可思议的巫女</name>
+      <name id="1">灵符「梦想封印」</name>
+      <name id="2">神技「八方鬼缚阵」</name>
+      <name id="3">博丽秘技「梦想天生」</name>
+      <disc id="0">你可以穿过敌方单位。</disc>
+      <disc id="1">梦想封印</disc>
+      <disc id="2">八方鬼缚阵</disc>
+      <disc id="3">梦想天生</disc>
+    </charc>
+  </sc>
+</data>

@@ -1,0 +1,145 @@
+﻿<Window x:Name="window" x:Class="JLQ_MBE_BattleSimulation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JLQ_MBE_BattleSimulation"
+        xmlns:system1="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="The Mirror Bridge to Euphoria" Height="602" Width="906" Closing="window_Closing" MinHeight="250" MinWidth="250">
+    <Window.Resources>
+        <local:ConverterContentToColor x:Key="converterContentToColor"/>
+        <local:ConverterHasMovedToColor x:Key="converterMove"/>
+        <local:ConverterHasAttackedToColor x:Key="converterAttack"/>
+    </Window.Resources>
+    <Grid x:Name="gridWindow" Loaded="gridWindow_Loaded">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border x:Name="borderPad" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" Grid.Row="1" VerticalAlignment="Stretch" Loaded="borderPad_Loaded"/>
+        <Grid HorizontalAlignment="Stretch" Margin="0" Grid.Row="1" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" CornerRadius="5">
+                <Grid x:Name="gridSC01" Loaded="gridSC01_Loaded"/>
+            </Border>
+            <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="2" CornerRadius="5">
+                <Grid x:Name="gridSC02"/>
+            </Border>
+            <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="4" CornerRadius="5">
+                <Grid x:Name="gridSC03"/>
+            </Border>
+            <Button x:Name="buttonGenerateFriend" Content="随机生成友军" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="75" Height="27" Click="buttonGenerateFriend_Click"/>
+            <Button x:Name="buttonGenerateEnemy" Content="随机生成敌军" Grid.Column="2" HorizontalAlignment="Left" Margin="10,78,0,0" Grid.Row="5" VerticalAlignment="Top" Width="75" Height="27" Click="buttonGenerateEnemy_Click"/>
+            <ComboBox x:Name="comboBoxFriend" Grid.Column="1" HorizontalAlignment="Left" Margin="60,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="120" Height="27" Text="1">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>5</ComboBoxItem>
+                <ComboBoxItem>6</ComboBoxItem>
+                <ComboBoxItem>7</ComboBoxItem>
+                <ComboBoxItem>8</ComboBoxItem>
+                <ComboBoxItem>9</ComboBoxItem>
+                <ComboBoxItem>10</ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="comboBoxEnemy" Grid.Column="1" HorizontalAlignment="Left" Margin="60,78,0,0" Grid.Row="5" VerticalAlignment="Top" Width="120" Height="27" Text="1">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>5</ComboBoxItem>
+                <ComboBoxItem>6</ComboBoxItem>
+                <ComboBoxItem>7</ComboBoxItem>
+                <ComboBoxItem>8</ComboBoxItem>
+                <ComboBoxItem>9</ComboBoxItem>
+                <ComboBoxItem>10</ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="comboBoxMiddle" Grid.Column="1" HorizontalAlignment="Left" Margin="60,42,0,0" Grid.Row="5" VerticalAlignment="Top" Width="120" Height="27" Text="1">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>5</ComboBoxItem>
+                <ComboBoxItem>6</ComboBoxItem>
+                <ComboBoxItem>7</ComboBoxItem>
+                <ComboBoxItem>8</ComboBoxItem>
+                <ComboBoxItem>9</ComboBoxItem>
+                <ComboBoxItem>10</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="buttonGenerateMiddle" Content="随机生成中立" Grid.Column="2" HorizontalAlignment="Left" Margin="10,42,0,0" Grid.Row="5" VerticalAlignment="Top" Width="75" Height="27" Click="buttonGenerateMiddle_Click"/>
+            <CheckBox x:Name="checkBox" Content="生成成功后提示" HorizontalAlignment="Left" Margin="60,118,0,-31" Grid.Row="5" VerticalAlignment="Top" Grid.Column="1" Width="120" IsChecked="True" FontWeight="SemiBold" Height="21"/>
+        </Grid>
+        <StackPanel HorizontalAlignment="Stretch" Height="28" Margin="0" VerticalAlignment="Top" Grid.ColumnSpan="3">
+            <Menu x:Name="menu" Height="22">
+                <MenuItem Header="游戏">
+                    <MenuItem Header="转为战斗模式" Name="menuPattern" Click="menuPattern_Click"/>
+                    <MenuItem Header="撤销上一次加人" Name="menuBackout" IsEnabled="False" Click="menuBackout_Click"/>
+                    <MenuItem Header="清除所有单位" Name="menuClear" Click="menuClear_Click"/>
+                    <Separator/>
+                    <MenuItem Header="退出" Name="menuExit" Click="menuExit_Click"/>
+                </MenuItem>
+                <MenuItem Header="帮助">
+                    <MenuItem Header="操作" Name="menuHelp" Click="menuHelp_Click"/>
+                    <MenuItem Header="显示" Name="menuShow" Click="menuShow_Click"/>
+                    <Separator/>
+                    <MenuItem Header="关于" Name="menuAbout"/>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <ComboBox x:Name="comboBoxDisplay" HorizontalAlignment="Left" Margin="22,44,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="buttonSave" Content="Save" HorizontalAlignment="Left" Margin="162,44,0,0" VerticalAlignment="Top" Width="75" Height="21"/>
+        <Button x:Name="buttonLoad" Content="Load" HorizontalAlignment="Left" Margin="274,44,0,0" VerticalAlignment="Top" Width="75" Height="21"/>
+        <Label x:Name="label1" Content="当前阶段：" HorizontalAlignment="Left" Margin="104,47,0,0" Grid.Row="2" VerticalAlignment="Top" Width="73"/>
+        <Border BorderBrush="Red" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Padding="1" CornerRadius="5" Margin="2,5,2,2">
+            <Grid x:Name="gridGame" Loaded="gridGame_Loaded" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="label3" Content="己方角色数量：" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top"/>
+                <Label x:Name="label5" Content="中立角色数量:" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top"/>
+                <Label x:Name="label7" Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top"/>
+            </Grid>
+        </Border>
+        <Grid x:Name="gridGameInformation" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="239" Margin="36,28,0,0" Height="81" Loaded="gridGameInformation_Loaded">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" FontSize="16" Foreground="Red" Grid.Column="1"/>
+            <Label x:Name="label" Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
+            <Label x:Name="label2" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
+        </Grid>
+    </Grid>
+</Window>
