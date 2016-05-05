@@ -24,6 +24,18 @@ namespace JLQ_MBE_BattleSimulation
             leavePad[0] = (s, ev) => SetDefaultLeavePadButtonDelegate(0);
         }
 
+        private float SCGain = 1.0f;
+
+        public override int Mp
+        {
+            get { return base.Mp; }
+            set
+            {
+                base.Mp = value;
+                SCGain = 1 + Mp/4000;
+            }
+        }
+
 
         //符卡
         /// <summary>符卡01：星屑幻想，选定一块3*3的区域，对其内敌人造成1.0倍率的弹幕攻击。</summary>
@@ -31,7 +43,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = SC01IsTargetLegal;
-            game.HandleTarget = SCee => DoAttack(SCee);
+            game.HandleTarget = SCee => DoAttack(SCee, SCGain);
             AddPadButtonEvent(0);
         }
 

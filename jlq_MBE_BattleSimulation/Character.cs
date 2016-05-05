@@ -65,7 +65,7 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
         /// <summary>机动增量</summary>
-        private int _moveAbilityX = 0;
+        public int _moveAbilityX { get; set; } = 0;
         /// <summary>攻击范围增量</summary>
         private int _attackRangeX = 0;
 
@@ -76,7 +76,6 @@ namespace JLQ_MBE_BattleSimulation
 
         //属性
         private int _hp;
-
         /// <summary>血量</summary>
         public int Hp
         {
@@ -89,9 +88,8 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         private int _mp;
-
         /// <summary>灵力</summary>
-        public int Mp
+        public virtual int Mp
         {
             get { return _mp; }
             set
@@ -102,7 +100,6 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         private int _currentTime;
-
         /// <summary>当前剩余冷却时间</summary>
         public int CurrentTime
         {
@@ -149,9 +146,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>行动间隔</summary>
         public int Interval => Calculate.Floor(Data.Interval*_intervalX + _intervalAdd);
         /// <summary>机动</summary>
-        public int MoveAbility => Data.MoveAbility + _moveAbilityX;
+        public int MoveAbility => Math.Max(0, Data.MoveAbility + _moveAbilityX);
         /// <summary>攻击范围</summary>
-        public int AttackRange => Data.AttackRange + _attackRangeX;
+        public int AttackRange => Math.Max(0, Data.AttackRange + _attackRangeX);
         /// <summary>暴击增益</summary>
         private float CriticalHitGain => 1.5f;
         /// <summary>暴击率</summary>
@@ -164,7 +161,7 @@ namespace JLQ_MBE_BattleSimulation
         public string Name => Data.Name;
 
         /// <summary>被攻击结算的委托对象</summary>
-        protected DBeAttacked HandleBeAttacked;
+        public DBeAttacked HandleBeAttacked;
         /// <summary>是否命中的委托对象</summary>
         protected DIsHit HandleIsHit;
         /// <summary>近战增益的委托对象</summary>
@@ -175,10 +172,8 @@ namespace JLQ_MBE_BattleSimulation
         public DPreparingSection HandlePreparingSection { get; set; }
         /// <summary>结束阶段委托</summary>
         public DEndSection HandleEndSection { get; protected set; }
-        /// <summary>移动委托</summary>
-        public DMove HandleMove { get; set; }
-        /// <summary>正常移动委托</summary>
-        public DMove HandleNormalMove { get; set; }
+        /// <summary>修改阻挡的敌人列表的委托</summary>
+        public DEnemyBlock HandleEnemyBlock { get; set; }
 
         //符卡相关委托
         /// <summary>进入符卡按钮01的委托</summary>
@@ -282,8 +277,7 @@ namespace JLQ_MBE_BattleSimulation
             HandleIsCriticalHit = IsCriticalHit;
             HandlePreparingSection = PreparingSection;
             HandleEndSection = EndSection;
-            HandleNormalMove += Move;
-            HandleMove += HandleNormalMove;
+            HandleEnemyBlock = e => from p in e select p;
         }
 
         /// <summary>治疗</summary>
@@ -373,23 +367,6 @@ namespace JLQ_MBE_BattleSimulation
                 GetValidPosition((int) this.Position.Y + relativeY, MainWindow.Row)));
         }
 
-        /// <summary>瞬移至指定坐标</summary>
-        /// <param name="end">瞬移的目标坐标</param>
-        public void Teleport(Point end)
-        {
-            this.Position = end;
-            Set();
-        }
-
-        /// <summary>在各方向瞬移指定的值，若超限则取边界</summary>
-        /// <param name="relativeX">瞬移的列向相对坐标</param>
-        /// <param name="relativeY">瞬移的行向相对坐标</param>
-        public void Teleport(int relativeX, int relativeY)
-        {
-            Teleport(new Point(GetValidPosition((int)this.Position.X + relativeX, MainWindow.Column),
-                GetValidPosition((int)this.Position.Y + relativeY, MainWindow.Row)));
-        }
-
         /// <summary>对此角色而言的敌人列表</summary>
         public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
 
@@ -399,7 +376,7 @@ namespace JLQ_MBE_BattleSimulation
         public virtual void EndSection() { }
 
         /// <summary>阻挡行动的敌人列表</summary>
-        public virtual IEnumerable<Character> EnemyBlock => Enemy; 
+        public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemy.Select(c => c.Position));
 
 
         /// <summary>检测灵力是否足够</summary>

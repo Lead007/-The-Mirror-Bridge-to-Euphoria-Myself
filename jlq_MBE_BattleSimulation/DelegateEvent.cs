@@ -64,4 +64,8 @@ namespace JLQ_MBE_BattleSimulation
     /// <summary>移动的委托</summary>
     /// <param name="point">移动的目标坐标</param>
     public delegate void DMove(Point point);
+    /// <summary>修改阻挡的敌人列表</summary>
+    /// <param name="enemies">原敌人列表</param>
+    /// <returns>修改后的敌人列表</returns>
+    public delegate IEnumerable<Point> DEnemyBlock(IEnumerable<Point> enemies);
 }

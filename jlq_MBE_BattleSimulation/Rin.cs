@@ -33,7 +33,7 @@ namespace JLQ_MBE_BattleSimulation
 		        this.game.DefaultButtonAndLabels();
 		        if (this.Position != pointTemp1)
 		        {
-		            game.Buttons[(int) pointTemp1.X, (int) pointTemp1.Y].Opacity = 1;
+		            game.GetButton(pointTemp1).Opacity = 1;
 		        }
 		        game.Characters.Where(SCee => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee))
 		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
@@ -106,7 +106,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee);
-            game.HandleSelf = () => Teleport(pointTemp1);
+            game.HandleSelf = () => Move(pointTemp1);
             game.HandleTarget = SCee => DoAttack(SCee, SC01DamageGain);
             AddPadButtonEvent(0);
         }

@@ -315,14 +315,11 @@ namespace JLQ_MBE_BattleSimulation
         public IEnumerable<Character> EnemyCharacters => Characters.Where(c => c.Group == Group.Enemy);
 
         /// <summary>攻击范围内的可攻击角色</summary>
-        public IEnumerable<Character> EnemyCanAttack
-            =>
-                EnemyAsCurrent.Where(c =>
-                    c.Group != CurrentCharacter.Group &&
-                        Calculate.Distance(CurrentCharacter, c) <= CurrentCharacter.AttackRange);
+        public IEnumerable<Character> EnemyCanAttack =>
+            EnemyAsCurrent.Where(c => Calculate.Distance(CurrentCharacter, c) <= CurrentCharacter.AttackRange);
 
         /// <summary>对当前行动者的阻挡列表</summary>
-        public virtual IEnumerable<Character> EnemyBlock => CurrentCharacter.EnemyBlock;
+        public virtual IEnumerable<Point> EnemyBlock => CurrentCharacter.EnemyBlock;
 
         /// <summary>对当前行动者的敌人列表</summary>
         public IEnumerable<Character> EnemyAsCurrent => CurrentCharacter.Enemy;
@@ -482,7 +479,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             CanReachPoint[(int)origin.X, (int)origin.Y] = true;
             if (step == 0) return;
-            var enm = this.EnemyBlock.Select(c => c.Position).ToList();
+            var enm = this.EnemyBlock.ToList();
             if (origin.Y < MainWindow.Row - 1 && !enm.Contains(new Point(origin.X, origin.Y + 1)))
             {
                 AssignPointCanReach(new Point(origin.X, origin.Y + 1), step - 1);
@@ -515,6 +512,14 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
+        /// <summary>获得对应点的按钮</summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public Button GetButton(Point point)
+        {
+            return Buttons[(int) point.X, (int) point.Y];
+        }
+
         /// <summary>改为战斗模式</summary>
         public void TurnToBattle()
         {
@@ -537,7 +542,7 @@ namespace JLQ_MBE_BattleSimulation
         public void SetButtonBackground(Point origin, int range)
         {
             PadPoints.Where(point => Calculate.Distance(point, origin) <= range && this[point] == null)
-                .Aggregate(0.0, (c, point) => Buttons[(int) point.X, (int) point.Y].Opacity = 1);
+                .Aggregate(0.0, (c, point) => GetButton(point).Opacity = 1);
         }
 
         /// <summary>生成可到达点的按钮颜色</summary>

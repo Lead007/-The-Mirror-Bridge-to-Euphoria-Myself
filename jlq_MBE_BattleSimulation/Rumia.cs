@@ -52,7 +52,7 @@ namespace JLQ_MBE_BattleSimulation
 	    private const float SC03Gain = 1.5f;
 
 	    private Image IsPreventing;
-        private int skillNum = 1;
+        public int SkillNum = 1;
 	    private bool __doPrevent;
 	    private bool _doPrevent
 	    {
@@ -68,12 +68,14 @@ namespace JLQ_MBE_BattleSimulation
 	    public override void PreparingSection()
 	    {
 	        _skillBeSymboled.Clear();
-	        var num = Math.Min(skillNum, Enemy.Count());
+	        var num = Math.Min(SkillNum, Enemy.Count());
 	        var cList = Enemy.OrderBy(c => c.Hp, new IntRandomComparer(random));
 	        for (var i = 0; i < num; i++)
 	        {
 	            var c = cList.ElementAt(i);
-                //TODO buff
+	            var buff = new BuffAddDamage(c, this, this.Interval, 0.5f, game);
+                c.BuffList.Add(buff);
+	            buff.BuffTrigger();
 	        }
 	    }
 
@@ -93,7 +95,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = point => game[point] == null;
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC01Range, SCee);
-            game.HandleSelf = () => Teleport(game.MousePoint);
+            game.HandleSelf = () => Move(game.MousePoint);
             game.HandleTarget = SCee =>
             {
                 DoAttack(SCee, 0.7f);
@@ -112,13 +114,20 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            //TODO SC02
+            //TODO NO CONSUME
+            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
+            game.HandleTarget = SCee =>
+            {
+                var buff = new BuffAddRumiaSkillNum(this, game);
+                this.BuffList.Add(buff);
+                buff.BuffTrigger();
+            };
         }
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
-
+            base.EndSC02();
         }
         /// <summary>符卡03</summary>
         public override void SC03()

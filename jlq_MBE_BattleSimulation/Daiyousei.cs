@@ -32,7 +32,7 @@ namespace JLQ_MBE_BattleSimulation
 		        if (this.Position == game.MousePoint) return;
 		        if (this.Position != pointTemp1)
 		        {
-		            game.Buttons[(int) pointTemp1.X, (int) pointTemp1.Y].Opacity = 1;
+		            game.GetButton(pointTemp1).Opacity = 1;
 		        }
 		        game[game.MousePoint].LabelDisplay.Background = Brushes.LightBlue;
 		        pointTemp1 = Game.DefaultPoint;
@@ -90,7 +90,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleSelf = () => Teleport(pointTemp1);
+            game.HandleSelf = () => Move(pointTemp1);
             game.HandleTarget = SCee => SCee.Cure((int) (0.7*this.Attack));
             AddPadButtonEvent(0);
         }

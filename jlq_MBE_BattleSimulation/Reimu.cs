@@ -25,6 +25,21 @@ namespace JLQ_MBE_BattleSimulation
                     .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
             };
             SetDefaultLeaveSCButtonDelegate(0);
+            //符卡02
+            //显示将被影响的目标和被监禁的范围
+            enterPad[1] = (s, ev) =>
+            {
+                if (!game.HandleIsLegalClick(game.MousePoint)) return;
+                game.DefaultButtonAndLabels();
+                var points = Game.PadPoints.Where(p => Calculate.IsIn33(game.MousePoint, p));
+                foreach (var p in points)
+                {
+                    var c = game[p];
+                    if (c == null) game.GetButton(p).Opacity = 1;
+                    else if (Enemy.Contains(c)) c.LabelDisplay.Background = Brushes.LightBlue;
+                }
+            };
+            SetDefaultLeavePadButtonDelegate(1);
         }
 
         /// <summary>符卡01的参数</summary>
@@ -72,19 +87,19 @@ namespace JLQ_MBE_BattleSimulation
                 var buff1 = new BuffSlowDown(SCee, this, 3*this.Interval, SC02Gain, game);
                 SCee.BuffList.Add(buff1);
                 buff1.BuffTrigger();
-                //TODO limit buff
-                var points = Game.PadPoints.Where(p => Calculate.IsIn33(SC02PointTemp, p));
-                var buff2 = new BuffLimit(SCee, this, 3*this.Interval, points, game);
+                var buff2 = new BuffLimit(SCee, this, 3*this.Interval, SC02PointTemp, game);
                 SCee.BuffList.Add(buff2);
                 buff2.BuffTrigger();
                 SC02PointTemp = Game.DefaultPoint;
             };
+            AddPadButtonEvent(1);
         }
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
             base.EndSC02();
+            RemovePadButtonEvent(1);
         }
 
         /// <summary>符卡03</summary>

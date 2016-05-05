@@ -209,6 +209,11 @@
             <summary>移动的委托</summary>
             <param name="point">移动的目标坐标</param>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.DEnemyBlock">
+            <summary>修改阻挡的敌人列表</summary>
+            <param name="enemies">原敌人列表</param>
+            <returns>修改后的敌人列表</returns>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Eirin.SC01">
             <summary>符卡01</summary>
         </member>
@@ -983,7 +988,7 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character._intervalAdd">
             <summary>行动间隔增加量</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Character._moveAbilityX">
+        <member name="P:JLQ_MBE_BattleSimulation.Character._moveAbilityX">
             <summary>机动增量</summary>
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.Character._attackRangeX">
@@ -1088,11 +1093,8 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandleEndSection">
             <summary>结束阶段委托</summary>
         </member>
-        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleMove">
-            <summary>移动委托</summary>
-        </member>
-        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleNormalMove">
-            <summary>正常移动委托</summary>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleEnemyBlock">
+            <summary>修改阻挡的敌人列表的委托</summary>
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.Character.enterButton">
             <summary>进入符卡按钮01的委托</summary>
@@ -1151,15 +1153,6 @@
             <summary>在各方向移动指定的值，若超限则取边界</summary>
             <param name="relativeX">移动的列向相对坐标</param>
             <param name="relativeY">移动的行向相对坐标</param>
-        </member>
-        <member name="M:JLQ_MBE_BattleSimulation.Character.Teleport(System.Windows.Point)">
-            <summary>瞬移至指定坐标</summary>
-            <param name="end">瞬移的目标坐标</param>
-        </member>
-        <member name="M:JLQ_MBE_BattleSimulation.Character.Teleport(System.Int32,System.Int32)">
-            <summary>在各方向瞬移指定的值，若超限则取边界</summary>
-            <param name="relativeX">瞬移的列向相对坐标</param>
-            <param name="relativeY">瞬移的行向相对坐标</param>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.Enemy">
             <summary>对此角色而言的敌人列表</summary>
@@ -1511,6 +1504,11 @@
         <member name="M:JLQ_MBE_BattleSimulation.Game.BuffSettle(JLQ_MBE_BattleSimulation.Section)">
             <summary>结算buff</summary>
             <param name="section">当前结算的阶段</param>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Game.GetButton(System.Windows.Point)">
+            <summary>获得对应点的按钮</summary>
+            <param name="point"></param>
+            <returns></returns>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Game.TurnToBattle">
             <summary>改为战斗模式</summary>

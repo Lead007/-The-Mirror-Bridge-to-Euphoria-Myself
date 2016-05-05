@@ -267,7 +267,7 @@ namespace JLQ_MBE_BattleSimulation
                         return;
                     }
                     //移动
-                    currentCharacter.HandleMove(game.MousePoint);
+                    currentCharacter.Move(game.MousePoint);
                     game.HasMoved = true;
                     game.ResetPadButtons();
                     game.UpdateLabelBackground();
