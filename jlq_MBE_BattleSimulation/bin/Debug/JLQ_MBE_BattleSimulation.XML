@@ -36,6 +36,32 @@
             <param name="attacker">攻击者</param>
             <param name="target">攻击目标</param>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffExecuteImmediately">
+            <summary>获得时立即执行BuffAffect委托的Buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffExecuteImmediately.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.String,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">buff持续时间</param>
+            <param name="name">buff名称</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffExecuteInSection">
+            <summary>在每回合特定阶段执行的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffExecuteInSection.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Section,System.String,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">buff持续时间</param>
+            <param name="executeSection">buff执行的阶段</param>
+            <param name="name">buff名称</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="F:JLQ_MBE_BattleSimulation.BuffExecuteInSection.ExecuteSection">
+            <summary>buff执行的阶段</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.BuffSlowDown.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
             <summary>构造函数</summary>
             <param name="buffee">buff承受者</param>
@@ -178,6 +204,10 @@
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.DIsDead">
             <summary>判断死亡角色的委托</summary>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.DMove">
+            <summary>移动的委托</summary>
+            <param name="point">移动的目标坐标</param>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Eirin.SC01">
             <summary>符卡01</summary>
@@ -551,7 +581,7 @@
         <member name="F:JLQ_MBE_BattleSimulation.Reimu.SC01Range">
             <summary>符卡01的参数</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Reimu.SC02Range1">
+        <member name="F:JLQ_MBE_BattleSimulation.Reimu.SC02Gain">
             <summary>符卡02的参数</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Reimu.MpGain(System.Int32)">
@@ -811,9 +841,6 @@
         <member name="P:JLQ_MBE_BattleSimulation.Buff.Time">
             <summary>buff剩余时间</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Buff.ExecuteSection">
-            <summary>buff执行的阶段</summary>
-        </member>
         <member name="F:JLQ_MBE_BattleSimulation.Buff.Name">
             <summary>buff名称</summary>
         </member>
@@ -832,12 +859,11 @@
         <member name="F:JLQ_MBE_BattleSimulation.Buff.Buffee">
             <summary>buff承受者</summary>
         </member>
-        <member name="M:JLQ_MBE_BattleSimulation.Buff.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Section,System.String,JLQ_MBE_BattleSimulation.Game)">
+        <member name="M:JLQ_MBE_BattleSimulation.Buff.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.String,JLQ_MBE_BattleSimulation.Game)">
             <summary>Buff类的构造函数</summary>
             <param name="buffee">buff承受者</param>
             <param name="buffer">buff发出者</param>
             <param name="time">buff持续时间</param>
-            <param name="executeSection">buff执行的阶段</param>
             <param name="name">buff名称</param>
             <param name="game">游戏对象</param>
         </member>
@@ -1062,6 +1088,12 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandleEndSection">
             <summary>结束阶段委托</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleMove">
+            <summary>移动委托</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleNormalMove">
+            <summary>正常移动委托</summary>
+        </member>
         <member name="F:JLQ_MBE_BattleSimulation.Character.enterButton">
             <summary>进入符卡按钮01的委托</summary>
         </member>
@@ -1119,6 +1151,15 @@
             <summary>在各方向移动指定的值，若超限则取边界</summary>
             <param name="relativeX">移动的列向相对坐标</param>
             <param name="relativeY">移动的行向相对坐标</param>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Character.Teleport(System.Windows.Point)">
+            <summary>瞬移至指定坐标</summary>
+            <param name="end">瞬移的目标坐标</param>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Character.Teleport(System.Int32,System.Int32)">
+            <summary>在各方向瞬移指定的值，若超限则取边界</summary>
+            <param name="relativeX">瞬移的列向相对坐标</param>
+            <param name="relativeY">瞬移的行向相对坐标</param>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.Enemy">
             <summary>对此角色而言的敌人列表</summary>
@@ -1247,6 +1288,11 @@
             <param name="range">范围</param>
             <param name="c">待判断的角色</param>
             <returns>是否符合</returns>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Character.IsEnemy(JLQ_MBE_BattleSimulation.Character)">
+            <summary>判断角色是否为敌人</summary>
+            <param name="c">待判断的角色</param>
+            <returns>是否为敌人</returns>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.CharacterData">
             <summary>角色数据类</summary>

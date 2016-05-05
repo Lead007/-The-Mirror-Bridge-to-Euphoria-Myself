@@ -93,7 +93,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = point => game[point] == null;
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC01Range, SCee);
-            game.HandleSelf = () => Move(game.MousePoint);
+            game.HandleSelf = () => Teleport(game.MousePoint);
             game.HandleTarget = SCee =>
             {
                 DoAttack(SCee, 0.7f);

@@ -71,7 +71,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private bool SC01IsTargetLegal(Character SCee, Point point)
         {
-            return Calculate.IsIn33(point, SCee.Position) && Enemy.Contains(SCee);
+            return Calculate.IsIn33(point, SCee.Position) && IsEnemy(SCee);
         }
     }
 }

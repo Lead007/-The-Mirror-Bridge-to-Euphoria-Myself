@@ -30,8 +30,6 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡01的参数</summary>
         private const int SC01Range = 4;
         /// <summary>符卡02的参数</summary>
-        private const int SC02Range1 = 1;
-        private const int SC02Range2 = 1;
         private const int SC02Gain = 10;
 
         private Point SC02PointTemp = Game.DefaultPoint;
@@ -65,15 +63,21 @@ namespace JLQ_MBE_BattleSimulation
                 point => point.X > 0 && point.X < MainWindow.Column - 1 && point.Y > 0 && point.Y < MainWindow.Row - 1;
             game.HandleIsTargetLegal = (SCee, point) =>
             {
-                if (!Calculate.IsIn33(point, SCee.Position) || !Enemy.Contains(SCee)) return false;
+                if (!Calculate.IsIn33(point, SCee.Position) || !IsEnemy(SCee)) return false;
                 SC02PointTemp = point;
                 return true;
             };
             game.HandleTarget = SCee =>
             {
-                SCee.BuffList.Add(new BuffSlowDown(SCee, this, 3*this.Interval, SC02Gain, game));
+                var buff1 = new BuffSlowDown(SCee, this, 3*this.Interval, SC02Gain, game);
+                SCee.BuffList.Add(buff1);
+                buff1.BuffTrigger();
+                //TODO limit buff
+                var points = Game.PadPoints.Where(p => Calculate.IsIn33(SC02PointTemp, p));
+                var buff2 = new BuffLimit(SCee, this, 3*this.Interval, points, game);
+                SCee.BuffList.Add(buff2);
+                buff2.BuffTrigger();
                 SC02PointTemp = Game.DefaultPoint;
-                //TODO another buff
             };
         }
 

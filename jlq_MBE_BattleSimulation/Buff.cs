@@ -22,8 +22,6 @@ namespace JLQ_MBE_BattleSimulation
         public const int Infinite = Int32.MaxValue;
         /// <summary>buff剩余时间</summary>
         public int Time { get; protected set; }
-        /// <summary>buff执行的阶段</summary>
-        public readonly Section ExecuteSection;
         /// <summary>buff名称</summary>
         public readonly string Name;
 
@@ -43,15 +41,13 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="buffee">buff承受者</param>
         /// <param name="buffer">buff发出者</param>
         /// <param name="time">buff持续时间</param>
-        /// <param name="executeSection">buff执行的阶段</param>
         /// <param name="name">buff名称</param>
         /// <param name="game">游戏对象</param>
-        protected Buff(Character buffee, Character buffer, int time, Section executeSection, string name, Game game)
+        protected Buff(Character buffee, Character buffer, int time, string name, Game game)
         {
             this.Buffer = buffer;
             this.Buffee = buffee;
             this.Time = time;
-            this.ExecuteSection = executeSection;
             this.Name = name;
             this.game = game;
             BuffCancels = Cancel;

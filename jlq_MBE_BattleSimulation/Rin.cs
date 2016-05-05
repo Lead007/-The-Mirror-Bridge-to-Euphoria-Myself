@@ -105,12 +105,8 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC01()
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
-            game.HandleIsTargetLegal = (SCee, point) =>
-            {
-                if (this.Position != pointTemp1) Move(pointTemp1);
-                return Calculate.Distance(pointTemp1, SCee) <= SC01Range2 && Enemy.Contains(SCee);
-            };
-            game.HandleSelf = () => Move(pointTemp1);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee);
+            game.HandleSelf = () => Teleport(pointTemp1);
             game.HandleTarget = SCee => DoAttack(SCee, SC01DamageGain);
             AddPadButtonEvent(0);
         }
@@ -128,7 +124,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsLegalClick = point =>
             {
                 var c = game[point];
-                return c != null && Calculate.Distance(point, this) <= SC02Range && Enemy.Contains(c);
+                return c != null && IsInRangeAndEnemy(this.Position, SC02Range, c);
             };
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => DoAttack(SCee, SC02DamageGain);
@@ -145,7 +141,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC03()
         {
             game.HandleIsLegalClick = point => true;
-            game.HandleIsTargetLegal = (SCee, point) => Calculate.Distance(point, SCee) <= SC03Range && Enemy.Contains(SCee);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC03Range, SCee);
             game.HandleTarget = SCee => DoAttack(SCee, SC03DamageGain);
             AddPadButtonEvent(2);
         }
@@ -175,10 +171,7 @@ namespace JLQ_MBE_BattleSimulation
         private bool SC01IsLegalClick(Point point)
         {
             var c = game[point];
-            if (c == null || Calculate.Distance(point, this) > SC01Range || (!Enemy.Contains(c)))
-            {
-                return false;
-            }
+            if (c == null || (!IsInRangeAndEnemy(this.Position, SC01Range, c))) return false;
             pointTemp1 = c.Position.Y == this.Position.Y
                 ? new Point(c.Position.X + (c.Position.X > this.Position.X ? -1 : 1), this.Position.Y)
                 : new Point(c.Position.X, c.Position.Y + (c.Position.Y > this.Position.Y ? -1 : 1));

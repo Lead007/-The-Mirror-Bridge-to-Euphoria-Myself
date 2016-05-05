@@ -90,7 +90,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleSelf = () => Move(pointTemp1);
+            game.HandleSelf = () => Teleport(pointTemp1);
             game.HandleTarget = SCee => SCee.Cure((int) (0.7*this.Attack));
             AddPadButtonEvent(0);
         }
@@ -188,7 +188,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             if (Calculate.Distance(point, this) > SC01Range) return false;
             var c = game[point];
-            return c != null && Enemy.Contains(c);
+            return c != null && IsEnemy(c);
         }
 
         private bool SC03IsTargetLegal(Character SCee)

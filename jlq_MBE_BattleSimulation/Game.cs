@@ -505,12 +505,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="section">当前结算的阶段</param>
         public void BuffSettle(Section section)
         {
-            var buffLists = Characters.Select(c => c.BuffList);
-            IEnumerable<Buff> buffs = new List<Buff>();
-            buffs = buffLists.Select(
-                buffList => buffList.Where(b => b.Buffer == CurrentCharacter && b.ExecuteSection == section))
-                    .Aggregate(buffs, (current, buffsToOne) => current.Concat(buffsToOne));
-            foreach (var buff in buffs)
+            foreach (var buff in
+                    CurrentCharacter.BuffList.Where(buff => buff is BuffExecuteInSection)
+                        .Cast<BuffExecuteInSection>()
+                        .Where(buff => buff.ExecuteSection == section))
             {
                 buff.BuffTrigger();
                 Thread.Sleep(200);

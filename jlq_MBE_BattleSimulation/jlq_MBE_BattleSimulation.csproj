@@ -59,6 +59,9 @@
     </ApplicationDefinition>
     <Compile Include="Alice.cs" />
     <Compile Include="AttackModel.cs" />
+    <Compile Include="BuffExecuteImmediately.cs" />
+    <Compile Include="BuffExecuteInSection.cs" />
+    <Compile Include="BuffLimit.cs" />
     <Compile Include="BuffSlowDown.cs" />
     <Compile Include="Chen.cs" />
     <Compile Include="Cirno.cs" />

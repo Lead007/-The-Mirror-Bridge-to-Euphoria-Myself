@@ -58,9 +58,10 @@ namespace JLQ_MBE_BattleSimulation
             get { return __intervalAdd; }
             set
             {
+                var i = Interval;
                 __intervalAdd = Math.Max(0, value);
-                CurrentTime = Math.Min(CurrentTime, Interval);
                 BarTime.Maximum = Interval;
+                CurrentTime = Math.Max(0, CurrentTime - i + Interval);
             }
         }
         /// <summary>机动增量</summary>
@@ -174,6 +175,10 @@ namespace JLQ_MBE_BattleSimulation
         public DPreparingSection HandlePreparingSection { get; set; }
         /// <summary>结束阶段委托</summary>
         public DEndSection HandleEndSection { get; protected set; }
+        /// <summary>移动委托</summary>
+        public DMove HandleMove { get; set; }
+        /// <summary>正常移动委托</summary>
+        public DMove HandleNormalMove { get; set; }
 
         //符卡相关委托
         /// <summary>进入符卡按钮01的委托</summary>
@@ -277,6 +282,8 @@ namespace JLQ_MBE_BattleSimulation
             HandleIsCriticalHit = IsCriticalHit;
             HandlePreparingSection = PreparingSection;
             HandleEndSection = EndSection;
+            HandleNormalMove += Move;
+            HandleMove += HandleNormalMove;
         }
 
         /// <summary>治疗</summary>
@@ -334,7 +341,7 @@ namespace JLQ_MBE_BattleSimulation
                 _maxMp, Attack, Defence, HitRate, DodgeRate, CloseAmendment, (CloseAmendment%1 == 0) ? ".0" : "",
                 Interval, MoveAbility, AttackRange, CurrentTime);
             if (!BuffList.Any()) return result;
-            result += "\nbuff:\n";
+            result += "\nBUFF:\n";
             result = BuffList.Aggregate(result, (current, buff) => current + buff.ToString() + "\n");
             return result;
         }
@@ -362,16 +369,29 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="relativeY">移动的行向相对坐标</param>
         public void Move(int relativeX, int relativeY)
         {
-            this.Position = new Point(GetValidPosition((int)this.Position.X + relativeX, MainWindow.Column),
-                GetValidPosition((int)this.Position.Y + relativeY, MainWindow.Row));
-            Set();
+            Move(new Point(GetValidPosition((int) this.Position.X + relativeX, MainWindow.Column),
+                GetValidPosition((int) this.Position.Y + relativeY, MainWindow.Row)));
+        }
 
+        /// <summary>瞬移至指定坐标</summary>
+        /// <param name="end">瞬移的目标坐标</param>
+        public void Teleport(Point end)
+        {
+            this.Position = end;
+            Set();
+        }
+
+        /// <summary>在各方向瞬移指定的值，若超限则取边界</summary>
+        /// <param name="relativeX">瞬移的列向相对坐标</param>
+        /// <param name="relativeY">瞬移的行向相对坐标</param>
+        public void Teleport(int relativeX, int relativeY)
+        {
+            Teleport(new Point(GetValidPosition((int)this.Position.X + relativeX, MainWindow.Column),
+                GetValidPosition((int)this.Position.Y + relativeY, MainWindow.Row)));
         }
 
         /// <summary>对此角色而言的敌人列表</summary>
-        public IEnumerable<Character> Enemy => game.Characters.Where(c =>
-            /*当前角色中立且c非中立*/(this.Group == Group.Middle && c.Group != Group.Middle) ||
-                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int) this.Group)));
+        public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
 
         /// <summary>准备阶段</summary>
         public virtual void PreparingSection() { }
@@ -603,7 +623,16 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndEnemy(Point origin, int range, Character c)
         {
-            return Calculate.Distance(origin, c) <= range && Enemy.Contains(c);
+            return Calculate.Distance(origin, c) <= range && IsEnemy(c);
+        }
+
+        /// <summary>判断角色是否为敌人</summary>
+        /// <param name="c">待判断的角色</param>
+        /// <returns>是否为敌人</returns>
+        protected bool IsEnemy(Character c)
+        {
+            return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
+                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int) this.Group));
         }
     }
 }

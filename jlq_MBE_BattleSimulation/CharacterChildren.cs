@@ -20,7 +20,8 @@ namespace JLQ_MBE_BattleSimulation
         protected CharacterMovingIgnoreEnemy(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)
         {
-            
+            HandleMove -= HandleNormalMove;
+            HandleMove += Teleport;
         }
 
         public override IEnumerable<Character> EnemyBlock => new List<Character>();

@@ -61,4 +61,7 @@ namespace JLQ_MBE_BattleSimulation
     public delegate void DEndSection();
     /// <summary>判断死亡角色的委托</summary>
     public delegate void DIsDead();
+    /// <summary>移动的委托</summary>
+    /// <param name="point">移动的目标坐标</param>
+    public delegate void DMove(Point point);
 }
