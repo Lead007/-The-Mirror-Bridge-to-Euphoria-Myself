@@ -31,6 +31,8 @@ namespace JLQ_MBE_BattleSimulation
         public virtual float _attackX { private get; set; } = 1.0f;
         /// <summary>防御增益</summary>
         public float _defenceX { private get; set; } = 1.0f;
+        /// <summary>防御增量</summary>
+        public int _defenceAdd { get; set; } = 0;
         /// <summary>命中率增益</summary>
         public float _hitRateX { private get; set; } = 1.0f;
         /// <summary>闪避率增益</summary>
@@ -52,7 +54,7 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         private int __intervalAdd;
-        /// <summary>行动间隔增加量</summary>
+        /// <summary>行动间隔增量</summary>
         public int _intervalAdd
         {
             get { return __intervalAdd; }
@@ -136,7 +138,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>攻击</summary>
         public int Attack => Calculate.Floor(Data.Attack*_attackX);
         /// <summary>防御</summary>
-        public int Defence => Calculate.Floor(Data.Defence*_defenceX);
+        public int Defence => Math.Max(0, Calculate.Floor(Data.Defence*_defenceX) + _defenceAdd);
         /// <summary>命中率</summary>
         public int HitRate => Calculate.Floor(Data.HitRate*_hitRateX);
         /// <summary>闪避率</summary>
@@ -600,6 +602,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndEnemy(Point origin, int range, Character c)
         {
+            if (c == null) return false;
             return Calculate.Distance(origin, c) <= range && IsEnemy(c);
         }
 
@@ -608,6 +611,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否为敌人</returns>
         protected bool IsEnemy(Character c)
         {
+            if (c == null) return false;
             return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
                 /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int) this.Group));
         }

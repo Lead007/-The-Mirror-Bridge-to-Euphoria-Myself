@@ -62,6 +62,7 @@
     <Compile Include="BuffAddDamage.cs" />
     <Compile Include="BuffAddRumiaSkillNum.cs" />
     <Compile Include="BuffCannotMove.cs" />
+    <Compile Include="BuffDecreaseDefence.cs" />
     <Compile Include="BuffExecuteImmediately.cs" />
     <Compile Include="BuffExecuteInSection.cs" />
     <Compile Include="BuffLimit.cs" />

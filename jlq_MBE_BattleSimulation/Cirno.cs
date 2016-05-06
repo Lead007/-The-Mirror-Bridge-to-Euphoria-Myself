@@ -13,10 +13,15 @@ namespace JLQ_MBE_BattleSimulation
 		public Cirno(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
-		    enterPad[2] = (s, ev) =>
+		    enterPad[0] = (s, ev) =>
+		    {
+		        if (SC01IsLegalClick(game.MousePoint)) game[game.MousePoint].LabelDisplay.Background = Brushes.LightBlue;
+		    };
+            SetDefaultLeavePadButtonDelegate(0);
+            enterPad[2] = (s, ev) =>
 		    {
 		        var c = game[game.MousePoint];
-		        if (c == null || (!IsEnemy(c))) return;
+		        if (!IsEnemy(c)) return;
 		        game.DefaultButtonAndLabels();
 		        c.LabelDisplay.Background = Brushes.LightBlue;
 		    };
@@ -29,13 +34,23 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            //TODO SC01
+            game.HandleIsLegalClick = SC01IsLegalClick;
+            game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+            game.HandleTarget = SCee =>
+            {
+                DoAttack(SCee, 0.7f);
+                var buff = new BuffDecreaseDefence(SCee, this, this.Interval, 20, game);
+                SCee.BuffList.Add(buff);
+                buff.BuffTrigger();
+            };
+            AddPadButtonEvent(0);
         }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-            
+            base.EndSC01();
+            RemovePadButtonEvent(0);
         }
 
         /// <summary>符卡02</summary>
@@ -71,6 +86,12 @@ namespace JLQ_MBE_BattleSimulation
         {
             base.EndSC03();
             RemovePadButtonEvent(2);
+        }
+
+	    private bool SC01IsLegalClick(Point point)
+	    {
+            var c = game[point];
+            return IsEnemy(c) && Calculate.Distance(c, this) <= this.AttackRange;
         }
 
     }

@@ -277,7 +277,7 @@ namespace JLQ_MBE_BattleSimulation
                     EndSection();
                 }
                 //如果单击的位置是合法攻击点
-                else if (game.EnemyCanAttack.Any(c => c.Position == game.MousePoint))
+                else if (game.EnemyCanAttack.Contains(game[game.MousePoint]))
                 {
                     //如果已经攻击过则操作非法
                     if (game.HasAttacked)

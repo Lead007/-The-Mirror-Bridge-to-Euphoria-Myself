@@ -187,8 +187,7 @@ namespace JLQ_MBE_BattleSimulation
         private bool SC02IsLegalClick(Point point)
         {
             if (Calculate.Distance(point, this) > SC01Range) return false;
-            var c = game[point];
-            return c != null && IsEnemy(c);
+            return IsEnemy(game[point]);
         }
 
         private bool SC03IsTargetLegal(Character SCee)
