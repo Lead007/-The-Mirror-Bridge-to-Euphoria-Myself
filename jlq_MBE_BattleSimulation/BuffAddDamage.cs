@@ -13,8 +13,13 @@ namespace JLQ_MBE_BattleSimulation
             : base(buffee, buffer, time, string.Format("虚弱：受伤增加{0}%", (int) (damageGain*100)), game)
         {
             BuffAffect = (bee, ber) =>
-                bee.HandleBeAttacked = (damage, attacker) => bee.HandleBeAttacked((int) (damage*(1 + damageGain)), attacker);
-            BuffCancels += (bee, ber) => bee.HandleBeAttacked = bee.BeAttacked;
+            {
+                temp = (DBeAttacked) bee.HandleBeAttacked.Clone();
+                bee.HandleBeAttacked = (damage, attacker) => temp((int) (damage*(1 + damageGain)), attacker);
+            };
+            BuffCancels += (bee, ber) => bee.HandleBeAttacked = temp;
         }
+
+        private DBeAttacked temp;
     }
 }

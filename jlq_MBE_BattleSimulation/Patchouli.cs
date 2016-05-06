@@ -21,7 +21,8 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            //TODO SC01
+            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
+            game.HandleSelf = () => MpGain((int) (this.Mp/10));
         }
 
         /// <summary>结束符卡01</summary>

@@ -152,7 +152,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>攻击范围</summary>
         public int AttackRange => Math.Max(0, Data.AttackRange + _attackRangeX);
         /// <summary>暴击增益</summary>
-        private float CriticalHitGain => 1.5f;
+        protected float CriticalHitGain => 1.5f;
         /// <summary>暴击率</summary>
         private float CriticalHitRate => 0.2f;
         /// <summary>伤害浮动</summary>
@@ -163,13 +163,13 @@ namespace JLQ_MBE_BattleSimulation
         public string Name => Data.Name;
 
         /// <summary>被攻击结算的委托对象</summary>
-        public DBeAttacked HandleBeAttacked;
+        public DBeAttacked HandleBeAttacked { get; set; }
         /// <summary>是否命中的委托对象</summary>
-        protected DIsHit HandleIsHit;
+        protected DIsHit HandleIsHit { get; set; }
         /// <summary>近战增益的委托对象</summary>
-        protected DCloseGain HandleCloseGain;
+        protected DCloseGain HandleCloseGain { get; set; }
         /// <summary>是否暴击的委托对象</summary>
-        protected DIsCriticalHit HandleIsCriticalHit;
+        protected DIsCriticalHit HandleIsCriticalHit { get; set; }
         /// <summary>准备阶段委托</summary>
         public DPreparingSection HandlePreparingSection { get; set; }
         /// <summary>结束阶段委托</summary>
@@ -300,16 +300,9 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>攻击</summary>
         /// <param name="target">攻击目标</param>
-        /// <returns>是否暴击</returns>
-        public bool DoAttack(Character target)
-        {
-            return DoAttack(target, 1.0f);
-        }
-        /// <summary>攻击</summary>
-        /// <param name="target">攻击目标</param>
         /// <param name="times">伤害值增益</param>
         /// <returns></returns>
-        public bool DoAttack(Character target, float times)
+        public virtual bool DoAttack(Character target, float times = 1.0f)
         {
             //判断是否命中
             if (HandleIsHit(target)) return false;
@@ -470,7 +463,7 @@ namespace JLQ_MBE_BattleSimulation
 
         //显示更新
         /// <summary>更新显示display的位置</summary>
-        protected void Set()
+        public void Set()
         {
             foreach (var c in ListControls)
             {

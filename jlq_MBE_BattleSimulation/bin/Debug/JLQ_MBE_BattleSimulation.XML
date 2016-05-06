@@ -62,6 +62,9 @@
         <member name="F:JLQ_MBE_BattleSimulation.BuffExecuteInSection.ExecuteSection">
             <summary>buff执行的阶段</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffShield">
+            <summary>获得持续一段时间的护盾，可抵消这段时间内受到的第一个伤害</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.BuffSlowDown.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
             <summary>构造函数</summary>
             <param name="buffee">buff承受者</param>
@@ -973,6 +976,9 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character._defenceX">
             <summary>防御增益</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character._defenceAdd">
+            <summary>防御增量</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character._hitRateX">
             <summary>命中率增益</summary>
         </member>
@@ -986,7 +992,7 @@
             <summary>行动间隔增益</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character._intervalAdd">
-            <summary>行动间隔增加量</summary>
+            <summary>行动间隔增量</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character._moveAbilityX">
             <summary>机动增量</summary>
@@ -1075,16 +1081,16 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character.Name">
             <summary>名字</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Character.HandleBeAttacked">
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleBeAttacked">
             <summary>被攻击结算的委托对象</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Character.HandleIsHit">
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleIsHit">
             <summary>是否命中的委托对象</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Character.HandleCloseGain">
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleCloseGain">
             <summary>近战增益的委托对象</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Character.HandleIsCriticalHit">
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleIsCriticalHit">
             <summary>是否暴击的委托对象</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandlePreparingSection">
@@ -1124,11 +1130,6 @@
             <summary>被攻击</summary>
             <param name="damage">伤害值</param>
             <param name="attacker">伤害来源</param>
-        </member>
-        <member name="M:JLQ_MBE_BattleSimulation.Character.DoAttack(JLQ_MBE_BattleSimulation.Character)">
-            <summary>攻击</summary>
-            <param name="target">攻击目标</param>
-            <returns>是否暴击</returns>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Character.DoAttack(JLQ_MBE_BattleSimulation.Character,System.Single)">
             <summary>攻击</summary>

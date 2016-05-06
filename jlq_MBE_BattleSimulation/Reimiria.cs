@@ -16,8 +16,27 @@ namespace JLQ_MBE_BattleSimulation
 		}
 
         //TODO 天赋
+	    public override bool DoAttack(Character target, float times = 1)
+	    {
+            //判断是否命中
+            if (HandleIsHit(target)) return false;
+            //判断是否近战
+            var closeGain = HandleCloseGain(target);
+            //计算基础伤害
+	        double damage;
+	        if (target.Hp*10 < target.Data.MaxHp) damage = 9999;
+            else damage = /*基础伤害*/ Calculate.Damage(this.Attack, target.Defence) * /*近战补正*/closeGain * FloatDamage * times;
+            //判断是否暴击
+            var isCriticalHit = HandleIsCriticalHit(target);
+            if (isCriticalHit)
+            {
+                damage *= this.CriticalHitGain;
+            }
+            target.HandleBeAttacked((int)damage, this);
+            return isCriticalHit;
+        }
 
-        //符卡
+	    //符卡
         /// <summary>符卡01</summary>
         public override void SC01()
         {

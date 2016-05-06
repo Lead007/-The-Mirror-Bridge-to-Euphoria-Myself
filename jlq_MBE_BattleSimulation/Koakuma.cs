@@ -15,9 +15,13 @@ namespace JLQ_MBE_BattleSimulation
 
 		}
 
-        //TODO 天赋
+	    public override void PreparingSection()
+	    {
+	        MpGain(this.Mp/10);
+            Cure(this.Hp/10);
+	    }
 
-        //符卡
+	    //符卡
         /// <summary>符卡01</summary>
         public override void SC01()
         {

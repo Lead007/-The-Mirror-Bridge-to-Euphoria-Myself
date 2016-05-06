@@ -21,13 +21,27 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            //TODO SC01
+            game.HandleIsLegalClick = point =>
+            {
+                var c = game[point];
+                return c != null && Calculate.Distance(c, this) <= this.AttackRange;
+            };
+            game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+            game.HandleSelf = () =>
+            {
+                var buff = new BuffShield(this, 3*this.Interval, game);
+                this.BuffList.Add(buff);
+                buff.BuffTrigger();
+            };
+            game.HandleTarget = SCee => DoAttack(SCee, 1.3f);
+            game.DefaultButtonAndLabels();
+            game.UpdateLabelBackground();
         }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-
+            base.EndSC01();
         }
 
         /// <summary>符卡02</summary>

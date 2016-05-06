@@ -66,6 +66,7 @@
     <Compile Include="BuffExecuteImmediately.cs" />
     <Compile Include="BuffExecuteInSection.cs" />
     <Compile Include="BuffLimit.cs" />
+    <Compile Include="BuffShield.cs" />
     <Compile Include="BuffSlowDown.cs" />
     <Compile Include="Chen.cs" />
     <Compile Include="Cirno.cs" />

@@ -15,19 +15,19 @@ namespace JLQ_MBE_BattleSimulation
 		public Rumia(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
-		    IsPreventing = new Image
-		    {
-		        HorizontalAlignment = HorizontalAlignment.Right,
-		        VerticalAlignment = VerticalAlignment.Top,
-		        Margin = new Thickness(0, 2, 2, 0),
-		        Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Characters/Rumia/Shield.jpg")),
-                Visibility = Visibility.Hidden,
-		        Width = 15,
-		        Height = 15
-		    };
-		    IsPreventing.SetValue(Panel.ZIndexProperty, 6);
-            ListControls.Add(IsPreventing);
-            Set();
+		    //IsPreventing = new Image
+		    //{
+		    //    HorizontalAlignment = HorizontalAlignment.Right,
+		    //    VerticalAlignment = VerticalAlignment.Top,
+		    //    Margin = new Thickness(0, 2, 2, 0),
+		    //    Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Characters/Rumia/Shield.jpg")),
+      //          Visibility = Visibility.Hidden,
+		    //    Width = 15,
+		    //    Height = 15
+		    //};
+		    //IsPreventing.SetValue(Panel.ZIndexProperty, 6);
+      //      ListControls.Add(IsPreventing);
+      //      Set();
             //显示将被攻击的角色
 		    enterPad[0] = (s, ev) =>
 		    {
@@ -51,18 +51,18 @@ namespace JLQ_MBE_BattleSimulation
 	    private const int SC03Range = 2;
 	    private const float SC03Gain = 1.5f;
 
-	    private Image IsPreventing;
+	    //private Image IsPreventing;
         public int SkillNum = 1;
-	    private bool __doPrevent;
-	    private bool _doPrevent
-	    {
-            get { return __doPrevent; }
-	        set
-	        {
-	            __doPrevent = value;
-	            IsPreventing.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-	        }
-	    }
+	    //private bool __doPrevent;
+	    //private bool _doPrevent
+	    //{
+     //       get { return __doPrevent; }
+	    //    set
+	    //    {
+	    //        __doPrevent = value;
+	    //        IsPreventing.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+	    //    }
+	    //}
 	    private List<Character> _skillBeSymboled = new List<Character>(); 
 
 	    public override void PreparingSection()
@@ -79,15 +79,15 @@ namespace JLQ_MBE_BattleSimulation
 	        }
 	    }
 
-	    public override void BeAttacked(int damage, Character attacker)
-	    {
-	        if (_doPrevent)
-	        {
-	            _doPrevent = false;
-	            return;
-	        }
-	        base.BeAttacked(damage, attacker);
-	    }
+	    //public override void BeAttacked(int damage, Character attacker)
+	    //{
+	    //    if (_doPrevent)
+	    //    {
+	    //        _doPrevent = false;
+	    //        return;
+	    //    }
+	    //    base.BeAttacked(damage, attacker);
+	    //}
 
 	    //符卡
         /// <summary>符卡01</summary>
@@ -99,7 +99,9 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 DoAttack(SCee, 0.7f);
-                _doPrevent = true;
+                var buff = new BuffShield(this, 3*Interval, game);
+                this.BuffList.Add(buff);
+                buff.BuffTrigger();
             };
             AddPadButtonEvent(0);
         }
