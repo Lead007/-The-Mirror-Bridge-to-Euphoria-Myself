@@ -21,16 +21,18 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>角色数据</summary>
         public readonly CharacterData Data;
         /// <summary>最大灵力</summary>
-        private readonly int _maxMp;
+        public readonly int _maxMp;
         /// <summary>阵营</summary>
         public readonly Group Group;
 
         //可变字段
         //增益
         /// <summary>攻击增益</summary>
-        public virtual float _attackX { private get; set; } = 1.0f;
+        public virtual float _attackX { get; set; } = 1.0f;
+        /// <summary>攻击增量</summary>
+        public int _attackAdd { get; set; } = 0;
         /// <summary>防御增益</summary>
-        public float _defenceX { private get; set; } = 1.0f;
+        public float _defenceX { get; set; } = 1.0f;
         /// <summary>防御增量</summary>
         public int _defenceAdd { get; set; } = 0;
         /// <summary>命中率增益</summary>
@@ -67,9 +69,9 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
         /// <summary>机动增量</summary>
-        public int _moveAbilityX { get; set; } = 0;
+        public int _moveAbilityAdd { get; set; } = 0;
         /// <summary>攻击范围增量</summary>
-        private int _attackRangeX = 0;
+        public int _attackRangeAdd { get; set; } = 0;
 
         /// <summary>随机数对象</summary>
         protected Random random;
@@ -115,9 +117,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>位置，X为Grid.Column，Y为Grid.Row</summary>
         public Point Position { get; protected set; }
         /// <summary>是否已移动</summary>
-        public bool HasMoved { get; set; }
+        public virtual bool HasMoved { get; set; }
         /// <summary>是否已攻击</summary>
-        public bool HasAttacked { get; set; }
+        public virtual bool HasAttacked { get; set; }
         /// <summary>作为buff承受者的buff列表</summary>
         public List<Buff> BuffList { get; protected set; }
 
@@ -136,7 +138,7 @@ namespace JLQ_MBE_BattleSimulation
 
         //只读属性
         /// <summary>攻击</summary>
-        public int Attack => Calculate.Floor(Data.Attack*_attackX);
+        public int Attack => Math.Max(0, Calculate.Floor(Data.Attack*_attackX) + _attackAdd);
         /// <summary>防御</summary>
         public int Defence => Math.Max(0, Calculate.Floor(Data.Defence*_defenceX) + _defenceAdd);
         /// <summary>命中率</summary>
@@ -146,11 +148,11 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>近战补正</summary>
         public int CloseAmendment => Calculate.Floor(Data.CloseAmendment*_closeAmendmentX);
         /// <summary>行动间隔</summary>
-        public int Interval => Calculate.Floor(Data.Interval*_intervalX + _intervalAdd);
+        public int Interval => Math.Max(1, Calculate.Floor(Data.Interval*_intervalX + _intervalAdd));
         /// <summary>机动</summary>
-        public int MoveAbility => Math.Max(0, Data.MoveAbility + _moveAbilityX);
+        public int MoveAbility => Math.Max(0, Data.MoveAbility + _moveAbilityAdd);
         /// <summary>攻击范围</summary>
-        public int AttackRange => Math.Max(0, Data.AttackRange + _attackRangeX);
+        public int AttackRange => Math.Max(0, Data.AttackRange + _attackRangeAdd);
         /// <summary>暴击增益</summary>
         protected float CriticalHitGain => 1.5f;
         /// <summary>暴击率</summary>
@@ -162,6 +164,8 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>名字</summary>
         public string Name => Data.Name;
 
+        /// <summary>攻击结算的委托对象</summary>
+        public DDoAttack HandleDoAttack { get; set; }
         /// <summary>被攻击结算的委托对象</summary>
         public DBeAttacked HandleBeAttacked { get; set; }
         /// <summary>是否命中的委托对象</summary>
@@ -194,7 +198,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        public Character(int id, Point position, Group group, Random random, Game game)
+        protected Character(int id, Point position, Group group, Random random, Game game)
         {
             this.ID = id;
             this.Position = position;
@@ -273,6 +277,7 @@ namespace JLQ_MBE_BattleSimulation
             this.random = random;
             this.game = game;
             //初始化委托
+            HandleDoAttack = DoAttack;
             HandleBeAttacked = BeAttacked;
             HandleIsHit = IsHit;
             HandleCloseGain = t => 1.0f;
@@ -289,6 +294,13 @@ namespace JLQ_MBE_BattleSimulation
             this.Hp = Math.Min(this.Data.MaxHp, this.Hp + hp);
         }
 
+        /// <summary>治疗</summary>
+        /// <param name="hp">治疗的体力值</param>
+        public void Cure(double hp)
+        {
+            Cure((int) hp);
+        }
+
         /// <summary>被攻击</summary>
         /// <param name="damage">伤害值</param>
         /// <param name="attacker">伤害来源</param>
@@ -301,7 +313,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>攻击</summary>
         /// <param name="target">攻击目标</param>
         /// <param name="times">伤害值增益</param>
-        /// <returns></returns>
+        /// <returns>是否暴击</returns>
         public virtual bool DoAttack(Character target, float times = 1.0f)
         {
             //判断是否命中

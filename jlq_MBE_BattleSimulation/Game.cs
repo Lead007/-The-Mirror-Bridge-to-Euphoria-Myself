@@ -387,7 +387,8 @@ namespace JLQ_MBE_BattleSimulation
 
             var ct = CurrentCharacter.CurrentTime;
             Characters.Aggregate(0, (cu, c) => c.CurrentTime -= ct);
-            foreach (var b in from l in Characters.Select(c => c.BuffList) from b in l where b.Round(ct) select b)
+            var tempList = (from l in Characters.Select(c => c.BuffList) from b in l where b.Round(ct) select b).ToList();
+            foreach (var b in tempList)
             {
                 b.BuffEnd();
             }
@@ -571,10 +572,7 @@ namespace JLQ_MBE_BattleSimulation
             Characters.Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.White);
             SetCurrentLabel();
             if (HasAttacked) return;
-            foreach (var c in EnemyCanAttack)
-            {
-                c.LabelDisplay.Background = Brushes.LightBlue;
-            }
+            EnemyCanAttack.Aggregate((Brush)Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
         }
 
         /// <summary>将当前行动角色标签颜色设为淡粉色</summary>

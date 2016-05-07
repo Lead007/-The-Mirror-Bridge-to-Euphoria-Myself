@@ -36,6 +36,79 @@
             <param name="attacker">攻击者</param>
             <param name="target">攻击目标</param>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffCure">
+            <summary>每回合治疗一定体力值</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffCure.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="hp">治疗的体力值</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffGainAttack">
+            <summary>增益攻击值的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffGainAttack.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Single,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="attackGain">增益的攻击值，负数则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffAddAttackRange">
+            <summary>增加攻击范围的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffAddAttackRange.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="attackRangeAdd">增加的攻击值，负数则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffGainBeDamaged">
+            <summary>增益受到的伤害buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffGainBeDamaged.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Single,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="damageGain">受伤增益，若负则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffAddRumiaSkillNum">
+            <summary>针对Rumia的buff，增加其天赋标记数</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffAddRumiaSkillNum.#ctor(JLQ_MBE_BattleSimulation.Rumia,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffer">buff发出者</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffCannotMove">
+            <summary>无法移动的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffCannotMove.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffAddDefence">
+            <summary>增加防御力的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffAddDefence.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="defenceAdd">增加的防御值，负数则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffExecuteImmediately">
             <summary>获得时立即执行BuffAffect委托的Buff</summary>
         </member>
@@ -62,15 +135,74 @@
         <member name="F:JLQ_MBE_BattleSimulation.BuffExecuteInSection.ExecuteSection">
             <summary>buff执行的阶段</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffGainDefence">
+            <summary>增益防御值的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffGainDefence.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Single,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="defenceGain">增益的防御值，负数则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffGainDoDamage">
+            <summary>增益造成的伤害buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffGainDoDamage.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Single,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="damageGain">受伤增益，若负则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffLimit">
+            <summary>被限制在特定区域内的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffLimit.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Windows.Point,JLQ_MBE_BattleSimulation.DIsPointWall,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="origin">中心点</param>
+            <param name="handle">判断点是否为墙的委托</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffMpGain">
+            <summary>每回合恢复一定灵力值</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffMpGain.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="mp">恢复的灵力值</param>
+            <param name="game">游戏对象</param>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffShield">
             <summary>获得持续一段时间的护盾，可抵消这段时间内受到的第一个伤害</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffShield.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffShield.ToString">
+            <summary>重写ToString方法</summary>
+            <returns>字符串化结果</returns>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffSlowDown">
+            <summary>增加行动间隔的buff</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.BuffSlowDown.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
             <summary>构造函数</summary>
             <param name="buffee">buff承受者</param>
             <param name="buffer">buff发出者</param>
             <param name="time">buff持续时间</param>
-            <param name="add">行动间隔添加量</param>
+            <param name="intervalAdd">行动间隔增加量，负数则为减少</param>
             <param name="game">游戏对象</param>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Chen.SC01">
@@ -189,6 +321,12 @@
             <param name="target">攻击目标</param>
             <returns>是否暴击</returns>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.DDoAttack">
+            <summary>攻击结算的委托</summary>
+            <param name="target">攻击目标</param>
+            <param name="times">伤害值增益</param>
+            <returns>是否暴击</returns>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.DBeAttacked">
             <summary>被攻击结算的委托</summary>
             <param name="damage">伤害值</param>
@@ -208,14 +346,16 @@
         <member name="T:JLQ_MBE_BattleSimulation.DIsDead">
             <summary>判断死亡角色的委托</summary>
         </member>
-        <member name="T:JLQ_MBE_BattleSimulation.DMove">
-            <summary>移动的委托</summary>
-            <param name="point">移动的目标坐标</param>
-        </member>
         <member name="T:JLQ_MBE_BattleSimulation.DEnemyBlock">
             <summary>修改阻挡的敌人列表</summary>
             <param name="enemies">原敌人列表</param>
             <returns>修改后的敌人列表</returns>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.DIsPointWall">
+            <summary>判断点是否为虚拟敌人</summary>
+            <param name="origin">原点</param>
+            <param name="point">待判断点</param>
+            <returns>是否为虚拟敌人</returns>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Eirin.SC01">
             <summary>符卡01</summary>
@@ -670,6 +810,23 @@
         <member name="M:JLQ_MBE_BattleSimulation.Rin.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Rumia">
+            <summary>Rumia</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Rumia.#ctor(System.Int32,System.Windows.Point,JLQ_MBE_BattleSimulation.Group,System.Random,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="id">ID</param>
+            <param name="position">位置</param>
+            <param name="group">阵营</param>
+            <param name="random">随机数对象</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="F:JLQ_MBE_BattleSimulation.Rumia.SkillNum">
+            <summary>天赋的标记数量</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Rumia.PreparingSection">
+            <summary>天赋</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Rumia.SC01">
             <summary>符卡01</summary>
         </member>
@@ -687,6 +844,12 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Rumia.EndSC03">
             <summary>结束符卡03</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Rumia.SCShow">
+            <summary>SC显示相关</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Rumia.ResetSCShow">
+            <summary>SC重置显示相关</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Sakuya.SC01">
             <summary>符卡01</summary>
@@ -890,6 +1053,11 @@
             <summary>重写object类的ToString方法</summary>
             <returns>转化为字符串的结果</returns>
         </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Buff.Add(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character)">
+            <summary>在buff列表中添加buff</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Buff.Cancel(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character)">
             <summary>从buff列表中删除buff</summary>
             <param name="buffee">buff承受者</param>
@@ -973,6 +1141,9 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character._attackX">
             <summary>攻击增益</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character._attackAdd">
+            <summary>攻击增量</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character._defenceX">
             <summary>防御增益</summary>
         </member>
@@ -994,10 +1165,10 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character._intervalAdd">
             <summary>行动间隔增量</summary>
         </member>
-        <member name="P:JLQ_MBE_BattleSimulation.Character._moveAbilityX">
+        <member name="P:JLQ_MBE_BattleSimulation.Character._moveAbilityAdd">
             <summary>机动增量</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Character._attackRangeX">
+        <member name="P:JLQ_MBE_BattleSimulation.Character._attackRangeAdd">
             <summary>攻击范围增量</summary>
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.Character.random">
@@ -1081,6 +1252,9 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character.Name">
             <summary>名字</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleDoAttack">
+            <summary>攻击结算的委托对象</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandleBeAttacked">
             <summary>被攻击结算的委托对象</summary>
         </member>
@@ -1126,6 +1300,10 @@
             <summary>治疗</summary>
             <param name="hp">治疗的体力值</param>
         </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Character.Cure(System.Double)">
+            <summary>治疗</summary>
+            <param name="hp">治疗的体力值</param>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Character.BeAttacked(System.Int32,JLQ_MBE_BattleSimulation.Character)">
             <summary>被攻击</summary>
             <param name="damage">伤害值</param>
@@ -1135,7 +1313,7 @@
             <summary>攻击</summary>
             <param name="target">攻击目标</param>
             <param name="times">伤害值增益</param>
-            <returns></returns>
+            <returns>是否暴击</returns>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Character.ToString">
             <summary>将各数据转化为字符串显示</summary>
@@ -1570,6 +1748,9 @@
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.MainWindow.characterLastAdd">
             <summary>加人模式上一个添加的角色</summary>
+        </member>
+        <member name="F:JLQ_MBE_BattleSimulation.MainWindow.isSCing">
+            <summary>是否处于符卡状态</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.MainWindow.#ctor">
             <summary>构造函数</summary>

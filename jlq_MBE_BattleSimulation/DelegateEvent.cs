@@ -9,16 +9,16 @@ namespace JLQ_MBE_BattleSimulation
 {
     //委托声明
 
+    //buff相关
     /// <summary>buff效果的委托</summary>
     /// <param name="buffee">buff承受者</param>
     /// <param name="buffer">buff发出者</param>
     public delegate void DBuffAffect(Character buffee, Character buffer);
-
     /// <summary>取消buff的委托</summary>
     /// <param name="buffee">buff承受者</param>
     /// <param name="buffer">buff发出者</param>
     public delegate void DBuffCancel(Character buffee, Character buffer);
-
+    //符卡相关
     /// <summary>如何处理目标的委托</summary>
     /// <param name="SCee">被使用符卡者</param>
     public delegate void DHandleTarget(Character SCee);
@@ -33,7 +33,7 @@ namespace JLQ_MBE_BattleSimulation
     /// <param name="clickPoint">单击位置</param>
     /// <returns>单击位置是否合法</returns>
     public delegate bool DIsLegalClick(Point clickPoint);
-
+    //伤害结算相关
     /// <summary>计算近战增益的委托</summary>
     /// <param name="target">攻击目标</param>
     /// <returns>近战增益</returns>
@@ -47,10 +47,16 @@ namespace JLQ_MBE_BattleSimulation
     /// <returns>是否暴击</returns>
     public delegate bool DIsCriticalHit(Character target);
 
+    /// <summary>攻击结算的委托</summary>
+    /// <param name="target">攻击目标</param>
+    /// <param name="times">伤害值增益</param>
+    /// <returns>是否暴击</returns>
+    public delegate bool DDoAttack(Character target, float times = 1.0f);
     /// <summary>被攻击结算的委托</summary>
     /// <param name="damage">伤害值</param>
     /// <param name="attacker">伤害来源</param>
     public delegate void DBeAttacked(int damage, Character attacker);
+    //回合制相关
     /// <summary>生成可到达点</summary>
     /// <param name="origin">起点</param>
     /// <param name="step">步数</param>
@@ -61,11 +67,15 @@ namespace JLQ_MBE_BattleSimulation
     public delegate void DEndSection();
     /// <summary>判断死亡角色的委托</summary>
     public delegate void DIsDead();
-    /// <summary>移动的委托</summary>
-    /// <param name="point">移动的目标坐标</param>
-    public delegate void DMove(Point point);
     /// <summary>修改阻挡的敌人列表</summary>
     /// <param name="enemies">原敌人列表</param>
     /// <returns>修改后的敌人列表</returns>
     public delegate IEnumerable<Point> DEnemyBlock(IEnumerable<Point> enemies);
+    //buff相关
+    //BuffLimit
+    /// <summary>判断点是否为虚拟敌人</summary>
+    /// <param name="origin">原点</param>
+    /// <param name="point">待判断点</param>
+    /// <returns>是否为虚拟敌人</returns>
+    public delegate bool DIsPointWall(Point origin, Point point);
 }

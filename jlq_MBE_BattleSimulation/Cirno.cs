@@ -13,11 +13,15 @@ namespace JLQ_MBE_BattleSimulation
 		public Cirno(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡01
+            //显示将攻击的敌人
 		    enterPad[0] = (s, ev) =>
 		    {
 		        if (SC01IsLegalClick(game.MousePoint)) game[game.MousePoint].LabelDisplay.Background = Brushes.LightBlue;
 		    };
             SetDefaultLeavePadButtonDelegate(0);
+            //符卡03
+            //显示将攻击的敌人
             enterPad[2] = (s, ev) =>
 		    {
 		        var c = game[game.MousePoint];
@@ -38,9 +42,8 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                DoAttack(SCee, 0.7f);
-                var buff = new BuffDecreaseDefence(SCee, this, this.Interval, 20, game);
-                SCee.BuffList.Add(buff);
+                HandleDoAttack(SCee, 0.7f);
+                var buff = new BuffAddDefence(SCee, this, this.Interval, -20, game);
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);
@@ -71,12 +74,10 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                DoAttack(SCee, 1.3f);
-                var buff1 = new BuffAddDamage(SCee, this, 3*this.Interval, 0.1f, game);
-                SCee.BuffList.Add(buff1);
+                HandleDoAttack(SCee, 1.3f);
+                var buff1 = new BuffGainBeDamaged(SCee, this, 3*this.Interval, 0.1f, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffCannotMove(SCee, this, 3*this.Interval, game);
-                SCee.BuffList.Add(buff2);
                 buff2.BuffTrigger();
             };
             AddPadButtonEvent(2);

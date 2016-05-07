@@ -62,7 +62,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC01()
         {
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(this.Position, SC01Range, SCee);
-            game.HandleTarget = t => DoAttack(t);
+            game.HandleTarget = t => HandleDoAttack(t);
         }
 
         /// <summary>结束符卡01</summary>
@@ -85,10 +85,14 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffSlowDown(SCee, this, 3*this.Interval, SC02Gain, game);
-                SCee.BuffList.Add(buff1);
                 buff1.BuffTrigger();
-                var buff2 = new BuffLimit(SCee, this, 3*this.Interval, SC02PointTemp, game);
-                SCee.BuffList.Add(buff2);
+                DIsPointWall handle = (origin, point) =>
+                {
+                    var rx = Math.Abs(point.X - origin.X);
+                    var ry = Math.Abs(point.Y - origin.Y);
+                    return (rx == 2 && ry <= 2) || (ry == 2 && rx <= 2);
+                };
+                var buff2 = new BuffLimit(SCee, this, 3*this.Interval, SC02PointTemp, handle, game);
                 buff2.BuffTrigger();
                 SC02PointTemp = Game.DefaultPoint;
             };

@@ -7,12 +7,16 @@ using System.Windows.Markup.Localizer;
 
 namespace JLQ_MBE_BattleSimulation
 {
-    class BuffAddRumiaSkillNum : BuffExecuteImmediately
+    /// <summary>针对Rumia的buff，增加其天赋标记数</summary>
+    public class BuffAddRumiaSkillNum : BuffExecuteImmediately
     {
+        /// <summary>构造函数</summary>
+        /// <param name="buffer">buff发出者</param>
+        /// <param name="game">游戏对象</param>
         public BuffAddRumiaSkillNum(Rumia buffer, Game game)
             : base(buffer, buffer, 3*buffer.Interval, "月光：天赋标记数+2", game)
         {
-            BuffAffect = (bee, ber) => buffer.SkillNum += 2;
+            BuffAffect += (bee, ber) => buffer.SkillNum += 2;
             BuffCancels += (bee, ber) => buffer.SkillNum -= 2;
         }
     }

@@ -80,7 +80,7 @@ namespace JLQ_MBE_BattleSimulation
                         c => c.Group == this.Group && c != this &&
                             Calculate.Distance(c, this) <= skillRange))
             {
-                c.Cure((int) (skillGain*c.Data.MaxHp));
+                c.Cure(skillGain*c.Data.MaxHp);
             }
         }
 
@@ -91,7 +91,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleSelf = () => Move(pointTemp1);
-            game.HandleTarget = SCee => SCee.Cure((int) (0.7*this.Attack));
+            game.HandleTarget = SCee => SCee.Cure(0.7*this.Attack);
             AddPadButtonEvent(0);
         }
 
@@ -107,7 +107,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC02IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleTarget = SCee => DoAttack(SCee, 1.5f);
+            game.HandleTarget = SCee => HandleDoAttack(SCee, 1.5f);
             AddPadButtonEvent(1);
         }
 
@@ -121,7 +121,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC03()
         {
             game.HandleIsTargetLegal = (SCee, point) => SC03IsTargetLegal(SCee);
-            game.HandleTarget = SCee => SCee.Cure((int) (SCee.Attack*SC02Gain));
+            game.HandleTarget = SCee => SCee.Cure(SCee.Attack*SC02Gain);
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

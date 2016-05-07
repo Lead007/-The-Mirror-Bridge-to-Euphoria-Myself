@@ -48,6 +48,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>加人模式上一个添加的角色</summary>
         private Character characterLastAdd = null;
 
+        /// <summary>是否处于符卡状态</summary>
+        private bool isSCing;
+
         /// <summary>构造函数</summary>
         public MainWindow()
         {
@@ -272,7 +275,7 @@ namespace JLQ_MBE_BattleSimulation
                     game.ResetPadButtons();
                     game.UpdateLabelBackground();
                     //如果同时已经攻击过则进入结束阶段
-                    if (!game.HasAttacked && game.EnemyCanAttack.Any()) return;
+                    if (!game.HasAttacked) return;
                     //Thread.Sleep(500);
                     EndSection();
                 }
@@ -288,7 +291,7 @@ namespace JLQ_MBE_BattleSimulation
                     //获取目标
                     var target = game[game.MousePoint];
                     //攻击
-                    currentCharacter.DoAttack(target);
+                    currentCharacter.HandleDoAttack(target);
                     game.HasAttacked = true;
                     game.EnemyCanAttack.Aggregate((Brush) Brushes.White,
                         (cu, c) => c.LabelDisplay.Background = Brushes.White);
@@ -334,6 +337,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>结束阶段</summary>
         private void EndSection()
         {
+            isSCing = false;
             game.CharactersMayDie.Clear();
             section = Section.End;
             currentCharacter.HandleEndSection();
@@ -376,9 +380,18 @@ namespace JLQ_MBE_BattleSimulation
 
         private void SC(int index)
         {
-            game.SC(index);
-            if (game.HandleIsLegalClick != null) return;
-            DoSC();
+            if (game.Section != Section.Round) return;
+            if (!isSCing)
+            {
+                isSCing = true;
+                game.SC(index);
+                if (game.HandleIsLegalClick != null) return;
+                DoSC();
+            }
+            else
+            {
+                isSCing = false;
+            }
             game.EndSC();
         }
 

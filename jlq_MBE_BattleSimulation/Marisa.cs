@@ -13,6 +13,7 @@ namespace JLQ_MBE_BattleSimulation
         public Marisa(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)
         {
+            //符卡01
             //显示将被攻击的角色
             enterPad[0] = (s, ev) =>
             {
@@ -43,7 +44,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = SC01IsTargetLegal;
-            game.HandleTarget = SCee => DoAttack(SCee, SCGain);
+            game.HandleTarget = SCee => HandleDoAttack(SCee, SCGain);
             AddPadButtonEvent(0);
         }
 

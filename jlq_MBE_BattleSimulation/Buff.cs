@@ -50,6 +50,7 @@ namespace JLQ_MBE_BattleSimulation
             this.Time = time;
             this.Name = name;
             this.game = game;
+            BuffAffect = Add;
             BuffCancels = Cancel;
         }
 
@@ -83,6 +84,14 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>重写object类的ToString方法</summary>
         /// <returns>转化为字符串的结果</returns>
         public override string ToString() => string.Format("{0} By:{1} 剩余时间：{2}", Name, Buffer.Data.Name, Time);
+
+        /// <summary>在buff列表中添加buff</summary>
+        /// <param name="buffee">buff承受者</param>
+        /// <param name="buffer">buff发出者</param>
+        public void Add(Character buffee, Character buffer)
+        {
+            buffee.BuffList.Add(this);
+        }
         /// <summary>从buff列表中删除buff</summary>
         /// <param name="buffee">buff承受者</param>
         /// <param name="buffer">buff发出者</param>

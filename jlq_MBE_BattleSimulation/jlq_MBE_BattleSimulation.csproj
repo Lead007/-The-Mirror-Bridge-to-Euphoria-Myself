@@ -59,13 +59,19 @@
     </ApplicationDefinition>
     <Compile Include="Alice.cs" />
     <Compile Include="AttackModel.cs" />
-    <Compile Include="BuffAddDamage.cs" />
+    <Compile Include="BuffCure.cs" />
+    <Compile Include="BuffGainAttack.cs" />
+    <Compile Include="BuffAddAttackRange.cs" />
+    <Compile Include="BuffGainBeDamaged.cs" />
     <Compile Include="BuffAddRumiaSkillNum.cs" />
     <Compile Include="BuffCannotMove.cs" />
-    <Compile Include="BuffDecreaseDefence.cs" />
+    <Compile Include="BuffAddDefence.cs" />
     <Compile Include="BuffExecuteImmediately.cs" />
     <Compile Include="BuffExecuteInSection.cs" />
+    <Compile Include="BuffGainDefence.cs" />
+    <Compile Include="BuffGainDoDamage.cs" />
     <Compile Include="BuffLimit.cs" />
+    <Compile Include="BuffMpGain.cs" />
     <Compile Include="BuffShield.cs" />
     <Compile Include="BuffSlowDown.cs" />
     <Compile Include="Chen.cs" />

@@ -10,24 +10,18 @@ using System.Windows.Media.Imaging;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Rumia : Character
+    /// <summary>Rumia</summary>
+	public class Rumia : Character
 	{
+        /// <summary>构造函数</summary>
+        /// <param name="id">ID</param>
+        /// <param name="position">位置</param>
+        /// <param name="group">阵营</param>
+        /// <param name="random">随机数对象</param>
+        /// <param name="game">游戏对象</param>
 		public Rumia(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
-		    //IsPreventing = new Image
-		    //{
-		    //    HorizontalAlignment = HorizontalAlignment.Right,
-		    //    VerticalAlignment = VerticalAlignment.Top,
-		    //    Margin = new Thickness(0, 2, 2, 0),
-		    //    Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Characters/Rumia/Shield.jpg")),
-      //          Visibility = Visibility.Hidden,
-		    //    Width = 15,
-		    //    Height = 15
-		    //};
-		    //IsPreventing.SetValue(Panel.ZIndexProperty, 6);
-      //      ListControls.Add(IsPreventing);
-      //      Set();
             //显示将被攻击的角色
 		    enterPad[0] = (s, ev) =>
 		    {
@@ -51,20 +45,11 @@ namespace JLQ_MBE_BattleSimulation
 	    private const int SC03Range = 2;
 	    private const float SC03Gain = 1.5f;
 
-	    //private Image IsPreventing;
+        /// <summary>天赋的标记数量</summary>
         public int SkillNum = 1;
-	    //private bool __doPrevent;
-	    //private bool _doPrevent
-	    //{
-     //       get { return __doPrevent; }
-	    //    set
-	    //    {
-	    //        __doPrevent = value;
-	    //        IsPreventing.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-	    //    }
-	    //}
 	    private List<Character> _skillBeSymboled = new List<Character>(); 
 
+        /// <summary>天赋</summary>
 	    public override void PreparingSection()
 	    {
 	        _skillBeSymboled.Clear();
@@ -73,21 +58,10 @@ namespace JLQ_MBE_BattleSimulation
 	        for (var i = 0; i < num; i++)
 	        {
 	            var c = cList.ElementAt(i);
-	            var buff = new BuffAddDamage(c, this, this.Interval, 0.5f, game);
-                c.BuffList.Add(buff);
+	            var buff = new BuffGainBeDamaged(c, this, this.Interval, 0.5f, game);
 	            buff.BuffTrigger();
 	        }
 	    }
-
-	    //public override void BeAttacked(int damage, Character attacker)
-	    //{
-	    //    if (_doPrevent)
-	    //    {
-	    //        _doPrevent = false;
-	    //        return;
-	    //    }
-	    //    base.BeAttacked(damage, attacker);
-	    //}
 
 	    //符卡
         /// <summary>符卡01</summary>
@@ -98,9 +72,8 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleSelf = () => Move(game.MousePoint);
             game.HandleTarget = SCee =>
             {
-                DoAttack(SCee, 0.7f);
-                var buff = new BuffShield(this, 3*Interval, game);
-                this.BuffList.Add(buff);
+                HandleDoAttack(SCee, 0.7f);
+                var buff = new BuffShield(this, this, 3*Interval, game);
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);
@@ -121,7 +94,6 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 var buff = new BuffAddRumiaSkillNum(this, game);
-                this.BuffList.Add(buff);
                 buff.BuffTrigger();
             };
         }
@@ -136,7 +108,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsTargetLegal =
                 (SCee, point) => IsInRangeAndEnemy(this.Position, SC03Range, SCee);
-            game.HandleTarget = SCee => DoAttack(SCee, SC03Gain);
+            game.HandleTarget = SCee => HandleDoAttack(SCee, SC03Gain);
             //TODO back mp
         }
         /// <summary>结束符卡03</summary>
@@ -145,11 +117,13 @@ namespace JLQ_MBE_BattleSimulation
             base.EndSC03();
         }
 
+        /// <summary>SC显示相关</summary>
 	    public override void SCShow()
 	    {
 	        AddSCButtonEvent(2);
 	    }
 
+        /// <summary>SC重置显示相关</summary>
 	    public override void ResetSCShow()
 	    {
 	        RemoveSCButtonEvent(2);

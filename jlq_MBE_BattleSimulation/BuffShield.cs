@@ -10,10 +10,15 @@ using System.Windows.Media.Imaging;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>获得持续一段时间的护盾，可抵消这段时间内受到的第一个伤害</summary>
-    class BuffShield : BuffExecuteImmediately
+    public class BuffShield : BuffExecuteImmediately
     {
-        public BuffShield(Character buffer, int time, Game game)
-            : base(buffer, buffer, time, string.Format("护盾：{0}时间单位内防止受到的第一次伤害", time), game)
+        /// <summary>构造函数</summary>
+        /// <param name="buffee">buff承受者</param>
+        /// <param name="buffer">buff发出者</param>
+        /// <param name="time">持续时间</param>
+        /// <param name="game">游戏对象</param>
+        public BuffShield(Character buffee, Character buffer, int time, Game game)
+            : base(buffee, buffer, time, string.Format("护盾：{0}时间单位内防止受到的第一次伤害", time), game)
         {
             _imageShield = new Image
             {
@@ -26,7 +31,7 @@ namespace JLQ_MBE_BattleSimulation
             };
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
             HasPrevented = true;
-            BuffAffect = (bee, ber) =>
+            BuffAffect += (bee, ber) =>
             {
                 bee.ListControls.Add(_imageShield);
                 bee.Set();
@@ -64,6 +69,8 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
+        /// <summary>重写ToString方法</summary>
+        /// <returns>字符串化结果</returns>
         public override string ToString()
             => string.Format("{0}({1}使用) By:{2} 剩余时间：{3}", Name, HasPrevented ? "未" : "已", Buffer.Data.Name, Time);
 
