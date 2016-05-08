@@ -172,9 +172,9 @@ namespace JLQ_MBE_BattleSimulation
         {
             var c = game[point];
             if (c == null || (!IsInRangeAndEnemy(this.Position, SC01Range, c))) return false;
-            pointTemp1 = c.Position.Y == this.Position.Y
-                ? new Point(c.Position.X + (c.Position.X > this.Position.X ? -1 : 1), this.Position.Y)
-                : new Point(c.Position.X, c.Position.Y + (c.Position.Y > this.Position.Y ? -1 : 1));
+            pointTemp1 = c.Y == this.Y
+                ? new Point(c.X + (c.X > this.X ? -1 : 1), c.Y)
+                : new Point(c.X, c.Y + (c.Y > this.Y ? -1 : 1));
             if (this.Position == pointTemp1 || game[pointTemp1] == null) return true;
             pointTemp1 = Game.DefaultPoint;
             return false;

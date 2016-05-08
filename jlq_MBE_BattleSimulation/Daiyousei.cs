@@ -153,9 +153,9 @@ namespace JLQ_MBE_BattleSimulation
                 pointTemp1 = point;
                 return true;
             }
-            if (point.Y == this.Position.Y)
+            if (point.Y == this.Y)
             {
-                if (point.X > this.Position.X)
+                if (point.X > this.X)
                 {
                     if (point.X == 8) return false;
                     pointTemp1 = new Point(point.X + 1, point.Y);
@@ -169,7 +169,7 @@ namespace JLQ_MBE_BattleSimulation
                 pointTemp1 = Game.DefaultPoint;
                 return false;
             }
-            if (point.Y > this.Position.Y)
+            if (point.Y > this.Y)
             {
                 if (point.Y == 8) return false;
                 pointTemp1 = new Point(point.X, point.Y + 1);

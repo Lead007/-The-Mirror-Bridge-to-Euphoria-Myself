@@ -163,6 +163,10 @@ namespace JLQ_MBE_BattleSimulation
         public bool IsDead => 0 >= Hp;
         /// <summary>名字</summary>
         public string Name => Data.Name;
+        /// <summary>Column坐标</summary>
+        public int X => (int) this.Position.X;
+        /// <summary>Row坐标</summary>
+        public int Y => (int) this.Position.Y;
 
         /// <summary>攻击结算的委托对象</summary>
         public DDoAttack HandleDoAttack { get; set; }
@@ -370,8 +374,8 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="relativeY">移动的行向相对坐标</param>
         public void Move(int relativeX, int relativeY)
         {
-            Move(new Point(GetValidPosition((int) this.Position.X + relativeX, MainWindow.Column),
-                GetValidPosition((int) this.Position.Y + relativeY, MainWindow.Row)));
+            Move(new Point(GetValidPosition((int) this.X + relativeX, MainWindow.Column),
+                GetValidPosition((int) this.Y + relativeY, MainWindow.Row)));
         }
 
         /// <summary>对此角色而言的敌人列表</summary>
@@ -479,8 +483,8 @@ namespace JLQ_MBE_BattleSimulation
         {
             foreach (var c in ListControls)
             {
-                c.SetValue(Grid.ColumnProperty, (int)Position.X);
-                c.SetValue(Grid.RowProperty, (int)Position.Y);
+                c.SetValue(Grid.ColumnProperty, this.X);
+                c.SetValue(Grid.RowProperty, this.Y);
             }
         }
 

@@ -8,6 +8,7 @@ using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>帕秋莉</summary>
 	class Patchouli : Character
 	{
 		public Patchouli(int id, Point position, Group group, Random random, Game game)

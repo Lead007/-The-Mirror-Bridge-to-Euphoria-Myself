@@ -8,6 +8,7 @@ using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>红美铃</summary>
 	class Meirin : Character
 	{
 		public Meirin(int id, Point position, Group group, Random random, Game game)

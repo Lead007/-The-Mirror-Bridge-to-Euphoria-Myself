@@ -223,6 +223,9 @@
         <member name="M:JLQ_MBE_BattleSimulation.Chen.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Cirno">
+            <summary>琪露诺</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Cirno.SC01">
             <summary>符卡01</summary>
         </member>
@@ -399,6 +402,9 @@
         <member name="F:JLQ_MBE_BattleSimulation.Section.End">
             <summary>结束阶段</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Flandre">
+            <summary>芙兰</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Flandre.SC01">
             <summary>符卡01</summary>
         </member>
@@ -470,6 +476,9 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Keine.EndSC03">
             <summary>结束符卡03</summary>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Koakuma">
+            <summary>小恶魔</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Koakuma.SC01">
             <summary>符卡01</summary>
@@ -579,6 +588,9 @@
         <member name="M:JLQ_MBE_BattleSimulation.Lyrica.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Marisa">
+            <summary>魔理沙</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Marisa.SC01">
             <summary>符卡01：星屑幻想，选定一块3*3的区域，对其内敌人造成1.0倍率的弹幕攻击。</summary>
         </member>
@@ -596,6 +608,9 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Marisa.EndSC03">
             <summary>结束符卡03</summary>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Meirin">
+            <summary>红美铃</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Meirin.SC01">
             <summary>符卡01</summary>
@@ -669,6 +684,9 @@
         <member name="M:JLQ_MBE_BattleSimulation.Mystia.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Patchouli">
+            <summary>帕秋莉</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Patchouli.SC01">
             <summary>符卡01</summary>
         </member>
@@ -704,6 +722,11 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Ran.EndSC03">
             <summary>结束符卡03</summary>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Reimiria">
+            <summary>
+            蕾米
+            </summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Reimiria.SC01">
             <summary>符卡01</summary>
@@ -811,7 +834,7 @@
             <summary>结束符卡03</summary>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.Rumia">
-            <summary>Rumia</summary>
+            <summary>露米娅</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Rumia.#ctor(System.Int32,System.Windows.Point,JLQ_MBE_BattleSimulation.Group,System.Random,JLQ_MBE_BattleSimulation.Game)">
             <summary>构造函数</summary>
@@ -850,6 +873,9 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Rumia.ResetSCShow">
             <summary>SC重置显示相关</summary>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Sakuya">
+            <summary>十六夜咲夜</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Sakuya.SC01">
             <summary>符卡01</summary>
@@ -1251,6 +1277,12 @@
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.Name">
             <summary>名字</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.X">
+            <summary>Column坐标</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.Y">
+            <summary>Row坐标</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandleDoAttack">
             <summary>攻击结算的委托对象</summary>

@@ -8,6 +8,7 @@ using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>十六夜咲夜</summary>
 	class Sakuya : Character
 	{
 		public Sakuya(int id, Point position, Group group, Random random, Game game)

@@ -32,9 +32,9 @@ namespace JLQ_MBE_BattleSimulation
             {
                 _imageShield.Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Buff/Shield.jpg"));
             }
-            catch (Exception ex)
+            catch
             {
-                _imageShield.Source = Calculate.BitmapToBitmapImage(Properties.Resources.Error);
+                _imageShield.Source = BitmapConverter.BitmapConverter.BitmapToBitmapImage(Properties.Resources.Error);
             }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
             HasPrevented = true;

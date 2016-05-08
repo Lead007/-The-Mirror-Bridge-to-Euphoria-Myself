@@ -4,18 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>
+    /// 蕾米
+    /// </summary>
 	class Reimiria : Character
 	{
 		public Reimiria(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡03
+            //显示将被攻击的角色
+            enterPad[2] = (s, ev) =>
+            {
+                if (Calculate.Distance(game.MousePoint, this) != 1) return;
+                game.DefaultButtonAndLabels();
+                Enemy.Where(c => SC03IsTargetLegal(c, game.MousePoint))
+                    .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+            };
+            SetDefaultLeavePadButtonDelegate(2);
+        }
 
-		}
+        private const float SC03Gain = 2.0f;
 
-        //TODO 天赋
 	    public override bool DoAttack(Character target, float times = 1)
 	    {
             //判断是否命中
@@ -63,13 +77,35 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            //TODO SC03
+            game.HandleIsLegalClick = point => Calculate.Distance(point, this) == 1;
+            game.HandleIsTargetLegal = (SCee, point) => SC03IsTargetLegal(SCee, point) && IsEnemy(SCee);
+            game.HandleTarget = SCee => HandleDoAttack(SCee, SC03Gain);
+            AddPadButtonEvent(2);
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
-
+            base.EndSC03();
+            RemovePadButtonEvent(2);
         }
+
+        private bool SC03IsTargetLegal(Character SCee, Point point)
+        {
+            if (point.X == this.X)
+            {
+                if (point.Y > this.Y)
+                {
+                    return SCee.X == this.X && SCee.Y > this.Y;
+                }
+                return SCee.X == this.X && SCee.Y < this.Y;
+            }
+            if (point.X > this.X)
+            {
+                return SCee.Y == this.Y && SCee.X > this.X;
+            }
+            return SCee.Y == this.Y && SCee.X < this.X;
+        }
+
 
     }
 }

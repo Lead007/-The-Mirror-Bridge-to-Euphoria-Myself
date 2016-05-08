@@ -470,7 +470,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             HandleAssignPointCanReach(CurrentCharacter.Position, CurrentCharacter.MoveAbility);
             Characters.Where(c => c.Position != CurrentCharacter.Position)
-                .Aggregate(false, (cu, c) => CanReachPoint[(int) c.Position.X, (int) c.Position.Y] = false);
+                .Aggregate(false, (cu, c) => CanReachPoint[c.X, c.Y] = false);
         }
 
         /// <summary>将所有可以到达的点在bool二维数组中置为true</summary>
