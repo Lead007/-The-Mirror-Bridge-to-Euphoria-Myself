@@ -18,7 +18,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="time">持续时间</param>
         /// <param name="game">游戏对象</param>
         public BuffShield(Character buffee, Character buffer, int time, Game game)
-            : base(buffee, buffer, time, string.Format("护盾：{0}时间单位内防止受到的第一次伤害", time), game)
+            : base(buffee, buffer, time, string.Format("护盾：{0}时间单位内防止受到的第一次伤害", time), true, game)
         {
             _imageShield = new Image
             {

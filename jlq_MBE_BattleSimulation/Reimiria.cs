@@ -8,11 +8,15 @@ using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
-    /// <summary>
-    /// 蕾米
-    /// </summary>
-	class Reimiria : Character
+    /// <summary>蕾米</summary>
+	class Reimiria : CharacterMayRepeatedlyDoDamage
 	{
+        /// <summary>构造函数</summary>
+        /// <param name="id">ID</param>
+        /// <param name="position">位置</param>
+        /// <param name="group">阵营</param>
+        /// <param name="random">随机数对象</param>
+        /// <param name="game">游戏对象</param>
 		public Reimiria(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
@@ -30,25 +34,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private const float SC03Gain = 2.0f;
 
-	    public override bool DoAttack(Character target, float times = 1)
-	    {
-            //判断是否命中
-            if (HandleIsHit(target)) return false;
-            //判断是否近战
-            var closeGain = HandleCloseGain(target);
-            //计算基础伤害
-	        double damage;
-	        if (target.Hp*10 < target.Data.MaxHp) damage = 9999;
-            else damage = /*基础伤害*/ Calculate.Damage(this.Attack, target.Defence) * /*近战补正*/closeGain * FloatDamage * times;
-            //判断是否暴击
-            var isCriticalHit = HandleIsCriticalHit(target);
-            if (isCriticalHit)
-            {
-                damage *= this.CriticalHitGain;
-            }
-            target.HandleBeAttacked((int)damage, this);
-            return isCriticalHit;
-        }
+        //TODO 天赋
 
 	    //符卡
         /// <summary>符卡01</summary>
@@ -79,7 +65,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = point => Calculate.Distance(point, this) == 1;
             game.HandleIsTargetLegal = (SCee, point) => SC03IsTargetLegal(SCee, point) && IsEnemy(SCee);
-            game.HandleTarget = SCee => HandleDoAttack(SCee, SC03Gain);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             AddPadButtonEvent(2);
         }
         /// <summary>结束符卡03</summary>

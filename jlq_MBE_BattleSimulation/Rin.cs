@@ -107,7 +107,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee);
             game.HandleSelf = () => Move(pointTemp1);
-            game.HandleTarget = SCee => HandleDoAttack(SCee, SC01DamageGain);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01DamageGain);
             AddPadButtonEvent(0);
         }
 
@@ -127,7 +127,7 @@ namespace JLQ_MBE_BattleSimulation
                 return c != null && IsInRangeAndEnemy(this.Position, SC02Range, c);
             };
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleTarget = SCee => HandleDoAttack(SCee, SC02DamageGain);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02DamageGain);
             enterButton[1](null, null);
 
         }
@@ -142,7 +142,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = point => true;
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC03Range, SCee);
-            game.HandleTarget = SCee => HandleDoAttack(SCee, SC03DamageGain);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03DamageGain);
             AddPadButtonEvent(2);
         }
         /// <summary>结束符卡03</summary>

@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="Alice.cs" />
     <Compile Include="AttackModel.cs" />
+    <Compile Include="BuffAddDamageTimes.cs" />
     <Compile Include="BuffCure.cs" />
     <Compile Include="BuffGainAttack.cs" />
     <Compile Include="BuffAddAttackRange.cs" />

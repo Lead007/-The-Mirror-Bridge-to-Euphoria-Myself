@@ -15,9 +15,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="time">buff持续时间</param>
         /// <param name="executeSection">buff执行的阶段</param>
         /// <param name="name">buff名称</param>
+        /// <param name="isPositive">是否为正面buff</param>
         /// <param name="game">游戏对象</param>
         protected BuffExecuteInSection(Character buffee, Character buffer, int time, Section executeSection, string name,
-            Game game) : base(buffee, buffer, time, name, game)
+            bool isPositive, Game game) : base(buffee, buffer, time, name, isPositive, game)
         {
             this.ExecuteSection = executeSection;
         }

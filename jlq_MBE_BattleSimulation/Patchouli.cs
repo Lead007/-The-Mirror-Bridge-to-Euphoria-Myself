@@ -36,10 +36,15 @@ namespace JLQ_MBE_BattleSimulation
             SetDefaultLeavePadButtonDelegate(2);
         }
 
+        private int _attackTimes = 0;
 	    private const int SC02Range = 5;
         private const int SC03Range = 5;
 
-        //TODO 天赋
+        public override bool DoingAttack(Character target, float times = 1)
+        {
+            if (_attackTimes != 2) _attackTimes++;
+            return base.DoingAttack(target, times);
+        }
 
         //符卡
         /// <summary>符卡01</summary>
@@ -63,7 +68,7 @@ namespace JLQ_MBE_BattleSimulation
                 (SCee, point) => IsEnemy(SCee) && Calculate.IsIn33(point, SCee.Position);
             game.HandleTarget = SCee =>
             {
-                HandleDoAttack(SCee, 1.3f);
+                HandleDoDanmakuAttack(SCee, 1.3f);
                 var buff1 = new BuffAddAttackRange(SCee, this, 3*this.Interval, -1, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffSlowDown(SCee, this, 3*this.Interval, 5, game);
@@ -86,7 +91,7 @@ namespace JLQ_MBE_BattleSimulation
                 (SCee, point) => IsEnemy(SCee) && Calculate.IsIn33(point, SCee.Position);
             game.HandleTarget = SCee =>
             {
-                HandleDoAttack(SCee, 1.7f);
+                HandleDoDanmakuAttack(SCee, 1.7f);
                 var buff1 = new BuffGainDefence(SCee, this, 3*this.Interval, -0.2f, game);
                 buff1.BuffTrigger();
                 

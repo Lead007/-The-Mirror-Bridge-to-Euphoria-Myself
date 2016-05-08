@@ -27,25 +27,13 @@ namespace JLQ_MBE_BattleSimulation
 
 	    private Character _cChange;
 	    private const int SC02Range = 2;
+        private const float SC02Gain = 0.2f;
 
-	    public override bool DoAttack(Character target, float times = 1)
+	    public override bool DoingAttack(Character target, float times = 1)
 	    {
-            //判断是否命中
-            if (HandleIsHit(target)) return false;
-            //判断是否近战
-            var closeGain = HandleCloseGain(target);
-            //计算基础伤害
-            var damage = /*基础伤害*/ Calculate.Damage(this.Attack, target.Defence) * /*近战补正*/closeGain * FloatDamage * times;
-            //判断是否暴击
-            var isCriticalHit = HandleIsCriticalHit(target);
-            if (isCriticalHit)
-            {
-                damage *= this.CriticalHitGain;
-            }
-            target.HandleBeAttacked((int)damage, this);
-	        var buff = new BuffSlowDown(target, this, 3*this.Interval, 2, game);
-	        buff.BuffTrigger();
-            return isCriticalHit;
+            var buff = new BuffSlowDown(target, this, 3 * this.Interval, 2, game);
+            buff.BuffTrigger();
+	        return base.DoingAttack(target, times);
         }
 
 	    //符卡
@@ -77,7 +65,7 @@ namespace JLQ_MBE_BattleSimulation
                 this.Move(_cChange.Position);
                 _cChange.Move(p);
             };
-            game.HandleTarget = SCee => HandleDoAttack(SCee, 0.2f);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02Gain);
             AddPadButtonEvent(1);
         }
 

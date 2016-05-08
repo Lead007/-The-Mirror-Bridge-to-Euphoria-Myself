@@ -16,7 +16,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="mp">恢复的灵力值</param>
         /// <param name="game">游戏对象</param>
         public BuffMpGain(Character buffee, Character buffer, int time, int mp, Game game)
-            : base(buffee, buffer, time, Section.Preparing, string.Format("回蓝：每回合准备阶段恢复{0}点灵力", mp), game)
+            : base(buffee, buffer, time, Section.Preparing, string.Format("回蓝：每回合准备阶段恢复{0}点灵力", mp), true, game)
         {
             BuffAffect += (bee, ber) => bee.MpGain(mp);
         }

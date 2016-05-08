@@ -73,7 +73,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
             game.HandleIsTargetLegal = SC01IsTargetLegal;
-            game.HandleTarget = SCee => HandleDoAttack(SCee, SCGain);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SCGain);
             AddPadButtonEvent(0);
         }
 
@@ -89,7 +89,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = point => Calculate.Distance(point, this) == 1;
             game.HandleIsTargetLegal = (SCee, point) => SC02IsTargetLegal(SCee, point) && IsEnemy(SCee);
-            game.HandleTarget = SCee => HandleDoAttack(SCee, (float) (SC02Gain*SCGain));
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, (float) (SC02Gain*SCGain));
             AddPadButtonEvent(1);
         }
 

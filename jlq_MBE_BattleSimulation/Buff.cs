@@ -24,6 +24,8 @@ namespace JLQ_MBE_BattleSimulation
         public int Time { get; protected set; }
         /// <summary>buff名称</summary>
         public readonly string Name;
+        /// <summary>是否为正面buff</summary>
+        public readonly bool IsPositive;
 
         /// <summary>buff效果的委托对象</summary>
         protected DBuffAffect BuffAffect;
@@ -42,13 +44,15 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="buffer">buff发出者</param>
         /// <param name="time">buff持续时间</param>
         /// <param name="name">buff名称</param>
+        /// <param name="isPositive">是否为正面buff</param>
         /// <param name="game">游戏对象</param>
-        protected Buff(Character buffee, Character buffer, int time, string name, Game game)
+        protected Buff(Character buffee, Character buffer, int time, string name, bool isPositive, Game game)
         {
             this.Buffer = buffer;
             this.Buffee = buffee;
             this.Time = time;
             this.Name = name;
+            this.IsPositive = isPositive;
             this.game = game;
             BuffAffect = Add;
             BuffCancels = Cancel;

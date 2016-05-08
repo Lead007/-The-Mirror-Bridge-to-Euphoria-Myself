@@ -112,24 +112,26 @@
         <member name="T:JLQ_MBE_BattleSimulation.BuffExecuteImmediately">
             <summary>获得时立即执行BuffAffect委托的Buff</summary>
         </member>
-        <member name="M:JLQ_MBE_BattleSimulation.BuffExecuteImmediately.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.String,JLQ_MBE_BattleSimulation.Game)">
+        <member name="M:JLQ_MBE_BattleSimulation.BuffExecuteImmediately.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.String,System.Boolean,JLQ_MBE_BattleSimulation.Game)">
             <summary>构造函数</summary>
             <param name="buffee">buff承受者</param>
             <param name="buffer">buff发出者</param>
             <param name="time">buff持续时间</param>
             <param name="name">buff名称</param>
+            <param name="isPositive">是否为正面buff</param>
             <param name="game">游戏对象</param>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffExecuteInSection">
             <summary>在每回合特定阶段执行的buff</summary>
         </member>
-        <member name="M:JLQ_MBE_BattleSimulation.BuffExecuteInSection.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Section,System.String,JLQ_MBE_BattleSimulation.Game)">
+        <member name="M:JLQ_MBE_BattleSimulation.BuffExecuteInSection.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Section,System.String,System.Boolean,JLQ_MBE_BattleSimulation.Game)">
             <summary>构造函数</summary>
             <param name="buffee">buff承受者</param>
             <param name="buffer">buff发出者</param>
             <param name="time">buff持续时间</param>
             <param name="executeSection">buff执行的阶段</param>
             <param name="name">buff名称</param>
+            <param name="isPositive">是否为正面buff</param>
             <param name="game">游戏对象</param>
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.BuffExecuteInSection.ExecuteSection">
@@ -724,9 +726,15 @@
             <summary>结束符卡03</summary>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.Reimiria">
-            <summary>
-            蕾米
-            </summary>
+            <summary>蕾米</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Reimiria.#ctor(System.Int32,System.Windows.Point,JLQ_MBE_BattleSimulation.Group,System.Random,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="id">ID</param>
+            <param name="position">位置</param>
+            <param name="group">阵营</param>
+            <param name="random">随机数对象</param>
+            <param name="game">游戏对象</param>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Reimiria.SC01">
             <summary>符卡01</summary>
@@ -1041,6 +1049,9 @@
         <member name="F:JLQ_MBE_BattleSimulation.Buff.Name">
             <summary>buff名称</summary>
         </member>
+        <member name="F:JLQ_MBE_BattleSimulation.Buff.IsPositive">
+            <summary>是否为正面buff</summary>
+        </member>
         <member name="F:JLQ_MBE_BattleSimulation.Buff.BuffAffect">
             <summary>buff效果的委托对象</summary>
         </member>
@@ -1056,12 +1067,13 @@
         <member name="F:JLQ_MBE_BattleSimulation.Buff.Buffee">
             <summary>buff承受者</summary>
         </member>
-        <member name="M:JLQ_MBE_BattleSimulation.Buff.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.String,JLQ_MBE_BattleSimulation.Game)">
+        <member name="M:JLQ_MBE_BattleSimulation.Buff.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.String,System.Boolean,JLQ_MBE_BattleSimulation.Game)">
             <summary>Buff类的构造函数</summary>
             <param name="buffee">buff承受者</param>
             <param name="buffer">buff发出者</param>
             <param name="time">buff持续时间</param>
             <param name="name">buff名称</param>
+            <param name="isPositive">是否为正面buff</param>
             <param name="game">游戏对象</param>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Buff.BuffTrigger">
@@ -1287,6 +1299,12 @@
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandleDoAttack">
             <summary>攻击结算的委托对象</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleDoDanmakuAttack">
+            <summary>弹幕攻击结算的委托对象</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Character.HandleDoingAttack">
+            <summary>命中后攻击结算的委托对象</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Character.HandleBeAttacked">
             <summary>被攻击结算的委托对象</summary>
         </member>
@@ -1343,6 +1361,18 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Character.DoAttack(JLQ_MBE_BattleSimulation.Character,System.Single)">
             <summary>攻击</summary>
+            <param name="target">攻击目标</param>
+            <param name="times">伤害值增益</param>
+            <returns>是否暴击</returns>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Character.DoDanmakuAttack(JLQ_MBE_BattleSimulation.Character,System.Single)">
+            <summary>弹幕攻击</summary>
+            <param name="target">攻击目标</param>
+            <param name="times">伤害值增益</param>
+            <returns>是否暴击</returns>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Character.DoingAttack(JLQ_MBE_BattleSimulation.Character,System.Single)">
+            <summary>命中后的伤害结算</summary>
             <param name="target">攻击目标</param>
             <param name="times">伤害值增益</param>
             <returns>是否暴击</returns>
@@ -1544,12 +1574,26 @@
             <summary>移动无视敌方角色的碰撞箱的角色</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.CharacterMovingIgnoreEnemy.#ctor(System.Int32,System.Windows.Point,JLQ_MBE_BattleSimulation.Group,System.Random,JLQ_MBE_BattleSimulation.Game)">
-            <summary>CharacterMovingIgnoreEnemy类的构造函数</summary>
+            <summary>构造函数</summary>
             <param name="id">ID</param>
             <param name="position">角色位置</param>
             <param name="group">角色阵营</param>
             <param name="random">随机数对象</param>
             <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage">
+            <summary>可能有多次普通的角色</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage.#ctor(System.Int32,System.Windows.Point,JLQ_MBE_BattleSimulation.Group,System.Random,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="id">ID</param>
+            <param name="position">角色位置</param>
+            <param name="group">角色阵营</param>
+            <param name="random">随机数对象</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage.DamageTimes">
+            <summary>普攻次数</summary>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.Game">
             <summary>游戏类</summary>

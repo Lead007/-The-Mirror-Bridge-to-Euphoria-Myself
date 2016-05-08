@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>琪露诺</summary>
-	class Cirno : Character
+	class Cirno : CharacterMayRepeatedlyDoDamage
 	{
 		public Cirno(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
@@ -43,7 +43,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                HandleDoAttack(SCee, 0.7f);
+                HandleDoDanmakuAttack(SCee, 0.7f);
                 var buff = new BuffAddDefence(SCee, this, this.Interval, -20, game);
                 buff.BuffTrigger();
             };
@@ -75,7 +75,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                HandleDoAttack(SCee, 1.3f);
+                HandleDoDanmakuAttack(SCee, 1.3f);
                 var buff1 = new BuffGainBeDamaged(SCee, this, 3*this.Interval, 0.1f, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffCannotMove(SCee, this, 3*this.Interval, game);

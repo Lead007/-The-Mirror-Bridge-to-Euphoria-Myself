@@ -18,7 +18,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="handle">判断点是否为墙的委托</param>
         /// <param name="game">游戏对象</param>
         public BuffLimit(Character buffee, Character buffer, int time, Point origin, DIsPointWall handle, Game game)
-            : base(buffee, buffer, time, "监禁：被限制在区域内", game)
+            : base(buffee, buffer, time, "监禁：被限制在区域内", false, game)
         {
             this._origin = origin;
             this._handleIsPointWall = handle;

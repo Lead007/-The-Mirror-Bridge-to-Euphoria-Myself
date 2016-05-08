@@ -49,7 +49,7 @@ namespace JLQ_MBE_BattleSimulation
                 var buff = new BuffShield(this, this, 3*this.Interval, game);
                 buff.BuffTrigger();
             };
-            game.HandleTarget = SCee => HandleDoAttack(SCee, 1.3f);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.3f);
             //显示可选择的敌人
             game.DefaultButtonAndLabels();
             game.UpdateLabelBackground();

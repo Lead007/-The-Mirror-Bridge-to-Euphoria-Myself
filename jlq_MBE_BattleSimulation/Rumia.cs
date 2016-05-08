@@ -72,7 +72,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleSelf = () => Move(game.MousePoint);
             game.HandleTarget = SCee =>
             {
-                HandleDoAttack(SCee, 0.7f);
+                HandleDoDanmakuAttack(SCee, 0.7f);
                 var buff = new BuffShield(this, this, 3*Interval, game);
                 buff.BuffTrigger();
             };
@@ -108,7 +108,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsTargetLegal =
                 (SCee, point) => IsInRangeAndEnemy(this.Position, SC03Range, SCee);
-            game.HandleTarget = SCee => HandleDoAttack(SCee, SC03Gain);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             //TODO back mp
         }
         /// <summary>结束符卡03</summary>

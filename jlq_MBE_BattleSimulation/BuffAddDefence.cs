@@ -19,7 +19,7 @@ namespace JLQ_MBE_BattleSimulation
         public BuffAddDefence(Character buffee, Character buffer, int time, int defenceAdd, Game game)
             : base(buffee, buffer, time,
                 defenceAdd >= 0 ? string.Format("坚固：防御增加{0}", defenceAdd) : string.Format("破碎：防御降低{0}", -defenceAdd),
-                game)
+                defenceAdd > 0, game)
         {
             BuffAffect += (bee, ber) => bee._defenceAdd += defenceAdd;
             BuffCancels += (bee, ber) => bee._defenceAdd -= defenceAdd;

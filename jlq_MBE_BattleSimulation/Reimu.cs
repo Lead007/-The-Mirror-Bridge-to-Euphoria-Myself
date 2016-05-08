@@ -62,7 +62,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC01()
         {
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(this.Position, SC01Range, SCee);
-            game.HandleTarget = t => HandleDoAttack(t);
+            game.HandleTarget = t => HandleDoDanmakuAttack(t);
         }
 
         /// <summary>结束符卡01</summary>

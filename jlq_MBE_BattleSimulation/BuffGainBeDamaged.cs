@@ -20,7 +20,7 @@ namespace JLQ_MBE_BattleSimulation
             : base(buffee, buffer, time,
                 damageGain > 0
                     ? string.Format("虚弱：受伤增加{0}%", (int) (damageGain*100))
-                    : string.Format("抵抗：受伤降低{0}%", (int) (-damageGain*100)), game)
+                    : string.Format("抵抗：受伤降低{0}%", (int) (-damageGain*100)), damageGain <= 0, game)
         {
             BuffAffect += (bee, ber) =>
             {

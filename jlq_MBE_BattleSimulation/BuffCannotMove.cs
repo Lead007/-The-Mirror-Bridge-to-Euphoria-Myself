@@ -15,7 +15,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="time">持续时间</param>
         /// <param name="game">游戏对象</param>
         public BuffCannotMove(Character buffee, Character buffer, int time, Game game)
-            : base(buffee, buffer, time, "冰冻：无法移动", game)
+            : base(buffee, buffer, time, "冰冻：无法移动", false, game)
         {
             BuffAffect += (bee, ber) =>
             {

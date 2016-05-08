@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Yukari : Character
+	class Yukari : CharacterMovingIgnoreEnemy
 	{
 		public Yukari(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

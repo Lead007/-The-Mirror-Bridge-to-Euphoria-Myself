@@ -107,7 +107,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = SC02IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleTarget = SCee => HandleDoAttack(SCee, 1.5f);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.5f);
             AddPadButtonEvent(1);
         }
 

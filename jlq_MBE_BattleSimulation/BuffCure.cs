@@ -16,7 +16,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="hp">治疗的体力值</param>
         /// <param name="game">游戏对象</param>
         public BuffCure(Character buffee, Character buffer, int time, int hp, Game game)
-            : base(buffee, buffer, time, Section.Preparing, string.Format("治疗：每回合准备阶段治疗{0}点体力", hp), game)
+            : base(buffee, buffer, time, Section.Preparing, string.Format("治疗：每回合准备阶段治疗{0}点体力", hp), true, game)
         {
             BuffAffect += (bee, ber) => bee.Cure(hp);
         }

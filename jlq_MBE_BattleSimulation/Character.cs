@@ -170,6 +170,10 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>攻击结算的委托对象</summary>
         public DDoAttack HandleDoAttack { get; set; }
+        /// <summary>弹幕攻击结算的委托对象</summary>
+        public DDoAttack HandleDoDanmakuAttack { get; set; }
+        /// <summary>命中后攻击结算的委托对象</summary>
+        public DDoAttack HandleDoingAttack { get; set; }
         /// <summary>被攻击结算的委托对象</summary>
         public DBeAttacked HandleBeAttacked { get; set; }
         /// <summary>是否命中的委托对象</summary>
@@ -282,6 +286,8 @@ namespace JLQ_MBE_BattleSimulation
             this.game = game;
             //初始化委托
             HandleDoAttack = DoAttack;
+            HandleDoDanmakuAttack = DoDanmakuAttack;
+            HandleDoingAttack = DoingAttack;
             HandleBeAttacked = BeAttacked;
             HandleIsHit = IsHit;
             HandleCloseGain = t => 1.0f;
@@ -322,10 +328,31 @@ namespace JLQ_MBE_BattleSimulation
         {
             //判断是否命中
             if (HandleIsHit(target)) return false;
+            //计算近战补正
+            var closeGain = HandleCloseGain(target);
+            //造成伤害
+            return DoingAttack(target, times*closeGain);
+        }
+
+        /// <summary>弹幕攻击</summary>
+        /// <param name="target">攻击目标</param>
+        /// <param name="times">伤害值增益</param>
+        /// <returns>是否暴击</returns>
+        public virtual bool DoDanmakuAttack(Character target, float times = 1.0f)
+        {
+            return !HandleIsHit(target) && DoingAttack(target, times);
+        }
+
+        /// <summary>命中后的伤害结算</summary>
+        /// <param name="target">攻击目标</param>
+        /// <param name="times">伤害值增益</param>
+        /// <returns>是否暴击</returns>
+        public virtual bool DoingAttack(Character target, float times = 1.0f)
+        {
             //判断是否近战
             var closeGain = HandleCloseGain(target);
             //计算基础伤害
-            var damage = /*基础伤害*/ Calculate.Damage(this.Attack, target.Defence)* /*近战补正*/closeGain*FloatDamage*times;
+            var damage = /*基础伤害*/ Calculate.Damage(this.Attack, target.Defence) * /*近战补正*/closeGain * FloatDamage * times;
             //判断是否暴击
             var isCriticalHit = HandleIsCriticalHit(target);
             if (isCriticalHit)

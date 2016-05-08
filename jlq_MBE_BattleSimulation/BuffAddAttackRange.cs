@@ -19,7 +19,7 @@ namespace JLQ_MBE_BattleSimulation
             : base(buffee, buffer, time,
                 attackRangeAdd >= 0
                     ? string.Format("远程：攻击范围增加{0}", attackRangeAdd)
-                    : string.Format("进程：攻击范围降低{0}", -attackRangeAdd), game)
+                    : string.Format("进程：攻击范围降低{0}", -attackRangeAdd), attackRangeAdd > 0, game)
         {
             BuffAffect += (bee, ber) => bee._attackRangeAdd += attackRangeAdd;
             BuffCancels += (bee, ber) => bee._attackRangeAdd -= attackRangeAdd;
