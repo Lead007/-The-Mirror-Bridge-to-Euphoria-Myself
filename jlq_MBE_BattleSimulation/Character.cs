@@ -352,7 +352,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns></returns>
         public string Tip(Character target)
         {
-            return string.Format("命中几率: {0}%\n平均伤害值: {1}",
+            return string.Format("命中几率: {0}%\n平均伤害值: {1}\n<按下Shift查看详细信息>",
                 Calculate.Floor(Calculate.HitRate(this, target)*100),
                 Calculate.Damage(this.Attack, target.Defence));
         }

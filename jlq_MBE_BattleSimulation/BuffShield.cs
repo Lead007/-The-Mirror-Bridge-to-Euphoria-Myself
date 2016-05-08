@@ -25,10 +25,17 @@ namespace JLQ_MBE_BattleSimulation
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(0, 2, 2, 0),
-                Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Buff/Shield.jpg")),
                 Width = 15,
                 Height = 15
             };
+            try
+            {
+                _imageShield.Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Buff/Shield.jpg"));
+            }
+            catch (Exception ex)
+            {
+                _imageShield.Source = Calculate.BitmapToBitmapImage(Properties.Resources.Error);
+            }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
             HasPrevented = true;
             BuffAffect += (bee, ber) =>

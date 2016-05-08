@@ -1,11 +1,14 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Automation.Peers;
+using System.Windows.Media.Imaging;
+using Point = System.Windows.Point;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -117,6 +120,27 @@ namespace JLQ_MBE_BattleSimulation
         public static bool IsIn33(Point origin, Point point)
         {
             return Math.Abs(origin.X - point.X) <= 1 && Math.Abs(origin.Y - point.Y) <= 1;
+        }
+
+        public static BitmapImage BitmapToBitmapImage(Bitmap bitmap)
+        {
+            Bitmap bitmapSource = new Bitmap(bitmap.Width, bitmap.Height);
+            int i, j;
+            for (i = 0; i < bitmap.Width; i++)
+                for (j = 0; j < bitmap.Height; j++)
+                {
+                    Color pixelColor = bitmap.GetPixel(i, j);
+                    Color newColor = Color.FromArgb(pixelColor.R, pixelColor.G, pixelColor.B);
+                    bitmapSource.SetPixel(i, j, newColor);
+                }
+            MemoryStream ms = new MemoryStream();
+            bitmapSource.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = new MemoryStream(ms.ToArray());
+            bitmapImage.EndInit();
+
+            return bitmapImage;
         }
 
     }

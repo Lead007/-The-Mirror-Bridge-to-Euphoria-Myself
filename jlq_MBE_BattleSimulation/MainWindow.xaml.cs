@@ -275,7 +275,7 @@ namespace JLQ_MBE_BattleSimulation
                     game.ResetPadButtons();
                     game.UpdateLabelBackground();
                     //如果同时已经攻击过则进入结束阶段
-                    if (!game.HasAttacked) return;
+                    if (!game.HasAttacked || !game.HasMoved) return;
                     //Thread.Sleep(500);
                     EndSection();
                 }
@@ -302,7 +302,7 @@ namespace JLQ_MBE_BattleSimulation
                     game.PaintButton();
 
                     //如果同时已经移动过则进入结束阶段
-                    if (!game.HasMoved) return;
+                    if (!game.HasAttacked || !game.HasMoved) return;
                     //Thread.Sleep(500);
                     EndSection();
                 }
