@@ -9,7 +9,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>移动无视敌方角色的碰撞箱的角色</summary>
-    abstract class CharacterMovingIgnoreEnemy:Character
+    public abstract class CharacterMovingIgnoreEnemy:Character
     {
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>
@@ -23,11 +23,12 @@ namespace JLQ_MBE_BattleSimulation
 
         }
 
+        /// <summary>重写基类的阻挡的敌人位置，返回一个空列表</summary>
         public override IEnumerable<Point> EnemyBlock => new List<Point>();
     }
 
     /// <summary>可能有多次普通的角色</summary>
-    abstract class CharacterMayRepeatedlyDoDamage : Character
+    public abstract class CharacterMayRepeatedlyDoDamage : Character
     {
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>
@@ -44,6 +45,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>普攻次数</summary>
         public int DamageTimes { get; set; } = 1;
 
+        /// <summary>重写基类的造成伤害方法，改为造成多次伤害</summary>
+        /// <param name="target">攻击目标</param>
+        /// <param name="times">伤害值增益</param>
+        /// <returns>是否存在暴击</returns>
         public override bool DoAttack(Character target, float times = 1)
         {
             var temp = false;

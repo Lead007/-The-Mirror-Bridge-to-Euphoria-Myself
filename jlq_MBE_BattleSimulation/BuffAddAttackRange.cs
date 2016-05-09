@@ -13,7 +13,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="buffee">buff承受者</param>
         /// <param name="buffer">buff发出者</param>
         /// <param name="time">持续时间</param>
-        /// <param name="attackRangeAdd">增加的攻击值，负数则为降低</param>
+        /// <param name="attackRangeAdd">增加的攻击范围值，负数则为降低</param>
         /// <param name="game">游戏对象</param>
         public BuffAddAttackRange(Character buffee, Character buffer, int time, int attackRangeAdd, Game game)
             : base(buffee, buffer, time,

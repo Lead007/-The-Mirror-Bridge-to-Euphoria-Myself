@@ -63,7 +63,10 @@
     <Compile Include="Alice.cs" />
     <Compile Include="AttackModel.cs" />
     <Compile Include="BuffAddDamageTimes.cs" />
+    <Compile Include="BuffAddMoveAbility.cs" />
+    <Compile Include="BuffBlooding.cs" />
     <Compile Include="BuffCure.cs" />
+    <Compile Include="BuffDecreaseMoveAbilityWhenHit.cs" />
     <Compile Include="BuffGainAttack.cs" />
     <Compile Include="BuffAddAttackRange.cs" />
     <Compile Include="BuffGainBeDamaged.cs" />

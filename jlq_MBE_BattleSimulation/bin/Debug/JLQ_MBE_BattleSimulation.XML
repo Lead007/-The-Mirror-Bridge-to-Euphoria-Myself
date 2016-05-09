@@ -36,6 +36,37 @@
             <param name="attacker">攻击者</param>
             <param name="target">攻击目标</param>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffAddDamageTimes">
+            <summary>增加普通次数的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffAddDamageTimes.#ctor(JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="damageTimesAdd">增加的普攻次数</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffAddMoveAbility">
+            <summary>增加机动的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffAddMoveAbility.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="moveAbilityAdd">增加的攻击值，负数则为降低</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffBlooding">
+            <summary>持续流血的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffBlooding.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="game">游戏对象</param>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffCure">
             <summary>每回合治疗一定体力值</summary>
         </member>
@@ -45,6 +76,17 @@
             <param name="buffer">buff发出者</param>
             <param name="time">持续时间</param>
             <param name="hp">治疗的体力值</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffDecreaseMoveAbilityWhenHit">
+            <summary>Cirno的SC02Buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffDecreaseMoveAbilityWhenHit.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="moveAbilityDecrease">机动减少量</param>
             <param name="game">游戏对象</param>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffGainAttack">
@@ -66,7 +108,7 @@
             <param name="buffee">buff承受者</param>
             <param name="buffer">buff发出者</param>
             <param name="time">持续时间</param>
-            <param name="attackRangeAdd">增加的攻击值，负数则为降低</param>
+            <param name="attackRangeAdd">增加的攻击范围值，负数则为降低</param>
             <param name="game">游戏对象</param>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffGainBeDamaged">
@@ -1581,6 +1623,9 @@
             <param name="random">随机数对象</param>
             <param name="game">游戏对象</param>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.CharacterMovingIgnoreEnemy.EnemyBlock">
+            <summary>重写基类的阻挡的敌人位置，返回一个空列表</summary>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage">
             <summary>可能有多次普通的角色</summary>
         </member>
@@ -1594,6 +1639,12 @@
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage.DamageTimes">
             <summary>普攻次数</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.CharacterMayRepeatedlyDoDamage.DoAttack(JLQ_MBE_BattleSimulation.Character,System.Single)">
+            <summary>重写基类的造成伤害方法，改为造成多次伤害</summary>
+            <param name="target">攻击目标</param>
+            <param name="times">伤害值增益</param>
+            <returns>是否存在暴击</returns>
         </member>
         <member name="T:JLQ_MBE_BattleSimulation.Game">
             <summary>游戏类</summary>
