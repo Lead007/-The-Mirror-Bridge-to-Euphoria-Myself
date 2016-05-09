@@ -9,7 +9,8 @@ using System.Windows.Media;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>大妖精</summary>
-	class Daiyousei : Character
+    [Serializable]
+    class Daiyousei : Character
 	{
 		public Daiyousei(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

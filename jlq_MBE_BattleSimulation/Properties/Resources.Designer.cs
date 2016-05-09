@@ -61,12 +61,39 @@ namespace JLQ_MBE_BattleSimulation.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Data.cdt 的本地化字符串。
+        /// </summary>
+        internal static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Bitmap Error {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Group.cgp 的本地化字符串。
+        /// </summary>
+        internal static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Position.pos 的本地化字符串。
+        /// </summary>
+        internal static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
             }
         }
     }

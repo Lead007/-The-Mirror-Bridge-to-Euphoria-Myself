@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -16,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -378,6 +380,26 @@ namespace JLQ_MBE_BattleSimulation
             MessageBox.Show("生成成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        /// <summary>清除所有角色</summary>
+        private void ClearCharacters()
+        {
+            IEnumerable<FrameworkElement> controls = new List<FrameworkElement>();
+            controls = game.Characters.Select(c => c.ListControls).Aggregate(controls, (current, l) => current.Concat(l));
+            foreach (var c in controls)
+            {
+                game.GridPad.Children.Remove(c);
+            }
+            game.Characters.Clear();
+            characterLastAdd = null;
+            menuBackout.IsEnabled = false;
+            ID = 1;
+            game.LabelID.Content = "1";
+            foreach (var l in game.LabelsGroup)
+            {
+                l.Content = "0";
+            }
+        }
+
         private void SC(int index)
         {
             if (game.Section != Section.Round) return;
@@ -462,20 +484,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="e"></param>
         private void menuClear_Click(object sender, RoutedEventArgs e)
         {
-            IEnumerable<FrameworkElement> controls = new List<FrameworkElement>();
-            controls = game.Characters.Select(c => c.ListControls).Aggregate(controls, (current, l) => current.Concat(l));
-            foreach (var c in controls)
+            var result = MessageBox.Show("确认清除所有角色？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK)
             {
-                game.GridPad.Children.Remove(c);
-            }
-            game.Characters.Clear();
-            characterLastAdd = null;
-            menuBackout.IsEnabled = false;
-            ID = 1;
-            game.LabelID.Content = "1";
-            foreach (var l in game.LabelsGroup)
-            {
-                l.Content = "0";
+                ClearCharacters();
             }
         }
 
@@ -518,6 +530,8 @@ namespace JLQ_MBE_BattleSimulation
             buttonGenerateFriend.IsEnabled = false;
             buttonGenerateEnemy.IsEnabled = false;
             buttonGenerateMiddle.IsEnabled = false;
+            buttonSave.IsEnabled = false;
+            buttonLoad.IsEnabled = false;
             game.ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = true);
             labelShow.Foreground = Brushes.Black;
             game.TurnToBattle();
@@ -598,6 +612,80 @@ namespace JLQ_MBE_BattleSimulation
         private void gridGameInformation_Loaded(object sender, RoutedEventArgs e)
         {
             gridGameInformation.Children.Add(game.LabelID);
+        }
+
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (!game.Characters.Any())
+            {
+                Game.ErrorMessageBox("还未添加角色！");
+                return;
+            }
+            var pathChoosing = new WindowChoosePath(game);
+            pathChoosing.ShowDialog();
+        }
+
+        private void buttonLoad_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.OpenFileDialog
+            {
+                InitialDirectory = game.LoadPath,
+                Title = "选择棋盘文件(*.pad)",
+                Multiselect = false,
+            };
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+            var result = MessageBox.Show("将清空棋盘，确定？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (result != MessageBoxResult.OK) return;
+            ClearCharacters();
+            var index = dialog.FileName.LastIndexOf('\\');
+            game.LoadPath = dialog.FileName.Substring(0, index + 1);
+            var p = new Point(0, 0);
+            const Group g = Group.Friend;
+            var d = Calculate.CharacterDataList.First(cd => cd.Name == "Reimu");
+            var formatter = new BinaryFormatter();
+            for (var i = 1; Directory.Exists(game.LoadPath + i); i++)
+            {
+                var pathc = game.LoadPath + i + "\\";
+                Point pp;
+                if (File.Exists(pathc + Properties.Resources.Position))
+                {
+                    using (Stream reader = File.OpenRead(pathc + Properties.Resources.Position))
+                    {
+                        pp = (Point) formatter.Deserialize(reader);
+                    }
+                }
+                else
+                {
+                    pp = p;
+                    p = p.Y == MainWindow.Row - 1 ? new Point(p.X + 1, 0) : new Point(p.X, p.Y + 1);
+                }
+                Group gg;
+                if (File.Exists(pathc + Properties.Resources.Group))
+                {
+                    using (Stream reader = File.OpenRead(pathc + Properties.Resources.Group))
+                    {
+                        gg = (Group)formatter.Deserialize(reader);
+                    }
+                }
+                else
+                {
+                    gg = g;
+                }
+                CharacterData cd;
+                if (File.Exists(pathc + Properties.Resources.Data))
+                {
+                    using (Stream reader = File.OpenRead(pathc + Properties.Resources.Data))
+                    {
+                        cd = (CharacterData)formatter.Deserialize(reader);
+                    }
+                }
+                else
+                {
+                    cd = d;
+                }
+                AddCharacter(pp, gg, cd.Display);
+            }
+            MessageBox.Show("载入成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

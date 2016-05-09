@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>琪露诺</summary>
-	class Cirno : CharacterMayRepeatedlyDoDamage
+    class Cirno : CharacterMayRepeatedlyDoDamage
 	{
 		public Cirno(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

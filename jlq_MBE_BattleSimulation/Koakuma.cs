@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>小恶魔</summary>
-	class Koakuma : Character
+    class Koakuma : Character
 	{
 		public Koakuma(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

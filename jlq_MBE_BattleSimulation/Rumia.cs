@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>露米娅</summary>
-	public class Rumia : Character
+    public class Rumia : Character
 	{
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Letty : Character
+    class Letty : Character
 	{
 		public Letty(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

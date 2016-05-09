@@ -7,7 +7,8 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Eirin : Character
+    [Serializable]
+    class Eirin : Character
 	{
 		public Eirin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

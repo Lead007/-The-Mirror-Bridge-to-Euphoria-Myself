@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>芙兰</summary>
-	class Flandre : Character
+    class Flandre : Character
 	{
 		public Flandre(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

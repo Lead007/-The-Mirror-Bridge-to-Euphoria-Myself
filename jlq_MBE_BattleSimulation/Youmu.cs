@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Youmu : Character
+    class Youmu : Character
 	{
 		public Youmu(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

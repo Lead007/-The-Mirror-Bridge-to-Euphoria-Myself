@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>蕾米</summary>
-	class Reimiria : CharacterMayRepeatedlyDoDamage
+    class Reimiria : CharacterMayRepeatedlyDoDamage
 	{
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>

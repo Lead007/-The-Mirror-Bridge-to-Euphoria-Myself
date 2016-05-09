@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Kaguya : Character
+    class Kaguya : Character
 	{
 		public Kaguya(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

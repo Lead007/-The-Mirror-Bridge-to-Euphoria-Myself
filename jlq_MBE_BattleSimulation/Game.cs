@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -90,6 +91,13 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>可能死亡的角色列表</summary>
         public List<AttackModel> CharactersMayDie { get; } = new List<AttackModel>();
+
+        /// <summary>Save按钮的路径</summary>
+        public string SavePath { get; set; }
+        /// <summary>保存次数</summary>
+        public int SaveTimes { get; set; } = 1;
+        /// <summary>Load按钮的路径</summary>
+        public string LoadPath { get; set; }
 
         //窗体显示
         /// <summary>当前阶段</summary>
@@ -291,6 +299,9 @@ namespace JLQ_MBE_BattleSimulation
             };
 
             this.Section = null;
+            this.SavePath = Directory.GetCurrentDirectory();
+            this.LoadPath = Directory.GetCurrentDirectory();
+            if (this.SavePath.Last() != '\\') this.SavePath += "\\";
         }
 
         /// <summary>确定在某位置的角色，若没有则返回null</summary>

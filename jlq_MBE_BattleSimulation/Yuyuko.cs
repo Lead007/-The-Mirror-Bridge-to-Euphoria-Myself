@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-	class Yuyuko : Character
+    class Yuyuko : Character
 	{
 		public Yuyuko(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

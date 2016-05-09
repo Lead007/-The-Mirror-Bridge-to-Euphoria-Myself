@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>角色数据类</summary>
+    [Serializable]
     public class CharacterData
     {
         /// <summary>角色名字</summary>
