@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.RegularExpressions;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -96,22 +97,13 @@ namespace JLQ_MBE_BattleSimulation
             reader.Close();
             //初始化game对象
             game = new Game();
+            game.EventGridPadClick += GridPadMouseDown;
 
             //生成棋盘按钮事件
             foreach (var button in game.Buttons)
             {
                 var column = (int)button.GetValue(Grid.ColumnProperty);
                 var row = (int)button.GetValue(Grid.RowProperty);
-                button.MouseDown += (s, ev) =>
-                {
-                    if (ev.LeftButton == MouseButtonState.Released)
-                    {
-                        GridPadMouseDown(column, row, MouseButtonState.Released, ev.MiddleButton);
-                    }
-                };
-                button.Click +=
-                    (s, ev) =>
-                        GridPadMouseDown(column, row, MouseButtonState.Pressed, MouseButtonState.Released);
                 button.MouseMove += (s, ev) =>
                 {
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
@@ -212,11 +204,9 @@ namespace JLQ_MBE_BattleSimulation
         
 
         /// <summary>网格单击事件</summary>
-        /// <param name="column">单击位置的列向坐标</param>
-        /// <param name="row">单击位置的横向坐标</param>
         /// <param name="leftButton">鼠标左键状态</param>
         /// <param name="middleButton">鼠标中键状态</param>
-        private void GridPadMouseDown(int column, int row, MouseButtonState leftButton, MouseButtonState middleButton)
+        private void GridPadMouseDown(MouseButtonState leftButton, MouseButtonState middleButton)
         {
             //TODO Pad Mouse Down
             //加人模式
@@ -258,7 +248,7 @@ namespace JLQ_MBE_BattleSimulation
                     game.EndSC();
                 }
                 //如果单击的位置是合法移动点
-                else if (game.CanReachPoint[column, row])
+                else if (game.CanReachPoint[game.MouseColumn, game.MouseRow])
                 {
                     //如果已经移动过则操作非法
                     if (game.HasMoved)
@@ -322,7 +312,6 @@ namespace JLQ_MBE_BattleSimulation
         {
             //获取下个行动的角色
             game.GetNextRoundCharacter();
-            currentCharacter.HandlePreparingSection();
             for (var i = 0; i < 3; i++)
             {
                 game.ButtonSC[i].Content = currentCharacter.Data.ScName[i + 1];
@@ -333,6 +322,8 @@ namespace JLQ_MBE_BattleSimulation
             //跳转阶段
             section = Section.Preparing;
             game.BuffSettle(Section.Preparing);
+            currentCharacter.HandlePreparingSection();
+            if (!game.IsPreparingSectionContinue) return;
             //Thread.Sleep(500);
             section = Section.Round;
         }
@@ -342,10 +333,13 @@ namespace JLQ_MBE_BattleSimulation
             isSCing = false;
             game.CharactersMayDie.Clear();
             section = Section.End;
-            currentCharacter.HandleEndSection();
             game.BuffSettle(Section.End);
             //Thread.Sleep(1000);
+            currentCharacter.HandleEndSection();
+            if (!game.IsEndSectionContinue) return;
 
+            game.IsPreparingSectionContinue = true;
+            game.IsEndSectionContinue = true;
             PreparingSection();
         }
 
@@ -519,6 +513,7 @@ namespace JLQ_MBE_BattleSimulation
             labelShow.Content = "战斗模式";
             label2.Visibility = Visibility.Hidden;
             game.LabelID.Visibility = Visibility.Hidden;
+            game.LabelGameTip.Visibility = Visibility.Visible;
             comboBoxDisplay.Text = "";
             comboBoxDisplay.IsEnabled = false;
             comboBoxEnemy.IsEnabled = false;
@@ -612,6 +607,7 @@ namespace JLQ_MBE_BattleSimulation
         private void gridGameInformation_Loaded(object sender, RoutedEventArgs e)
         {
             gridGameInformation.Children.Add(game.LabelID);
+            gridGameInformation.Children.Add(game.LabelGameTip);
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

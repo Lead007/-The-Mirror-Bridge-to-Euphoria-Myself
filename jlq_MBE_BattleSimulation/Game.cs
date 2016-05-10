@@ -33,7 +33,7 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         /// <summary>随机数对象</summary>
-        public Random Random;
+        public Random Random = new Random();
 
         /// <summary>当前行动者</summary>
         public Character CurrentCharacter = null;
@@ -42,9 +42,13 @@ namespace JLQ_MBE_BattleSimulation
         public bool IsBattle { get; private set; }
 
         /// <summary>鼠标的网格位置</summary>
-        public Point MousePoint = new Point(-1, -1);
+        public Point MousePoint { get; set; } = new Point(-1, -1);
+        /// <summary>鼠标网格位置的Column值</summary>
+        public int MouseColumn => (int) MousePoint.X;
+        /// <summary>鼠标网格位置的Row值</summary>
+        public int MouseRow => (int) MousePoint.Y;
 
-        private Section? _section ;
+        private Section? _section;
         /// <summary>当前回合所在的阶段</summary>
         public Section? Section
         {
@@ -87,10 +91,15 @@ namespace JLQ_MBE_BattleSimulation
         public List<Character> Characters { get; } = new List<Character>();
 
         /// <summary>每个格子能否被到达</summary>
-        public bool[,] CanReachPoint = new bool[MainWindow.Column, MainWindow.Row];
+        public bool[,] CanReachPoint { get; } = new bool[MainWindow.Column, MainWindow.Row];
 
         /// <summary>可能死亡的角色列表</summary>
         public List<AttackModel> CharactersMayDie { get; } = new List<AttackModel>();
+
+        /// <summary>准备阶段是否继续或需等待单击</summary>
+        public bool IsPreparingSectionContinue { get; set; } = true;
+        /// <summary>结束阶段是否继续或需等待单击</summary>
+        public bool IsEndSectionContinue { get; set; } = true;
 
         /// <summary>Save按钮的路径</summary>
         public string SavePath { get; set; }
@@ -108,6 +117,8 @@ namespace JLQ_MBE_BattleSimulation
         public Label LabelMove { get; set; }
         /// <summary>用以响应鼠标事件的按钮</summary>
         public Button[,] Buttons { get; set; } = new Button[MainWindow.Column, MainWindow.Row];
+        /// <summary>棋盘按钮单击事件</summary>
+        public event DGridPadClick EventGridPadClick;
         /// <summary>符卡按钮</summary>
         public Button[] ButtonSC { get; set; }
         /// <summary>棋盘网格控件</summary>
@@ -118,6 +129,8 @@ namespace JLQ_MBE_BattleSimulation
         public Label[] LabelsGroup { get; set; } = new Label[3];
         /// <summary>显示当前添加ID的标签</summary>
         public Label LabelID { get; set; }
+        /// <summary>游戏提示标签</summary>
+        public Label LabelGameTip { get; set; }
         /// <summary>生成可到达点矩阵</summary>
         public DAssignPointCanReach HandleAssignPointCanReach;
         /// <summary>判断是否死亡</summary>
@@ -139,8 +152,6 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>Game类的构造函数</summary>
         public Game()
         {
-            this.Random = new Random();
-            this.IsBattle = false;
             HandleAssignPointCanReach = AssignPointCanReach;
             HandleIsDead = IsDead;
 
@@ -220,6 +231,15 @@ namespace JLQ_MBE_BattleSimulation
                     Buttons[i, j].SetValue(Grid.ColumnSpanProperty, 1);
                     Buttons[i, j].SetValue(Grid.RowSpanProperty, 1);
                     Buttons[i, j].SetValue(Panel.ZIndexProperty, 1);
+                    Buttons[i, j].MouseDown += (s, ev) =>
+                    {
+                        if (ev.LeftButton == MouseButtonState.Released)
+                        {
+                            EventGridPadClick(MouseButtonState.Released, ev.MiddleButton);
+                        }
+                    };
+                    Buttons[i, j].Click += (s, ev) =>
+                        EventGridPadClick(MouseButtonState.Pressed, MouseButtonState.Released);
                 }
             }
             //ButtonSC
@@ -276,6 +296,17 @@ namespace JLQ_MBE_BattleSimulation
             };
             LabelID.SetValue(Grid.ColumnProperty, 1);
             LabelID.SetValue(Grid.RowProperty, 1);
+            //LabelGameTip
+            LabelGameTip = new Label
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Visibility = Visibility.Hidden,
+                Foreground = Brushes.Blue
+            };
+            LabelGameTip.SetValue(Grid.RowProperty, 1);
+            LabelGameTip.SetValue(Grid.ColumnSpanProperty, 2);
             //GridPad
             GridPad = new Grid();
             for (var i = 0; i < MainWindow.Column; i++)
@@ -298,7 +329,6 @@ namespace JLQ_MBE_BattleSimulation
                 }
             };
 
-            this.Section = null;
             this.SavePath = Directory.GetCurrentDirectory();
             this.LoadPath = Directory.GetCurrentDirectory();
             if (this.SavePath.Last() != '\\') this.SavePath += "\\";
@@ -627,6 +657,7 @@ namespace JLQ_MBE_BattleSimulation
             HandleTarget = null;
             HandleIsLegalClick = null;
             ButtonSC.Aggregate((Brush) Brushes.White, (c, b) => b.Background = Brushes.LightGray);
+            LabelGameTip.Content = "";
             switch (ScSelect)
             {
                 case 1:

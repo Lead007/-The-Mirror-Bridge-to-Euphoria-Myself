@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,7 +95,13 @@ namespace JLQ_MBE_BattleSimulation
                     formatter.Serialize(writer, c.Position);
                 }
             }
-            using (var writer = new StreamWriter(path + textBoxName.Text + ".pad")) {}
+            using (var writer = new StreamWriter(path + textBoxName.Text + ".pad"))
+            {
+                writer.WriteLine("Name: {0}", textBoxName.Text);
+                writer.WriteLine("Number of Characters: {0}", game.Characters.Count);
+                writer.WriteLine("Save Time: {0}",
+                    DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("en-US")));
+            }
             Thread.Sleep(2000);
             MessageBox.Show("保存成功！", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();

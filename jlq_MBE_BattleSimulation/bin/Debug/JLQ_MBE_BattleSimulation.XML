@@ -325,6 +325,11 @@
         <member name="M:JLQ_MBE_BattleSimulation.Daiyousei.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.DGridPadClick">
+            <summary>棋盘按钮单击事件的委托</summary>
+            <param name="leftButton">左键状态</param>
+            <param name="middleButton">中键状态</param>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.DBuffAffect">
             <summary>buff效果的委托</summary>
             <param name="buffee">buff承受者</param>
@@ -1680,8 +1685,14 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.IsBattle">
             <summary>是否为战斗模式</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.MousePoint">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.MousePoint">
             <summary>鼠标的网格位置</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.MouseColumn">
+            <summary>鼠标网格位置的Column值</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.MouseRow">
+            <summary>鼠标网格位置的Row值</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.Section">
             <summary>当前回合所在的阶段</summary>
@@ -1695,11 +1706,17 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.Characters">
             <summary>游戏中所有角色列表</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.CanReachPoint">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.CanReachPoint">
             <summary>每个格子能否被到达</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.CharactersMayDie">
             <summary>可能死亡的角色列表</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.IsPreparingSectionContinue">
+            <summary>准备阶段是否继续或需等待单击</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.IsEndSectionContinue">
+            <summary>结束阶段是否继续或需等待单击</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.SavePath">
             <summary>Save按钮的路径</summary>
@@ -1722,6 +1739,9 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.Buttons">
             <summary>用以响应鼠标事件的按钮</summary>
         </member>
+        <member name="E:JLQ_MBE_BattleSimulation.Game.EventGridPadClick">
+            <summary>棋盘按钮单击事件</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.ButtonSC">
             <summary>符卡按钮</summary>
         </member>
@@ -1736,6 +1756,9 @@
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.LabelID">
             <summary>显示当前添加ID的标签</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.LabelGameTip">
+            <summary>游戏提示标签</summary>
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.Game.HandleAssignPointCanReach">
             <summary>生成可到达点矩阵</summary>
@@ -1919,10 +1942,8 @@
             <param name="group">角色的阵营</param>
             <param name="display">显示的字符串</param>
         </member>
-        <member name="M:JLQ_MBE_BattleSimulation.MainWindow.GridPadMouseDown(System.Int32,System.Int32,System.Windows.Input.MouseButtonState,System.Windows.Input.MouseButtonState)">
+        <member name="M:JLQ_MBE_BattleSimulation.MainWindow.GridPadMouseDown(System.Windows.Input.MouseButtonState,System.Windows.Input.MouseButtonState)">
             <summary>网格单击事件</summary>
-            <param name="column">单击位置的列向坐标</param>
-            <param name="row">单击位置的横向坐标</param>
             <param name="leftButton">鼠标左键状态</param>
             <param name="middleButton">鼠标中键状态</param>
         </member>

@@ -4,10 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace JLQ_MBE_BattleSimulation
 {
     //委托声明
+
+    //窗体相关
+    /// <summary>棋盘按钮单击事件的委托</summary>
+    /// <param name="leftButton">左键状态</param>
+    /// <param name="middleButton">中键状态</param>
+    public delegate void DGridPadClick(MouseButtonState leftButton, MouseButtonState middleButton);
 
     //buff相关
     /// <summary>buff效果的委托</summary>

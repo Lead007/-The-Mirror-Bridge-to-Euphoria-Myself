@@ -97,6 +97,7 @@ namespace JLQ_MBE_BattleSimulation
                 SC02PointTemp = Game.DefaultPoint;
             };
             AddPadButtonEvent(1);
+            game.LabelGameTip.Content = "符卡提示：单击所选择的3×3区域的中心";
         }
 
         /// <summary>结束符卡02</summary>
