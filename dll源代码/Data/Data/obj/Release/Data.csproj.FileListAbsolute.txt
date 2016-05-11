@@ -1,4 +1,0 @@
-D:\Program\C#程序\C#类库\Data\Data\bin\Release\Data.dll
-D:\Program\C#程序\C#类库\Data\Data\bin\Release\Data.pdb
-D:\Program\C#程序\C#类库\Data\Data\obj\Release\Data.dll
-D:\Program\C#程序\C#类库\Data\Data\obj\Release\Data.pdb

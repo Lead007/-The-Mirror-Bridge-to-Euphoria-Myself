@@ -1,0 +1,5 @@
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\obj\Release\Bitmap.csprojResolveAssemblyReference.cache
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\bin\Release\Bitmap.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\bin\Release\Bitmap.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\obj\Release\Bitmap.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\obj\Release\Bitmap.pdb

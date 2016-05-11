@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Bitmap;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -34,7 +35,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             catch
             {
-                _imageShield.Source = BitmapConverter.BitmapConverter.BitmapToBitmapImage(Properties.Resources.Error);
+                _imageShield.Source = BitmapConverter.BitmapToBitmapImage(Properties.Resources.Error);
             }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
             HasPrevented = true;

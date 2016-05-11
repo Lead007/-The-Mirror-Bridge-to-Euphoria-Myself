@@ -36,11 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BitmapConverter">
-      <HintPath>..\..\..\C#类库\BitmapConverter\BitmapConverter\bin\Release\BitmapConverter.dll</HintPath>
+    <Reference Include="Bitmap">
+      <HintPath>..\Bitmap\bin\Release\Bitmap.dll</HintPath>
     </Reference>
-    <Reference Include="Data">
-      <HintPath>..\dll源代码\Data\Data\bin\Release\Data.dll</HintPath>
+    <Reference Include="Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

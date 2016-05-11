@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jlq_MBE_BattleSimulation", "JLQ_MBE_BattleSimulation\jlq_MBE_BattleSimulation.csproj", "{27492CF3-0CBE-4D7F-9580-6B46DAD89E83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bitmap", "Bitmap\Bitmap.csproj", "{EA47899C-66E7-40FB-B4F6-33630FC67E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{CC851819-3A7B-402E-8984-5D6FF7DCB022}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{27492CF3-0CBE-4D7F-9580-6B46DAD89E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27492CF3-0CBE-4D7F-9580-6B46DAD89E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27492CF3-0CBE-4D7F-9580-6B46DAD89E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA47899C-66E7-40FB-B4F6-33630FC67E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA47899C-66E7-40FB-B4F6-33630FC67E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA47899C-66E7-40FB-B4F6-33630FC67E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA47899C-66E7-40FB-B4F6-33630FC67E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC851819-3A7B-402E-8984-5D6FF7DCB022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC851819-3A7B-402E-8984-5D6FF7DCB022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC851819-3A7B-402E-8984-5D6FF7DCB022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC851819-3A7B-402E-8984-5D6FF7DCB022}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

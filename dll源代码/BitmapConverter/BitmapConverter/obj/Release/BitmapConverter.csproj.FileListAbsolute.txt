@@ -1,4 +1,0 @@
-D:\Program\C#程序\C#类库\BitmapConverter\BitmapConverter\bin\Release\BitmapConverter.dll
-D:\Program\C#程序\C#类库\BitmapConverter\BitmapConverter\bin\Release\BitmapConverter.pdb
-D:\Program\C#程序\C#类库\BitmapConverter\BitmapConverter\obj\Release\BitmapConverter.dll
-D:\Program\C#程序\C#类库\BitmapConverter\BitmapConverter\obj\Release\BitmapConverter.pdb
