@@ -87,6 +87,7 @@
     <Compile Include="BuffMpGain.cs" />
     <Compile Include="BuffShield.cs" />
     <Compile Include="BuffSlowDown.cs" />
+    <Compile Include="BuffSlowDownGain.cs" />
     <Compile Include="Chen.cs" />
     <Compile Include="Cirno.cs" />
     <Compile Include="Comparer.cs" />

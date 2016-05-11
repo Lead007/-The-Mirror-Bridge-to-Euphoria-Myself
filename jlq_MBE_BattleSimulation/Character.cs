@@ -29,25 +29,25 @@ namespace JLQ_MBE_BattleSimulation
         //可变字段
         //增益
         /// <summary>攻击增益</summary>
-        public virtual float _attackX { get; set; } = 1.0f;
+        public virtual double _attackX { get; set; } = 1.0f;
         /// <summary>攻击增量</summary>
         public int _attackAdd { get; set; } = 0;
         /// <summary>防御增益</summary>
-        public float _defenceX { get; set; } = 1.0f;
+        public double _defenceX { get; set; } = 1.0f;
         /// <summary>防御增量</summary>
         public int _defenceAdd { get; set; } = 0;
         /// <summary>命中率增益</summary>
-        public float _hitRateX { private get; set; } = 1.0f;
+        public double _hitRateX { private get; set; } = 1.0f;
         /// <summary>闪避率增益</summary>
-        public float _dodgeRateX { private get; set; } = 1.0f;
+        public double _dodgeRateX { private get; set; } = 1.0f;
         /// <summary>近战补正增益</summary>
-        public float _closeAmendmentX { private get; set; } = 1.0f;
+        public double _closeAmendmentX { private get; set; } = 1.0f;
 
-        private float __intervalX = 1.0f;
+        private double __intervalX = 1.0f;
         /// <summary>行动间隔增益</summary>
-        public float _intervalX
+        public double _intervalX
         {
-            private get { return __intervalX; }
+            get { return __intervalX; }
             set
             {
                 __intervalX = value;
