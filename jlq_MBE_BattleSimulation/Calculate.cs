@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation.Peers;
 using System.Windows;
+using Data;
 
 namespace JLQ_MBE_BattleSimulation
 {

@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text.RegularExpressions;
+using Data;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -37,20 +37,6 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>game对象</summary>
         private readonly Game game;
 
-        private int _id = 1;
-        /// <summary>加人模式的当前ID</summary>
-        private int ID
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-                game.LabelID.Content = value.ToString();
-            }
-        }
-        /// <summary>加人模式上一个添加的角色</summary>
-        private Character characterLastAdd = null;
-
         /// <summary>是否处于符卡状态</summary>
         private bool isSCing;
 
@@ -61,40 +47,15 @@ namespace JLQ_MBE_BattleSimulation
 
             //读取角色各数据
             var data = new XmlDocument();
-            var reader = XmlReader.Create("data.xml", new XmlReaderSettings {IgnoreComments = true /*忽略注释*/});
+            var reader = XmlReader.Create("Resources/Data/data.xml", new XmlReaderSettings {IgnoreComments = true /*忽略注释*/});
             data.Load(reader);
-            var xnl = data.SelectSingleNode("/data/datas").ChildNodes;
-            var xnscl = data.SelectSingleNode("/data/sc").ChildNodes;
-            for (int i = 0, count = xnl.Count; i < count; i++)
+            Calculate.CharacterDataList = DataLoader.LoadDatas(data);
+            reader.Close();
+            foreach (var cd in Calculate.CharacterDataList)
             {
-                //读取角色数据
-                var cd = new CharacterData();
-                var xe = (XmlElement)xnl.Item(i);
-                var xesc = (XmlElement)xnscl.Item(i);
-                cd.Name = xe.GetAttribute("id");
-                var xnll = xe.ChildNodes;
-                var xnscll = xesc.ChildNodes;
-                cd.Display = xnll.Item(0).InnerText;
-                cd.MaxHp = Convert.ToInt32(xnll.Item(1).InnerText);
-                cd.Attack = Convert.ToInt32(xnll.Item(2).InnerText);
-                cd.Defence = Convert.ToInt32(xnll.Item(3).InnerText);
-                cd.HitRate = Convert.ToInt32(xnll.Item(4).InnerText);
-                cd.DodgeRate = Convert.ToInt32(xnll.Item(5).InnerText);
-                cd.CloseAmendment = Convert.ToSingle(xnll.Item(6).InnerText);
-                cd.Interval = Convert.ToInt32(xnll.Item(7).InnerText);
-                cd.MoveAbility = Convert.ToInt32(xnll.Item(8).InnerText);
-                cd.AttackRange = Convert.ToInt32(xnll.Item(9).InnerText);
-                //读取符卡描述
-                for (var j = 0; j < 4; j++)
-                {
-                    cd.ScName[j] = xnscll.Item(j).InnerText;
-                    cd.ScDisc[j] = xnscll.Item(j + 4).InnerText;
-                }
-
-                Calculate.CharacterDataList.Add(cd);
                 comboBoxDisplay.Items.Add(cd.Display);
             }
-            reader.Close();
+            comboBoxDisplay.Items.Remove("芙分");
             //初始化game对象
             game = new Game();
             game.EventGridPadClick += GridPadMouseDown;
@@ -181,21 +142,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="display">显示的字符串</param>
         private void AddCharacter(Point point, Group group, string display)
         {
-            //以下你肯定凌乱了不过就是调用对应的构造函数创建角色对象而已
-            var characterData = Calculate.CharacterDataList.First(cd => cd.Display == display);
-            Type[] constructorTypes =
-            {
-                    typeof (int), typeof (Point), typeof (Group), typeof (Random), typeof (Game)
-                };
-            object[] parameters = { ID, point, group, game.Random, game };
-            characterLastAdd =
-                (Character)
-                    Type.GetType("JLQ_MBE_BattleSimulation." + characterData.Name).GetConstructors()[0].Invoke(
-                        parameters);
-            //各种加入列表
-            characterLastAdd.ListControls.Aggregate(0, (cu, c) => game.GridPad.Children.Add(c));
-            game.Characters.Add(characterLastAdd);
-            ID++;
+            game.AddCharacter(point, group, display);
             menuBackout.IsEnabled = true;
             var labelTemp = game.LabelsGroup[(int) group + 1];
             labelTemp.Content = Convert.ToInt32(labelTemp.Content) + 1;
@@ -384,9 +331,9 @@ namespace JLQ_MBE_BattleSimulation
                 game.GridPad.Children.Remove(c);
             }
             game.Characters.Clear();
-            characterLastAdd = null;
+            game.characterLastAdd = null;
             menuBackout.IsEnabled = false;
-            ID = 1;
+            game.ID = 1;
             game.LabelID.Content = "1";
             foreach (var l in game.LabelsGroup)
             {
@@ -538,17 +485,17 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="e"></param>
         private void menuBackout_Click(object sender, RoutedEventArgs e)
         {
-            if (characterLastAdd == null) return;
-            game.RemoveCharacter(characterLastAdd);
-            ID--;
+            if (game.characterLastAdd == null) return;
+            game.RemoveCharacter(game.characterLastAdd);
+            game.ID--;
             if (game.Characters.Count == 0)
             {
-                characterLastAdd = null;
+                game.characterLastAdd = null;
                 menuBackout.IsEnabled = false;
             }
             else
             {
-                characterLastAdd = game.Characters.Last();
+                game.characterLastAdd = game.Characters.Last();
             }
         }
 

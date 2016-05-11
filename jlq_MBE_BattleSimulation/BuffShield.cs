@@ -30,7 +30,7 @@ namespace JLQ_MBE_BattleSimulation
             };
             try
             {
-                _imageShield.Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Buff/Shield.jpg"));
+                _imageShield.Source = new BitmapImage(new Uri("pack://SiteOfOrigin:,,,/Resources/Image/Buff/Shield.jpg"));
             }
             catch
             {

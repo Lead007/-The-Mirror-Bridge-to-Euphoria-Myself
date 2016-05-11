@@ -19,6 +19,7 @@ namespace JLQ_MBE_BattleSimulation
     {
         /// <summary>默认点</summary>
         public static Point DefaultPoint => new Point(-1, -1);
+
         /// <summary>棋盘点集</summary>
         public static List<Point> PadPoints
         {
@@ -43,12 +44,15 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>鼠标的网格位置</summary>
         public Point MousePoint { get; set; } = new Point(-1, -1);
+
         /// <summary>鼠标网格位置的Column值</summary>
         public int MouseColumn => (int) MousePoint.X;
+
         /// <summary>鼠标网格位置的Row值</summary>
         public int MouseRow => (int) MousePoint.Y;
 
         private Section? _section;
+
         /// <summary>当前回合所在的阶段</summary>
         public Section? Section
         {
@@ -57,6 +61,19 @@ namespace JLQ_MBE_BattleSimulation
             {
                 _section = value;
                 LabelSection.Content = Calculate.Convert(value);
+            }
+        }
+
+        private int _id = 1;
+
+        /// <summary>加人模式的当前ID</summary>
+        public int ID
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                LabelID.Content = value.ToString();
             }
         }
 
@@ -90,7 +107,11 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>游戏中所有角色列表</summary>
         public List<Character> Characters { get; } = new List<Character>();
 
-        /// <summary>每个格子能否被到达</summary>
+        /// <summary>加人模式上一个添加的角色</summary>
+        public Character characterLastAdd { get; set; }= null;
+
+
+    /// <summary>每个格子能否被到达</summary>
         public bool[,] CanReachPoint { get; } = new bool[MainWindow.Column, MainWindow.Row];
 
         /// <summary>可能死亡的角色列表</summary>
@@ -101,6 +122,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>结束阶段是否继续或需等待单击</summary>
         public bool IsEndSectionContinue { get; set; } = true;
 
+        /// <summary>应用路径</summary>
+        public string ApplicationPath { get; }
+        /// <summary>资源文件夹路径</summary>
+        public string ResourcePath { get; }
         /// <summary>Save按钮的路径</summary>
         public string SavePath { get; set; }
         /// <summary>保存次数</summary>
@@ -110,27 +135,27 @@ namespace JLQ_MBE_BattleSimulation
 
         //窗体显示
         /// <summary>当前阶段</summary>
-        public Label LabelSection { get; set; }
+        public Label LabelSection { get; }
         /// <summary>是否已攻击</summary>
-        public Label LabelAttack { get; set; }
+        public Label LabelAttack { get; }
         /// <summary>是否已移动</summary>
-        public Label LabelMove { get; set; }
+        public Label LabelMove { get; }
         /// <summary>用以响应鼠标事件的按钮</summary>
-        public Button[,] Buttons { get; set; } = new Button[MainWindow.Column, MainWindow.Row];
+        public Button[,] Buttons { get; } = new Button[MainWindow.Column, MainWindow.Row];
         /// <summary>棋盘按钮单击事件</summary>
         public event DGridPadClick EventGridPadClick;
         /// <summary>符卡按钮</summary>
-        public Button[] ButtonSC { get; set; }
+        public Button[] ButtonSC { get; }
         /// <summary>棋盘网格控件</summary>
-        public Grid GridPad { get; set; }
+        public Grid GridPad { get; }
         /// <summary>棋盘网格线</summary>
         private Border[,] borders { get; } = new Border[MainWindow.Column, MainWindow.Row];
         /// <summary>显示每阵营剩余人数的标签</summary>
-        public Label[] LabelsGroup { get; set; } = new Label[3];
+        public Label[] LabelsGroup { get; } = new Label[3];
         /// <summary>显示当前添加ID的标签</summary>
-        public Label LabelID { get; set; }
+        public Label LabelID { get; }
         /// <summary>游戏提示标签</summary>
-        public Label LabelGameTip { get; set; }
+        public Label LabelGameTip { get; }
         /// <summary>生成可到达点矩阵</summary>
         public DAssignPointCanReach HandleAssignPointCanReach;
         /// <summary>判断是否死亡</summary>
@@ -329,8 +354,10 @@ namespace JLQ_MBE_BattleSimulation
                 }
             };
 
-            this.SavePath = Directory.GetCurrentDirectory();
-            this.LoadPath = Directory.GetCurrentDirectory();
+            this.ApplicationPath = Directory.GetCurrentDirectory();
+            this.ResourcePath = ApplicationPath + @"\Resources";
+            this.SavePath = ApplicationPath;
+            this.LoadPath = ApplicationPath;
             if (this.SavePath.Last() != '\\') this.SavePath += "\\";
         }
 
@@ -377,6 +404,29 @@ namespace JLQ_MBE_BattleSimulation
                     }
                 return result;
             }
+        }
+
+        /// <summary>添加角色</summary>
+        /// <param name="point">添加的位置</param>
+        /// <param name="group">角色的阵营</param>
+        /// <param name="display">显示的字符串</param>
+        public void AddCharacter(Point point, Group group, string display)
+        {
+            //以下你肯定凌乱了不过就是调用对应的构造函数创建角色对象而已
+            var characterData = Calculate.CharacterDataList.First(cd => cd.Display == display);
+            Type[] constructorTypes =
+            {
+                    typeof (int), typeof (Point), typeof (Group), typeof (Random), typeof (Game)
+                };
+            object[] parameters = { ID, point, group, Random, this };
+            characterLastAdd =
+                (Character)
+                    Type.GetType("JLQ_MBE_BattleSimulation." + characterData.Name).GetConstructors()[0].Invoke(
+                        parameters);
+            //各种加入列表
+            characterLastAdd.ListControls.Aggregate(0, (cu, c) => GridPad.Children.Add(c));
+            Characters.Add(characterLastAdd);
+            ID++;
         }
 
         /// <summary>移除角色</summary>

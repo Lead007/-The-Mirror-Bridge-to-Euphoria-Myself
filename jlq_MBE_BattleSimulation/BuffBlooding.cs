@@ -15,14 +15,18 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="time">持续时间</param>
         /// <param name="game">游戏对象</param>
         public BuffBlooding(Character buffee, Character buffer, int time, Game game)
-            : base(buffee, buffer, time, Section.Preparing, "流血：准备阶段失去5点体力", false, game)
+            : base(buffee, buffer, time, Section.Preparing, string.Format("流血：准备阶段失去{0}点体力", bloodNum), false, game)
         {
             BuffAffect += (bee, ber) =>
             {
                 bee.HandleBeAttacked(bloodNum, null);
+                foreach (var c in game.Characters.Where(c => c is Flandre))
+                {
+                    c.Cure(bloodNum);
+                }
             };
         }
 
-        private const int bloodNum = 5;
+        private const int bloodNum = 10;
     }
 }

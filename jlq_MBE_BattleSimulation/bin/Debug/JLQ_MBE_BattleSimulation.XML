@@ -201,6 +201,17 @@
             <param name="damageGain">受伤增益，若负则为降低</param>
             <param name="game">游戏对象</param>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffLetBloodingWhenBeAttacked">
+            <summary>使攻击者获得流血buff的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffLetBloodingWhenBeAttacked.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Int32,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">持续时间</param>
+            <param name="bloodingTime">流血时间</param>
+            <param name="game">游戏对象</param>
+        </member>
         <member name="T:JLQ_MBE_BattleSimulation.BuffLimit">
             <summary>被限制在特定区域内的buff</summary>
         </member>
@@ -1154,11 +1165,6 @@
             <summary>重写object类的ToString方法</summary>
             <returns>转化为字符串的结果</returns>
         </member>
-        <member name="M:JLQ_MBE_BattleSimulation.Buff.Add(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character)">
-            <summary>在buff列表中添加buff</summary>
-            <param name="buffee">buff承受者</param>
-            <param name="buffer">buff发出者</param>
-        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Buff.Cancel(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character)">
             <summary>从buff列表中删除buff</summary>
             <param name="buffee">buff承受者</param>
@@ -1591,48 +1597,6 @@
             <param name="c">待判断的角色</param>
             <returns>是否为敌人</returns>
         </member>
-        <member name="T:JLQ_MBE_BattleSimulation.CharacterData">
-            <summary>角色数据类</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.Name">
-            <summary>角色名字</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.Display">
-            <summary>屏幕上显示的文字</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.MaxHp">
-            <summary>最大血量</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.Attack">
-            <summary>攻击</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.Defence">
-            <summary>防御</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.HitRate">
-            <summary>命中</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.DodgeRate">
-            <summary>闪避</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.CloseAmendment">
-            <summary>近战补正</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.Interval">
-            <summary>行动间隔</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.MoveAbility">
-            <summary>机动</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.AttackRange">
-            <summary>普攻范围</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.ScName">
-            <summary>符卡名</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.CharacterData.ScDisc">
-            <summary>符卡描述</summary>
-        </member>
         <member name="T:JLQ_MBE_BattleSimulation.CharacterMovingIgnoreEnemy">
             <summary>移动无视敌方角色的碰撞箱的角色</summary>
         </member>
@@ -1697,6 +1661,9 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.Section">
             <summary>当前回合所在的阶段</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.ID">
+            <summary>加人模式的当前ID</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.HasMoved">
             <summary>当前行动者是否已移动</summary>
         </member>
@@ -1705,6 +1672,9 @@
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.Characters">
             <summary>游戏中所有角色列表</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.characterLastAdd">
+            <summary>加人模式上一个添加的角色</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.CanReachPoint">
             <summary>每个格子能否被到达</summary>
@@ -1717,6 +1687,12 @@
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.IsEndSectionContinue">
             <summary>结束阶段是否继续或需等待单击</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.ApplicationPath">
+            <summary>应用路径</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.ResourcePath">
+            <summary>资源文件夹路径</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.SavePath">
             <summary>Save按钮的路径</summary>
@@ -1819,6 +1795,12 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.ArrayButtons">
             <summary>棋盘按钮数组的一维数组形式</summary>
         </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Game.AddCharacter(System.Windows.Point,JLQ_MBE_BattleSimulation.Group,System.String)">
+            <summary>添加角色</summary>
+            <param name="point">添加的位置</param>
+            <param name="group">角色的阵营</param>
+            <param name="display">显示的字符串</param>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Game.RemoveCharacter(JLQ_MBE_BattleSimulation.Character)">
             <summary>移除角色</summary>
             <param name="target">待移除的角色</param>
@@ -1917,12 +1899,6 @@
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.MainWindow.game">
             <summary>game对象</summary>
-        </member>
-        <member name="P:JLQ_MBE_BattleSimulation.MainWindow.ID">
-            <summary>加人模式的当前ID</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.MainWindow.characterLastAdd">
-            <summary>加人模式上一个添加的角色</summary>
         </member>
         <member name="F:JLQ_MBE_BattleSimulation.MainWindow.isSCing">
             <summary>是否处于符卡状态</summary>

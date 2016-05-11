@@ -1,0 +1,1 @@
+用于将Bitmap对象转化为BitmapImage对象以便在WPF中使用。

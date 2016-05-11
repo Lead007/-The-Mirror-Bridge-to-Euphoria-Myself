@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace Data
 {
     /// <summary>角色数据类</summary>
     [Serializable]
@@ -17,7 +17,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>最大血量</summary>
         public int MaxHp = 120;
         /// <summary>攻击</summary>
-        public int Attack = 100;  
+        public int Attack = 100;
         /// <summary>防御</summary>
         public int Defence = 80;
         /// <summary>命中</summary>
@@ -36,5 +36,6 @@ namespace JLQ_MBE_BattleSimulation
         public string[] ScName = { "", "", "", "" };
         /// <summary>符卡描述</summary>
         public string[] ScDisc = { "", "", "", "" };
+
     }
 }

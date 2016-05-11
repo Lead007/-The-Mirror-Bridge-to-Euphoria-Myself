@@ -39,6 +39,9 @@
     <Reference Include="BitmapConverter">
       <HintPath>..\..\..\C#类库\BitmapConverter\BitmapConverter\bin\Release\BitmapConverter.dll</HintPath>
     </Reference>
+    <Reference Include="Data">
+      <HintPath>..\dll源代码\Data\Data\bin\Release\Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -78,6 +81,7 @@
     <Compile Include="BuffExecuteInSection.cs" />
     <Compile Include="BuffGainDefence.cs" />
     <Compile Include="BuffGainDoDamage.cs" />
+    <Compile Include="BuffLetBloodingWhenBeAttacked.cs" />
     <Compile Include="BuffLimit.cs" />
     <Compile Include="BuffMpGain.cs" />
     <Compile Include="BuffShield.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="Eirin.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Flandre.cs" />
+    <Compile Include="FlandreLittle.cs" />
     <Compile Include="Gedama.cs" />
     <Compile Include="Kaguya.cs" />
     <Compile Include="Keine.cs" />
@@ -132,7 +137,6 @@
     <Compile Include="Buff.cs" />
     <Compile Include="Calculate.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="CharacterData.cs" />
     <Compile Include="CharacterChildren.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="Game.cs" />
