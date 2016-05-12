@@ -19,6 +19,8 @@ namespace JLQ_MBE_BattleSimulation
     {
         /// <summary>默认点</summary>
         public static Point DefaultPoint => new Point(-1, -1);
+        /// <summary>棋盘中心</summary>
+        public static Point CenterPoint => new Point(4, 4);
 
         /// <summary>棋盘点集</summary>
         public static List<Point> PadPoints

@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>爱丽丝·玛格特洛依德</summary>
 	class Alice : Character
 	{
 		public Alice(int id, Point position, Group group, Random random, Game game)
