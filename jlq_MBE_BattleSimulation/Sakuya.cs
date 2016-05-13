@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -19,8 +18,8 @@ namespace JLQ_MBE_BattleSimulation
 		        if (!SC02IsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC02Range, c))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
-		        game[game.MousePoint].LabelDisplay.Background = Brushes.LawnGreen;
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground2;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}

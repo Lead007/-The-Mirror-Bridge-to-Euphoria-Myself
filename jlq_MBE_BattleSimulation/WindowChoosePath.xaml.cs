@@ -43,7 +43,7 @@ namespace JLQ_MBE_BattleSimulation
             labelPath.Content = game.SavePath + textBoxName.Text + "   ";
             if (!string.IsNullOrWhiteSpace(textBoxName.Text))
             {
-                textBoxName.BorderBrush = Brushes.LightGray;
+                textBoxName.BorderBrush = GameColor.BaseColor;
             }
         }
 

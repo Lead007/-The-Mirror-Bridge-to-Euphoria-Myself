@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -21,7 +20,7 @@ namespace JLQ_MBE_BattleSimulation
 		        game.DefaultButtonAndLabels();
 		        foreach (var c in game.Characters.Where(c => c.Group == this.Group && c != this))
 		        {
-		            c.LabelDisplay.Background = Brushes.LightBlue;
+		            c.LabelDisplay.Background = GameColor.LabelBackground;
 		        }
 		    };
             SetDefaultLeaveSCButtonDelegate(2);

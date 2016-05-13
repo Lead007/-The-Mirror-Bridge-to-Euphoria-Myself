@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -21,7 +20,7 @@ namespace JLQ_MBE_BattleSimulation
 		        var c = game[game.MousePoint];
 		        if (!IsFriend(c)) return;
 		        game.DefaultButtonAndLabels();
-		        c.LabelDisplay.Background = Brushes.LightBlue;
+		        c.LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}
@@ -49,7 +48,7 @@ namespace JLQ_MBE_BattleSimulation
             game.DefaultButtonAndLabels();
             game.SetCurrentLabel();
             Enemy.Where(c => Calculate.Distance(c, this) <= SC01Range)
-                .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
         }
 
         /// <summary>结束符卡01</summary>

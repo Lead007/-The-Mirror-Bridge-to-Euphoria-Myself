@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -28,7 +25,7 @@ namespace JLQ_MBE_BattleSimulation
 		        if (game[game.MousePoint] != null) return;
 		        game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC01Range, c))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //显示将被攻击的角色
@@ -36,7 +33,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        game.DefaultButtonAndLabels();
 		        game.Characters.Where(SCee => IsInRangeAndEnemy(this.Position, SC03Range, SCee))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}

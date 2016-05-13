@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -19,7 +18,7 @@ namespace JLQ_MBE_BattleSimulation
 		        if (Calculate.Distance(game.MousePoint, this) > SC01Range) return;
 		        game.DefaultButtonAndLabels();
 		        Enemy.Where(c => Calculate.Distance(game.MousePoint, c) <= 1)
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		}

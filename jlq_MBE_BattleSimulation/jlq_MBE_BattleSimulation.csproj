@@ -97,6 +97,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Flandre.cs" />
     <Compile Include="FlandreLittle.cs" />
+    <Compile Include="GameColor.cs" />
     <Compile Include="Gedama.cs" />
     <Compile Include="Kaguya.cs" />
     <Compile Include="Keine.cs" />

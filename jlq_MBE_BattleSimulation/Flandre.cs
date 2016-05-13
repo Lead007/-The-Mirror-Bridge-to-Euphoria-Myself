@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -17,7 +16,7 @@ namespace JLQ_MBE_BattleSimulation
 		    enterButton[0] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        FList.Aggregate((Brush) Brushes.White, (c, f) => f.LabelDisplay.Background = Brushes.LightBlue);
+		        FList.Aggregate(GameColor.BaseColor, (c, f) => f.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
 		    enterButton[1] = (s, ev) =>
@@ -30,7 +29,7 @@ namespace JLQ_MBE_BattleSimulation
 		        if (!game.HandleIsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
 		        Enemy.Where(c => Calculate.IsIn33(game.MousePoint, c.Position))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
@@ -103,7 +102,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC03()
         {
             game.HandleIsLegalClick =
-                point => point.X > 0 && point.X < MainWindow.Column - 1 && point.Y > 0 && point.Y < MainWindow.Row - 1;
+                point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
             game.HandleIsTargetLegal = (SCee, point) => Calculate.IsIn33(point, SCee.Position) && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             AddPadButtonEvent(2);

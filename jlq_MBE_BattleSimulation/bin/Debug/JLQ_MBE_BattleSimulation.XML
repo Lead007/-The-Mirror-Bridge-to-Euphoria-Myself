@@ -4,6 +4,9 @@
         <name>JLQ_MBE_BattleSimulation</name>
     </assembly>
     <members>
+        <member name="T:JLQ_MBE_BattleSimulation.Alice">
+            <summary>爱丽丝·玛格特洛依德</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Alice.SC01">
             <summary>符卡01</summary>
         </member>
@@ -260,6 +263,20 @@
             <param name="intervalAdd">行动间隔增加量，负数则为减少</param>
             <param name="game">游戏对象</param>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.BuffSlowDownGain">
+            <summary>增加行动间隔的buff</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.BuffSlowDownGain.#ctor(JLQ_MBE_BattleSimulation.Character,JLQ_MBE_BattleSimulation.Character,System.Int32,System.Double,JLQ_MBE_BattleSimulation.Game)">
+            <summary>构造函数</summary>
+            <param name="buffee">buff承受者</param>
+            <param name="buffer">buff发出者</param>
+            <param name="time">buff持续时间</param>
+            <param name="intervalX">行动间隔增加量，负数则为减少</param>
+            <param name="game">游戏对象</param>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Chen">
+            <summary>橙</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Chen.SC01">
             <summary>符卡01</summary>
         </member>
@@ -483,6 +500,30 @@
         <member name="M:JLQ_MBE_BattleSimulation.Flandre.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.GameColor">
+            <summary>静态颜色类</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.GameColor.BaseColor">
+            <summary>控件的基础颜色</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.GameColor.PadBackground">
+            <summary>棋盘按钮的颜色</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.GameColor.LabelDefalutBackground">
+            <summary>角色标签的默认颜色</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.GameColor.LabelBackground">
+            <summary>角色标签改变后的颜色</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.GameColor.LabelBackground2">
+            <summary>角色标签改变后的颜色2</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.GameColor.LinearBrush">
+            <summary>按钮单击后的颜色</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.GameColor.GenerateColors">
+            <summary>生成颜色</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Gedama.SC01">
             <summary>符卡01</summary>
         </member>
@@ -576,6 +617,9 @@
         <member name="M:JLQ_MBE_BattleSimulation.Leira.EndSC03">
             <summary>结束符卡03</summary>
         </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Letty">
+            <summary>蕾蒂</summary>
+        </member>
         <member name="M:JLQ_MBE_BattleSimulation.Letty.SC01">
             <summary>符卡01</summary>
         </member>
@@ -611,6 +655,9 @@
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.LilyWhite.EndSC03">
             <summary>结束符卡03</summary>
+        </member>
+        <member name="T:JLQ_MBE_BattleSimulation.Lunasa">
+            <summary>露娜萨·普莉兹姆利巴</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Lunasa.SC01">
             <summary>符卡01</summary>
@@ -1634,8 +1681,17 @@
         <member name="T:JLQ_MBE_BattleSimulation.Game">
             <summary>游戏类</summary>
         </member>
+        <member name="F:JLQ_MBE_BattleSimulation.Game.Column">
+            <summary>棋盘列数</summary>
+        </member>
+        <member name="F:JLQ_MBE_BattleSimulation.Game.Row">
+            <summary>棋盘行数</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.DefaultPoint">
             <summary>默认点</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.CenterPoint">
+            <summary>棋盘中心</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.PadPoints">
             <summary>棋盘点集</summary>
@@ -1667,8 +1723,14 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.HasMoved">
             <summary>当前行动者是否已移动</summary>
         </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.IsMoving">
+            <summary>是否正在移动中</summary>
+        </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.HasAttacked">
             <summary>当前行动者是否已攻击</summary>
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.IsAttacking">
+            <summary>是否正在攻击中</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.Characters">
             <summary>游戏中所有角色列表</summary>
@@ -1706,11 +1768,11 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.LabelSection">
             <summary>当前阶段</summary>
         </member>
-        <member name="P:JLQ_MBE_BattleSimulation.Game.LabelAttack">
-            <summary>是否已攻击</summary>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.ButtonAttack">
+            <summary>攻击按钮</summary>
         </member>
-        <member name="P:JLQ_MBE_BattleSimulation.Game.LabelMove">
-            <summary>是否已移动</summary>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.ButtonMove">
+            <summary>移动按钮</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.Buttons">
             <summary>用以响应鼠标事件的按钮</summary>
@@ -1736,26 +1798,29 @@
         <member name="P:JLQ_MBE_BattleSimulation.Game.LabelGameTip">
             <summary>游戏提示标签</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.HandleAssignPointCanReach">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.HandleAssignPointCanReach">
             <summary>生成可到达点矩阵</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.HandleIsDead">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.HandleIsDead">
             <summary>判断是否死亡</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.HandleIsTargetLegal">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.HandleIsTargetLegal">
             <summary>传递参数，如何获取目标以及所需参数列表</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.HandleSelf">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.HandleSelf">
             <summary>传递参数，如何处理自己</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.HandleTarget">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.HandleTarget">
             <summary>传递参数，如何处理目标</summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.Game.HandleIsLegalClick">
+        <member name="P:JLQ_MBE_BattleSimulation.Game.HandleIsLegalClick">
             <summary>传递参数，判断单击位置是否有效</summary>
         </member>
         <member name="P:JLQ_MBE_BattleSimulation.Game.ScSelect">
             <summary>当前符卡序号，0为不处于符卡状态</summary> 
+        </member>
+        <member name="P:JLQ_MBE_BattleSimulation.Game.IsSCing">
+            <summary>是否处于符卡状态</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Game.#ctor">
             <summary>Game类的构造函数</summary>
@@ -1804,6 +1869,12 @@
         <member name="M:JLQ_MBE_BattleSimulation.Game.RemoveCharacter(JLQ_MBE_BattleSimulation.Character)">
             <summary>移除角色</summary>
             <param name="target">待移除的角色</param>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Game.PreparingSection">
+            <summary>准备阶段</summary>
+        </member>
+        <member name="M:JLQ_MBE_BattleSimulation.Game.EndSection">
+            <summary>结束阶段</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.Game.GetNextRoundCharacter">
             <summary>更新下个行动的角色,取currentTime最小的角色中Interval最大的角色中的随机一个</summary>
@@ -1891,17 +1962,8 @@
             MainWindow
             </summary>
         </member>
-        <member name="F:JLQ_MBE_BattleSimulation.MainWindow.Column">
-            <summary>棋盘列数</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.MainWindow.Row">
-            <summary>棋盘行数</summary>
-        </member>
         <member name="F:JLQ_MBE_BattleSimulation.MainWindow.game">
             <summary>game对象</summary>
-        </member>
-        <member name="F:JLQ_MBE_BattleSimulation.MainWindow.isSCing">
-            <summary>是否处于符卡状态</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.MainWindow.#ctor">
             <summary>构造函数</summary>
@@ -1922,12 +1984,6 @@
             <summary>网格单击事件</summary>
             <param name="leftButton">鼠标左键状态</param>
             <param name="middleButton">鼠标中键状态</param>
-        </member>
-        <member name="M:JLQ_MBE_BattleSimulation.MainWindow.PreparingSection">
-            <summary>准备阶段</summary>
-        </member>
-        <member name="M:JLQ_MBE_BattleSimulation.MainWindow.EndSection">
-            <summary>结束阶段</summary>
         </member>
         <member name="M:JLQ_MBE_BattleSimulation.MainWindow.RandomlyAddCharacters(JLQ_MBE_BattleSimulation.Group,System.Int32)">
             <summary>随机添加角色</summary>

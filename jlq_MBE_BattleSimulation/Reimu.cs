@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -22,7 +20,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 game.DefaultButtonAndLabels();
                 game.Characters.Where(c => IsInRangeAndEnemy(this.Position, SC01Range, c))
-                    .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeaveSCButtonDelegate(0);
             //符卡02
@@ -36,7 +34,7 @@ namespace JLQ_MBE_BattleSimulation
                 {
                     var c = game[p];
                     if (c == null) game.GetButton(p).Opacity = 1;
-                    else if (Enemy.Contains(c)) c.LabelDisplay.Background = Brushes.LightBlue;
+                    else if (Enemy.Contains(c)) c.LabelDisplay.Background = GameColor.LabelBackground;
                 }
             };
             SetDefaultLeavePadButtonDelegate(1);
@@ -75,7 +73,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC02()
         {
             game.HandleIsLegalClick =
-                point => point.X > 0 && point.X < MainWindow.Column - 1 && point.Y > 0 && point.Y < MainWindow.Row - 1;
+                point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
             game.HandleIsTargetLegal = (SCee, point) =>
             {
                 if (!Calculate.IsIn33(point, SCee.Position) || !IsEnemy(SCee)) return false;

@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -22,7 +20,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        this.game.DefaultButtonAndLabels();
 		        Game.PadPoints.Where(SC01IsLegalClick)
-		            .Aggregate((Brush) Brushes.White, (c, point) => game[point].LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (c, point) => game[point].LabelDisplay.Background = GameColor.LabelBackground);
 		        pointTemp1 = Game.DefaultPoint;
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
@@ -36,7 +34,7 @@ namespace JLQ_MBE_BattleSimulation
 		            game.GetButton(pointTemp1).Opacity = 1;
 		        }
 		        game.Characters.Where(SCee => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
                 pointTemp1 = Game.DefaultPoint;
             };
             SetDefaultLeavePadButtonDelegate(0);
@@ -46,7 +44,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        this.game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsInRangeAndEnemy(this.Position, SC02Range, c))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
             //显示将被攻击的目标
@@ -54,7 +52,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        if (!this.game.HandleIsLegalClick(game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
-		        game[game.MousePoint].LabelDisplay.Background = Brushes.LightBlue;
+		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -63,7 +61,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        this.game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC03Range, c))
-		            .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}

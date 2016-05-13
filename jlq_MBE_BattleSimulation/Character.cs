@@ -391,7 +391,7 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>移动至指定坐标</summary>
         /// <param name="end">移动的目标坐标</param>
-        public void Move(Point end)
+        public virtual void Move(Point end)
         {
             this.Position = end;
             Set();
@@ -400,10 +400,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>在各方向移动指定的值，若超限则取边界</summary>
         /// <param name="relativeX">移动的列向相对坐标</param>
         /// <param name="relativeY">移动的行向相对坐标</param>
-        public void Move(int relativeX, int relativeY)
+        public virtual void Move(int relativeX, int relativeY)
         {
-            Move(new Point(GetValidPosition((int) this.X + relativeX, MainWindow.Column),
-                GetValidPosition((int) this.Y + relativeY, MainWindow.Row)));
+            Move(new Point(GetValidPosition((int) this.X + relativeX, Game.Column),
+                GetValidPosition((int) this.Y + relativeY, Game.Row)));
         }
 
         /// <summary>对此角色而言的敌人列表</summary>

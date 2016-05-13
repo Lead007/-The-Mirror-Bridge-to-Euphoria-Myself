@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
 using Data;
+using static JLQ_MBE_BattleSimulation.GameColor;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -27,18 +28,8 @@ namespace JLQ_MBE_BattleSimulation
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>棋盘列数</summary>
-        public const int Column = 9;
-        /// <summary>棋盘行数</summary>
-        public const int Row = 9;
-
-        //private DispatcherTimer timer = new DispatcherTimer { Interval = new TimeSpan(0 /*TODO Set Interval*/) };//Timer对象
-
         /// <summary>game对象</summary>
         private readonly Game game;
-
-        /// <summary>是否处于符卡状态</summary>
-        private bool isSCing;
 
         /// <summary>构造函数</summary>
         public MainWindow()
@@ -56,6 +47,8 @@ namespace JLQ_MBE_BattleSimulation
                 comboBoxDisplay.Items.Add(cd.Display);
             }
             comboBoxDisplay.Items.Remove("芙分");
+            //初始化颜色
+            GenerateColors();
             //初始化game对象
             game = new Game();
             game.EventGridPadClick += GridPadMouseDown;
@@ -100,7 +93,7 @@ namespace JLQ_MBE_BattleSimulation
                         //清屏
                         game.DefaultButtonAndLabels();
                         game.SetButtonBackground(game.MousePoint, character.AttackRange);
-                        character.LabelDisplay.Background = Brushes.LightBlue;
+                        character.LabelDisplay.Background = LabelBackground;
                     }
                     //如果ctrl被按下
                     else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -111,7 +104,7 @@ namespace JLQ_MBE_BattleSimulation
                         game.DefaultButtonAndLabels();
 
                         game.SetButtonBackground(game.MousePoint, character.MoveAbility);
-                        character.LabelDisplay.Background = Brushes.LightBlue;
+                        character.LabelDisplay.Background = LabelBackground;
                     }
 
                 };
@@ -194,100 +187,52 @@ namespace JLQ_MBE_BattleSimulation
                     DoSC();
                     game.EndSC();
                 }
-                //如果单击的位置是合法移动点
-                else if (game.CanReachPoint[game.MouseColumn, game.MouseRow])
+                //如果正在移动中
+                else if (game.IsMoving)
                 {
-                    //如果已经移动过则操作非法
-                    if (game.HasMoved)
-                    {
-                        if (currentCharacter.Position != game.MousePoint)
-                        {
-                            Game.IllegalMessageBox("已移动过");
-                            return;
-                        }
-                        EndSection();
-                        return;
-                    }
+                    if (!game.CanReachPoint[game.MouseColumn, game.MouseRow]) return;
                     //移动
                     currentCharacter.Move(game.MousePoint);
                     game.HasMoved = true;
+                    game.IsMoving = false;
                     game.ResetPadButtons();
                     game.UpdateLabelBackground();
                     //如果同时已经攻击过则进入结束阶段
                     if (!game.HasAttacked || !game.HasMoved) return;
                     //Thread.Sleep(500);
-                    EndSection();
+                    game.EndSection();
                 }
-                //如果单击的位置是合法攻击点
-                else if (game.EnemyCanAttack.Contains(game[game.MousePoint]))
+                //如果正在攻击中
+                else if (game.IsAttacking)
                 {
-                    //如果已经攻击过则操作非法
-                    if (game.HasAttacked)
+                    if (game.MousePoint != currentCharacter.Position &&
+                        !game.EnemyCanAttack.Contains(game[game.MousePoint])) return;
+                    if (game.EnemyCanAttack.Contains(game[game.MousePoint]))
                     {
-                        Game.IllegalMessageBox("已攻击过");
-                        return;
+                        //获取目标
+                        var target = game[game.MousePoint];
+                        //攻击
+                        currentCharacter.HandleDoAttack(target);
+                        //死人提示
+                        game.HandleIsDead();
                     }
-                    //获取目标
-                    var target = game[game.MousePoint];
-                    //攻击
-                    currentCharacter.HandleDoAttack(target);
+                    //绘制屏幕
                     game.HasAttacked = true;
-                    game.EnemyCanAttack.Aggregate((Brush) Brushes.White,
-                        (cu, c) => c.LabelDisplay.Background = Brushes.White);
-
-                    //死人提示
-                    game.HandleIsDead();
+                    game.IsAttacking = false;
+                    game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
                     game.Generate_CanReachPoint();
                     game.PaintButton();
-
                     //如果同时已经移动过则进入结束阶段
                     if (!game.HasAttacked || !game.HasMoved) return;
                     //Thread.Sleep(500);
-                    EndSection();
+                    game.EndSection();
                 }
                 //单击位置非法，操作非法
                 else
                 {
-                    Game.IllegalMessageBox("选择位置非法");
+                    Game.IllegalMessageBox("请先选择操作类型");
                 }
             }
-        }
-
-        //游戏流程
-        /// <summary>准备阶段</summary>
-        private void PreparingSection()
-        {
-            //获取下个行动的角色
-            game.GetNextRoundCharacter();
-            for (var i = 0; i < 3; i++)
-            {
-                game.ButtonSC[i].Content = currentCharacter.Data.ScName[i + 1];
-                game.ButtonSC[i].ToolTip = currentCharacter.Data.ScDisc[i + 1];
-            }
-            game.PaintButton();
-
-            //跳转阶段
-            section = Section.Preparing;
-            game.BuffSettle(Section.Preparing);
-            currentCharacter.HandlePreparingSection();
-            if (!game.IsPreparingSectionContinue) return;
-            //Thread.Sleep(500);
-            section = Section.Round;
-        }
-        /// <summary>结束阶段</summary>
-        private void EndSection()
-        {
-            isSCing = false;
-            game.CharactersMayDie.Clear();
-            section = Section.End;
-            game.BuffSettle(Section.End);
-            //Thread.Sleep(1000);
-            currentCharacter.HandleEndSection();
-            if (!game.IsEndSectionContinue) return;
-
-            game.IsPreparingSectionContinue = true;
-            game.IsEndSectionContinue = true;
-            PreparingSection();
         }
 
         /// <summary>随机添加角色</summary>
@@ -296,9 +241,9 @@ namespace JLQ_MBE_BattleSimulation
         private void RandomlyAddCharacters(Group group, int number)
         {
             var points = new List<Point>();
-            for (var i = 0; i < Column; i++)
+            for (var i = 0; i < Game.Column; i++)
             {
-                for (var j = 0; j < Row; j++)
+                for (var j = 0; j < Game.Row; j++)
                 {
                     points.Add(new Point(i, j));
                 }
@@ -344,16 +289,16 @@ namespace JLQ_MBE_BattleSimulation
         private void SC(int index)
         {
             if (game.Section != Section.Round) return;
-            if (!isSCing)
+            if (!game.IsSCing)
             {
-                isSCing = true;
+                game.IsSCing = true;
                 game.SC(index);
                 if (game.HandleIsLegalClick != null) return;
                 DoSC();
             }
             else
             {
-                isSCing = false;
+                game.IsSCing = false;
             }
             game.EndSC();
         }
@@ -374,7 +319,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             game.EndSC();
             game.HasAttacked = true;
-            game.EnemyCanAttack.Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.White);
+            game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
             game.HandleIsDead();
 
             game.DefaultButtonAndLabels();
@@ -384,7 +329,7 @@ namespace JLQ_MBE_BattleSimulation
             //如果同时已经移动过则进入结束阶段
             if (!game.HasMoved) return;
             //Thread.Sleep(500);
-            EndSection();
+            game.EndSection();
         }
 
 
@@ -474,10 +419,12 @@ namespace JLQ_MBE_BattleSimulation
             buttonGenerateMiddle.IsEnabled = false;
             buttonSave.IsEnabled = false;
             buttonLoad.IsEnabled = false;
+            game.ButtonAttack.IsEnabled = true;
+            game.ButtonMove.IsEnabled = true;
             game.ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = true);
             labelShow.Foreground = Brushes.Black;
             game.TurnToBattle();
-            PreparingSection();
+            game.PreparingSection();
         }
 
         /// <summary>撤销上一次添加的角色</summary>
@@ -534,8 +481,8 @@ namespace JLQ_MBE_BattleSimulation
 
         private void gridGame_Loaded(object sender, RoutedEventArgs e)
         {
-            gridGame.Children.Add(game.LabelAttack);
-            gridGame.Children.Add(game.LabelMove);
+            gridGame.Children.Add(game.ButtonAttack);
+            gridGame.Children.Add(game.ButtonMove);
             game.LabelsGroup.Aggregate(0, (c, l) => gridGame.Children.Add(l));
         }
 
@@ -600,7 +547,7 @@ namespace JLQ_MBE_BattleSimulation
                 else
                 {
                     pp = p;
-                    p = p.Y == MainWindow.Row - 1 ? new Point(p.X + 1, 0) : new Point(p.X, p.Y + 1);
+                    p = p.Y == Game.Row - 1 ? new Point(p.X + 1, 0) : new Point(p.X, p.Y + 1);
                 }
                 Group gg;
                 if (File.Exists(pathc + Properties.Resources.Group))

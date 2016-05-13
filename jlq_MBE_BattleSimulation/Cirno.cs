@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -18,7 +17,7 @@ namespace JLQ_MBE_BattleSimulation
             //显示将攻击的敌人
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (SC01IsLegalClick(game.MousePoint)) game[game.MousePoint].LabelDisplay.Background = Brushes.LightBlue;
+		        if (SC01IsLegalClick(game.MousePoint)) game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡03
@@ -28,7 +27,7 @@ namespace JLQ_MBE_BattleSimulation
 		        var c = game[game.MousePoint];
 		        if (!IsEnemy(c)) return;
 		        game.DefaultButtonAndLabels();
-		        c.LabelDisplay.Background = Brushes.LightBlue;
+		        c.LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}

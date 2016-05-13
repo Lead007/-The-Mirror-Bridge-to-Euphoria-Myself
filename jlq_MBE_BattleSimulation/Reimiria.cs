@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -25,7 +24,7 @@ namespace JLQ_MBE_BattleSimulation
             enterButton[1] = (s, ev) =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                Enemy.Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeaveSCButtonDelegate(1);
             //符卡03
@@ -35,7 +34,7 @@ namespace JLQ_MBE_BattleSimulation
                 if (Calculate.Distance(game.MousePoint, this) != 1) return;
                 game.DefaultButtonAndLabels();
                 Enemy.Where(c => SC03IsTargetLegal(c, game.MousePoint))
-                    .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeavePadButtonDelegate(2);
         }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -21,7 +20,7 @@ namespace JLQ_MBE_BattleSimulation
                 if (!SC01IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
                 game.Characters.Where(c => SC01IsTargetLegal(c, game.MousePoint))
-                    .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
@@ -31,7 +30,7 @@ namespace JLQ_MBE_BattleSimulation
                 if (Calculate.Distance(game.MousePoint, this) != 1) return;
                 game.DefaultButtonAndLabels();
                 Enemy.Where(c => SC02IsTargetLegal(c, game.MousePoint))
-                    .Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -41,7 +40,7 @@ namespace JLQ_MBE_BattleSimulation
                 if (!SC03IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
                 var c = game[game.MousePoint];
-                c.LabelDisplay.Background = Brushes.LightBlue;
+                c.LabelDisplay.Background = GameColor.LabelBackground;
                 var point = Destination(c);
                 if (game[point] == null)
                 {
@@ -133,7 +132,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private static bool SC01IsLegalClick(Point point)
         {
-            return point.X > 0 && point.X < MainWindow.Column - 1 && point.Y > 0 && point.Y < MainWindow.Row - 1;
+            return point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
         }
 
         private bool SC01IsTargetLegal(Character SCee, Point point)
@@ -170,11 +169,11 @@ namespace JLQ_MBE_BattleSimulation
             return SCee.X == this.X
                 ? new Point(SCee.X,
                     SCee.Y > this.Y
-                        ? Math.Min(SCee.Y + SC03Const2, MainWindow.Row - 1)
+                        ? Math.Min(SCee.Y + SC03Const2, Game.Row - 1)
                         : Math.Max(SCee.Y - SC03Const2, 0))
                 : new Point(
                     SCee.X > this.X
-                        ? Math.Min(SCee.X + 2, MainWindow.Column - 1)
+                        ? Math.Min(SCee.X + 2, Game.Column - 1)
                         : Math.Max(SCee.X - SC03Const2, 0),
                     SCee.Y);
         }

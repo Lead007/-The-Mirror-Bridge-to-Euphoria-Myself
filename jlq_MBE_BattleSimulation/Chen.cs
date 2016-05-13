@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -14,18 +13,37 @@ namespace JLQ_MBE_BattleSimulation
 		public Chen(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+		    _skillMove = (l, m) =>
+		    {
+		        var c = this.game[game.MousePoint];
+		        if (!IsEnemy(c)) return;
+		        var p = this.X == c.X
+		            ? new Point(c.X, c.Y + (this.Y > c.Y ? 1 : -1))
+		            : new Point(c.X + (this.X > c.X ? 1 : -1), c.Y);
+		        if (game[p] != null) return;
+		        this.Move(p);
+		        HandleDoAttack(c, 0.5f);
+                game.HasMoved = true;
+                game.IsMoving = false;
+                game.ResetPadButtons();
+                game.UpdateLabelBackground();
+                //如果同时已经攻击过则进入结束阶段
+                if (!game.HasAttacked || !game.HasMoved) return;
+                //Thread.Sleep(500);
+                game.EndSection();
+            };
             enterPad[1] = (s, ev) =>
             {
                 if (Calculate.Distance(game.MousePoint, this) > SC02Range) return;
                 game.DefaultButtonAndLabels();
                 Enemy.Where(c => Calculate.Distance(game.MousePoint, c) <= 1)
-                    .Aggregate((Brush)Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeavePadButtonDelegate(1);
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        Enemy.Aggregate((Brush) Brushes.White, (cu, c) => c.LabelDisplay.Background = Brushes.LightBlue);
+		        Enemy.Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
@@ -39,9 +57,10 @@ namespace JLQ_MBE_BattleSimulation
             {
                 game.ButtonSC[2].IsEnabled = false;
             }
+            game.EventGridPadClick += _skillMove;
         }
 
-        //TODO 天赋
+        private DGridPadClick _skillMove;
 
         //符卡
         /// <summary>符卡01</summary>
