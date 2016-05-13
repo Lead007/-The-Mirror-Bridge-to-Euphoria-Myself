@@ -30,7 +30,7 @@ namespace JLQ_MBE_BattleSimulation
 	    public override void BeAttacked(int damage, Character attacker)
 	    {
 	        if (random.NextDouble() < 0.2) return;
-	        base.BeAttacked((int) (damage*0.8), attacker);
+	        base.BeAttacked((int)(damage*0.8), attacker);
 	    }
 
 	    //符卡

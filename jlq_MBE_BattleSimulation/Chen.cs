@@ -60,6 +60,12 @@ namespace JLQ_MBE_BattleSimulation
             game.EventGridPadClick += _skillMove;
         }
 
+        public override void EndSection()
+        {
+            base.EndSection();
+            game.EventGridPadClick -= _skillMove;
+        }
+
         private DGridPadClick _skillMove;
 
         //符卡

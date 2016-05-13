@@ -50,7 +50,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC01()
         {
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleSelf = () => MpGain((int) (this.Mp/10));
+            game.HandleSelf = () => MpGain(this.Mp/10);
         }
 
         /// <summary>结束符卡01</summary>

@@ -137,7 +137,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.AddCharacter(point, group, display);
             menuBackout.IsEnabled = true;
-            var labelTemp = game.LabelsGroup[(int) group + 1];
+            var labelTemp = game.LabelsGroup[(int)group + 1];
             labelTemp.Content = Convert.ToInt32(labelTemp.Content) + 1;
         }
 

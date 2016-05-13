@@ -50,7 +50,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>距离值</returns>
         public static int Distance(Point point1, Point point2)
         {
-            return (int) (Math.Abs(point1.X - point2.X) + Math.Abs(point1.Y - point2.Y));
+            return (int)(Math.Abs(point1.X - point2.X) + Math.Abs(point1.Y - point2.Y));
         }
         /// <summary>求一点和一角色的距离</summary>
         /// <param name="point1">点1</param>
@@ -108,7 +108,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>取整结果</returns>
         public static int Floor(double number)
         {
-            return (int) Math.Floor(number);
+            return (int)Math.Floor(number);
         }
 
         /// <summary>目标点是否在源点3*3范围内</summary>

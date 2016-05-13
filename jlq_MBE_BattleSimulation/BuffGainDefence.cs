@@ -18,8 +18,8 @@ namespace JLQ_MBE_BattleSimulation
         public BuffGainDefence(Character buffee, Character buffer, int time, float defenceGain, Game game)
             : base(buffee, buffer, time,
                 defenceGain >= 0
-                    ? string.Format("坚固：防御增加{0}%", (int) (defenceGain*100))
-                    : string.Format("破碎：防御降低{0}%", (int) (-defenceGain*100)), defenceGain > 0, game)
+                    ? string.Format("坚固：防御增加{0}%", (int)(defenceGain*100))
+                    : string.Format("破碎：防御降低{0}%", (int)(-defenceGain*100)), defenceGain > 0, game)
         {
             BuffAffect += (bee, ber) => bee._defenceX *= (1 + defenceGain);
             BuffCancels += (bee, ber) => bee._defenceX /= (1 + defenceGain);

@@ -119,7 +119,7 @@ namespace JLQ_MBE_BattleSimulation
                 }
                 var point = Destination(SCee);
                 if (game[point] == null) SCee.Move(point);
-                SCee.HandleBeAttacked((int) damage, this);
+                SCee.HandleBeAttacked((int)damage, this);
             };
             AddPadButtonEvent(2);
         }

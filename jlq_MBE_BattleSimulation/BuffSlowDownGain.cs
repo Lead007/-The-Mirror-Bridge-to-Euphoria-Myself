@@ -18,8 +18,8 @@ namespace JLQ_MBE_BattleSimulation
         public BuffSlowDownGain(Character buffee, Character buffer, int time, double intervalX, Game game)
             : base(buffee, buffer, time,
                 intervalX >= 0.0
-                    ? string.Format("缓慢：行动间隔+{0}%", (int) (intervalX*100))
-                    : string.Format("速度：行动间隔-{0}%", -(int) (intervalX*100)), intervalX < 0, game)
+                    ? string.Format("缓慢：行动间隔+{0}%", (int)(intervalX*100))
+                    : string.Format("速度：行动间隔-{0}%", -(int)(intervalX*100)), intervalX < 0, game)
         {
             BuffAffect += (bee, ber) => bee._intervalX *= (1 + intervalX);
             BuffCancels += (bee, ber) => bee._intervalX /= (1 + intervalX);

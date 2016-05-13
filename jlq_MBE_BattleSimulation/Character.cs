@@ -165,9 +165,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>名字</summary>
         public string Name => Data.Name;
         /// <summary>Column坐标</summary>
-        public int X => (int) this.Position.X;
+        public int X => (int)this.Position.X;
         /// <summary>Row坐标</summary>
-        public int Y => (int) this.Position.Y;
+        public int Y => (int)this.Position.Y;
 
         /// <summary>攻击结算的委托对象</summary>
         public DDoAttack HandleDoAttack { get; set; }
@@ -309,7 +309,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="hp">治疗的体力值</param>
         public void Cure(double hp)
         {
-            Cure((int) hp);
+            Cure((int)hp);
         }
 
         /// <summary>被攻击</summary>
@@ -402,8 +402,8 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="relativeY">移动的行向相对坐标</param>
         public virtual void Move(int relativeX, int relativeY)
         {
-            Move(new Point(GetValidPosition((int) this.X + relativeX, Game.Column),
-                GetValidPosition((int) this.Y + relativeY, Game.Row)));
+            Move(new Point(GetValidPosition((int)this.X + relativeX, Game.Column),
+                GetValidPosition((int)this.Y + relativeY, Game.Row)));
         }
 
         /// <summary>对此角色而言的敌人列表</summary>
@@ -650,7 +650,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             if (c == null) return false;
             return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
-                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int) this.Group));
+                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int)this.Group));
         }
     }
 }

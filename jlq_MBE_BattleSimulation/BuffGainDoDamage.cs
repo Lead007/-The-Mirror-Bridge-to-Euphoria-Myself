@@ -18,8 +18,8 @@ namespace JLQ_MBE_BattleSimulation
         public BuffGainDoDamage(Character buffee, Character buffer, int time, float damageGain, Game game)
             : base(buffee, buffer, time,
                 damageGain > 0
-                    ? string.Format("力量：伤害增加{0}%", (int) (damageGain*100))
-                    : string.Format("无力：伤害降低{0}%", (int) (-damageGain*100)), damageGain > 0, game)
+                    ? string.Format("力量：伤害增加{0}%", (int)(damageGain*100))
+                    : string.Format("无力：伤害降低{0}%", (int)(-damageGain*100)), damageGain > 0, game)
         {
             BuffAffect += (bee, ber) =>
             {

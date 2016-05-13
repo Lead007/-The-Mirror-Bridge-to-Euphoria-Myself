@@ -94,7 +94,7 @@ namespace JLQ_MBE_BattleSimulation
             //判断是否命中
             if (HandleIsHit(target)) return;
             //造成无来源伤害
-            var damageNew = (int) (damage*0.3*FloatDamage);
+            var damageNew = (int)(damage*0.3*FloatDamage);
             target.BeAttacked(damageNew, null);
         }
 

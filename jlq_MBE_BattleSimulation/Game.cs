@@ -53,10 +53,10 @@ namespace JLQ_MBE_BattleSimulation
         public Point MousePoint { get; set; } = new Point(-1, -1);
 
         /// <summary>鼠标网格位置的Column值</summary>
-        public int MouseColumn => (int) MousePoint.X;
+        public int MouseColumn => (int)MousePoint.X;
 
         /// <summary>鼠标网格位置的Row值</summary>
-        public int MouseRow => (int) MousePoint.Y;
+        public int MouseRow => (int)MousePoint.Y;
 
         private Section? _section;
 
@@ -655,7 +655,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns></returns>
         public Button GetButton(Point point)
         {
-            return Buttons[(int) point.X, (int) point.Y];
+            return Buttons[(int)point.X, (int)point.Y];
         }
 
         /// <summary>改为战斗模式</summary>
