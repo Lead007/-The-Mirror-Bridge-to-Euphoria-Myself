@@ -17,14 +17,14 @@ namespace JLQ_MBE_BattleSimulation
             //显示将攻击的敌人
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (SC01IsLegalClick(game.MousePoint)) game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
+		        if (SC01IsLegalClick(game.MousePoint)) game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡03
             //显示将攻击的敌人
             enterPad[2] = (s, ev) =>
 		    {
-		        var c = game[game.MousePoint];
+		        var c = game.MouseCharacter;
 		        if (!IsEnemy(c)) return;
 		        game.DefaultButtonAndLabels();
 		        c.LabelDisplay.Background = GameColor.LabelBackground;

@@ -88,7 +88,7 @@ namespace JLQ_MBE_BattleSimulation
                     //如果shift被按下
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                     {
-                        var character = game[game.MousePoint];
+                        var character = game.MouseCharacter;
                         if (character == null) return;
                         //清屏
                         game.DefaultButtonAndLabels();
@@ -98,7 +98,7 @@ namespace JLQ_MBE_BattleSimulation
                     //如果ctrl被按下
                     else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                     {
-                        var character = game[game.MousePoint];
+                        var character = game.MouseCharacter;
                         if (character == null) return;
                         //清屏
                         game.DefaultButtonAndLabels();
@@ -206,11 +206,11 @@ namespace JLQ_MBE_BattleSimulation
                 else if (game.IsAttacking)
                 {
                     if (game.MousePoint != currentCharacter.Position &&
-                        !game.EnemyCanAttack.Contains(game[game.MousePoint])) return;
-                    if (game.EnemyCanAttack.Contains(game[game.MousePoint]))
+                        !game.EnemyCanAttack.Contains(game.MouseCharacter)) return;
+                    if (game.EnemyCanAttack.Contains(game.MouseCharacter))
                     {
                         //获取目标
-                        var target = game[game.MousePoint];
+                        var target = game.MouseCharacter;
                         //攻击
                         currentCharacter.HandleDoAttack(target);
                         //死人提示

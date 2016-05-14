@@ -43,7 +43,7 @@ namespace JLQ_MBE_BattleSimulation
             enterButton[1] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(this.Position, SC02Range, c))
+		        game.Characters.Where(c => IsInRangeAndEnemy(SC02Range, c))
 		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
@@ -52,7 +52,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        if (!this.game.HandleIsLegalClick(game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
-		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
+		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -87,7 +87,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void BeAttacked(int damage, Character attacker)
         {
             base.BeAttacked(damage, attacker);
-            var legalTarget = game.Characters.Where(c => IsInRangeAndEnemy(this.Position, skillRange, c)).ToArray();
+            var legalTarget = game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c)).ToArray();
             if (legalTarget.Length == 0) return;
             var index = random.Next(legalTarget.Length);
             var target = legalTarget[index];
@@ -122,7 +122,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsLegalClick = point =>
             {
                 var c = game[point];
-                return c != null && IsInRangeAndEnemy(this.Position, SC02Range, c);
+                return c != null && IsInRangeAndEnemy(SC02Range, c);
             };
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02DamageGain);
@@ -169,7 +169,7 @@ namespace JLQ_MBE_BattleSimulation
         private bool SC01IsLegalClick(Point point)
         {
             var c = game[point];
-            if (c == null || (!IsInRangeAndEnemy(this.Position, SC01Range, c))) return false;
+            if (c == null || (!IsInRangeAndEnemy(SC01Range, c))) return false;
             pointTemp1 = c.Y == this.Y
                 ? new Point(c.X + (c.X > this.X ? -1 : 1), c.Y)
                 : new Point(c.X, c.Y + (c.Y > this.Y ? -1 : 1));

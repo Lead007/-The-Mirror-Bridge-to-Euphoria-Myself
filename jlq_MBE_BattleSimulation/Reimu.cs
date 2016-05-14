@@ -19,7 +19,7 @@ namespace JLQ_MBE_BattleSimulation
             enterButton[0] = (s, ev) =>
             {
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => IsInRangeAndEnemy(this.Position, SC01Range, c))
+                game.Characters.Where(c => IsInRangeAndEnemy(SC01Range, c))
                     .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeaveSCButtonDelegate(0);
@@ -59,7 +59,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡01：梦想封印，对所有4格内的敌人造成1.0倍率的弹幕攻击</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(this.Position, SC01Range, SCee);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC01Range, SCee);
             game.HandleTarget = t => HandleDoDanmakuAttack(t);
         }
 

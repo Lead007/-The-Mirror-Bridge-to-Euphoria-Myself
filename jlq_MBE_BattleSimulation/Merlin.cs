@@ -7,15 +7,25 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-    class Merlin : Character
+    /// <summary>梅露兰·普莉兹姆利巴</summary>
+    class Merlin : CharacterPrismriver
 	{
 		public Merlin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
 
-		}
+        }
 
-        //TODO 天赋
+        public override void PreparingSection()
+        {
+            base.PreparingSection();
+            foreach (var buff in
+                    game.Characters.Where(c => c.Group == this.Group && Calculate.Distance(c, this) <= skillRange)
+                        .Select(c => new BuffSlowDownGain(c, this, this.Interval, -0.1f, game)))
+            {
+                buff.BuffTrigger();
+            }
+        }
 
         //符卡
         /// <summary>符卡01</summary>
@@ -38,16 +48,6 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
-        {
-
-        }
-        /// <summary>符卡03</summary>
-        public override void SC03()
-        {
-            //TODO SC03
-        }
-        /// <summary>结束符卡03</summary>
-        public override void EndSC03()
         {
 
         }

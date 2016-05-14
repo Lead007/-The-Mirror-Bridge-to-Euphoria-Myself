@@ -34,7 +34,7 @@ namespace JLQ_MBE_BattleSimulation
 		        {
 		            game.GetButton(pointTemp1).Opacity = 1;
 		        }
-		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
+		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
 		        pointTemp1 = Game.DefaultPoint;
 		    };
             SetDefaultLeavePadButtonDelegate(0);
@@ -52,7 +52,7 @@ namespace JLQ_MBE_BattleSimulation
 		    {
 		        if (!SC02IsLegalClick(game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
-		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
+		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //显示将回血的角色

@@ -59,4 +59,55 @@ namespace JLQ_MBE_BattleSimulation
             return temp;
         }
     }
+
+    /// <summary>普莉兹姆利巴角色</summary>
+    public abstract class CharacterPrismriver : Character
+    {
+        /// <summary>构造函数</summary>
+        /// <param name="id">ID</param>
+        /// <param name="position">角色位置</param>
+        /// <param name="group">角色阵营</param>
+        /// <param name="random">随机数对象</param>
+        /// <param name="game">游戏对象</param>
+        protected CharacterPrismriver(int id, Point position, Group group, Random random, Game game)
+            : base(id, position, group, random, game)
+        {
+            //符卡03
+            //显示将被攻击的角色
+            enterButton[2] = (s, ev) =>
+            {
+                game.DefaultButtonAndLabels();
+                game.Characters.Where(c => IsInRangeAndEnemy(SC03Range, c))
+                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+            };
+            SetDefaultLeaveSCButtonDelegate(2);
+        }
+
+        protected const int skillRange = 3;
+        private const int SC03Range = 5;
+        private const float SC03Gain = 0.7f;
+
+        /// <summary>符卡03</summary>
+        public override void SC03()
+        {
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC03Range, SCee);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
+        }
+        /// <summary>结束符卡03</summary>
+        public override void EndSC03()
+        {
+            base.EndSC03();
+        }
+
+        public override void SCShow()
+        {
+            AddSCButtonEvent(2);
+        }
+
+        public override void ResetSCShow()
+        {
+            RemoveSCButtonEvent(2);
+        }
+
+    }
 }

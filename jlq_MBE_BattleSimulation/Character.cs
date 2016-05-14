@@ -643,6 +643,15 @@ namespace JLQ_MBE_BattleSimulation
             return Calculate.Distance(origin, c) <= range && IsEnemy(c);
         }
 
+        /// <summary>是否是在自己周围某范围内的敌人</summary>
+        /// <param name="range">范围</param>
+        /// <param name="c">待判断的角色</param>
+        /// <returns>是否符合</returns>
+        protected bool IsInRangeAndEnemy(int range, Character c)
+        {
+            return IsInRangeAndEnemy(this.Position, range, c);
+        }
+
         /// <summary>判断角色是否为敌人</summary>
         /// <param name="c">待判断的角色</param>
         /// <returns>是否为敌人</returns>

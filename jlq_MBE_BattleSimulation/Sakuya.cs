@@ -19,7 +19,7 @@ namespace JLQ_MBE_BattleSimulation
 		        game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC02Range, c))
 		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
-		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground2;
+		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground2;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}

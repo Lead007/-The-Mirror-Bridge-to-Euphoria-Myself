@@ -39,7 +39,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 if (!SC03IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
-                var c = game[game.MousePoint];
+                var c = game.MouseCharacter;
                 c.LabelDisplay.Background = GameColor.LabelBackground;
                 var point = Destination(c);
                 if (game[point] == null)

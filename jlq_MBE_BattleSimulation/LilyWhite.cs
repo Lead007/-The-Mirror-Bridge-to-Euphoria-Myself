@@ -22,7 +22,7 @@ namespace JLQ_MBE_BattleSimulation
 		        }
 		        else
 		        {
-		            game.Characters.Where(c => IsInRangeAndEnemy(this.Position, SC01Range, c))
+		            game.Characters.Where(c => IsInRangeAndEnemy(SC01Range, c))
 		                .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		        }
 		    };
@@ -30,9 +30,9 @@ namespace JLQ_MBE_BattleSimulation
 		    enterPad[1] = (s, ev) =>
 		    {
 		        if (IsWhite && (!SC02WhiteIsLegalClick(game.MousePoint))) return;
-		        if ((!IsWhite) && (!IsEnemy(game[game.MousePoint]))) return;
+		        if ((!IsWhite) && (!IsEnemy(game.MouseCharacter))) return;
 		        game.DefaultButtonAndLabels();
-		        game[game.MousePoint].LabelDisplay.Background = GameColor.LabelBackground;
+		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}
@@ -64,7 +64,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             else
             {
-                game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(this.Position, SC01Range, SCee);
+                game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC01Range, SCee);
                 game.HandleTarget = SCee =>
                 {
                     HandleDoDanmakuAttack(SCee);

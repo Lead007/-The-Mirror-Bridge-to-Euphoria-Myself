@@ -15,7 +15,7 @@ namespace JLQ_MBE_BattleSimulation
 		{
 		    _skillMove = (l, m) =>
 		    {
-		        var c = this.game[game.MousePoint];
+		        var c = this.game.MouseCharacter;
 		        if (!IsEnemy(c)) return;
 		        var p = this.X == c.X
 		            ? new Point(c.X, c.Y + (this.Y > c.Y ? 1 : -1))

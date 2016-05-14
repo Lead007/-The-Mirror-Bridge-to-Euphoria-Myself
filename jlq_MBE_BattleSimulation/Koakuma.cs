@@ -17,7 +17,7 @@ namespace JLQ_MBE_BattleSimulation
             //显示将获得buff的队友
 		    enterPad[1] = (s, ev) =>
 		    {
-		        var c = game[game.MousePoint];
+		        var c = game.MouseCharacter;
 		        if (!IsFriend(c)) return;
 		        game.DefaultButtonAndLabels();
 		        c.LabelDisplay.Background = GameColor.LabelBackground;

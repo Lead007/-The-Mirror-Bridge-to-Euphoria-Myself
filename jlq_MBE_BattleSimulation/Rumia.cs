@@ -22,7 +22,7 @@ namespace JLQ_MBE_BattleSimulation
             //显示将被攻击的角色
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (game[game.MousePoint] != null) return;
+		        if (game.MouseCharacter != null) return;
 		        game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC01Range, c))
 		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
@@ -32,7 +32,7 @@ namespace JLQ_MBE_BattleSimulation
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(SCee => IsInRangeAndEnemy(this.Position, SC03Range, SCee))
+		        game.Characters.Where(SCee => IsInRangeAndEnemy(SC03Range, SCee))
 		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
@@ -104,7 +104,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC03()
         {
             game.HandleIsTargetLegal =
-                (SCee, point) => IsInRangeAndEnemy(this.Position, SC03Range, SCee);
+                (SCee, point) => IsInRangeAndEnemy(SC03Range, SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             //TODO back mp
         }

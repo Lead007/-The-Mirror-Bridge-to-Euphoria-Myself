@@ -54,9 +54,11 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>鼠标网格位置的Column值</summary>
         public int MouseColumn => (int)MousePoint.X;
-
         /// <summary>鼠标网格位置的Row值</summary>
         public int MouseRow => (int)MousePoint.Y;
+
+        /// <summary>鼠标网格位置的角色</summary>
+        public Character MouseCharacter => this[this.MousePoint];
 
         private Section? _section;
 
