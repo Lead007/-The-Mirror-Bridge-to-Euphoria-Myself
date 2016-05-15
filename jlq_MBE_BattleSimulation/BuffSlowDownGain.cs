@@ -21,8 +21,8 @@ namespace JLQ_MBE_BattleSimulation
                     ? string.Format("缓慢：行动间隔+{0}%", (int)(intervalX*100))
                     : string.Format("速度：行动间隔-{0}%", -(int)(intervalX*100)), intervalX < 0, game)
         {
-            BuffAffect += (bee, ber) => bee._intervalX *= (1 + intervalX);
-            BuffCancels += (bee, ber) => bee._intervalX /= (1 + intervalX);
+            BuffAffect += (bee, ber) => bee.IntervalX = intervalX;
+            BuffCancels += (bee, ber) => bee.IntervalX = intervalX;
         }
     }
 }

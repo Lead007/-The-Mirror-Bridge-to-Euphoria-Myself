@@ -9,7 +9,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>灵梦</summary>
-    class Reimu : CharacterMovingIgnoreEnemy
+    class Reimu : CharacterTeleportMoving
     {
         public Reimu(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)

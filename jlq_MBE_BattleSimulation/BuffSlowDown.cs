@@ -21,8 +21,8 @@ namespace JLQ_MBE_BattleSimulation
                     ? string.Format("缓慢：行动间隔+{0}", intervalAdd)
                     : string.Format("速度：行动间隔-{0}", -intervalAdd), intervalAdd < 0, game)
         {
-            BuffAffect += (bee, ber) => bee._intervalAdd += intervalAdd;
-            BuffCancels += (bee, ber) => bee._intervalAdd -= intervalAdd;
+            BuffAffect += (bee, ber) => bee.IntervalAdd = intervalAdd;
+            BuffCancels += (bee, ber) => bee.IntervalAdd = intervalAdd;
         }
     }
 }

@@ -9,14 +9,14 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>冴月麟</summary>
-    class Rin : Character
+    class Rin : CharacterHitBack
 	{
 		public Rin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
             //符卡01
             //显示有效单击点
-		    enterButton[0] = (s, ev) =>
+            enterButton[0] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
 		        Game.PadPoints.Where(SC01IsLegalClick)
@@ -81,22 +81,10 @@ namespace JLQ_MBE_BattleSimulation
 
 	    private Point pointTemp1 = Game.DefaultPoint;
 
-        /// <summary>天赋：当你受到攻击时，对2格内随机一名敌方单位造成所受伤害30%的真实伤害</summary>
-        /// <param name="damage">伤害值</param>
-        /// <param name="attacker">攻击者</param>
-        public override void BeAttacked(int damage, Character attacker)
-        {
-            base.BeAttacked(damage, attacker);
-            var legalTarget = game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c)).ToArray();
-            if (legalTarget.Length == 0) return;
-            var index = random.Next(legalTarget.Length);
-            var target = legalTarget[index];
-            //判断是否命中
-            if (HandleIsHit(target)) return;
-            //造成无来源伤害
-            var damageNew = (int)(damage*0.3*FloatDamage);
-            target.BeAttacked(damageNew, null);
-        }
+        //天赋
+        protected override IEnumerable<Character> LegalHitBackTarget
+            => game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c));
+
 
         //符卡
         /// <summary>符卡01：乘着风，瞬移到3格内一名敌方角色面前，并释放旋风对自身2格内所有敌方单位造成0.5倍率的伤害</summary>

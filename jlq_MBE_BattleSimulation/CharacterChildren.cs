@@ -9,7 +9,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>移动无视敌方角色的碰撞箱的角色</summary>
-    public abstract class CharacterMovingIgnoreEnemy:Character
+    public abstract class CharacterTeleportMoving:Character
     {
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>
@@ -17,7 +17,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected CharacterMovingIgnoreEnemy(int id, Point position, Group group, Random random, Game game)
+        protected CharacterTeleportMoving(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)
         {
 
@@ -25,6 +25,37 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>重写基类的阻挡的敌人位置，返回一个空列表</summary>
         public override IEnumerable<Point> EnemyBlock => new List<Point>();
+    }
+
+    public abstract class CharacterHitBack : Character
+    {
+        /// <summary>构造函数</summary>
+        /// <param name="id">ID</param>
+        /// <param name="position">角色位置</param>
+        /// <param name="group">角色阵营</param>
+        /// <param name="random">随机数对象</param>
+        /// <param name="game">游戏对象</param>
+        protected CharacterHitBack(int id, Point position, Group group, Random random, Game game)
+            : base(id, position, group, random, game)
+        {
+
+        }
+
+        protected abstract IEnumerable<Character> LegalHitBackTarget { get; }
+
+        public override void BeAttacked(int damage, Character attacker)
+        {
+            base.BeAttacked(damage, attacker);
+            var legalTarget = this.LegalHitBackTarget.ToArray();
+            if (legalTarget.Length == 0) return;
+            var index = random.Next(legalTarget.Length);
+            var target = legalTarget[index];
+            //判断是否命中
+            if (HandleIsHit(target)) return;
+            //造成无来源伤害
+            var damageNew = (int)(damage * 0.3 * FloatDamage);
+            target.BeAttacked(damageNew, null);
+        }
     }
 
     /// <summary>可能有多次普通的角色</summary>

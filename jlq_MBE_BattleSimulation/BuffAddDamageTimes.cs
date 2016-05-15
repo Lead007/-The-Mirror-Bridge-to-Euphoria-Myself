@@ -20,5 +20,6 @@ namespace JLQ_MBE_BattleSimulation
             BuffAffect += (bee, ber) => buffer.DamageTimes += damageTimesAdd;
             BuffCancels += (bee, ber) => buffer.DamageTimes -= damageTimesAdd;
         }
+
     }
 }

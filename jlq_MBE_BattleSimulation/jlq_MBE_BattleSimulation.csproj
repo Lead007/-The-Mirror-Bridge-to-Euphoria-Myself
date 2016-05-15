@@ -69,7 +69,9 @@
     <Compile Include="AttackModel.cs" />
     <Compile Include="BuffAddDamageTimes.cs" />
     <Compile Include="BuffAddMoveAbility.cs" />
+    <Compile Include="BuffAddProperty.cs" />
     <Compile Include="BuffBlooding.cs" />
+    <Compile Include="BuffChildren.cs" />
     <Compile Include="BuffCure.cs" />
     <Compile Include="BuffDecreaseMoveAbilityWhenHit.cs" />
     <Compile Include="BuffGainAttack.cs" />
@@ -78,10 +80,10 @@
     <Compile Include="BuffAddRumiaSkillNum.cs" />
     <Compile Include="BuffCannotMove.cs" />
     <Compile Include="BuffAddDefence.cs" />
-    <Compile Include="BuffExecuteImmediately.cs" />
-    <Compile Include="BuffExecuteInSection.cs" />
     <Compile Include="BuffGainDefence.cs" />
     <Compile Include="BuffGainDoDamage.cs" />
+    <Compile Include="BuffGainDodgeRate.cs" />
+    <Compile Include="BuffGainProperty.cs" />
     <Compile Include="BuffLetBloodingWhenBeAttacked.cs" />
     <Compile Include="BuffLimit.cs" />
     <Compile Include="BuffMpGain.cs" />

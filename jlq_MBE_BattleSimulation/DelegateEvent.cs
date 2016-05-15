@@ -78,7 +78,8 @@ namespace JLQ_MBE_BattleSimulation
     /// <param name="enemies">原敌人列表</param>
     /// <returns>修改后的敌人列表</returns>
     public delegate IEnumerable<Point> DEnemyBlock(IEnumerable<Point> enemies);
-    //buff相关
+    //Character子类相关
+    //Buff子类相关
     //BuffLimit
     /// <summary>判断点是否为虚拟敌人</summary>
     /// <param name="origin">原点</param>

@@ -27,25 +27,75 @@ namespace JLQ_MBE_BattleSimulation
         public Group Group { get; }
 
         //可变字段
-        //增益
+        //增益与增量
         /// <summary>攻击增益</summary>
-        public virtual double _attackX { get; set; } = 1.0f;
+        private double _attackX = 1.0f;
+        public double AttackX
+        {
+            set { _attackX *= (1 + value); }
+        }
         /// <summary>攻击增量</summary>
-        public int _attackAdd { get; set; } = 0;
-        /// <summary>防御增益</summary>
-        public double _defenceX { get; set; } = 1.0f;
-        /// <summary>防御增量</summary>
-        public int _defenceAdd { get; set; } = 0;
-        /// <summary>命中率增益</summary>
-        public double _hitRateX { private get; set; } = 1.0f;
-        /// <summary>闪避率增益</summary>
-        public double _dodgeRateX { private get; set; } = 1.0f;
-        /// <summary>近战补正增益</summary>
-        public double _closeAmendmentX { private get; set; } = 1.0f;
+        private int _attackAdd = 0;
+        public int AttackAdd
+        {
+            set { _attackAdd += value; }
+        }
 
-        private double __intervalX = 1.0f;
+        /// <summary>防御增益</summary>
+        private double _defenceX = 1.0f;
+        public double DefenceX
+        {
+            set { _defenceX *= (1 + value); }
+        }
+        /// <summary>防御增量</summary>
+        public int _defenceAdd = 0;
+        public int DefenceAdd
+        {
+            set { _defenceAdd += value; }
+        }
+
+        /// <summary>命中率增益</summary>
+        private double _hitRateX = 1.0f;
+        public double HitRateX
+        {
+            set { _hitRateX *= (1 + value); }
+        }
+        /// <summary>命中率增量</summary>
+        private int _hitRateAdd = 0;
+        public int HitRateAdd
+        {
+            set { _hitRateAdd += value; }
+        }
+
+        /// <summary>闪避率增益</summary>
+        private double _dodgeRateX = 1.0f;
+        public double DodgeRateX
+        {
+            set { _dodgeRateX *= (1 + value); }
+        }
+        /// <summary>闪避率增益</summary>
+        private int _dodgeRateAdd = 0;
+        public int DodgeRateAdd
+        {
+            set { _dodgeRateAdd += value; }
+        }
+
+        /// <summary>近战补正增益</summary>
+        private double _closeAmendmentX = 1.0f;
+        public double CloseAmendmentX
+        {
+            set { _closeAmendmentX *= (1 + value); }
+        }
+        /// <summary>近战补正增量</summary>
+        private double _clostAmendmentAdd = 0;
+        public double CloseAmendmentAdd
+        {
+            set { _clostAmendmentAdd += value; }
+        }
+
         /// <summary>行动间隔增益</summary>
-        public double _intervalX
+        private double __intervalX = 1.0f;
+        private double _intervalX
         {
             get { return __intervalX; }
             set
@@ -55,10 +105,13 @@ namespace JLQ_MBE_BattleSimulation
                 BarTime.Maximum = Interval;
             }
         }
-
-        private int __intervalAdd;
+        public double IntervalX
+        {
+            set { _intervalX *= (1 + value); }
+        }
         /// <summary>行动间隔增量</summary>
-        public int _intervalAdd
+        private int __intervalAdd;
+        private int _intervalAdd
         {
             get { return __intervalAdd; }
             set
@@ -69,10 +122,24 @@ namespace JLQ_MBE_BattleSimulation
                 CurrentTime = Math.Max(0, CurrentTime - i + Interval);
             }
         }
+        public int IntervalAdd
+        {
+            set { _intervalAdd += value; }
+        }
+
         /// <summary>机动增量</summary>
-        public int _moveAbilityAdd { get; set; } = 0;
+        private int _moveAbilityAdd = 0;
+        public int MoveAbilityAdd
+        {
+            set { _moveAbilityAdd += value; }
+        }
+
         /// <summary>攻击范围增量</summary>
-        public int _attackRangeAdd { get; set; } = 0;
+        private int _attackRangeAdd = 0;
+        public int AttackRangeAdd
+        {
+            set { _attackRangeAdd += value; }
+        }
 
         /// <summary>随机数对象</summary>
         protected Random random;
@@ -143,11 +210,11 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>防御</summary>
         public int Defence => Math.Max(0, Calculate.Floor(Data.Defence*_defenceX) + _defenceAdd);
         /// <summary>命中率</summary>
-        public int HitRate => Calculate.Floor(Data.HitRate*_hitRateX);
+        public int HitRate => Math.Max(0, Calculate.Floor(Data.HitRate*_hitRateX) + _hitRateAdd);
         /// <summary>闪避率</summary>
-        public int DodgeRate => Calculate.Floor(Data.DodgeRate*_dodgeRateX);
+        public int DodgeRate => Math.Max(0, Calculate.Floor(Data.DodgeRate*_dodgeRateX) + _dodgeRateAdd);
         /// <summary>近战补正</summary>
-        public int CloseAmendment => Calculate.Floor(Data.CloseAmendment*_closeAmendmentX);
+        public double CloseAmendment => Math.Max(0, Data.CloseAmendment*_closeAmendmentX + _clostAmendmentAdd);
         /// <summary>行动间隔</summary>
         public int Interval => Math.Max(1, Calculate.Floor(Data.Interval*_intervalX + _intervalAdd));
         /// <summary>机动</summary>
@@ -526,9 +593,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>近战增益</summary>
         /// <param name="target">攻击目标</param>
         /// <returns>近战增益</returns>
-        protected virtual float CloseGain(Character target)
+        protected virtual double CloseGain(Character target)
         {
-            float closeGain;
+            double closeGain;
             var distance = Calculate.Distance(this, target);
             if (distance == 1)
             {
