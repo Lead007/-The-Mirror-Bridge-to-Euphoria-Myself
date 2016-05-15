@@ -8,7 +8,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>露娜萨·普莉兹姆利巴</summary>
-    class Lunasa : CharacterPrismriver
+    class Lunasa : CharacterPoltergeist
 	{
 		public Lunasa(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

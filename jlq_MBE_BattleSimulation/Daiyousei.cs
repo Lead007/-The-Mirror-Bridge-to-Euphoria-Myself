@@ -76,9 +76,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>天赋：雾之湖的恩惠</summary>
         public override void PreparingSection()
         {
-            foreach (var c in game.Characters.Where(
-                        c => c.Group == this.Group && c != this &&
-                            Calculate.Distance(c, this) <= skillRange))
+            foreach (var c in game.Characters.Where(c => IsInRangeAndFriend(skillRange, c, false)))
             {
                 c.Cure(skillGain*c.Data.MaxHp);
             }
@@ -192,7 +190,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private bool SC03IsTargetLegal(Character SCee)
         {
-            return Calculate.Distance(SCee, this) <= SC02Range && SCee.Group == this.Group;
+            return IsInRangeAndFriend(SC02Range, SCee);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace JLQ_MBE_BattleSimulation
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        foreach (var c in game.Characters.Where(c => c.Group == this.Group && c != this))
+		        foreach (var c in game.Characters.Where(c => IsFriend(c, false)))
 		        {
 		            c.LabelDisplay.Background = GameColor.LabelBackground;
 		        }
@@ -81,7 +81,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee.Group == this.Group;
+            game.HandleIsTargetLegal = (SCee, point) => IsFriend(SCee);
             game.HandleTarget = SCee =>
             {
                 SCee.Cure(SCee.Data.MaxHp*0.1);

@@ -121,7 +121,7 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         /// <summary>当前行动角色</summary>
-        private Character currentCharacter => game.CurrentCharacter;
+        private Character CurrentCharacter => game.CurrentCharacter;
         /// <summary>当前游戏阶段</summary>
         private Section? section
         {
@@ -192,7 +192,7 @@ namespace JLQ_MBE_BattleSimulation
                 {
                     if (!game.CanReachPoint[game.MouseColumn, game.MouseRow]) return;
                     //移动
-                    currentCharacter.Move(game.MousePoint);
+                    CurrentCharacter.Move(game.MousePoint);
                     game.HasMoved = true;
                     game.IsMoving = false;
                     game.ResetPadButtons();
@@ -205,14 +205,14 @@ namespace JLQ_MBE_BattleSimulation
                 //如果正在攻击中
                 else if (game.IsAttacking)
                 {
-                    if (game.MousePoint != currentCharacter.Position &&
+                    if (game.MousePoint != CurrentCharacter.Position &&
                         !game.EnemyCanAttack.Contains(game.MouseCharacter)) return;
                     if (game.EnemyCanAttack.Contains(game.MouseCharacter))
                     {
                         //获取目标
                         var target = game.MouseCharacter;
                         //攻击
-                        currentCharacter.HandleDoAttack(target);
+                        CurrentCharacter.HandleDoAttack(target);
                         //死人提示
                         game.HandleIsDead();
                     }

@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>西行寺幽幽子</summary>
     class Yuyuko : Character
 	{
 		public Yuyuko(int id, Point position, Group group, Random random, Game game)
@@ -15,7 +16,31 @@ namespace JLQ_MBE_BattleSimulation
 
 		}
 
-        //TODO 天赋
+        public override bool DoAttack(Character target, float times = 1)
+        {
+            //判断是否命中
+            if (HandleIsHit(target)) return false;
+            //计算伤害增益
+            float gain;
+            switch (Calculate.Distance(this, target))
+            {
+                case 1:
+                    gain = 1.2f;
+                    break;
+                case 2:
+                    gain = 1.1f;
+                    break;
+                case 3:
+                    gain = 1;
+                    break;
+                default:
+                    gain = 0.9f;
+                    break;
+            }
+            //造成伤害
+            return DoingAttack(target, times * gain);
+
+        }
 
         //符卡
         /// <summary>符卡01</summary>

@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
+    /// <summary>魂魄妖梦</summary>
     class Youmu : Character
 	{
 		public Youmu(int id, Point position, Group group, Random random, Game game)

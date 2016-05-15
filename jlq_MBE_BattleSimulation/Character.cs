@@ -18,13 +18,13 @@ namespace JLQ_MBE_BattleSimulation
         //以下为字段
         //只读字段
         /// <summary>ID</summary>
-        public readonly int ID;
+        public int ID { get; }
         /// <summary>角色数据</summary>
-        public readonly CharacterData Data;
+        public CharacterData Data { get; }
         /// <summary>最大灵力</summary>
-        public readonly int _maxMp;
+        public int MaxMp { get; }
         /// <summary>阵营</summary>
-        public readonly Group Group;
+        public Group Group { get; }
 
         //可变字段
         //增益
@@ -216,7 +216,7 @@ namespace JLQ_MBE_BattleSimulation
             HasAttacked = false;
             this.Data =
                 Calculate.CharacterDataList.First(cd => cd.Name == this.GetType().ToString().Substring(25));
-            this._maxMp = 1000;
+            this.MaxMp = 1000;
             //初始化显示
             this.LabelDisplay = new Label
             {
@@ -269,7 +269,7 @@ namespace JLQ_MBE_BattleSimulation
                 VerticalAlignment = VerticalAlignment.Bottom,
                 Height = 2,
                 Foreground = Brushes.Blue,
-                Maximum = this._maxMp,
+                Maximum = this.MaxMp,
                 Value = this.Mp
             };
             ListControls.Add(LabelDisplay);
@@ -279,7 +279,7 @@ namespace JLQ_MBE_BattleSimulation
             Set();
 
             this.Hp = this.Data.MaxHp;
-            this.Mp = _maxMp;
+            this.Mp = MaxMp;
             this.CurrentTime = this.Data.Interval;
 
             BuffList = new List<Buff>();
@@ -371,7 +371,7 @@ namespace JLQ_MBE_BattleSimulation
             var result = string.Format("HP: {0} / {1}\nMP: {2} / {3}\n攻击: {4}\n防御: {5}\n" +
                                           "命中率: {6}\n闪避率: {7}\n近战补正: {8}{9}\n" +
                                           "行动间隔: {10}\n机动: {11}\n攻击范围: {12}\n剩余冷却时间: {13}", Hp, Data.MaxHp, Mp,
-                _maxMp, Attack, Defence, HitRate, DodgeRate, CloseAmendment, (CloseAmendment%1 == 0) ? ".0" : "",
+                MaxMp, Attack, Defence, HitRate, DodgeRate, CloseAmendment, (CloseAmendment%1 == 0) ? ".0" : "",
                 Interval, MoveAbility, AttackRange, CurrentTime);
             if (!BuffList.Any()) return result;
             result += "\nBUFF:\n";
@@ -440,7 +440,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="mp">获得的灵力量</param>
         public virtual void MpGain(int mp)
         {
-            Mp = Math.Min(_maxMp, Mp + mp);
+            Mp = Math.Min(MaxMp, Mp + mp);
         }
 
 
@@ -660,6 +660,27 @@ namespace JLQ_MBE_BattleSimulation
             if (c == null) return false;
             return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
                 /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int)this.Group));
+        }
+
+        /// <summary>判断角色是否为队友</summary>
+        /// <param name="c">待判断的角色</param>
+        /// <param name="containThis">自己是否返回true</param>
+        /// <returns>是否为队友</returns>
+        protected bool IsFriend(Character c, bool containThis = true)
+        {
+            if (containThis) return c.Group == this.Group;
+            return c != this && c.Group == this.Group;
+        }
+
+        /// <summary>是否是在自己周围某范围内的队友</summary>
+        /// <param name="range">范围</param>
+        /// <param name="c">待判断的角色</param>
+        /// <param name="containThis">自己是否返回true</param>
+        /// <returns>是否符合</returns>
+        protected bool IsInRangeAndFriend(int range, Character c, bool containThis = true)
+        {
+            if (c == null) return false;
+            return Calculate.Distance(c, this) <= range && IsFriend(c, containThis);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation
 {
     /// <summary>梅露兰·普莉兹姆利巴</summary>
-    class Merlin : CharacterPrismriver
+    class Merlin : CharacterPoltergeist
 	{
 		public Merlin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
@@ -20,8 +20,8 @@ namespace JLQ_MBE_BattleSimulation
         {
             base.PreparingSection();
             foreach (var buff in
-                    game.Characters.Where(c => c.Group == this.Group && Calculate.Distance(c, this) <= skillRange)
-                        .Select(c => new BuffSlowDownGain(c, this, this.Interval, -0.1f, game)))
+                game.Characters.Where(c => IsInRangeAndFriend(skillRange, c))
+                    .Select(c => new BuffSlowDownGain(c, this, this.Interval, -0.1f, game)))
             {
                 buff.BuffTrigger();
             }

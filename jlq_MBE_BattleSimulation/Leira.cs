@@ -7,15 +7,37 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation
 {
-    class Leira : Character
+    /// <summary>蕾拉·普莉兹姆利巴</summary>
+    class Leira : CharacterPrismriver
 	{
 		public Leira(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
-
+            //符卡02
+            //显示将回血的角色
+		    enterPad[1] = (s, e) =>
+		    {
+		        var c = game.MouseCharacter;
+		        if (!IsFriend(c, false)) return;
+		        game.DefaultButtonAndLabels();
+		        c.LabelDisplay.Background = GameColor.LabelBackground;
+		    };
+            SetDefaultLeavePadButtonDelegate(1);
 		}
 
-        //TODO 天赋
+        public override void PreparingSection()
+        {
+            base.PreparingSection();
+            var ps = game.Characters.Where(c => IsFriend(c) && c is CharacterPrismriver).ToList();
+            var count = ps.Count;
+            foreach (var c in ps)
+            {
+                var buff1 = new BuffGainAttack(c, this, this.Interval, 0.5f*count, game);
+                buff1.BuffTrigger();
+                var buff2 = new BuffGainDefence(c, this, this.Interval, 0.5f*count, game);
+                buff2.BuffTrigger();
+            }
+        }
 
         //符卡
         /// <summary>符卡01</summary>
@@ -33,13 +55,17 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            //TODO SC02
+            game.HandleIsLegalClick = point => IsFriend(game[point]);
+            game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+            game.HandleTarget = SCee => SCee.Cure(0.2*SCee.Data.MaxHp);
+            AddPadButtonEvent(1);
         }
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
-
+            base.EndSC02();
+            RemovePadButtonEvent(1);
         }
         /// <summary>符卡03</summary>
         public override void SC03()

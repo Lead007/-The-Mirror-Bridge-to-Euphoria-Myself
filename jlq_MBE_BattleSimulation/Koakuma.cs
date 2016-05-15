@@ -65,7 +65,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffCure(SCee, this, 3*this.Interval, SCee.Data.MaxHp/10, game);
-                var buff2 = new BuffMpGain(SCee, this, 3*this.Interval, SCee._maxMp/10, game);
+                var buff2 = new BuffMpGain(SCee, this, 3*this.Interval, SCee.MaxMp/10, game);
             };
             AddPadButtonEvent(1);
         }
@@ -85,11 +85,6 @@ namespace JLQ_MBE_BattleSimulation
         public override void EndSC03()
         {
 
-        }
-
-	    private bool IsFriend(Character c)
-	    {
-            return c != null && c.Group == this.Group;
         }
     }
 }

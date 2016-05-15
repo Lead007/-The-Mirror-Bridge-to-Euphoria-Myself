@@ -17,7 +17,7 @@ namespace JLQ_MBE_BattleSimulation
 		        game.DefaultButtonAndLabels();
 		        if (IsWhite)
 		        {
-		            game.Characters.Where(c => Calculate.Distance(c, this) <= SC01Range && c.Group == this.Group)
+		            game.Characters.Where(c => IsInRangeAndFriend(SC01Range, c, false))
 		                .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
 		        }
 		        else
@@ -58,8 +58,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             if (IsWhite)
             {
-                game.HandleIsTargetLegal = (SCee, point) =>
-                    Calculate.Distance(SCee, this) <= SC01Range && SCee.Group == this.Group && SCee != this;
+                game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndFriend(SC01Range, SCee, false);
                 game.HandleTarget = SCee => SCee.MpGain(SC01Num);
             }
             else
@@ -132,9 +131,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private bool SC02WhiteIsLegalClick(Point point)
         {
-            if (Calculate.Distance(point, this) > SC02Range) return false;
-            var c = game[point];
-            return c != null && c.Group == this.Group;
+            return Calculate.Distance(point, this) <= SC02Range && IsFriend(game[point]);
         }
-    }
+	}
 }

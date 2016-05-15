@@ -72,6 +72,23 @@ namespace JLQ_MBE_BattleSimulation
         protected CharacterPrismriver(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)
         {
+
+        }
+
+    }
+
+    /// <summary>骚灵角色</summary>
+    public abstract class CharacterPoltergeist : CharacterPrismriver
+    {
+        /// <summary>构造函数</summary>
+        /// <param name="id">ID</param>
+        /// <param name="position">角色位置</param>
+        /// <param name="group">角色阵营</param>
+        /// <param name="random">随机数对象</param>
+        /// <param name="game">游戏对象</param>
+        protected CharacterPoltergeist(int id, Point position, Group group, Random random, Game game)
+            : base(id, position, group, random, game)
+        {
             //符卡03
             //显示将被攻击的角色
             enterButton[2] = (s, ev) =>
@@ -108,6 +125,6 @@ namespace JLQ_MBE_BattleSimulation
         {
             RemoveSCButtonEvent(2);
         }
-
     }
+
 }
