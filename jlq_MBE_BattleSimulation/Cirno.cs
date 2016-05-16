@@ -62,9 +62,9 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleSelf = () =>
             {
-                var buff = new BuffAddDamageTimes(this, 3*this.Interval, 2, game);
+                var buff = new BuffAddDamageTimes(this, this.BuffTime, 2, game);
                 buff.BuffTrigger();
-                var buff2 = new BuffDecreaseMoveAbilityWhenHit(this, this, 3*this.Interval, -1, game);
+                var buff2 = new BuffDecreaseMoveAbilityWhenHit(this, this, this.BuffTime, -1, game);
                 buff2.BuffTrigger();
             };
             game.HandleTarget = SCee => { };
@@ -83,9 +83,9 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.3f);
-                var buff1 = new BuffGainBeDamaged(SCee, this, 3*this.Interval, 0.1f, game);
+                var buff1 = new BuffGainBeDamaged(SCee, this, this.BuffTime, 0.1f, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffCannotMove(SCee, this, 3*this.Interval, game);
+                var buff2 = new BuffCannotMove(SCee, this, this.BuffTime, game);
                 buff2.BuffTrigger();
             };
             AddPadButtonEvent(2);

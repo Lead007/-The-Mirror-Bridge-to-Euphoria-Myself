@@ -68,9 +68,9 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.3f);
-                var buff1 = new BuffAddAttackRange(SCee, this, 3*this.Interval, -1, game);
+                var buff1 = new BuffAddAttackRange(SCee, this, this.BuffTime, -1, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffSlowDown(SCee, this, 3*this.Interval, 5, game);
+                var buff2 = new BuffSlowDown(SCee, this, this.BuffTime, 5, game);
                 buff2.BuffTrigger();
             };
             AddPadButtonEvent(1);
@@ -91,7 +91,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.7f);
-                var buff1 = new BuffGainDefence(SCee, this, 3*this.Interval, -0.2f, game);
+                var buff1 = new BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);
                 buff1.BuffTrigger();
                 
             };

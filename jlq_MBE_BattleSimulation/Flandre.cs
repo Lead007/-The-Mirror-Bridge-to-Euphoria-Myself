@@ -59,7 +59,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee == this || FList.Contains(SCee);
             game.HandleTarget = SCee =>
             {
-                var buff = new BuffLetBloodingWhenBeAttacked(SCee, this, 3*this.Interval, 3*this.Interval, game);
+                var buff = new BuffLetBloodingWhenBeAttacked(SCee, this, this.BuffTime, this.BuffTime, game);
                 buff.BuffTrigger();
             };
         }

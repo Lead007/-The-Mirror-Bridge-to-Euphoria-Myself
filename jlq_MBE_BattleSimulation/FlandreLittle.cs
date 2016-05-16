@@ -30,7 +30,7 @@ namespace JLQ_MBE_BattleSimulation
         public override bool DoAttack(Character target, float times = 1)
         {
             var b = base.DoAttack(target, times);
-            var buff = new BuffBlooding(target, this, 3*this.Interval, game);
+            var buff = new BuffBlooding(target, this, this.BuffTime, game);
             return b;
         }
     }

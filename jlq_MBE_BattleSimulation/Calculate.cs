@@ -117,8 +117,18 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否在范围内</returns>
         public static bool IsIn33(Point origin, Point point)
         {
-            return Math.Abs(origin.X - point.X) <= 1 && Math.Abs(origin.Y - point.Y) <= 1;
+            return IsInSquare(origin, point, 3);
         }
-        
+
+        /// <summary>目标点是否在以源点为中心的正方形内</summary>
+        /// <param name="origin">源点</param>
+        /// <param name="point">待测点</param>
+        /// <param name="length">正方形边长</param>
+        /// <returns>是否在范围内</returns>
+        public static bool IsInSquare(Point origin, Point point, int length)
+        {
+            var i = (length - 1)/2;
+            return Math.Abs(origin.X - point.X) <= i && Math.Abs(origin.Y - point.Y) <= i;
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                var buff = new BuffGainBeDamaged(SCee, this, 3*this.Interval, 0.2f, game);
+                var buff = new BuffGainBeDamaged(SCee, this, this.BuffTime, 0.2f, game);
                 buff.BuffTrigger();
             };
             //显示可攻击目标
@@ -64,8 +64,8 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffCure(SCee, this, 3*this.Interval, SCee.Data.MaxHp/10, game);
-                var buff2 = new BuffMpGain(SCee, this, 3*this.Interval, SCee.MaxMp/10, game);
+                var buff1 = new BuffCure(SCee, this, this.BuffTime, SCee.Data.MaxHp/10, game);
+                var buff2 = new BuffMpGain(SCee, this, this.BuffTime, SCee.MaxMp/10, game);
             };
             AddPadButtonEvent(1);
         }

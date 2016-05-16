@@ -125,7 +125,7 @@ namespace JLQ_MBE_BattleSimulation
             enterButton[2] = (s, ev) =>
             {
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => IsInRangeAndEnemy(SC03Range, c))
+                game.Characters.Where(c => _cps.Any(cp => cp.IsInRangeAndEnemy(SC03Range, c)))
                     .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
             };
             SetDefaultLeaveSCButtonDelegate(2);
@@ -135,11 +135,20 @@ namespace JLQ_MBE_BattleSimulation
         private const int SC03Range = 5;
         private const float SC03Gain = 0.7f;
 
+        private IEnumerable<Character> _cps
+            => game.Characters.Where(c => IsFriend(c) && c is CharacterPoltergeist /*TODO if mp enough*/);
+
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC03Range, SCee);
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
+            game.HandleIsTargetLegal = (SCee, point) => _cps.Any(c => c.IsInRangeAndEnemy(SC03Range, SCee));
+            game.HandleTarget = SCee =>
+            {
+                foreach (var c in _cps)
+                {
+                    c.HandleDoDanmakuAttack(SCee, SC03Gain);
+                }
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

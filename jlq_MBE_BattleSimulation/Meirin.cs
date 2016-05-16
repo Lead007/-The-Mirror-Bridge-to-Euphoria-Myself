@@ -45,7 +45,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleSelf = () =>
             {
-                var buff = new BuffShield(this, this, 3*this.Interval, game);
+                var buff = new BuffShield(this, this, this.BuffTime, game);
                 buff.BuffTrigger();
             };
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.3f);
@@ -66,9 +66,9 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffGainAttack(this, this, 3*this.Interval, 0.25f, game);
+                var buff1 = new BuffGainAttack(this, this, this.BuffTime, 0.25f, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffAddAttackRange(this, this, 3*this.Interval, 1, game);
+                var buff2 = new BuffAddAttackRange(this, this, this.BuffTime, 1, game);
                 buff2.BuffTrigger();
             };
         }
@@ -85,7 +85,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 SCee.Cure(SCee.Data.MaxHp*0.1);
-                var buff = new BuffGainDoDamage(SCee, this, 3*this.Interval, 0.1f, game);
+                var buff = new BuffGainDoDamage(SCee, this, this.BuffTime, 0.1f, game);
                 buff.BuffTrigger();
             };
         }

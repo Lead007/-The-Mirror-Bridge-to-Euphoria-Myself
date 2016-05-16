@@ -14,7 +14,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="buffer">buff发出者</param>
         /// <param name="game">游戏对象</param>
         public BuffAddRumiaSkillNum(Rumia buffer, Game game)
-            : base(buffer, buffer, 3*buffer.Interval, "月光：天赋标记数+2", true, game)
+            : base(buffer, buffer, buffer.BuffTime, "月光：天赋标记数+2", true, game)
         {
             BuffAffect += (bee, ber) => buffer.SkillNum += 2;
             BuffCancels += (bee, ber) => buffer.SkillNum -= 2;

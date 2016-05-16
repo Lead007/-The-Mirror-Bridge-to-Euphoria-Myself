@@ -13,8 +13,10 @@ namespace JLQ_MBE_BattleSimulation
 		public Chen(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //天赋
 		    _skillMove = (l, m) =>
 		    {
+		        if (!game.IsMoving) return;
 		        var c = this.game.MouseCharacter;
 		        if (!IsEnemy(c)) return;
 		        var p = this.X == c.X
@@ -23,15 +25,15 @@ namespace JLQ_MBE_BattleSimulation
 		        if (game[p] != null) return;
 		        this.Move(p);
 		        HandleDoAttack(c, 0.5f);
-                game.HasMoved = true;
-                game.IsMoving = false;
-                game.ResetPadButtons();
-                game.UpdateLabelBackground();
-                //如果同时已经攻击过则进入结束阶段
-                if (!game.HasAttacked || !game.HasMoved) return;
-                //Thread.Sleep(500);
-                game.EndSection();
-            };
+		        game.HasMoved = true;
+		        game.IsMoving = false;
+		        game.ResetPadButtons();
+		        game.UpdateLabelBackground();
+		        //如果同时已经攻击过则进入结束阶段
+		        if (!game.HasAttacked || !game.HasMoved) return;
+		        //Thread.Sleep(500);
+		        game.EndSection();
+		    };
             enterPad[1] = (s, ev) =>
             {
                 if (Calculate.Distance(game.MousePoint, this) > SC02Range) return;
@@ -49,7 +51,9 @@ namespace JLQ_MBE_BattleSimulation
 		}
 
         private const int SC02Range = 4;
+        private readonly DGridPadClick _skillMove;
 
+        //天赋
         public override void PreparingSection()
         {
             base.PreparingSection();
@@ -59,14 +63,11 @@ namespace JLQ_MBE_BattleSimulation
             }
             game.EventGridPadClick += _skillMove;
         }
-
         public override void EndSection()
         {
             base.EndSection();
             game.EventGridPadClick -= _skillMove;
         }
-
-        private DGridPadClick _skillMove;
 
         //符卡
         /// <summary>符卡01</summary>
@@ -75,9 +76,9 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffAddMoveAbility(this, this, 3*this.Interval, 1, game);
+                var buff1 = new BuffAddMoveAbility(this, this, this.BuffTime, 1, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffSlowDownGain(this, this, 3*this.Interval, -0.2, game);
+                var buff2 = new BuffSlowDownGain(this, this, this.BuffTime, -0.2, game);
                 buff2.BuffTrigger();
             };
         }

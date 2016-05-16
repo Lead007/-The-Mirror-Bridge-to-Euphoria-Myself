@@ -51,7 +51,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleTarget = SCee =>
             {
-                var buff = new BuffAddDamageTimes(this, 3*this.Interval, 1, game);
+                var buff = new BuffAddDamageTimes(this, this.BuffTime, 1, game);
                 buff.BuffTrigger();
             };
         }

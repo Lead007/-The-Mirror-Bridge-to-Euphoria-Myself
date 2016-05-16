@@ -48,7 +48,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee);
-                var buff = new BuffAddMoveAbility(SCee, this, 3*this.Interval, -1, game);
+                var buff = new BuffAddMoveAbility(SCee, this, this.BuffTime, -1, game);
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);

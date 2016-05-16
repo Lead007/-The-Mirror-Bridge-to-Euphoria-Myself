@@ -45,7 +45,6 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡02的参数</summary>
         private const int SC02Gain = 10;
 
-        private Point SC02PointTemp = Game.DefaultPoint;
         private List<Character> SC02CharactersBeSlowed = new List<Character>();
 
 
@@ -74,15 +73,10 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick =
                 point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
-            game.HandleIsTargetLegal = (SCee, point) =>
-            {
-                if (!Calculate.IsIn33(point, SCee.Position) || !IsEnemy(SCee)) return false;
-                SC02PointTemp = point;
-                return true;
-            };
+            game.HandleIsTargetLegal = (SCee, point) => Calculate.IsIn33(point, SCee.Position) && IsEnemy(SCee);
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffSlowDown(SCee, this, 3*this.Interval, SC02Gain, game);
+                var buff1 = new BuffSlowDown(SCee, this, this.BuffTime, SC02Gain, game);
                 buff1.BuffTrigger();
                 DIsPointWall handle = (origin, point) =>
                 {
@@ -90,9 +84,8 @@ namespace JLQ_MBE_BattleSimulation
                     var ry = Math.Abs(point.Y - origin.Y);
                     return (rx == 2 && ry <= 2) || (ry == 2 && rx <= 2);
                 };
-                var buff2 = new BuffLimit(SCee, this, 3*this.Interval, SC02PointTemp, handle, game);
+                var buff2 = new BuffLimit(SCee, this, this.BuffTime, game.MousePoint, handle, game);
                 buff2.BuffTrigger();
-                SC02PointTemp = Game.DefaultPoint;
             };
             AddPadButtonEvent(1);
             game.LabelGameTip.Content = "符卡提示：单击所选择的3×3区域的中心";

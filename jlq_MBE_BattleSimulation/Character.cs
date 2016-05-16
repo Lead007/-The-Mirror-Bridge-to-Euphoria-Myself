@@ -217,6 +217,8 @@ namespace JLQ_MBE_BattleSimulation
         public double CloseAmendment => Math.Max(0, Data.CloseAmendment*_closeAmendmentX + _clostAmendmentAdd);
         /// <summary>行动间隔</summary>
         public int Interval => Math.Max(1, Calculate.Floor(Data.Interval*_intervalX + _intervalAdd));
+        /// <summary>默认Buff时间（3*Interval）</summary>
+        public int BuffTime => 3*Interval;
         /// <summary>机动</summary>
         public int MoveAbility => Math.Max(0, Data.MoveAbility + _moveAbilityAdd);
         /// <summary>攻击范围</summary>
@@ -510,6 +512,15 @@ namespace JLQ_MBE_BattleSimulation
             Mp = Math.Min(MaxMp, Mp + mp);
         }
 
+        /// <summary>是否是在自己周围某范围内的敌人</summary>
+        /// <param name="range">范围</param>
+        /// <param name="c">待判断的角色</param>
+        /// <returns>是否符合</returns>
+        public bool IsInRangeAndEnemy(int range, Character c)
+        {
+            return IsInRangeAndEnemy(this.Position, range, c);
+        }
+
 
         //以下为符卡
 
@@ -708,15 +719,6 @@ namespace JLQ_MBE_BattleSimulation
         {
             if (c == null) return false;
             return Calculate.Distance(origin, c) <= range && IsEnemy(c);
-        }
-
-        /// <summary>是否是在自己周围某范围内的敌人</summary>
-        /// <param name="range">范围</param>
-        /// <param name="c">待判断的角色</param>
-        /// <returns>是否符合</returns>
-        protected bool IsInRangeAndEnemy(int range, Character c)
-        {
-            return IsInRangeAndEnemy(this.Position, range, c);
         }
 
         /// <summary>判断角色是否为敌人</summary>
