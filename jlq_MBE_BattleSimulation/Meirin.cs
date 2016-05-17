@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Number;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -25,6 +26,8 @@ namespace JLQ_MBE_BattleSimulation
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
+
+        private static RationalNumber SC03Gain = new RationalNumber(1, 10, true, false);
 
         //TODO 天赋
 	    public override void BeAttacked(int damage, Character attacker)
@@ -84,7 +87,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => IsFriend(SCee);
             game.HandleTarget = SCee =>
             {
-                SCee.Cure(SCee.Data.MaxHp*0.1);
+                SCee.Cure(SC03Gain);
                 var buff = new BuffGainDoDamage(SCee, this, this.BuffTime, 0.1f, game);
                 buff.BuffTrigger();
             };

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Number;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -72,7 +73,7 @@ namespace JLQ_MBE_BattleSimulation
                 if (HandleIsHit(SCee)) return;
                 //造成伤害
                 DoingAttack(SCee, SC02Gain);
-                this.Cure(0.05*this.Data.MaxHp);
+                this.Cure(new RationalNumber(1, 20, true, false));
                 if (SCee.IsDead) this.DamageTimes++;
             };
         }

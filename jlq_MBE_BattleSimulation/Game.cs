@@ -41,10 +41,10 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         /// <summary>随机数对象</summary>
-        public Random Random = new Random();
+        public Random Random { get; set; } = new Random();
 
         /// <summary>当前行动者</summary>
-        public Character CurrentCharacter = null;
+        public Character CurrentCharacter { get; set; } = null;
 
         /// <summary>是否为战斗模式</summary>
         public bool IsBattle { get; private set; }
@@ -386,9 +386,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>当前行动者的位置</summary>
         public Point CurrentPosition => CurrentCharacter.Position;
         /// <summary>当前行动者的scName</summary>
-        public string[] ScName => CurrentCharacter.Data.ScName;
+        public string[] ScName => CurrentCharacter.ScName;
         /// <summary>当前行动者的scDisc</summary>
-        public string[] ScDisc => CurrentCharacter.Data.ScDisc;
+        public string[] ScDisc => CurrentCharacter.ScDisc;
 
         /// <summary>友军列表</summary>
         public IEnumerable<Character> FriendCharacters => Characters.Where(c => c.Group == Group.Friend);
@@ -460,8 +460,8 @@ namespace JLQ_MBE_BattleSimulation
             GetNextRoundCharacter();
             for (var i = 0; i < 3; i++)
             {
-                ButtonSC[i].Content = CurrentCharacter.Data.ScName[i + 1];
-                ButtonSC[i].ToolTip = CurrentCharacter.Data.ScDisc[i + 1];
+                ButtonSC[i].Content = CurrentCharacter.ScName[i + 1];
+                ButtonSC[i].ToolTip = CurrentCharacter.ScDisc[i + 1];
             }
             PaintButton();
 

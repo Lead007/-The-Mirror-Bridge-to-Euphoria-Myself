@@ -80,7 +80,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>重写ToString方法</summary>
         /// <returns>字符串化结果</returns>
         public override string ToString()
-            => string.Format("{0}({1}使用) By:{2} 剩余时间：{3}", Name, HasPrevented ? "未" : "已", Buffer.Data.Name, Time);
+            => string.Format("{0}({1}使用) By:{2} 剩余时间：{3}", Name, HasPrevented ? "未" : "已", Buffer.Name, Time);
 
     }
 }

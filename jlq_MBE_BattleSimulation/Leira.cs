@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Number;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -24,6 +25,8 @@ namespace JLQ_MBE_BattleSimulation
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}
+
+        private static RationalNumber SC02Gain => new RationalNumber(1, 5, true, false);
 
         public override void PreparingSection()
         {
@@ -57,7 +60,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = point => IsFriend(game[point]);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleTarget = SCee => SCee.Cure(0.2*SCee.Data.MaxHp);
+            game.HandleTarget = SCee => SCee.Cure(SC02Gain);
             AddPadButtonEvent(1);
         }
 

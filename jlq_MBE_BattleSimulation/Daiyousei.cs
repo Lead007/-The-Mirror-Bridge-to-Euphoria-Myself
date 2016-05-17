@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Number;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -66,7 +67,7 @@ namespace JLQ_MBE_BattleSimulation
 		}
 
         private const int skillRange = 2;
-        private const float skillGain = 0.05f;
+        private static RationalNumber skillGain => new RationalNumber(1, 20, true, false);
         private const int SC01Range = 4;
         private const int SC02Range = 2;
         private const float SC02Gain = 1.5f;
@@ -78,7 +79,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             foreach (var c in game.Characters.Where(c => IsInRangeAndFriend(skillRange, c, false)))
             {
-                c.Cure(skillGain*c.Data.MaxHp);
+                c.Cure(skillGain);
             }
         }
 

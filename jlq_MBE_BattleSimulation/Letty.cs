@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Number;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -26,6 +27,7 @@ namespace JLQ_MBE_BattleSimulation
         private const int skillRange = 2;
         private const float skillGain = 0.3f;
         private const int SC01Range = 4;
+        private static RationalNumber SC02Gain = new RationalNumber(2, 5, true, false);
 
         public override void PreparingSection()
         {
@@ -65,7 +67,7 @@ namespace JLQ_MBE_BattleSimulation
         public override void SC02()
         {
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleTarget = SCee => Cure(0.4*this.Data.MaxHp);
+            game.HandleTarget = SCee => Cure(SC02Gain);
         }
 
         /// <summary>结束符卡02</summary>

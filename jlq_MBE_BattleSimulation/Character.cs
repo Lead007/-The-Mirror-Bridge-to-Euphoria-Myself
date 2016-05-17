@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Data;
+using Number;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -19,8 +20,20 @@ namespace JLQ_MBE_BattleSimulation
         //只读字段
         /// <summary>ID</summary>
         public int ID { get; }
+        #region 角色数据
         /// <summary>角色数据</summary>
-        public CharacterData Data { get; }
+        private CharacterData Data { get; }
+        /// <summary>角色名字</summary>
+        public string Name => Data.Name;
+        /// <summary>角色最大血量</summary>
+        public int MaxHp => Data.MaxHp;
+        /// <summary>角色显示</summary>
+        public string Display => Data.Display;
+        /// <summary>角色符卡名字</summary>
+        public string[] ScName => Data.ScName;
+        /// <summary>角色符卡提示</summary>
+        public string[] ScDisc => Data.ScDisc;
+        #endregion
         /// <summary>最大灵力</summary>
         public int MaxMp { get; }
         /// <summary>阵营</summary>
@@ -231,8 +244,6 @@ namespace JLQ_MBE_BattleSimulation
         private float DamageFloat => 0.1f;
         /// <summary>是否死亡</summary>
         public bool IsDead => 0 >= Hp;
-        /// <summary>名字</summary>
-        public string Name => Data.Name;
         /// <summary>Column坐标</summary>
         public int X => (int)this.Position.X;
         /// <summary>Row坐标</summary>
@@ -294,7 +305,7 @@ namespace JLQ_MBE_BattleSimulation
                 VerticalAlignment = VerticalAlignment.Stretch,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Top,
-                Content = this.Data.Display,
+                Content = this.Display,
                 Padding = new Thickness(0),
                 FontSize = 23
             };
@@ -318,7 +329,7 @@ namespace JLQ_MBE_BattleSimulation
                 VerticalAlignment = VerticalAlignment.Bottom,
                 Height = 2,
                 Foreground = Brushes.Red,
-                Maximum = this.Data.MaxHp,
+                Maximum = this.MaxHp,
                 Value = this.Hp
             };
             this.BarTime = new ProgressBar
@@ -347,7 +358,7 @@ namespace JLQ_MBE_BattleSimulation
             ListControls.Add(BarTime);
             Set();
 
-            this.Hp = this.Data.MaxHp;
+            this.Hp = this.MaxHp;
             this.Mp = MaxMp;
             this.CurrentTime = this.Data.Interval;
 
@@ -371,7 +382,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="hp">治疗的体力值</param>
         public void Cure(int hp)
         {
-            this.Hp = Math.Min(this.Data.MaxHp, this.Hp + hp);
+            this.Hp = Math.Min(this.MaxHp, this.Hp + hp);
         }
 
         /// <summary>治疗</summary>
@@ -379,6 +390,13 @@ namespace JLQ_MBE_BattleSimulation
         public void Cure(double hp)
         {
             Cure((int)hp);
+        }
+
+        /// <summary>治疗最大体力值的一定比值</summary>
+        /// <param name="x">治疗量与最大体力值的比值</param>
+        public void Cure(RationalNumber x)
+        {
+            Cure(x.Value*MaxHp);
         }
 
         /// <summary>被攻击</summary>
@@ -439,7 +457,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             var result = string.Format("HP: {0} / {1}\nMP: {2} / {3}\n攻击: {4}\n防御: {5}\n" +
                                           "命中率: {6}\n闪避率: {7}\n近战补正: {8}{9}\n" +
-                                          "行动间隔: {10}\n机动: {11}\n攻击范围: {12}\n剩余冷却时间: {13}", Hp, Data.MaxHp, Mp,
+                                          "行动间隔: {10}\n机动: {11}\n攻击范围: {12}\n剩余冷却时间: {13}", Hp, MaxHp, Mp,
                 MaxMp, Attack, Defence, HitRate, DodgeRate, CloseAmendment, (CloseAmendment%1 == 0) ? ".0" : "",
                 Interval, MoveAbility, AttackRange, CurrentTime);
             if (!BuffList.Any()) return result;

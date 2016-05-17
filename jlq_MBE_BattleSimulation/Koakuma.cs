@@ -64,7 +64,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffCure(SCee, this, this.BuffTime, SCee.Data.MaxHp/10, game);
+                var buff1 = new BuffCure(SCee, this, this.BuffTime, SCee.MaxHp/10, game);
                 var buff2 = new BuffMpGain(SCee, this, this.BuffTime, SCee.MaxMp/10, game);
             };
             AddPadButtonEvent(1);

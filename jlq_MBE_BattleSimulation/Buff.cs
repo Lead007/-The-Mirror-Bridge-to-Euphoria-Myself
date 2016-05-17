@@ -87,7 +87,7 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>重写object类的ToString方法</summary>
         /// <returns>转化为字符串的结果</returns>
-        public override string ToString() => string.Format("{0} By:{1} 剩余时间：{2}", Name, Buffer.Data.Name, Time);
+        public override string ToString() => string.Format("{0} By:{1} 剩余时间：{2}", Name, Buffer.Name, Time);
 
         /// <summary>从buff列表中删除buff</summary>
         /// <param name="buffee">buff承受者</param>

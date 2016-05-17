@@ -1,0 +1,5 @@
+D:\Program\C#程序\C#类库\RationalNumber\RationalNumber\bin\Release\RationalNumber.dll
+D:\Program\C#程序\C#类库\RationalNumber\RationalNumber\bin\Release\RationalNumber.pdb
+D:\Program\C#程序\C#类库\RationalNumber\RationalNumber\obj\Release\RationalNumber.dll
+D:\Program\C#程序\C#类库\RationalNumber\RationalNumber\obj\Release\RationalNumber.pdb
+D:\Program\C#程序\C#类库\RationalNumber\RationalNumber\obj\Release\RationalNumber.csprojResolveAssemblyReference.cache

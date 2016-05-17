@@ -84,7 +84,7 @@ namespace JLQ_MBE_BattleSimulation
                 pathc += "\\";
                 using (Stream writer = File.Create(pathc + Properties.Resources.Data))
                 {
-                    formatter.Serialize(writer, c.Data);
+                    formatter.Serialize(writer, Calculate.CharacterDataList.First(cd => cd.Name == c.Name));
                 }
                 using (Stream writer = File.Create(pathc + Properties.Resources.Group))
                 {
