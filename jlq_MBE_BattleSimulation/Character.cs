@@ -17,7 +17,7 @@ namespace JLQ_MBE_BattleSimulation
     public abstract class Character
     {
         //以下为字段
-        //只读字段
+        #region 只读属性字段
         /// <summary>ID</summary>
         public int ID { get; }
         #region 角色数据
@@ -36,11 +36,17 @@ namespace JLQ_MBE_BattleSimulation
         #endregion
         /// <summary>最大灵力</summary>
         public int MaxMp { get; }
+
         /// <summary>阵营</summary>
         public Group Group { get; }
 
-        //可变字段
-        //增益与增量
+        /// <summary>随机数对象</summary>
+        protected Random random { get; }
+        /// <summary>游戏对象</summary>
+        protected Game game { get; }
+        #endregion
+
+        #region 角色数据增益与增量
         /// <summary>攻击增益</summary>
         private double _attackX = 1.0f;
         public double AttackX
@@ -153,13 +159,9 @@ namespace JLQ_MBE_BattleSimulation
         {
             set { _attackRangeAdd += value; }
         }
+        #endregion
 
-        /// <summary>随机数对象</summary>
-        protected Random random;
-        /// <summary>游戏对象</summary>
-        protected Game game;
-
-        //属性
+        #region 与ProgressBar绑定的属性
         private int _hp;
         /// <summary>血量</summary>
         public int Hp
@@ -195,8 +197,11 @@ namespace JLQ_MBE_BattleSimulation
                 BarTime.Value = value;
             }
         }
+        #endregion
+
         /// <summary>位置，X为Grid.Column，Y为Grid.Row</summary>
         public Point Position { get; protected set; }
+
         /// <summary>是否已移动</summary>
         public virtual bool HasMoved { get; set; }
         /// <summary>是否已攻击</summary>
@@ -204,7 +209,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>作为buff承受者的buff列表</summary>
         public List<Buff> BuffList { get; protected set; }
 
-        //显示
+        #region 显示
         /// <summary>所有在GUI上显示的控件</summary>
         public List<FrameworkElement> ListControls = new List<FrameworkElement>();
         /// <summary>显示Display的Label</summary>
@@ -215,9 +220,11 @@ namespace JLQ_MBE_BattleSimulation
         public ProgressBar BarMp { get; set; }
         /// <summary>显示剩余时间的ProgressBar</summary>
         public ProgressBar BarTime { get; set; }
+        #endregion
 
 
-        //只读属性
+        #region 只读属性
+        #region 游戏内角色数据
         /// <summary>攻击</summary>
         public int Attack => Math.Max(0, Calculate.Floor(Data.Attack*_attackX) + _attackAdd);
         /// <summary>防御</summary>
@@ -242,13 +249,16 @@ namespace JLQ_MBE_BattleSimulation
         private float CriticalHitRate => 0.2f;
         /// <summary>伤害浮动</summary>
         private float DamageFloat => 0.1f;
+        #endregion
         /// <summary>是否死亡</summary>
         public bool IsDead => 0 >= Hp;
         /// <summary>Column坐标</summary>
         public int X => (int)this.Position.X;
         /// <summary>Row坐标</summary>
         public int Y => (int)this.Position.Y;
+        #endregion
 
+        #region 游戏相关委托
         /// <summary>攻击结算的委托对象</summary>
         public DDoAttack HandleDoAttack { get; set; }
         /// <summary>弹幕攻击结算的委托对象</summary>
@@ -269,8 +279,9 @@ namespace JLQ_MBE_BattleSimulation
         public DEndSection HandleEndSection { get; protected set; }
         /// <summary>修改阻挡的敌人列表的委托</summary>
         public DEnemyBlock HandleEnemyBlock { get; set; }
+        #endregion
 
-        //符卡相关委托
+        #region 符卡相关委托
         /// <summary>进入符卡按钮01的委托</summary>
         protected MouseEventHandler[] enterButton = new MouseEventHandler[3];
         /// <summary>离开符卡按钮01的委托</summary>
@@ -279,6 +290,7 @@ namespace JLQ_MBE_BattleSimulation
         protected MouseEventHandler[] enterPad = new MouseEventHandler[3];
         /// <summary>单击符卡按钮01后离开棋盘按钮的委托</summary>
         protected MouseEventHandler[] leavePad = new MouseEventHandler[3];
+        #endregion
 
 
         /// <summary>Character类的构造函数</summary>
@@ -292,12 +304,11 @@ namespace JLQ_MBE_BattleSimulation
             this.ID = id;
             this.Position = position;
             this.Group = group;
-            HasMoved = false;
-            HasAttacked = false;
             this.Data =
                 Calculate.CharacterDataList.First(cd => cd.Name == this.GetType().ToString().Substring(25));
             this.MaxMp = 1000;
-            //初始化显示
+            #region 初始化显示
+            #region LabelDisplay
             this.LabelDisplay = new Label
             {
                 Margin = new Thickness(2, 2, 2, 11),
@@ -321,7 +332,8 @@ namespace JLQ_MBE_BattleSimulation
                     LabelDisplay.Foreground = Brushes.Green;
                     break;
             }
-
+            #endregion
+            #region BarHp
             this.BarHp = new ProgressBar
             {
                 Margin = new Thickness(2, 0, 2, 8),
@@ -332,6 +344,8 @@ namespace JLQ_MBE_BattleSimulation
                 Maximum = this.MaxHp,
                 Value = this.Hp
             };
+            #endregion
+            #region BarTime
             this.BarTime = new ProgressBar
             {
                 Margin = new Thickness(2, 0, 2, 2),
@@ -342,6 +356,8 @@ namespace JLQ_MBE_BattleSimulation
                 Maximum = this.Interval,
                 Value = this.CurrentTime
             };
+            #endregion
+            #region BarMp
             this.BarMp = new ProgressBar
             {
                 Margin = new Thickness(2, 0, 2, 5),
@@ -352,11 +368,15 @@ namespace JLQ_MBE_BattleSimulation
                 Maximum = this.MaxMp,
                 Value = this.Mp
             };
+            #endregion
+            #region 将控件添加至ListControls
             ListControls.Add(LabelDisplay);
             ListControls.Add(BarHp);
             ListControls.Add(BarMp);
             ListControls.Add(BarTime);
             Set();
+            #endregion
+            #endregion
 
             this.Hp = this.MaxHp;
             this.Mp = MaxMp;
@@ -365,7 +385,7 @@ namespace JLQ_MBE_BattleSimulation
             BuffList = new List<Buff>();
             this.random = random;
             this.game = game;
-            //初始化委托
+            #region 初始化委托
             HandleDoAttack = DoAttack;
             HandleDoDanmakuAttack = DoDanmakuAttack;
             HandleDoingAttack = DoingAttack;
@@ -376,8 +396,10 @@ namespace JLQ_MBE_BattleSimulation
             HandlePreparingSection = PreparingSection;
             HandleEndSection = EndSection;
             HandleEnemyBlock = e => from p in e select p;
+            #endregion
         }
 
+        #region 治疗
         /// <summary>治疗</summary>
         /// <param name="hp">治疗的体力值</param>
         public void Cure(int hp)
@@ -398,6 +420,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             Cure(x.Value*MaxHp);
         }
+        #endregion
 
         /// <summary>被攻击</summary>
         /// <param name="damage">伤害值</param>
@@ -408,6 +431,7 @@ namespace JLQ_MBE_BattleSimulation
             game.CharactersMayDie.Add(new AttackModel(attacker, this));
         }
 
+        #region 造成伤害
         /// <summary>攻击</summary>
         /// <param name="target">攻击目标</param>
         /// <param name="times">伤害值增益</param>
@@ -450,7 +474,9 @@ namespace JLQ_MBE_BattleSimulation
             target.HandleBeAttacked((int)damage, this);
             return isCriticalHit;
         }
+        #endregion
 
+        #region 信息字符串化
         /// <summary>将各数据转化为字符串显示</summary>
         /// <returns>各数据字符串化的结果</returns>
         public override string ToString()
@@ -475,7 +501,9 @@ namespace JLQ_MBE_BattleSimulation
                 Calculate.Floor(Calculate.HitRate(this, target)*100),
                 Calculate.Damage(this.Attack, target.Defence));
         }
+        #endregion
 
+        #region 移动
         /// <summary>移动至指定坐标</summary>
         /// <param name="end">移动的目标坐标</param>
         public virtual void Move(Point end)
@@ -492,6 +520,19 @@ namespace JLQ_MBE_BattleSimulation
             Move(new Point(GetValidPosition((int)this.X + relativeX, Game.Column),
                 GetValidPosition((int)this.Y + relativeY, Game.Row)));
         }
+        #endregion
+
+        #region 显示更新
+        /// <summary>更新显示display的位置</summary>
+        public void Set()
+        {
+            foreach (var c in ListControls)
+            {
+                c.SetValue(Grid.ColumnProperty, this.X);
+                c.SetValue(Grid.RowProperty, this.Y);
+            }
+        }
+        #endregion
 
         /// <summary>对此角色而言的敌人列表</summary>
         public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
@@ -540,8 +581,7 @@ namespace JLQ_MBE_BattleSimulation
         }
 
 
-        //以下为符卡
-
+        #region 符卡
         /// <summary>符卡01</summary>
         public abstract void SC01();
 
@@ -576,11 +616,11 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>按钮移动响应复位</summary>
         public virtual void ResetSCShow(){ }
+        #endregion
 
 
 
-        //以下为私有函数
-
+        #region 私有或受保护函数
         /// <summary>受伤</summary>
         /// <param name="damage">伤害值</param>
         private void Damage(int damage)
@@ -601,17 +641,7 @@ namespace JLQ_MBE_BattleSimulation
             return coordinate > max ? max : coordinate;
         }
 
-        //显示更新
-        /// <summary>更新显示display的位置</summary>
-        public void Set()
-        {
-            foreach (var c in ListControls)
-            {
-                c.SetValue(Grid.ColumnProperty, this.X);
-                c.SetValue(Grid.RowProperty, this.Y);
-            }
-        }
-
+        #region 造成伤害时的计算
         /// <summary>是否命中</summary>
         /// <param name="target">攻击目标</param>
         /// <returns>是否命中</returns>
@@ -644,7 +674,7 @@ namespace JLQ_MBE_BattleSimulation
             return random.NextDouble() <= this.CriticalHitRate;
         }
 
-        //RESET
+        #region 重置
         /// <summary>恢复是否命中的委托对象</summary>
         protected void ResetHandleIsHit()
         {
@@ -665,10 +695,12 @@ namespace JLQ_MBE_BattleSimulation
         {
             HandleBeAttacked = BeAttacked;
         }
+        #endregion
 
         /// <summary>伤害浮动</summary>
         /// <returns>浮动带来的伤害系数</returns>
         protected double FloatDamage => (2*random.NextDouble() - 1)*this.DamageFloat + 1;
+        #endregion
 
         /// <summary>结束符卡结算</summary>
         private void EndSC()
@@ -678,6 +710,7 @@ namespace JLQ_MBE_BattleSimulation
             game.HandleTarget = null;
         }
 
+        #region 符卡桌面事件相关
         /// <summary>为符卡按钮事件添加对应委托</summary>
         /// <param name="index">符卡按钮索引</param>
         protected void AddSCButtonEvent(int index)
@@ -727,6 +760,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             leavePad[index] = (s, ev) => this.game.ResetShow();
         }
+        #endregion
 
         /// <summary>是否是在某点周围某范围内的敌人</summary>
         /// <param name="origin">点</param>
@@ -769,5 +803,6 @@ namespace JLQ_MBE_BattleSimulation
             if (c == null) return false;
             return Calculate.Distance(c, this) <= range && IsFriend(c, containThis);
         }
+        #endregion
     }
 }

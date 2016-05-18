@@ -36,7 +36,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             InitializeComponent();
 
-            //读取角色各数据
+            #region 读取角色各数据
             var data = new XmlDocument();
             var reader = XmlReader.Create("Resources/Data/data.xml", new XmlReaderSettings {IgnoreComments = true /*忽略注释*/});
             data.Load(reader);
@@ -47,13 +47,17 @@ namespace JLQ_MBE_BattleSimulation
                 comboBoxDisplay.Items.Add(cd.Display);
             }
             comboBoxDisplay.Items.Remove("芙分");
-            //初始化颜色
+            #endregion
+
+            #region 初始化颜色
             GenerateColors();
-            //初始化game对象
+            #endregion
+            #region 初始化game对象
             game = new Game();
             game.EventGridPadClick += GridPadMouseDown;
+            #endregion
 
-            //生成棋盘按钮事件
+            #region 生成棋盘按钮事件
             foreach (var button in game.Buttons)
             {
                 var column = (int)button.GetValue(Grid.ColumnProperty);
@@ -118,16 +122,13 @@ namespace JLQ_MBE_BattleSimulation
                     game.ResetShow();
                 };
             }
+            #endregion
         }
 
         /// <summary>当前行动角色</summary>
         private Character CurrentCharacter => game.CurrentCharacter;
         /// <summary>当前游戏阶段</summary>
-        private Section? section
-        {
-            get { return game.Section; }
-            set { game.Section = value; }
-        }
+        private Section? section => game.Section;
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -149,9 +150,9 @@ namespace JLQ_MBE_BattleSimulation
         private void GridPadMouseDown(MouseButtonState leftButton, MouseButtonState middleButton)
         {
             //TODO Pad Mouse Down
-            //加人模式
             if (!game.IsBattle)
             {
+                #region 加人模式
                 //如果没选角色Display则操作非法
                 if (String.IsNullOrEmpty(comboBoxDisplay.Text))
                 {
@@ -169,15 +170,17 @@ namespace JLQ_MBE_BattleSimulation
                     ? Group.Friend
                     : ((middleButton == MouseButtonState.Pressed) ? Group.Middle : Group.Enemy);
                 AddCharacter(game.MousePoint, group, comboBoxDisplay.Text);
+                #endregion
             }
-            //战斗模式
             else
             {
-                //如果不是行动阶段则操作非法
+                #region 战斗模式
+                #region 如果不是行动阶段则操作非法
                 if (section != Section.Round) return;
-                //符卡
+                #endregion
                 if (game.ScSelect != 0)
                 {
+                    #region 符卡
                     //如果单击位置不合法
                     if (!game.HandleIsLegalClick(game.MousePoint))
                     {
@@ -186,25 +189,29 @@ namespace JLQ_MBE_BattleSimulation
                     }
                     DoSC();
                     game.EndSC();
+                    #endregion
                 }
-                //如果正在移动中
                 else if (game.IsMoving)
                 {
+                    #region 如果正在移动中
                     if (!game.CanReachPoint[game.MouseColumn, game.MouseRow]) return;
-                    //移动
+                    #region 移动
                     CurrentCharacter.Move(game.MousePoint);
                     game.HasMoved = true;
                     game.IsMoving = false;
                     game.ResetPadButtons();
                     game.UpdateLabelBackground();
-                    //如果同时已经攻击过则进入结束阶段
+                    #endregion
+                    #region 如果同时已经攻击过则进入结束阶段
                     if (!game.HasAttacked || !game.HasMoved) return;
                     //Thread.Sleep(500);
                     game.EndSection();
+                    #endregion
+                    #endregion
                 }
-                //如果正在攻击中
                 else if (game.IsAttacking)
                 {
+                    #region 如果正在攻击中
                     if (game.MousePoint != CurrentCharacter.Position &&
                         !game.EnemyCanAttack.Contains(game.MouseCharacter)) return;
                     if (game.EnemyCanAttack.Contains(game.MouseCharacter))
@@ -216,22 +223,27 @@ namespace JLQ_MBE_BattleSimulation
                         //死人提示
                         game.HandleIsDead();
                     }
-                    //绘制屏幕
+                    #region 绘制屏幕
                     game.HasAttacked = true;
                     game.IsAttacking = false;
                     game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
                     game.Generate_CanReachPoint();
                     game.PaintButton();
-                    //如果同时已经移动过则进入结束阶段
+                    #endregion
+                    #region 如果同时已经移动过则进入结束阶段
                     if (!game.HasAttacked || !game.HasMoved) return;
                     //Thread.Sleep(500);
                     game.EndSection();
+                    #endregion
+                    #endregion
                 }
-                //单击位置非法，操作非法
                 else
                 {
+                    #region 单击位置非法，操作非法
                     Game.IllegalMessageBox("请先选择操作类型");
+                    #endregion
                 }
+                #endregion
             }
         }
 
@@ -288,7 +300,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private void SC(int index)
         {
-            if (game.Section != Section.Round) return;
+            if (section != Section.Round) return;
             if (!game.IsSCing)
             {
                 game.IsSCing = true;
@@ -326,10 +338,11 @@ namespace JLQ_MBE_BattleSimulation
             game.Generate_CanReachPoint();
             game.PaintButton();
             game.SetCurrentLabel();
-            //如果同时已经移动过则进入结束阶段
+            #region 如果同时已经移动过则进入结束阶段
             if (!game.HasMoved) return;
             //Thread.Sleep(500);
             game.EndSection();
+            #endregion
         }
 
 
@@ -382,7 +395,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="e"></param>
         private void menuPattern_Click(object sender, RoutedEventArgs e)
         {
-            //合法性
+            #region 合法性
             if (game.Characters.Count == 0)
             {
                 Game.ErrorMessageBox("还未加人！");
@@ -398,7 +411,8 @@ namespace JLQ_MBE_BattleSimulation
                 Game.ErrorMessageBox("还未加敌方角色！");
                 return;
             }
-            //控件操作
+            #endregion
+            #region 控件操作
             menuPattern.IsEnabled = false;
             menuBackout.IsEnabled = false;
             menuClear.IsEnabled = false;
@@ -425,6 +439,7 @@ namespace JLQ_MBE_BattleSimulation
             labelShow.Foreground = Brushes.Black;
             game.TurnToBattle();
             game.PreparingSection();
+            #endregion
         }
 
         /// <summary>撤销上一次添加的角色</summary>

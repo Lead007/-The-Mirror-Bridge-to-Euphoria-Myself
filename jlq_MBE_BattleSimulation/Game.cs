@@ -17,6 +17,7 @@ namespace JLQ_MBE_BattleSimulation
     /// <summary>游戏类</summary>
     public class Game
     {
+        #region 静态只读属性或常量
         /// <summary>棋盘列数</summary>
         public const int Column = 9;
         /// <summary>棋盘行数</summary>
@@ -39,9 +40,10 @@ namespace JLQ_MBE_BattleSimulation
                 return points;
             }
         }
+        #endregion
 
         /// <summary>随机数对象</summary>
-        public Random Random { get; set; } = new Random();
+        public Random Random { get; } = new Random();
 
         /// <summary>当前行动者</summary>
         public Character CurrentCharacter { get; set; } = null;
@@ -49,6 +51,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>是否为战斗模式</summary>
         public bool IsBattle { get; private set; }
 
+        #region 鼠标位置相关
         /// <summary>鼠标的网格位置</summary>
         public Point MousePoint { get; set; } = new Point(-1, -1);
 
@@ -56,6 +59,7 @@ namespace JLQ_MBE_BattleSimulation
         public int MouseColumn => (int)MousePoint.X;
         /// <summary>鼠标网格位置的Row值</summary>
         public int MouseRow => (int)MousePoint.Y;
+        #endregion
 
         /// <summary>鼠标网格位置的角色</summary>
         public Character MouseCharacter => this[this.MousePoint];
@@ -135,6 +139,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>结束阶段是否继续或需等待单击</summary>
         public bool IsEndSectionContinue { get; set; } = true;
 
+        #region Save与Load相关
         /// <summary>应用路径</summary>
         public string ApplicationPath { get; }
         /// <summary>资源文件夹路径</summary>
@@ -145,8 +150,9 @@ namespace JLQ_MBE_BattleSimulation
         public int SaveTimes { get; set; } = 1;
         /// <summary>Load按钮的路径</summary>
         public string LoadPath { get; set; }
+        #endregion
 
-        //窗体显示
+        #region 窗体显示
         /// <summary>当前阶段</summary>
         public Label LabelSection { get; }
         /// <summary>攻击按钮</summary>
@@ -169,16 +175,17 @@ namespace JLQ_MBE_BattleSimulation
         public Label LabelID { get; }
         /// <summary>游戏提示标签</summary>
         public Label LabelGameTip { get; }
+        #endregion
+
         /// <summary>生成可到达点矩阵</summary>
         public DAssignPointCanReach HandleAssignPointCanReach { get; set; }
         /// <summary>判断是否死亡</summary>
         public DIsDead HandleIsDead { get; set; }
 
 
-        //符卡相关
+        #region 符卡相关
         /// <summary>传递参数，如何获取目标以及所需参数列表</summary>
         public DIsTargetLegal HandleIsTargetLegal { get; set; }
-
         /// <summary>传递参数，如何处理自己</summary>
         public DHandleSelf HandleSelf { get; set; }
         /// <summary>传递参数，如何处理目标</summary>
@@ -189,6 +196,7 @@ namespace JLQ_MBE_BattleSimulation
         public int ScSelect { get; set; }
         /// <summary>是否处于符卡状态</summary>
         public bool IsSCing { get; set; }
+        #endregion
 
         /// <summary>Game类的构造函数</summary>
         public Game()
@@ -196,7 +204,8 @@ namespace JLQ_MBE_BattleSimulation
             HandleAssignPointCanReach = AssignPointCanReach;
             HandleIsDead = IsDead;
 
-            //LabelSection
+            #region 窗体显示
+            #region LabelSection
             LabelSection = new Label
             {
                 Content = "游戏还未开始",
@@ -215,7 +224,8 @@ namespace JLQ_MBE_BattleSimulation
                 Converter = new ConverterContentToColor()
             };
             LabelSection.SetBinding(Label.ForegroundProperty, binding);
-            //LabelMove
+            #endregion
+            #region ButtonMove
             ButtonMove = new Button
             {
                 Content = "移动",
@@ -234,7 +244,8 @@ namespace JLQ_MBE_BattleSimulation
                 ButtonMove.Background = IsMoving ? BaseColor : LinearBrush;
                 IsMoving = !IsMoving;
             };
-            //LabelAttack
+            #endregion
+            #region ButtonAttack
             ButtonAttack = new Button
             {
                 Content = "攻击",
@@ -253,7 +264,8 @@ namespace JLQ_MBE_BattleSimulation
                 ButtonAttack.Background = IsAttacking ? BaseColor : LinearBrush;
                 IsAttacking = !IsAttacking;
             };
-            //Buttons
+            #endregion
+            #region Buttons
             for (var i = 0; i < Column; i++)
             {
                 for (var j = 0; j < Row; j++)
@@ -282,7 +294,8 @@ namespace JLQ_MBE_BattleSimulation
                         EventGridPadClick(MouseButtonState.Pressed, MouseButtonState.Released);
                 }
             }
-            //ButtonSC
+            #endregion
+            #region ButtonSC
             ButtonSC = new Button[3];
             for (var i = 0; i < 3; i++)
             {
@@ -294,7 +307,8 @@ namespace JLQ_MBE_BattleSimulation
                     VerticalAlignment = VerticalAlignment.Stretch
                 };
             }
-            //LabelsGroup
+            #endregion
+            #region LabelsGroup
             for (var i = 0; i < 3; i++)
             {
                 LabelsGroup[i] = new Label
@@ -306,7 +320,8 @@ namespace JLQ_MBE_BattleSimulation
                 LabelsGroup[i].SetValue(Grid.RowProperty, 1);
                 LabelsGroup[i].SetValue(Grid.ColumnProperty, 5 - 2*i);
             }
-            //PadBorders
+            #endregion
+            #region PadBorders
             for (var i = 0; i < Column; i++)
             {
                 for (var j = 0; j < Row; j++)
@@ -326,7 +341,8 @@ namespace JLQ_MBE_BattleSimulation
                     borders[i, j].SetValue(Panel.ZIndexProperty, 0);
                 }
             }
-            //LabelID
+            #endregion
+            #region LabelID
             LabelID = new Label
             {
                 Content = "1",
@@ -336,7 +352,8 @@ namespace JLQ_MBE_BattleSimulation
             };
             LabelID.SetValue(Grid.ColumnProperty, 1);
             LabelID.SetValue(Grid.RowProperty, 1);
-            //LabelGameTip
+            #endregion
+            #region LabelGameTip
             LabelGameTip = new Label
             {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -347,7 +364,8 @@ namespace JLQ_MBE_BattleSimulation
             };
             LabelGameTip.SetValue(Grid.RowProperty, 1);
             LabelGameTip.SetValue(Grid.ColumnSpanProperty, 2);
-            //GridPad
+            #endregion
+            #region GridPad
             GridPad = new Grid();
             for (var i = 0; i < Column; i++)
             {
@@ -368,12 +386,16 @@ namespace JLQ_MBE_BattleSimulation
                     GridPad.Children.Add(button);
                 }
             };
+            #endregion
+            #endregion
 
+            #region Save与Load相关
             this.ApplicationPath = Directory.GetCurrentDirectory();
             this.ResourcePath = ApplicationPath + @"\Resources";
             this.SavePath = ApplicationPath;
             this.LoadPath = ApplicationPath;
             if (this.SavePath.Last() != '\\') this.SavePath += "\\";
+            #endregion
         }
 
         /// <summary>确定在某位置的角色，若没有则返回null</summary>
@@ -390,14 +412,16 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>当前行动者的scDisc</summary>
         public string[] ScDisc => CurrentCharacter.ScDisc;
 
+        #region 宏观整个游戏的各方列表
         /// <summary>友军列表</summary>
         public IEnumerable<Character> FriendCharacters => Characters.Where(c => c.Group == Group.Friend);
         /// <summary>中立列表</summary>
         public IEnumerable<Character> MiddleCharacters => Characters.Where(c => c.Group == Group.Middle);
         /// <summary>敌军列表</summary>
         public IEnumerable<Character> EnemyCharacters => Characters.Where(c => c.Group == Group.Enemy);
+        #endregion
 
-        /// <summary>攻击范围内的可攻击角色</summary>
+        /// <summary>当前角色攻击范围内的可攻击角色</summary>
         public IEnumerable<Character> EnemyCanAttack =>
             EnemyAsCurrent.Where(c => Calculate.Distance(CurrentCharacter, c) <= CurrentCharacter.AttackRange);
 
@@ -427,16 +451,18 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="display">显示的字符串</param>
         public void AddCharacter(Point point, Group group, string display)
         {
-            //以下你肯定凌乱了不过就是调用对应的构造函数创建角色对象而已
+            #region 调用对应的构造函数创建角色对象而已
             var characterData = Calculate.CharacterDataList.First(cd => cd.Display == display);
             object[] parameters = { ID, point, group, Random, this };
             characterLastAdd =
                 (Character) Type.GetType("JLQ_MBE_BattleSimulation." + characterData.Name).GetConstructors()[0]
                 .Invoke(parameters);
-            //各种加入列表
+            #endregion
+            #region 各种加入列表
             characterLastAdd.ListControls.Aggregate(0, (cu, c) => GridPad.Children.Add(c));
             Characters.Add(characterLastAdd);
             ID++;
+            #endregion
         }
 
         /// <summary>移除角色</summary>
@@ -456,7 +482,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>准备阶段</summary>
         public void PreparingSection()
         {
-            //获取下个行动的角色
+            #region 获取下个行动的角色
             GetNextRoundCharacter();
             for (var i = 0; i < 3; i++)
             {
@@ -464,14 +490,16 @@ namespace JLQ_MBE_BattleSimulation
                 ButtonSC[i].ToolTip = CurrentCharacter.ScDisc[i + 1];
             }
             PaintButton();
+            #endregion
 
-            //跳转阶段
+            #region 跳转阶段
             Section = JLQ_MBE_BattleSimulation.Section.Preparing;
             BuffSettle(JLQ_MBE_BattleSimulation.Section.Preparing);
             CurrentCharacter.HandlePreparingSection();
             if (!IsPreparingSectionContinue) return;
             //Thread.Sleep(500);
             Section = JLQ_MBE_BattleSimulation.Section.Round;
+            #endregion
         }
         /// <summary>结束阶段</summary>
         public void EndSection()
@@ -558,7 +586,7 @@ namespace JLQ_MBE_BattleSimulation
                 }
                 RemoveCharacter(model.Target);
             }
-            //游戏是否结束
+            #region 游戏是否结束
             if (!FriendCharacters.Any())
             {
                 MessageBox.Show("敌方获胜！", "游戏结束", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -566,6 +594,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             if (EnemyCharacters.Any()) return;
             MessageBox.Show("己方获胜！", "游戏结束", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            #endregion
         }
 
         /// <summary>格子的文字显示</summary>
@@ -666,7 +695,7 @@ namespace JLQ_MBE_BattleSimulation
             IsBattle = true;
         }
 
-        //棋盘绘制相关
+        #region 棋盘绘制相关
         /// <summary>恢复棋盘和角色正常颜色</summary>
         public void DefaultButtonAndLabels()
         {
@@ -727,8 +756,9 @@ namespace JLQ_MBE_BattleSimulation
             PaintButton();
             UpdateLabelBackground();
         }
+        #endregion
 
-        //SC
+        #region 符卡
         /// <summary>SC</summary>
         public void SC(int index)
         {
@@ -770,10 +800,9 @@ namespace JLQ_MBE_BattleSimulation
             }
             ScSelect = 0;
         }
+        #endregion
 
-
-        //TODO save&load
-
+        //TODO 播放声音
         /// <summary>播放声音</summary>
         /// <param name="uType"></param>
         /// <returns></returns>
