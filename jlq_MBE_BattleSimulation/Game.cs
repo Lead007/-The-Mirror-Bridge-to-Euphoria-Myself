@@ -67,7 +67,7 @@ namespace JLQ_MBE_BattleSimulation
         private Section? _section;
 
         /// <summary>当前回合所在的阶段</summary>
-        public Section? Section
+        public Section? GameSection
         {
             get { return _section; }
             set
@@ -97,7 +97,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 if (CurrentCharacter == null) return;
                 CurrentCharacter.HasMoved = value;
-                ButtonMove.IsEnabled = !value;
+                ButtonMove.IsEnabled = !HasMoved;
                 ButtonMove.Background = BaseColor;
             }
         }
@@ -112,7 +112,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 if (CurrentCharacter == null) return;
                 CurrentCharacter.HasAttacked = value;
-                ButtonAttack.IsEnabled = !value;
+                ButtonAttack.IsEnabled = !HasAttacked;
                 ButtonAttack.Background = BaseColor;
                 ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = !value);
             }
@@ -489,16 +489,16 @@ namespace JLQ_MBE_BattleSimulation
                 ButtonSC[i].Content = CurrentCharacter.ScName[i + 1];
                 ButtonSC[i].ToolTip = CurrentCharacter.ScDisc[i + 1];
             }
-            PaintButton();
+            PaintButtons();
             #endregion
 
             #region 跳转阶段
-            Section = JLQ_MBE_BattleSimulation.Section.Preparing;
-            BuffSettle(JLQ_MBE_BattleSimulation.Section.Preparing);
+            GameSection = Section.Preparing;
+            BuffSettle(Section.Preparing);
             CurrentCharacter.HandlePreparingSection();
             if (!IsPreparingSectionContinue) return;
             //Thread.Sleep(500);
-            Section = JLQ_MBE_BattleSimulation.Section.Round;
+            GameSection = Section.Round;
             #endregion
         }
         /// <summary>结束阶段</summary>
@@ -506,11 +506,14 @@ namespace JLQ_MBE_BattleSimulation
         {
             IsSCing = false;
             CharactersMayDie.Clear();
-            Section = JLQ_MBE_BattleSimulation.Section.End;
+            GameSection = JLQ_MBE_BattleSimulation.Section.End;
             BuffSettle(JLQ_MBE_BattleSimulation.Section.End);
             //Thread.Sleep(1000);
             CurrentCharacter.HandleEndSection();
             if (!IsEndSectionContinue) return;
+            CurrentCharacter?.ResetSCShow();
+            HasMoved = false;
+            HasAttacked = false;
 
             IsPreparingSectionContinue = true;
             IsEndSectionContinue = true;
@@ -521,10 +524,6 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>更新下个行动的角色,取currentTime最小的角色中Interval最大的角色中的随机一个</summary>
         public void GetNextRoundCharacter()
         {
-            CurrentCharacter?.ResetSCShow();
-            //currentCharacter?.Reset();
-            HasMoved = false;
-            HasAttacked = false;
             var stack = new Stack<Character>();
             stack.Push(Characters.First());
             foreach (var character in Characters)
@@ -715,7 +714,7 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         /// <summary>生成可到达点的按钮颜色</summary>
-        public void PaintButton()
+        public void PaintButtons()
         {
             if (HasMoved) return;
             for (var i = 0; i < Column; i++)
@@ -753,7 +752,7 @@ namespace JLQ_MBE_BattleSimulation
         public void ResetShow()
         {
             ResetPadButtons();
-            PaintButton();
+            PaintButtons();
             UpdateLabelBackground();
         }
         #endregion

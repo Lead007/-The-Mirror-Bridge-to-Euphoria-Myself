@@ -86,7 +86,7 @@ namespace JLQ_MBE_BattleSimulation
                     //如果shift和ctrl都没被按下或不在行动阶段或不在棋盘内或该点无角色或该点角色为当前角色则无效
                     if ((!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ||
                            Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) ||
-                        section != Section.Round || game.MousePoint == new Point(-1, -1) ||
+                        GameSection != JLQ_MBE_BattleSimulation.Section.Round || game.MousePoint == new Point(-1, -1) ||
                         game.Characters.All(c => c.Position != game.MousePoint) ||
                         game.MousePoint == game.CurrentPosition) return;
                     //如果shift被按下
@@ -115,7 +115,7 @@ namespace JLQ_MBE_BattleSimulation
                 button.KeyUp += (s, ev) =>
                 {
                     //如果不在行动阶段或仍有shift或ctrl在棋盘内则无效
-                    if (section != Section.Round) return;
+                    if (GameSection != JLQ_MBE_BattleSimulation.Section.Round) return;
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ||
                         Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
                     //恢复原本显示
@@ -128,7 +128,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>当前行动角色</summary>
         private Character CurrentCharacter => game.CurrentCharacter;
         /// <summary>当前游戏阶段</summary>
-        private Section? section => game.Section;
+        private Section? GameSection => game.GameSection;
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -149,7 +149,6 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="middleButton">鼠标中键状态</param>
         private void GridPadMouseDown(MouseButtonState leftButton, MouseButtonState middleButton)
         {
-            //TODO Pad Mouse Down
             if (!game.IsBattle)
             {
                 #region 加人模式
@@ -176,7 +175,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 #region 战斗模式
                 #region 如果不是行动阶段则操作非法
-                if (section != Section.Round) return;
+                if (GameSection != JLQ_MBE_BattleSimulation.Section.Round) return;
                 #endregion
                 if (game.ScSelect != 0)
                 {
@@ -199,8 +198,18 @@ namespace JLQ_MBE_BattleSimulation
                     CurrentCharacter.Move(game.MousePoint);
                     game.HasMoved = true;
                     game.IsMoving = false;
-                    game.ResetPadButtons();
+                    #region 绘制屏幕
+                    game.DefaultButtonAndLabels();
+                    if (game.HasMoved)
+                    {
+                        game.ResetPadButtons();
+                    }
+                    else
+                    {
+                        game.PaintButtons();
+                    }
                     game.UpdateLabelBackground();
+                    #endregion
                     #endregion
                     #region 如果同时已经攻击过则进入结束阶段
                     if (!game.HasAttacked || !game.HasMoved) return;
@@ -223,12 +232,15 @@ namespace JLQ_MBE_BattleSimulation
                         //死人提示
                         game.HandleIsDead();
                     }
-                    #region 绘制屏幕
                     game.HasAttacked = true;
                     game.IsAttacking = false;
-                    game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
+                    #region 绘制屏幕
+                    if (game.HasAttacked)
+                    {
+                        game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
+                    }
                     game.Generate_CanReachPoint();
-                    game.PaintButton();
+                    game.PaintButtons();
                     #endregion
                     #region 如果同时已经移动过则进入结束阶段
                     if (!game.HasAttacked || !game.HasMoved) return;
@@ -300,7 +312,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private void SC(int index)
         {
-            if (section != Section.Round) return;
+            if (GameSection != JLQ_MBE_BattleSimulation.Section.Round) return;
             if (!game.IsSCing)
             {
                 game.IsSCing = true;
@@ -324,20 +336,21 @@ namespace JLQ_MBE_BattleSimulation
                 return;
             }
             game.HandleSelf?.Invoke();
-            var characterArray = game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint)).ToArray();
-            foreach (var c in characterArray)
+            foreach (var c in game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint)))
             {
                 game.HandleTarget(c);
             }
             game.EndSC();
             game.HasAttacked = true;
-            game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
             game.HandleIsDead();
 
             game.DefaultButtonAndLabels();
             game.Generate_CanReachPoint();
-            game.PaintButton();
-            game.SetCurrentLabel();
+            game.PaintButtons();
+            if (!game.HasAttacked)
+            {
+                game.UpdateLabelBackground();
+            }
             #region 如果同时已经移动过则进入结束阶段
             if (!game.HasMoved) return;
             //Thread.Sleep(500);

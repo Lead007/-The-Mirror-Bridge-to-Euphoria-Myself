@@ -20,7 +20,5 @@ namespace JLQ_MBE_BattleSimulation
             BuffAffect += (bee, ber) => bee.MoveAbilityAdd = -100;
             BuffCancels = (bee, ber) => bee.MoveAbilityAdd = 100;
         }
-
-        private int _mA;
     }
 }
