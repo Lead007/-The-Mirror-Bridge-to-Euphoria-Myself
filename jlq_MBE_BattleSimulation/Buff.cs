@@ -4,6 +4,7 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup.Localizer;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -28,9 +29,9 @@ namespace JLQ_MBE_BattleSimulation
         public readonly bool IsPositive;
 
         /// <summary>buff效果的委托对象</summary>
-        protected DBuffAffect BuffAffect;
+        protected DBuffAffect HandleBuffAffect { get; set; }
         /// <summary>取消buff的委托对象</summary>
-        protected DBuffCancel BuffCancels;
+        protected DBuffCancel HandleBuffCancels { get; set; }
         /// <summary>游戏对象</summary>
         protected Game game;
 
@@ -54,14 +55,15 @@ namespace JLQ_MBE_BattleSimulation
             this.Name = name;
             this.IsPositive = isPositive;
             this.game = game;
-            BuffCancels = Cancel;
+            HandleBuffAffect = (bee, ber) => BuffAffect();
+            HandleBuffCancels = (bee, ber) => Cancel();
             buffee.BuffList.Add(this);
         }
 
         /// <summary>buff引发</summary>
         public void BuffTrigger()
         {
-            BuffAffect(Buffee, Buffer);
+            HandleBuffAffect(Buffee, Buffer);
         }
 
         /// <summary>buff剩余时间减少</summary>
@@ -82,7 +84,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>buff结束</summary>
         public void BuffEnd()
         {
-            BuffCancels(Buffee, Buffer);
+            HandleBuffCancels(Buffee, Buffer);
         }
 
         /// <summary>重写object类的ToString方法</summary>
@@ -92,9 +94,11 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>从buff列表中删除buff</summary>
         /// <param name="buffee">buff承受者</param>
         /// <param name="buffer">buff发出者</param>
-        protected void Cancel(Character buffee,Character buffer)
+        protected virtual void Cancel()
         {
-            buffee.BuffList.Remove(this);
+            Buffee.BuffList.Remove(this);
         }
+
+        protected abstract void BuffAffect();
     }
 }

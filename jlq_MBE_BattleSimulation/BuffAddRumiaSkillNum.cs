@@ -16,8 +16,20 @@ namespace JLQ_MBE_BattleSimulation
         public BuffAddRumiaSkillNum(Rumia buffer, Game game)
             : base(buffer, buffer, buffer.BuffTime, "月光：天赋标记数+2", true, game)
         {
-            BuffAffect += (bee, ber) => buffer.SkillNum += 2;
-            BuffCancels += (bee, ber) => buffer.SkillNum -= 2;
+
+        }
+
+        private Rumia BuffeeTurn => Buffee as Rumia;
+
+        protected override void BuffAffect()
+        {
+            BuffeeTurn.SkillNum += 2;
+        }
+
+        protected override void Cancel()
+        {
+            BuffeeTurn.SkillNum -= 2;
+            base.Cancel();
         }
     }
 }

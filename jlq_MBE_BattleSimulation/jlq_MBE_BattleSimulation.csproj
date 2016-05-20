@@ -73,6 +73,7 @@
     <Compile Include="BuffAddDamageTimes.cs" />
     <Compile Include="BuffAddMoveAbility.cs" />
     <Compile Include="BuffAddProperty.cs" />
+    <Compile Include="BuffBeAttacked.cs" />
     <Compile Include="BuffBlooding.cs" />
     <Compile Include="BuffChildren.cs" />
     <Compile Include="BuffCure.cs" />

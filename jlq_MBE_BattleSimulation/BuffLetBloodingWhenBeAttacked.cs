@@ -18,18 +18,21 @@ namespace JLQ_MBE_BattleSimulation
         public BuffLetBloodingWhenBeAttacked(Character buffee, Character buffer, int time, int bloodingTime, Game game)
             : base(buffee, buffer, time, "禁弹：对其攻击者进入流血状态", true, game)
         {
-            BuffAffect += (bee, ber) =>
-            {
-                _temp = (DBeAttacked) bee.HandleBeAttacked.Clone();
-                bee.HandleBeAttacked = (damage, attacker) =>
-                {
-                    _temp(damage, attacker);
-                    var buff = new BuffBlooding(attacker, bee, bloodingTime, game);
-                };
-            };
-            BuffCancels += (bee, ber) => bee.HandleBeAttacked = _temp;
+            _bloodingTime = bloodingTime;
         }
 
         private DBeAttacked _temp;
+        private readonly int _bloodingTime;
+
+        protected override void BuffAffect()
+        {
+            _temp = Buffee.HandleBeAttacked.Clone() as DBeAttacked;
+            Buffee.HandleBeAttacked = (damage, attacker) =>
+            {
+                _temp(damage, attacker);
+                var buff = new BuffBlooding(attacker, Buffee, _bloodingTime, game);
+            };
+
+        }
     }
 }

@@ -22,13 +22,21 @@ namespace JLQ_MBE_BattleSimulation
         {
             this._origin = origin;
             this._handleIsPointWall = handle;
-            BuffAffect += (bee, ber) => Buffee.HandleEnemyBlock = ps => ps.Concat(_points);
-            BuffCancels += (bee, ber) => Buffee.HandleEnemyBlock = ps => from p in ps select p;
         }
 
         private IEnumerable<Point> _points => Game.PadPoints.Where(p => _handleIsPointWall(_origin, p));
         private readonly Point _origin;
         private readonly DIsPointWall _handleIsPointWall;
 
+        protected override void BuffAffect()
+        {
+            Buffee.HandleEnemyBlock = ps => ps.Concat(_points);
+        }
+
+        protected override void Cancel()
+        {
+            Buffee.HandleEnemyBlock = ps => from p in ps select p;
+            base.Cancel();
+        }
     }
 }

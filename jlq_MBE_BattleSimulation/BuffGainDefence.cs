@@ -15,7 +15,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="time">持续时间</param>
         /// <param name="defenceGain">增益的防御值，负数则为降低</param>
         /// <param name="game">游戏对象</param>
-        public BuffGainDefence(Character buffee, Character buffer, int time, float defenceGain, Game game)
+        public BuffGainDefence(Character buffee, Character buffer, int time, double defenceGain, Game game)
             : base(buffee, buffer, time, "Defence", defenceGain, "坚固：防御", "破碎：防御", game)
         {
             

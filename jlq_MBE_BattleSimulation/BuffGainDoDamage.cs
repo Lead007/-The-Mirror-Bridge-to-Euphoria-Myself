@@ -21,14 +21,22 @@ namespace JLQ_MBE_BattleSimulation
                     ? string.Format("力量：伤害增加{0}%", (int)(damageGain*100))
                     : string.Format("无力：伤害降低{0}%", (int)(-damageGain*100)), damageGain > 0, game)
         {
-            BuffAffect += (bee, ber) =>
-            {
-                _temp = (DDoAttack)bee.HandleDoingAttack.Clone();
-                bee.HandleDoingAttack = (target, times) => _temp(target, Math.Max(0, 1 + damageGain));
-            };
-            BuffCancels += (bee, ber) => bee.HandleDoingAttack = _temp;
+            _damageGain = damageGain;
         }
 
         private DDoAttack _temp;
+        private readonly float _damageGain;
+
+        protected override void BuffAffect()
+        {
+            _temp = (DDoAttack)Buffee.HandleDoingAttack.Clone();
+            Buffee.HandleDoingAttack = (target, times) => _temp(target, Math.Max(0, 1 + _damageGain));
+        }
+
+        protected override void Cancel()
+        {
+            Buffee.HandleDoingAttack = _temp;
+            base.Cancel();
+        }
     }
 }

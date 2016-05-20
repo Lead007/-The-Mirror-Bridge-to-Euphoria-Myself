@@ -18,8 +18,14 @@ namespace JLQ_MBE_BattleSimulation
         public BuffMpGain(Character buffee, Character buffer, int time, int mp, Game game)
             : base(buffee, buffer, time, Section.Preparing, string.Format("回蓝：每回合准备阶段恢复{0}点灵力", mp), true, game)
         {
-            BuffAffect += (bee, ber) => bee.MpGain(mp);
+            _mp = mp;
         }
 
+        private readonly int _mp;
+
+        protected override void BuffAffect()
+        {
+            Buffee.MpGain(_mp);
+        }
     }
 }

@@ -17,8 +17,18 @@ namespace JLQ_MBE_BattleSimulation
         public BuffCannotMove(Character buffee, Character buffer, int time, Game game)
             : base(buffee, buffer, time, "冰冻：无法移动", false, game)
         {
-            BuffAffect += (bee, ber) => bee.MoveAbilityAdd = -100;
-            BuffCancels = (bee, ber) => bee.MoveAbilityAdd = 100;
+
+        }
+
+        protected override void BuffAffect()
+        {
+            Buffee.MoveAbilityAdd = -100;
+        }
+
+        protected override void Cancel()
+        {
+            Buffee.MoveAbilityAdd = 100;
+            base.Cancel();
         }
     }
 }

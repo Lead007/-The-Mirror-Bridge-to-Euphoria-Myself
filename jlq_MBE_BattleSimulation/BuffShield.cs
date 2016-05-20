@@ -39,28 +39,6 @@ namespace JLQ_MBE_BattleSimulation
             }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
             HasPrevented = true;
-            BuffAffect += (bee, ber) =>
-            {
-                bee.ListControls.Add(_imageShield);
-                bee.Set();
-                game.GridPad.Children.Add(_imageShield);
-                temp = (DBeAttacked) bee.HandleBeAttacked.Clone();
-                bee.HandleBeAttacked = (damage, attacker) =>
-                {
-                    if (HasPrevented)
-                    {
-                        HasPrevented = false;
-                        return;
-                    }
-                    temp(damage, attacker);
-                };
-            };
-            BuffCancels += (bee, ber) =>
-            {
-                game.GridPad.Children.Remove(_imageShield);
-                Buffer.ListControls.Remove(_imageShield);
-                bee.HandleBeAttacked = temp;
-            };
         }
 
         private readonly Image _imageShield;
@@ -82,5 +60,29 @@ namespace JLQ_MBE_BattleSimulation
         public override string ToString()
             => string.Format("{0}({1}使用) By:{2} 剩余时间：{3}", Name, HasPrevented ? "未" : "已", Buffer.Name, Time);
 
+        protected override void BuffAffect()
+        {
+            Buffee.ListControls.Add(_imageShield);
+            Buffee.Set();
+            game.GridPad.Children.Add(_imageShield);
+            temp = Buffee.HandleBeAttacked.Clone() as DBeAttacked;
+            Buffee.HandleBeAttacked = (damage, attacker) =>
+            {
+                if (HasPrevented)
+                {
+                    HasPrevented = false;
+                    return;
+                }
+                temp(damage, attacker);
+            };
+        }
+
+        protected override void Cancel()
+        {
+            game.GridPad.Children.Remove(_imageShield);
+            Buffee.ListControls.Remove(_imageShield);
+            Buffee.HandleBeAttacked = temp;
+            base.Cancel();
+        }
     }
 }

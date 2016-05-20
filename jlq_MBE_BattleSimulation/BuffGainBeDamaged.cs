@@ -22,14 +22,22 @@ namespace JLQ_MBE_BattleSimulation
                     ? string.Format("虚弱：受伤增加{0}%", (int)(damageGain*100))
                     : string.Format("抵抗：受伤降低{0}%", (int)(-damageGain*100)), damageGain <= 0, game)
         {
-            BuffAffect += (bee, ber) =>
-            {
-                _temp = (DBeAttacked) bee.HandleBeAttacked.Clone();
-                bee.HandleBeAttacked = (damage, attacker) => _temp((int)(damage*Math.Max(0, 1 + damageGain)), attacker);
-            };
-            BuffCancels += (bee, ber) => bee.HandleBeAttacked = _temp;
+            _damageGain = damageGain;
         }
 
         private DBeAttacked _temp;
+        private readonly float _damageGain;
+
+        protected override void BuffAffect()
+        {
+            _temp = Buffee.HandleBeAttacked.Clone() as DBeAttacked;
+            Buffee.HandleBeAttacked = (damage, attacker) => _temp((int)(damage * Math.Max(0, 1 + _damageGain)), attacker);
+        }
+
+        protected override void Cancel()
+        {
+            Buffee.HandleBeAttacked = _temp;
+            base.Cancel();
+        }
     }
 }

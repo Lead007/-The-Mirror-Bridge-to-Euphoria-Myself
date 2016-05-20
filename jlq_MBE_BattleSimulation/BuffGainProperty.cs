@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,10 +25,24 @@ namespace JLQ_MBE_BattleSimulation
                 string.Format((gain > 0 ? positiveName + "+" : negativeName + "-") + "{0}%", (int) (Math.Abs(gain)*100)),
                 gain > 0, game)
         {
-            var p = typeof(Character).GetProperty(propertyName + "X").SetMethod;
-            BuffAffect += (bee, ber) => p.Invoke(bee, new object[] { gain });
-            BuffCancels += (bee, ber) => p.Invoke(bee, new object[] { -gain });
+            _setProperty = typeof(Character).GetProperty(propertyName + "X").SetMethod;
+            _gain = gain;
         }
+
+        private readonly double _gain;
+        private readonly MethodInfo _setProperty;
+
+        protected override void BuffAffect()
+        {
+            _setProperty.Invoke(Buffee, new object[] { _gain });
+        }
+
+        protected override void Cancel()
+        {
+            _setProperty.Invoke(Buffee, new object[] { -_gain });
+            base.Cancel();
+        }
+
 
     }
 }

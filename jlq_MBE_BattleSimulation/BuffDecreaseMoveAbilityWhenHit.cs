@@ -18,20 +18,28 @@ namespace JLQ_MBE_BattleSimulation
         public BuffDecreaseMoveAbilityWhenHit(Character buffee, Character buffer, int time, int moveAbilityDecrease,
             Game game) : base(buffee, buffer, time, string.Format("吹冰：普攻命中敌人后使敌人一回合内机动-{0}", moveAbilityDecrease), true, game)
         {
-            BuffAffect += (bee, ber) =>
-            {
-                _temp = (DDoAttack) bee.HandleDoingAttack.Clone();
-                bee.HandleDoingAttack = (target, times) =>
-                {
-                    var b = _temp(target, times);
-                    var buff = new BuffAddMoveAbility(target, bee, bee.Interval, moveAbilityDecrease, game);
-                    buff.BuffTrigger();
-                    return b;
-                };
-            };
-            BuffCancels += (bee, ber) => bee.HandleDoingAttack = _temp;
+            _moveAbilityDecrease = moveAbilityDecrease;
         }
 
         private DDoAttack _temp;
+        private readonly int _moveAbilityDecrease;
+
+        protected override void BuffAffect()
+        {
+            _temp = Buffee.HandleDoingAttack.Clone() as DDoAttack;
+            Buffee.HandleDoingAttack = (target, times) =>
+            {
+                var b = _temp(target, times);
+                var buff = new BuffAddMoveAbility(target, Buffee, Buffee.Interval, -_moveAbilityDecrease, game);
+                buff.BuffTrigger();
+                return b;
+            };
+        }
+
+        protected override void Cancel()
+        {
+            Buffee.HandleDoingAttack = _temp;
+            base.Cancel();
+        }
     }
 }

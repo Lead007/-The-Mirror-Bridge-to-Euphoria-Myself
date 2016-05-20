@@ -17,9 +17,21 @@ namespace JLQ_MBE_BattleSimulation
         public BuffAddDamageTimes(CharacterMayRepeatedlyDoDamage buffer, int time, int damageTimesAdd, Game game)
             : base(buffer, buffer, time, string.Format("幻影：普攻次数+{0}", damageTimesAdd), true, game)
         {
-            BuffAffect += (bee, ber) => buffer.DamageTimes += damageTimesAdd;
-            BuffCancels += (bee, ber) => buffer.DamageTimes -= damageTimesAdd;
+            _damageTimesAdd = damageTimesAdd;
         }
 
+        private readonly int _damageTimesAdd;
+        private CharacterMayRepeatedlyDoDamage BuffeeTurn => Buffee as CharacterMayRepeatedlyDoDamage;
+
+        protected override void BuffAffect()
+        {
+            BuffeeTurn.DamageTimes += _damageTimesAdd;
+        }
+
+        protected override void Cancel()
+        {
+            BuffeeTurn.DamageTimes -= _damageTimesAdd;
+            base.Cancel();
+        }
     }
 }
