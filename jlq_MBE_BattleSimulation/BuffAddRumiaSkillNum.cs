@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup.Localizer;
+using JLQ_MBE_BattleSimulation.Characters.SingleCharacter;
 
 namespace JLQ_MBE_BattleSimulation
 {

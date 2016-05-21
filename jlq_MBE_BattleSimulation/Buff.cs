@@ -4,7 +4,6 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Markup.Localizer;
 
 namespace JLQ_MBE_BattleSimulation
 {

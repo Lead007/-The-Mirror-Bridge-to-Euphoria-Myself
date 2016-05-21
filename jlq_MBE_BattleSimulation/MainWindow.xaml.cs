@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
 using Data;
+using JLQ_MBE_BattleSimulation.Dialogs;
 using static JLQ_MBE_BattleSimulation.GameColor;
 
 namespace JLQ_MBE_BattleSimulation
@@ -539,7 +540,7 @@ namespace JLQ_MBE_BattleSimulation
                 Game.ErrorMessageBox("还未添加角色！");
                 return;
             }
-            var pathChoosing = new WindowChoosePath(game);
+            var pathChoosing = new Dialog_ChoosePath(game);
             pathChoosing.ShowDialog();
         }
 
