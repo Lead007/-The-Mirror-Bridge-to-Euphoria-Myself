@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>增益造成的伤害buff</summary>
     public class BuffGainDoDamage : BuffExecuteImmediately

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>每回合恢复一定灵力值</summary>
     public class BuffMpGain : BuffExecuteInSection

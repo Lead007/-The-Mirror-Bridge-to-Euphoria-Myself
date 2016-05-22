@@ -5,11 +5,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>灵梦</summary>
-    class Reimu : CharacterTeleportMoving
+    public class Reimu : CharacterTeleportMoving
     {
         public Reimu(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)

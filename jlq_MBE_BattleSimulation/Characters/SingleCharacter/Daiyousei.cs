@@ -9,8 +9,7 @@ using Number;
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>大妖精</summary>
-    [Serializable]
-    class Daiyousei : Character
+    public class Daiyousei : Character
 	{
 		public Daiyousei(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

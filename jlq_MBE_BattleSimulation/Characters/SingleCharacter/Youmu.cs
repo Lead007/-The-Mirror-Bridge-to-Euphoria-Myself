@@ -8,7 +8,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>魂魄妖梦</summary>
-    class Youmu : Character
+    public class Youmu : Character
 	{
 		public Youmu(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

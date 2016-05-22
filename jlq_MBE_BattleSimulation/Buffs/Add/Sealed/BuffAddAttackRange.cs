@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.Add.Sealed
 {
     /// <summary>增加攻击范围的buff</summary>
     public sealed class BuffAddAttackRange : BuffAddProperty

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using JLQ_MBE_BattleSimulation.Dialogs;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
+using JLQ_MBE_BattleSimulation.Dialogs.GamePad;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>莉莉卡·普莉兹姆利巴</summary>
-    class Lyrica : CharacterPoltergeist
+    public class Lyrica : CharacterPoltergeist
 	{
 		public Lyrica(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
@@ -53,8 +54,27 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            var dialog = new Dialog_LyricaSC02(game);
-            dialog.ShowDialog();
+            var dialog = new GamePad_LyricaSC02(game);
+            var result = dialog.ShowDialog();
+            if (result == true)
+            {
+                game.HandleIsTargetLegal = (SCee, point) => dialog.LinesChoose.Contains(SCee.Y);
+                game.HandleTarget = SCee =>
+                {
+                    if (IsFriend(SCee))
+                    {
+                        var buff = new BuffCure(SCee, this, BuffTime, SCee.MaxHp/10, game);
+                    }
+                    else if (IsEnemy(SCee))
+                    {
+                        var buff = new BuffBeAttacked(SCee, this, BuffTime, SCee.MaxHp/10, this, game);
+                    }
+                };
+            }
+            else
+            {
+                game.HandleIsLegalClick = point => false;
+            }
         }
 
         /// <summary>结束符卡02</summary>

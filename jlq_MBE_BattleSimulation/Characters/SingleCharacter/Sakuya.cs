@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>十六夜咲夜</summary>
-    class Sakuya : Character
+    public class Sakuya : Character
 	{
 		public Sakuya(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

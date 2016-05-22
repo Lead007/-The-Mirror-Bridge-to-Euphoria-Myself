@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.Add.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>八云蓝</summary>
-    class Ran : CharacterHitBack
+    public class Ran : CharacterHitBack
 	{
 		public Ran(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
@@ -29,6 +32,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             };
             SetDefaultLeavePadButtonDelegate(2);
         }
+
+        protected override float HitBackGain => 0.1f;
 
         protected override IEnumerable<Character> LegalHitBackTarget
             => game.Characters.Where(c => IsInRangeAndEnemy((this.AttackRange + 1)/2, c));

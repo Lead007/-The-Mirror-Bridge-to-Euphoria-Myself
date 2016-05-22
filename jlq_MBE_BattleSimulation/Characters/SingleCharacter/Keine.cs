@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
-    class Keine : Character
+    public class Keine : Character
 	{
 		public Keine(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

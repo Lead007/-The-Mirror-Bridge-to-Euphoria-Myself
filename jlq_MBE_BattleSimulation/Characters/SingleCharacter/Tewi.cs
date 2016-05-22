@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
-    class Tewi : Character
+    public class Tewi : Character
 	{
 		public Tewi(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

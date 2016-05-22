@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>被限制在特定区域内的buff</summary>
     public class BuffLimit : BuffExecuteImmediately

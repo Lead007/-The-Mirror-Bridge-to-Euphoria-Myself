@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Markup.Localizer;
 using JLQ_MBE_BattleSimulation.Characters.SingleCharacter;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>针对Rumia的buff，增加其天赋标记数</summary>
     public class BuffAddRumiaSkillNum : BuffExecuteImmediately

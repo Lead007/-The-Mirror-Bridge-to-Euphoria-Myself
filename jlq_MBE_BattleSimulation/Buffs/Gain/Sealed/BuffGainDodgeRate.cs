@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed
 {
     /// <summary>增益闪避值的buff</summary>
     public sealed class BuffGainDodgeRate : BuffGainProperty

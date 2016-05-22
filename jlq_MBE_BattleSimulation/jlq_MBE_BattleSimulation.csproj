@@ -68,41 +68,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buffs\SingleBuff\BuffBeAttacked.cs" />
     <Compile Include="Characters\SingleCharacter\Alice.cs" />
     <Compile Include="AttackModel.cs" />
-    <Compile Include="BuffAddDamageTimes.cs" />
-    <Compile Include="BuffAddMoveAbility.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffAddDamageTimes.cs" />
+    <Compile Include="Buffs\Add\Sealed\BuffAddMoveAbility.cs" />
     <Compile Include="Buffs\Add\BuffAddProperty.cs" />
-    <Compile Include="BuffBeAttacked.cs" />
-    <Compile Include="BuffBlooding.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffBeDanmakuAttacked.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffBlooding.cs" />
     <Compile Include="Buffs\BuffChildren.cs" />
-    <Compile Include="BuffCure.cs" />
-    <Compile Include="BuffDecreaseMoveAbilityWhenHit.cs" />
-    <Compile Include="BuffGainAttack.cs" />
-    <Compile Include="BuffAddAttackRange.cs" />
-    <Compile Include="BuffGainBeDamaged.cs" />
-    <Compile Include="BuffAddRumiaSkillNum.cs" />
-    <Compile Include="BuffCannotMove.cs" />
-    <Compile Include="BuffAddDefence.cs" />
-    <Compile Include="BuffGainDefence.cs" />
-    <Compile Include="BuffGainDoDamage.cs" />
-    <Compile Include="BuffGainDodgeRate.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffCure.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffDecreaseMoveAbilityWhenHit.cs" />
+    <Compile Include="Buffs\Gain\Sealed\BuffGainAttack.cs" />
+    <Compile Include="Buffs\Add\Sealed\BuffAddAttackRange.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffGainBeDamaged.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffAddRumiaSkillNum.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffCannotMove.cs" />
+    <Compile Include="Buffs\Add\Sealed\BuffAddDefence.cs" />
+    <Compile Include="Buffs\Gain\Sealed\BuffGainDefence.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffGainDoDamage.cs" />
+    <Compile Include="Buffs\Gain\Sealed\BuffGainDodgeRate.cs" />
     <Compile Include="Buffs\Gain\BuffGainProperty.cs" />
-    <Compile Include="BuffLetBloodingWhenBeAttacked.cs" />
-    <Compile Include="BuffLimit.cs" />
-    <Compile Include="BuffMpGain.cs" />
-    <Compile Include="BuffShield.cs" />
-    <Compile Include="BuffSlowDown.cs" />
-    <Compile Include="BuffSlowDownGain.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffLetBloodingWhenBeAttacked.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffLimit.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffMpGain.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffShield.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffSlowDown.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffSlowDownGain.cs" />
     <Compile Include="Characters\SingleCharacter\Chen.cs" />
     <Compile Include="Characters\SingleCharacter\Cirno.cs" />
     <Compile Include="Comparer.cs" />
     <Compile Include="Characters\SingleCharacter\Daiyousei.cs" />
     <Compile Include="DelegateEvent.cs" />
-    <Compile Include="Dialogs\Dialog_LyricaSC02.xaml.cs">
-      <DependentUpon>Dialog_LyricaSC02.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Characters\SingleCharacter\Eirin.cs" />
+    <Compile Include="Dialogs\Dialog_GamePad.xaml.cs">
+      <DependentUpon>Dialog_GamePad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\GamePad\GamePad_LyricaSC02.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Characters\SingleCharacter\Flandre.cs" />
     <Compile Include="Characters\SingleCharacter\FlandreLittle.cs" />
@@ -138,7 +140,7 @@
     <Compile Include="Characters\SingleCharacter\Youmu.cs" />
     <Compile Include="Characters\SingleCharacter\Yukari.cs" />
     <Compile Include="Characters\SingleCharacter\Yuyuko.cs" />
-    <Page Include="Dialogs\Dialog_LyricaSC02.xaml">
+    <Page Include="Dialogs\Dialog_GamePad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,10 +197,7 @@
   <ItemGroup>
     <None Include="Resources\Error.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Buffs\Add\Sealed\" />
-    <Folder Include="Buffs\Gain\Sealed\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.Add.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 using Number;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>红美铃</summary>
-    class Meirin : Character
+    public class Meirin : Character
 	{
 		public Meirin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

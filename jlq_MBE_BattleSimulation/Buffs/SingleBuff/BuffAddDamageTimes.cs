@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JLQ_MBE_BattleSimulation.Characters;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>增加普通次数的buff</summary>
     public class BuffAddDamageTimes : BuffExecuteImmediately

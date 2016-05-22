@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
-    class LilyWhite : Character
+    public class LilyWhite : Character
 	{
 		public LilyWhite(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
@@ -164,7 +166,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee);
                 game.HandleTarget = SCee =>
                 {
-                    var buff = new BuffBeAttacked(SCee, this, BuffTime, SC03BlackGain, this, game);
+                    var buff = new BuffBeDanmakuAttacked(SCee, this, BuffTime, SC03BlackGain, this, game);
                 };
             }
         }

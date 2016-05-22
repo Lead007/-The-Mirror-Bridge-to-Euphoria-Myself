@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JLQ_MBE_BattleSimulation.Characters.SingleCharacter;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>持续流血的buff</summary>
     public class BuffBlooding : BuffExecuteInSection

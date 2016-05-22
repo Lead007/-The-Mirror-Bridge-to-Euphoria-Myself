@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.Add
 {
     /// <summary>增加角色属性的Buff抽象类</summary>
     public abstract class BuffAddProperty:BuffExecuteImmediately

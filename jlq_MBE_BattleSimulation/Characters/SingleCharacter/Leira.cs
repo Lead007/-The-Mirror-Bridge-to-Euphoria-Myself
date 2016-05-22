@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Number;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>蕾拉·普莉兹姆利巴</summary>
-    class Leira : CharacterPrismriver
+    public class Leira : CharacterPrismriver
 	{
 		public Leira(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
-    class Gedama : Character
+    public class Gedama : Character
 	{
 		public Gedama(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

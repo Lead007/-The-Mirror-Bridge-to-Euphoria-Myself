@@ -9,7 +9,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation.Characters
 {
     /// <summary>移动无视敌方角色的碰撞箱的角色</summary>
-    public abstract class CharacterTeleportMoving:Character
+    public abstract class CharacterTeleportMoving : Character
     {
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>
@@ -41,6 +41,7 @@ namespace JLQ_MBE_BattleSimulation.Characters
 
         }
 
+        protected abstract float HitBackGain { get; }
         protected abstract IEnumerable<Character> LegalHitBackTarget { get; }
 
         public override void BeAttacked(int damage, Character attacker)
@@ -53,7 +54,7 @@ namespace JLQ_MBE_BattleSimulation.Characters
             //判断是否命中
             if (HandleIsHit(target)) return;
             //造成无来源伤害
-            var damageNew = (int)(damage * 0.3 * FloatDamage);
+            var damageNew = (int)(damage * HitBackGain * FloatDamage);
             target.BeAttacked(damageNew, null);
         }
     }

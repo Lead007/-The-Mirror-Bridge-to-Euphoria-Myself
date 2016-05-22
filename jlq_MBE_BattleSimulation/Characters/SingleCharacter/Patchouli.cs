@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.Add.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>帕秋莉</summary>
-    class Patchouli : Character
+    public class Patchouli : Character
 	{
 		public Patchouli(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

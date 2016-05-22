@@ -8,7 +8,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>西行寺幽幽子</summary>
-    class Yuyuko : Character
+    public class Yuyuko : Character
 	{
 		public Yuyuko(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

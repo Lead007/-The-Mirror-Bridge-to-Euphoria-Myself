@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>小恶魔</summary>
-    class Koakuma : Character
+    public class Koakuma : Character
 	{
 		public Koakuma(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

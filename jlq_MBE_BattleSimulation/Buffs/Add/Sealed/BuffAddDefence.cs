@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup.Localizer;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.Add.Sealed
 {
     /// <summary>增加防御力的buff</summary>
     public sealed class BuffAddDefence : BuffAddProperty

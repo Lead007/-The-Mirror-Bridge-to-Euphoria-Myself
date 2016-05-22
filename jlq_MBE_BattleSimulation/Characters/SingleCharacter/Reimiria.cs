@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 using Number;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>蕾米</summary>
-    class Reimiria : CharacterMayRepeatedlyDoDamage
+    public class Reimiria : CharacterMayRepeatedlyDoDamage
 	{
         /// <summary>构造函数</summary>
         /// <param name="id">ID</param>

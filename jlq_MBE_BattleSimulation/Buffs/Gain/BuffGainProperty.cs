@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.Gain
 {
     /// <summary>增益角色属性的Buff抽象类</summary>
     public abstract class BuffGainProperty : BuffExecuteImmediately

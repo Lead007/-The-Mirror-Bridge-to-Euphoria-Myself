@@ -282,8 +282,8 @@ namespace JLQ_MBE_BattleSimulation
             var count = Calculate.CharacterDataList.Count;
             for (var i = 0; i < number; i++)
             {
-                var index = game.Random.Next(pointsCanAdd.Count);
-                var displayIndex = game.Random.Next(count);
+                var index = game.random.Next(pointsCanAdd.Count);
+                var displayIndex = game.random.Next(count);
                 AddCharacter(pointsCanAdd[index], group, Calculate.CharacterDataList.ElementAt(displayIndex).Display);
                 pointsCanAdd.RemoveAt(index);
             }
@@ -324,18 +324,19 @@ namespace JLQ_MBE_BattleSimulation
             else
             {
                 game.IsSCing = false;
+                game.EndSC();
             }
-            game.EndSC();
         }
 
         private void DoSC()
         {
-            //如果已攻击过则操作非法
+            #region 如果已攻击过则操作非法
             if (game.HasAttacked)
             {
                 Game.IllegalMessageBox("已攻击过不能使用符卡");
                 return;
             }
+            #endregion
             game.HandleSelf?.Invoke();
             foreach (var c in game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint)))
             {
@@ -523,7 +524,11 @@ namespace JLQ_MBE_BattleSimulation
             for (var i = 0; i < 3; i++)
             {
                 var j = i + 1;
-                game.ButtonSC[i].Click += (s, ev) => SC(j);
+                game.ButtonSC[i].Click += (s, ev) =>
+                {
+                    if (game.IsMoving || game.IsAttacking) return;
+                    SC(j);
+                };
             }
         }
 

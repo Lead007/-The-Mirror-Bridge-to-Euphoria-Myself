@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.Add.Sealed
 {
     /// <summary>增加机动的buff</summary>
     public class BuffAddMoveAbility : BuffAddProperty

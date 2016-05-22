@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>梅露兰·普莉兹姆利巴</summary>
-    class Merlin : CharacterPoltergeist
+    public class Merlin : CharacterPoltergeist
 	{
 		public Merlin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

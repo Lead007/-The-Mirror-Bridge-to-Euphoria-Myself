@@ -305,7 +305,7 @@ namespace JLQ_MBE_BattleSimulation
             this.Position = position;
             this.Group = group;
             this.Data =
-                Calculate.CharacterDataList.First(cd => cd.Name == this.GetType().ToString().Substring(25));
+                Calculate.CharacterDataList.First(cd => cd.Name == this.GetType().ToString().Substring(52));
             this.MaxMp = 1000;
             #region 初始化显示
             #region LabelDisplay
@@ -571,6 +571,26 @@ namespace JLQ_MBE_BattleSimulation
             Mp = Math.Min(MaxMp, Mp + mp);
         }
 
+        /// <summary>判断角色是否为敌人</summary>
+        /// <param name="c">待判断的角色</param>
+        /// <returns>是否为敌人</returns>
+        public bool IsEnemy(Character c)
+        {
+            if (c == null) return false;
+            return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
+                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group)(-(int)this.Group));
+        }
+
+        /// <summary>判断角色是否为队友</summary>
+        /// <param name="c">待判断的角色</param>
+        /// <param name="containThis">自己是否返回true</param>
+        /// <returns>是否为队友</returns>
+        public bool IsFriend(Character c, bool containThis = true)
+        {
+            if (containThis) return c.Group == this.Group;
+            return c != this && c.Group == this.Group;
+        }
+
         /// <summary>是否是在自己周围某范围内的敌人</summary>
         /// <param name="range">范围</param>
         /// <param name="c">待判断的角色</param>
@@ -771,26 +791,6 @@ namespace JLQ_MBE_BattleSimulation
         {
             if (c == null) return false;
             return Calculate.Distance(origin, c) <= range && IsEnemy(c);
-        }
-
-        /// <summary>判断角色是否为敌人</summary>
-        /// <param name="c">待判断的角色</param>
-        /// <returns>是否为敌人</returns>
-        protected bool IsEnemy(Character c)
-        {
-            if (c == null) return false;
-            return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
-                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group) (-(int)this.Group));
-        }
-
-        /// <summary>判断角色是否为队友</summary>
-        /// <param name="c">待判断的角色</param>
-        /// <param name="containThis">自己是否返回true</param>
-        /// <returns>是否为队友</returns>
-        protected bool IsFriend(Character c, bool containThis = true)
-        {
-            if (containThis) return c.Group == this.Group;
-            return c != this && c.Group == this.Group;
         }
 
         /// <summary>是否是在自己周围某范围内的队友</summary>

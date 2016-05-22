@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>芙兰</summary>
-    class Flandre : Character
+    public class Flandre : Character
 	{
 		public Flandre(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Runtime.InteropServices;
@@ -43,7 +44,7 @@ namespace JLQ_MBE_BattleSimulation
         #endregion
 
         /// <summary>随机数对象</summary>
-        public Random Random { get; } = new Random();
+        public Random random { get; } = new Random();
 
         /// <summary>当前行动者</summary>
         public Character CurrentCharacter { get; set; } = null;
@@ -241,6 +242,7 @@ namespace JLQ_MBE_BattleSimulation
             ButtonMove.SetValue(Grid.ColumnSpanProperty, 2);
             ButtonMove.Click += (s, ev) =>
             {
+                if (IsSCing || IsAttacking) return;
                 ButtonMove.Background = IsMoving ? BaseColor : LinearBrush;
                 IsMoving = !IsMoving;
             };
@@ -261,6 +263,7 @@ namespace JLQ_MBE_BattleSimulation
             ButtonAttack.SetValue(Grid.ColumnSpanProperty, 2);
             ButtonAttack.Click += (s, ev) =>
             {
+                if (IsSCing || IsMoving) return;
                 ButtonAttack.Background = IsAttacking ? BaseColor : LinearBrush;
                 IsAttacking = !IsAttacking;
             };
@@ -453,10 +456,9 @@ namespace JLQ_MBE_BattleSimulation
         {
             #region 调用对应的构造函数创建角色对象而已
             var characterData = Calculate.CharacterDataList.First(cd => cd.Display == display);
-            object[] parameters = { ID, point, group, Random, this };
-            characterLastAdd =
-                (Character) Type.GetType("JLQ_MBE_BattleSimulation." + characterData.Name).GetConstructors()[0]
-                .Invoke(parameters);
+            object[] parameters = { ID, point, group, random, this };
+            characterLastAdd = Type.GetType("JLQ_MBE_BattleSimulation.Characters.SingleCharacter." + characterData.Name)
+                .GetConstructors().First().Invoke(parameters) as Character;
             #endregion
             #region 各种加入列表
             characterLastAdd.ListControls.Aggregate(0, (cu, c) => GridPad.Children.Add(c));
@@ -547,7 +549,7 @@ namespace JLQ_MBE_BattleSimulation
                     }
                 }
             }
-            var i = Random.Next(stack.Count);
+            var i = random.Next(stack.Count);
             CurrentCharacter = stack.ElementAt(i);
             UpdateLabelBackground();
 

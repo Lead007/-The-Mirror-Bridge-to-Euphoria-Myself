@@ -8,7 +8,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>八云紫</summary>
-    class Yukari : CharacterTeleportMoving
+    public class Yukari : CharacterTeleportMoving
 	{
 		public Yukari(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)

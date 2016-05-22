@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JLQ_MBE_BattleSimulation.Buffs.Add.Sealed;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>Cirno的SC02Buff</summary>
     public class BuffDecreaseMoveAbilityWhenHit : BuffExecuteImmediately

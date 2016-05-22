@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Bitmap;
 
-namespace JLQ_MBE_BattleSimulation
+namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>获得持续一段时间的护盾，可抵消这段时间内受到的第一个伤害</summary>
     public class BuffShield : BuffExecuteImmediately

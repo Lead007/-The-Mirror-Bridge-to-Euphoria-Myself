@@ -9,7 +9,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
     /// <summary>冴月麟</summary>
-    class Rin : CharacterHitBack
+    public class Rin : CharacterHitBack
 	{
 		public Rin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
@@ -82,6 +82,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 	    private Point pointTemp1 = Game.DefaultPoint;
 
         //天赋
+        protected override float HitBackGain => 0.3f;
+
         protected override IEnumerable<Character> LegalHitBackTarget
             => game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c));
 
