@@ -19,13 +19,16 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
     /// </summary>
     public abstract partial class Dialog_GamePad : Window
     {
+        protected const string tick = "√";
+        public readonly Grid[] Grids;
         protected Game game { get; }
-        public Dialog_GamePad(Game game)
+        protected Dialog_GamePad(Game game)
         {
             InitializeComponent();
 
             this.game = game;
 
+            Grids = new[] {GridLeft, GridRight, GridBottom, GridTop};
         }
 
         protected void Window_LostFocus(object sender, RoutedEventArgs e)
@@ -60,19 +63,11 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
                 GridPad.Children.Add(ui);
             }
             #endregion
-            game.EnemyCanAttack.Aggregate(GameColor.BaseColor,
-                (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
         }
 
         protected void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-            this.Close();
-        }
-
-        protected void ButtonSure_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
             this.Close();
         }
 
@@ -88,5 +83,6 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
             game.SetCurrentLabel();
             if (!game.HasAttacked) game.UpdateLabelBackground();
         }
+
     }
 }

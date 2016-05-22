@@ -38,7 +38,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="ButtonSure" Content="确认" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Height="25" Click="ButtonSure_Click"/>
+            <Button x:Name="ButtonSure" Content="确认" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Height="25"/>
             <Button x:Name="ButtonCancel" Content="取消" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Height="25" Click="ButtonCancel_Click"/>
         </Grid>
         <Grid x:Name="GridLeft" HorizontalAlignment="Left" Margin="50,100,0,150" VerticalAlignment="Stretch" Width="50">

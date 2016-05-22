@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
+using JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChoosePoints;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -54,13 +56,12 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            //TODO SC02
         }
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
-
+            base.EndSC02();
         }
 	}
 }

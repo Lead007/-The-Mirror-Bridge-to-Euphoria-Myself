@@ -10,7 +10,7 @@ namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
     public class BuffBeAttacked : BuffExecuteInSection
     {
         public BuffBeAttacked(Character buffee, Character buffer, int time, int damage, Character attacker, Game game)
-            : base(buffee, buffer, time, Section.Preparing, string.Format("丰收祭：每回合准备阶段受到{0}倍率弹幕伤害", damage), false, game)
+            : base(buffee, buffer, time, Section.Preparing, string.Format("琴乐：每回合准备阶段受到{0}点真实伤害", damage), false, game)
         {
             _attacker = attacker;
             _damage = damage;

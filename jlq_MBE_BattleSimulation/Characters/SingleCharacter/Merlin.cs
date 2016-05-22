@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
+using JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChoosePoints;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -44,13 +46,35 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            //TODO SC02
+            var dialog = new GamePad_MerlinSC02(game);
+            var result = dialog.ShowDialog();
+            if (result == true)
+            {
+                game.HandleIsTargetLegal = (SCee, point) => dialog.PointsChoose.Any(p => Calculate.Distance(p, SCee) <= 2);
+                game.HandleTarget = SCee =>
+                {
+                    if (IsFriend(SCee))
+                    {
+                        var buff = new BuffGainAttack(SCee, this, 2 * this.Interval, 0.1, game);
+                        buff.BuffTrigger();
+                    }
+                    else if (IsEnemy(SCee))
+                    {
+                        var buff = new BuffGainHitRate(SCee, this, 2 * this.Interval, -0.1, game);
+                        buff.BuffTrigger();
+                    }
+                };
+            }
+            else
+            {
+                game.HandleIsLegalClick = point => false;
+            }
         }
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
-
+            base.EndSC02();
         }
 
     }

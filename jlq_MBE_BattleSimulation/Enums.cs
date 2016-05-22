@@ -27,4 +27,17 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>结束阶段</summary>
         End
     }
+
+    /// <summary>选择按钮在棋盘网格的方向</summary>
+    public enum Direction
+    {
+        /// <summary>左</summary>
+        Left,
+        /// <summary>右</summary>
+        Right,
+        /// <summary>下</summary>
+        Buttom,
+        /// <summary>中</summary>
+        Top
+    }
 }

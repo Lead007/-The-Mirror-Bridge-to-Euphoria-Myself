@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buffs\Gain\Sealed\BuffGainHitRate.cs" />
     <Compile Include="Buffs\SingleBuff\BuffBeAttacked.cs" />
     <Compile Include="Characters\SingleCharacter\Alice.cs" />
     <Compile Include="AttackModel.cs" />
@@ -104,7 +105,10 @@
     <Compile Include="Dialogs\Dialog_GamePad.xaml.cs">
       <DependentUpon>Dialog_GamePad.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\GamePad\GamePad_LyricaSC02.cs" />
+    <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_MerlinSC02.cs" />
+    <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LyricaSC02.cs" />
+    <Compile Include="Dialogs\GamePad\GamePad_ChooseLines.cs" />
+    <Compile Include="Dialogs\GamePad\GamePad_ChoosePoints.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Characters\SingleCharacter\Flandre.cs" />
     <Compile Include="Characters\SingleCharacter\FlandreLittle.cs" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
-using JLQ_MBE_BattleSimulation.Dialogs.GamePad;
+using JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -48,7 +48,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-
+            base.EndSC01();
         }
 
         /// <summary>符卡02</summary>

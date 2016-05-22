@@ -21,6 +21,8 @@ namespace JLQ_MBE_BattleSimulation
         public static Brush LabelBackground2 => Brushes.LawnGreen;
         /// <summary>棋盘网格的颜色</summary>
         public static Brush PadBrush => Brushes.Blue;
+        /// <summary>对话框中的按钮颜色</summary>
+        public static Brush DialogButtonBrush => Brushes.SaddleBrown;
         /// <summary>按钮单击后的颜色</summary>
         public static Brush LinearBrush { get; private set; }
 
