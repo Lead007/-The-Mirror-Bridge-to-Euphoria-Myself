@@ -38,17 +38,16 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    };
             enterPad[1] = (s, ev) =>
             {
-                if (Calculate.Distance(game.MousePoint, this) > SC02Range) return;
+                if (game.MousePoint.Distance(this) > SC02Range) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => Calculate.Distance(game.MousePoint, c) <= 1)
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                Enemy.Where(c => game.MousePoint.Distance(c) <= 1).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        Enemy.Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
-		    };
+		        Enemy.SetLabelBackground();
+            };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
@@ -94,8 +93,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) <= SC02Range;
-            game.HandleIsTargetLegal = (SCee, point) => Calculate.Distance(point, SCee) <= 1 && IsEnemy(SCee);
+            game.HandleIsLegalClick = point => point.Distance(this) <= SC02Range;
+            game.HandleIsTargetLegal = (SCee, point) => point.Distance(SCee) <= 1 && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
             AddPadButtonEvent(1);
         }
@@ -111,7 +110,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         {
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee);
             game.HandleSelf = () => Move(Game.CenterPoint);
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 0.25f * (9 - Calculate.Distance(SCee, this)));
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 0.25f * (9 - SCee.Distance(this)));
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

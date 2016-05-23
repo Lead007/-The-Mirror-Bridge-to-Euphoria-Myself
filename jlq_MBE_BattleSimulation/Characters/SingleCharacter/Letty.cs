@@ -18,10 +18,9 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		{
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (Calculate.Distance(game.MousePoint, this) > SC01Range) return;
+		        if (game.MousePoint.Distance(this) > SC01Range) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => Calculate.Distance(game.MousePoint, c) <= 1)
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        Enemy.Where(c => game.MousePoint.Distance(c) <= 1).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		}
@@ -34,7 +33,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         public override void PreparingSection()
         {
             foreach (var buff in
-                Enemy.Where(c => Calculate.Distance(c, this) <= skillRange)
+                Enemy.Where(c => c.Distance(this) <= skillRange)
                 .Select(c => new BuffSlowDownGain(c, this, this.Interval, skillGain, game)))
             {
                 buff.BuffTrigger();
@@ -47,8 +46,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) <= SC01Range;
-            game.HandleIsTargetLegal = (SCee, point) => Calculate.Distance(point, SCee) <= 1 && IsEnemy(SCee);
+            game.HandleIsLegalClick = point => point.Distance(this) <= SC01Range;
+            game.HandleIsTargetLegal = (SCee, point) => point.Distance(SCee) <= 1 && IsEnemy(SCee);
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee);

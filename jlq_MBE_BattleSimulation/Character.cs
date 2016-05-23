@@ -226,17 +226,17 @@ namespace JLQ_MBE_BattleSimulation
         #region 只读属性
         #region 游戏内角色数据
         /// <summary>攻击</summary>
-        public int Attack => Math.Max(0, Calculate.Floor(Data.Attack*_attackX) + _attackAdd);
+        public int Attack => Math.Max(0, (Data.Attack*_attackX).Floor() + _attackAdd);
         /// <summary>防御</summary>
-        public int Defence => Math.Max(0, Calculate.Floor(Data.Defence*_defenceX) + _defenceAdd);
+        public int Defence => Math.Max(0, (Data.Defence*_defenceX).Floor() + _defenceAdd);
         /// <summary>命中率</summary>
-        public int HitRate => Math.Max(0, Calculate.Floor(Data.HitRate*_hitRateX) + _hitRateAdd);
+        public int HitRate => Math.Max(0, (Data.HitRate*_hitRateX).Floor() + _hitRateAdd);
         /// <summary>闪避率</summary>
-        public int DodgeRate => Math.Max(0, Calculate.Floor(Data.DodgeRate*_dodgeRateX) + _dodgeRateAdd);
+        public int DodgeRate => Math.Max(0, (Data.DodgeRate*_dodgeRateX).Floor() + _dodgeRateAdd);
         /// <summary>近战补正</summary>
         public double CloseAmendment => Math.Max(0, Data.CloseAmendment*_closeAmendmentX + _clostAmendmentAdd);
         /// <summary>行动间隔</summary>
-        public int Interval => Math.Max(1, Calculate.Floor(Data.Interval*_intervalX + _intervalAdd));
+        public int Interval => Math.Max(1, (Data.Interval*_intervalX + _intervalAdd).Floor());
         /// <summary>默认Buff时间（3*Interval）</summary>
         public int BuffTime => 3*Interval;
         /// <summary>机动</summary>
@@ -498,7 +498,7 @@ namespace JLQ_MBE_BattleSimulation
         public string Tip(Character target)
         {
             return string.Format("命中几率: {0}%\n平均伤害值: {1}\n<按下Shift查看详细信息>",
-                Calculate.Floor(Calculate.HitRate(this, target)*100),
+                Calculate.Floor(this.HitRate(target)*100),
                 Calculate.Damage(this.Attack, target.Defence));
         }
         #endregion
@@ -661,7 +661,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否命中</returns>
         protected virtual bool IsHit(Character target)
         {
-            return random.NextDouble() > Calculate.HitRate(this, target);
+            return random.NextDouble() > this.HitRate(target);
         }
         /// <summary>近战增益</summary>
         /// <param name="target">攻击目标</param>
@@ -669,7 +669,7 @@ namespace JLQ_MBE_BattleSimulation
         protected virtual double CloseGain(Character target)
         {
             double closeGain;
-            var distance = Calculate.Distance(this, target);
+            var distance = this.Distance(target);
             if (distance == 1)
             {
                 closeGain = this.CloseAmendment;
@@ -784,7 +784,7 @@ namespace JLQ_MBE_BattleSimulation
         protected bool IsInRangeAndEnemy(Point origin, int range, Character c)
         {
             if (c == null) return false;
-            return Calculate.Distance(origin, c) <= range && IsEnemy(c);
+            return origin.Distance(c) <= range && IsEnemy(c);
         }
 
         /// <summary>是否是在自己周围某范围内的队友</summary>
@@ -795,7 +795,7 @@ namespace JLQ_MBE_BattleSimulation
         protected bool IsInRangeAndFriend(int range, Character c, bool containThis = true)
         {
             if (c == null) return false;
-            return Calculate.Distance(c, this) <= range && IsFriend(c, containThis);
+            return c.Distance(this) <= range && IsFriend(c, containThis);
         }
         #endregion
     }

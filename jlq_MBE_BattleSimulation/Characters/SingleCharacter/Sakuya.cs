@@ -18,8 +18,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    {
 		        if (!SC02IsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC02Range, c))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC02Range, c)).SetLabelBackground();
 		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground2;
 		    };
             SetDefaultLeavePadButtonDelegate(1);
@@ -31,7 +30,6 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private int _moveTime = 1;
         private int _attackTime = 1;
-
         public override bool HasMoved
         {
             get { return _moveTime == 0; }
@@ -47,7 +45,6 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 }
             }
         }
-
         public override bool HasAttacked
         {
             get { return _attackTime == 0; }
@@ -64,6 +61,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             }
         }
 
+        //天赋
         public override bool DoingAttack(Character target, float times = 1)
 	    {
             var buff = new BuffSlowDown(target, this, 3 * this.Interval, 2, game);
@@ -129,7 +127,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
 	    private bool SC02IsLegalClick(Point point)
 	    {
-	        return Calculate.Distance(point, this) <= 2*this.AttackRange && game[point] != null;
+	        return point.Distance(this) <= 2*this.AttackRange && game[point] != null;
         }
     }
 }

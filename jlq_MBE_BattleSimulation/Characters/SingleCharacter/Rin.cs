@@ -19,8 +19,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             enterButton[0] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
-		        Game.PadPoints.Where(SC01IsLegalClick)
-		            .Aggregate(GameColor.BaseColor, (c, point) => game[point].LabelDisplay.Background = GameColor.LabelBackground);
+		        Game.PadPoints.Where(SC01IsLegalClick).Select(p=>game[p]).SetLabelBackground();
 		        pointTemp1 = Game.DefaultPoint;
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
@@ -31,10 +30,9 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        this.game.DefaultButtonAndLabels();
 		        if (this.Position != pointTemp1)
 		        {
-		            game.GetButton(pointTemp1).Opacity = 1;
+		            game.GetButton(pointTemp1).SetButtonColor();
 		        }
-		        game.Characters.Where(SCee => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(c => IsInRangeAndEnemy(pointTemp1, SC01Range2, c)).SetLabelBackground();
                 pointTemp1 = Game.DefaultPoint;
             };
             SetDefaultLeavePadButtonDelegate(0);
@@ -43,8 +41,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             enterButton[1] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(SC02Range, c))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(c => IsInRangeAndEnemy(SC02Range, c)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
             //显示将被攻击的目标
@@ -52,16 +49,15 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    {
 		        if (!this.game.HandleIsLegalClick(game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
-		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
-		    };
+		        game.MouseCharacter.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
             //显示将被攻击的目标
             enterPad[2] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC03Range, c))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC03Range, c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}

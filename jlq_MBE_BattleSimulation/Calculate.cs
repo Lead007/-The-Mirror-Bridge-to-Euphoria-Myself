@@ -26,9 +26,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="attacker">攻击者</param>
         /// <param name="target">攻击目标</param>
         /// <returns>命中率</returns>
-        public static double HitRate(Character attacker, Character target)
+        public static double HitRate(this Character attacker, Character target)
         {
-            return HitRate(attacker.HitRate - target.DodgeRate, Distance(attacker, target));
+            return HitRate(attacker.HitRate - target.DodgeRate, attacker.Distance(target));
         }
 
         //伤害公式
@@ -44,11 +44,12 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>储存角色列表中所有角色的原始数据</summary>
         public static List<CharacterData> CharacterDataList = new List<CharacterData>();
 
+        #region Distance
         /// <summary>求两点距离，参数可交换</summary>
         /// <param name="point1">点1</param>
         /// <param name="point2">点2</param>
         /// <returns>距离值</returns>
-        public static int Distance(Point point1, Point point2)
+        public static int Distance(this Point point1, Point point2)
         {
             return (int)(Math.Abs(point1.X - point2.X) + Math.Abs(point1.Y - point2.Y));
         }
@@ -56,19 +57,21 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="point1">点1</param>
         /// <param name="character1">角色1</param>
         /// <returns></returns>
-        public static int Distance(Point point1, Character character1)
+        public static int Distance(this Point point1, Character character1)
         {
-            return Distance(point1, character1.Position);
+            return point1.Distance(character1.Position);
         }
         /// <summary>求两角色的距离</summary>
         /// <param name="character1">角色1</param>
         /// <param name="character2">角色2</param>
         /// <returns></returns>
-        public static int Distance(Character character1, Character character2)
+        public static int Distance(this Character character1, Character character2)
         {
-            return Distance(character1.Position, character2);
+            return character1.Position.Distance(character2);
         }
+        #endregion
 
+        #region Convert
         /// <summary>将Section转化为中文显示</summary>
         /// <param name="value">当前游戏阶段</param>
         /// <returns>中文显示</returns>
@@ -102,11 +105,12 @@ namespace JLQ_MBE_BattleSimulation
                     return "中立方";
             }
         }
+        #endregion
 
         /// <summary>向下取整</summary>
         /// <param name="number">待取整的值</param>
         /// <returns>取整结果</returns>
-        public static int Floor(double number)
+        public static int Floor(this double number)
         {
             return (int)Math.Floor(number);
         }
@@ -115,9 +119,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="origin">源点</param>
         /// <param name="point">待测点</param>
         /// <returns>是否在范围内</returns>
-        public static bool IsIn33(Point origin, Point point)
+        public static bool IsIn33(this Point origin, Point point)
         {
-            return IsInSquare(origin, point, 3);
+            return origin.IsInSquare(point, 3);
         }
 
         /// <summary>目标点是否在以源点为中心的正方形内</summary>
@@ -125,7 +129,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="point">待测点</param>
         /// <param name="length">正方形边长</param>
         /// <returns>是否在范围内</returns>
-        public static bool IsInSquare(Point origin, Point point, int length)
+        public static bool IsInSquare(this Point origin, Point point, int length)
         {
             var i = (length - 1)/2;
             return Math.Abs(origin.X - point.X) <= i && Math.Abs(origin.Y - point.Y) <= i;

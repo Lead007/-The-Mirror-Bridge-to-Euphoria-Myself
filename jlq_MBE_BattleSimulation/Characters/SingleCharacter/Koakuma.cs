@@ -21,8 +21,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        var c = game.MouseCharacter;
 		        if (!IsFriend(c)) return;
 		        game.DefaultButtonAndLabels();
-		        c.LabelDisplay.Background = GameColor.LabelBackground;
-		    };
+		        c.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(1);
 		}
 
@@ -38,7 +38,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) <= SC01Range && IsEnemy(game[point]);
+            game.HandleIsLegalClick = point => point.Distance(this) <= SC01Range && IsEnemy(game[point]);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
@@ -48,8 +48,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             //显示可攻击目标
             game.DefaultButtonAndLabels();
             game.SetCurrentLabel();
-            Enemy.Where(c => Calculate.Distance(c, this) <= SC01Range)
-                .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+            Enemy.Where(c => c.Distance(this) <= SC01Range).SetLabelBackground();
         }
 
         /// <summary>结束符卡01</summary>

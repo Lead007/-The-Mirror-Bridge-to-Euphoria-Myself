@@ -126,8 +126,7 @@ namespace JLQ_MBE_BattleSimulation.Characters
             enterButton[2] = (s, ev) =>
             {
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => _cps.Any(cp => cp.IsInRangeAndEnemy(SC03Range, c)))
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                game.Characters.Where(c => _cps.Any(cp => cp.IsInRangeAndEnemy(SC03Range, c))).SetLabelBackground();
             };
             SetDefaultLeaveSCButtonDelegate(2);
         }

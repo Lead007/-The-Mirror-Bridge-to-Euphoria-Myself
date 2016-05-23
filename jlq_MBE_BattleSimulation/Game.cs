@@ -413,7 +413,7 @@ namespace JLQ_MBE_BattleSimulation
 
         /// <summary>当前角色攻击范围内的可攻击角色</summary>
         public IEnumerable<Character> EnemyCanAttack =>
-            EnemyAsCurrent.Where(c => Calculate.Distance(CurrentCharacter, c) <= CurrentCharacter.AttackRange);
+            EnemyAsCurrent.Where(c => CurrentCharacter.Distance(c) <= CurrentCharacter.AttackRange);
 
         /// <summary>对当前行动者的阻挡列表</summary>
         public virtual IEnumerable<Point> EnemyBlock => CurrentCharacter.EnemyBlock;
@@ -697,8 +697,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="range">范围</param>
         public void SetButtonBackground(Point origin, int range)
         {
-            PadPoints.Where(point => Calculate.Distance(point, origin) <= range && this[point] == null)
-                .Aggregate(0.0, (c, point) => GetButton(point).Opacity = 1);
+            PadPoints.Where(point => point.Distance(origin) <= range && this[point] == null).Select(GetButton).SetButtonColor();
         }
 
         /// <summary>生成可到达点的按钮颜色</summary>
@@ -710,7 +709,7 @@ namespace JLQ_MBE_BattleSimulation
                 for (var j = 0; j < Row; j++)
                 {
                     if ((!CanReachPoint[i, j]) || CurrentPosition == new Point(i, j)) continue;
-                    Buttons[i, j].Opacity = 1;
+                    Buttons[i, j].SetButtonColor();
                 }
             }
         }
@@ -718,7 +717,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>将全部棋盘按钮置透明</summary>
         public void ResetPadButtons()
         {
-            ArrayButtons.Aggregate(0.0, (c, b) => b.Opacity = 0);
+            ArrayButtons.ResetButtonColor();
         }
 
         /// <summary>更新角色标签颜色</summary>
@@ -727,7 +726,7 @@ namespace JLQ_MBE_BattleSimulation
             Characters.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
             SetCurrentLabel();
             if (HasAttacked) return;
-            EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelBackground);
+            EnemyCanAttack.SetLabelBackground();
         }
 
         /// <summary>将当前行动角色标签颜色设为淡粉色</summary>
@@ -785,6 +784,7 @@ namespace JLQ_MBE_BattleSimulation
                     break;
             }
             ScSelect = 0;
+            IsSCing = false;
         }
         #endregion
 

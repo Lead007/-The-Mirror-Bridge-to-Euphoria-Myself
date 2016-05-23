@@ -71,6 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buffs\Add\Sealed\BuffAddAttack.cs" />
+    <Compile Include="Buffs\Add\Sealed\BuffAddDodgeRate.cs" />
+    <Compile Include="Buffs\Add\Sealed\BuffAddHitRate.cs" />
     <Compile Include="Buffs\Gain\Sealed\BuffGainHitRate.cs" />
     <Compile Include="Buffs\SingleBuff\BuffBeAttacked.cs" />
     <Compile Include="Characters\SingleCharacter\Alice.cs" />
@@ -176,6 +179,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Paint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

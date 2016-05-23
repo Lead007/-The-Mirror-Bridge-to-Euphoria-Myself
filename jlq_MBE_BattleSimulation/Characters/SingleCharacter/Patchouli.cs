@@ -20,20 +20,18 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             //显示将被影响的敌人
 		    enterPad[1] = (s, ev) =>
 		    {
-		        if (Calculate.Distance(game.MousePoint, this) > SC02Range) return;
+		        if (game.MousePoint.Distance(this) > SC02Range) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => Calculate.IsIn33(game.MousePoint, c.Position))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
             //显示将被影响的敌人
             enterPad[2] = (s, ev) =>
             {
-                if (Calculate.Distance(game.MousePoint, this) > SC03Range) return;
+                if (game.MousePoint.Distance(this) > SC03Range) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => Calculate.IsIn33(game.MousePoint, c.Position))
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(2);
         }
@@ -65,9 +63,9 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) <= SC02Range;
+            game.HandleIsLegalClick = point => point.Distance(this) <= SC02Range;
             game.HandleIsTargetLegal =
-                (SCee, point) => IsEnemy(SCee) && Calculate.IsIn33(point, SCee.Position);
+                (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.3f);
@@ -88,9 +86,9 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) <= SC03Range;
+            game.HandleIsLegalClick = point => point.Distance(this) <= SC03Range;
             game.HandleIsTargetLegal =
-                (SCee, point) => IsEnemy(SCee) && Calculate.IsIn33(point, SCee.Position);
+                (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.7f);

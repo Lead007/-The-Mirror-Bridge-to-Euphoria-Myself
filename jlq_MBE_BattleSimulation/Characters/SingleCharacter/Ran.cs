@@ -22,12 +22,12 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             {
                 if (!game.HandleIsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
-                var points = Game.PadPoints.Where(p => Calculate.IsInSquare(game.MousePoint, p, 5));
+                var points = Game.PadPoints.Where(p => game.MousePoint.IsInSquare(p, 5));
                 foreach (var p in points)
                 {
                     var c = game[p];
-                    if (c == null) game.GetButton(p).Opacity = 1;
-                    else if (Enemy.Contains(c)) c.LabelDisplay.Background = GameColor.LabelBackground;
+                    if (c == null) game.GetButton(p).SetButtonColor();
+                    else if (Enemy.Contains(c)) c.SetLabelBackground();
                 }
             };
             SetDefaultLeavePadButtonDelegate(2);
@@ -75,7 +75,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             game.HandleIsLegalClick =
                 point => point.X > 1 && point.X < Game.Column - 1 && point.Y > 1 && point.Y < Game.Row - 1;
             game.HandleIsTargetLegal =
-                (SCee, point) => Calculate.IsInSquare(point, SCee.Position, 5);
+                (SCee, point) => point.IsInSquare(SCee.Position, 5);
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);

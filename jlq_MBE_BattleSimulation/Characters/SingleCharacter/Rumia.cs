@@ -25,16 +25,14 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    {
 		        if (game.MouseCharacter != null) return;
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC01Range, c))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC01Range, c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //显示将被攻击的角色
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(SCee => IsInRangeAndEnemy(SC03Range, SCee))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(SCee => IsInRangeAndEnemy(SC03Range, SCee)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}

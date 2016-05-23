@@ -19,18 +19,16 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             {
                 if (!SC01IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => SC01IsTargetLegal(c, game.MousePoint))
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                game.Characters.Where(c => SC01IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
             //显示将被攻击的角色
             enterPad[1] = (s, ev) =>
             {
-                if (Calculate.Distance(game.MousePoint, this) != 1) return;
+                if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => SC02IsTargetLegal(c, game.MousePoint))
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                Enemy.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -40,11 +38,11 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 if (!SC03IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
                 var c = game.MouseCharacter;
-                c.LabelDisplay.Background = GameColor.LabelBackground;
+                c.SetLabelBackground();
                 var point = Destination(c);
                 if (game[point] == null)
                 {
-                    game.Buttons[(int)point.X, (int)point.Y].Opacity = 1;
+                    game.Buttons[(int)point.X, (int)point.Y].SetButtonColor();
                 }
             };
             SetDefaultLeavePadButtonDelegate(2);
@@ -86,7 +84,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) == 1;
+            game.HandleIsLegalClick = point => point.Distance(this) == 1;
             game.HandleIsTargetLegal = (SCee, point) => SC02IsTargetLegal(SCee, point) && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, (float) (SC02Gain*SCGain));
             AddPadButtonEvent(1);
@@ -137,7 +135,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private bool SC01IsTargetLegal(Character SCee, Point point)
         {
-            return Calculate.IsIn33(point, SCee.Position) && IsEnemy(SCee);
+            return point.IsIn33(SCee.Position) && IsEnemy(SCee);
         }
 
         private bool SC02IsTargetLegal(Character SCee, Point point)
@@ -159,7 +157,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private bool SC03IsLegalClick(Point point)
         {
-            return Calculate.Distance(point, this) <= SC03Const1 && (point.X == this.X || point.Y == this.Y) &&
+            return point.Distance(this) <= SC03Const1 && (point.X == this.X || point.Y == this.Y) &&
                    IsEnemy(game[point]);
 
         }

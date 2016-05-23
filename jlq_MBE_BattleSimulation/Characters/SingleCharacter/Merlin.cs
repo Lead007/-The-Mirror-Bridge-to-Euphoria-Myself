@@ -22,8 +22,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        var cs = Enemy.Where(c => SC01IsTargetLegal(c, game.MousePoint)).ToList();
 		        if (!cs.Any()) return;
                 game.DefaultButtonAndLabels();
-                var ce = cs[0];
-		        if (ce != null) ce.LabelDisplay.Background = GameColor.LabelBackground;
+		        cs[0].SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		}
@@ -67,7 +66,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                game.HandleIsTargetLegal = (SCee, point) => dialog.PointsChoose.Any(p => Calculate.Distance(p, SCee) <= 2);
+                game.HandleIsTargetLegal = (SCee, point) => dialog.PointsChoose.Any(p => p.Distance(SCee) <= 2);
                 game.HandleTarget = SCee =>
                 {
                     if (IsFriend(SCee))
@@ -117,8 +116,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         {
             var cInLine = Enemy.Where(c => IsInLine(c, point)).ToList();
             if (!cInLine.Any()) return false;
-            var min = cInLine.Min(c => Calculate.Distance(c, this));
-            return IsInLine(SCee, point) && Calculate.Distance(SCee, this) == min;
+            var min = cInLine.Min(c => c.Distance(this));
+            return IsInLine(SCee, point) && SCee.Distance(this) == min;
         }
     }
 }

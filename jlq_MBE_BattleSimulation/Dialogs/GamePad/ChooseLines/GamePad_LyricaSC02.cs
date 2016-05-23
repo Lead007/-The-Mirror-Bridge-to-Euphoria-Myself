@@ -27,7 +27,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines
                         foreach (var c in game.Characters.Where(c => c.Y == j && c != game.CurrentCharacter))
                         {
                             if (game.CurrentCharacter.IsFriend(c))
-                                c.LabelDisplay.Background = GameColor.LabelBackground;
+                                c.SetLabelBackground();
                             else if (game.CurrentCharacter.IsEnemy(c))
                                 c.LabelDisplay.Background = GameColor.LabelBackground2;
                         }
@@ -51,7 +51,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines
         protected override void SetLabelBackground(Character c)
         {
             if (game.CurrentCharacter.IsFriend(c))
-                c.LabelDisplay.Background = GameColor.LabelBackground;
+                c.SetLabelBackground();
             else if (game.CurrentCharacter.IsEnemy(c))
                 c.LabelDisplay.Background = GameColor.LabelBackground2;
         }

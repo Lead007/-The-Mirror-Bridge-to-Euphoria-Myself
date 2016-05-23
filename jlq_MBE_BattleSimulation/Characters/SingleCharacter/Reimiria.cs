@@ -26,17 +26,16 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             enterButton[1] = (s, ev) =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                Enemy.SetLabelBackground();
             };
             SetDefaultLeaveSCButtonDelegate(1);
             //符卡03
             //显示将被攻击的角色
             enterPad[2] = (s, ev) =>
             {
-                if (Calculate.Distance(game.MousePoint, this) != 1) return;
+                if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => SC03IsTargetLegal(c, game.MousePoint))
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                Enemy.Where(c => SC03IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(2);
         }
@@ -87,7 +86,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsLegalClick = point => Calculate.Distance(point, this) == 1;
+            game.HandleIsLegalClick = point => point.Distance(this) == 1;
             game.HandleIsTargetLegal = (SCee, point) => SC03IsTargetLegal(SCee, point) && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             AddPadButtonEvent(2);

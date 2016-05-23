@@ -19,8 +19,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    enterButton[0] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
-		        Game.PadPoints.Where(point => this.Position != point && SC01IsLegalClick(point))
-		            .Aggregate(GameColor.BaseColor, (c, point) => game[point].LabelDisplay.Background = GameColor.LabelBackground);
+		        Game.PadPoints.Where(point => this.Position != point && SC01IsLegalClick(point)).Select(p=>game[p]).SetLabelBackground();
 		        pointTemp1 = Game.DefaultPoint;
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
@@ -32,9 +31,9 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        if (this.Position == game.MousePoint) return;
 		        if (this.Position != pointTemp1)
 		        {
-		            game.GetButton(pointTemp1).Opacity = 1;
+		            game.GetButton(pointTemp1).SetButtonColor();
 		        }
-		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
+		        game.MouseCharacter.SetLabelBackground();
 		        pointTemp1 = Game.DefaultPoint;
 		    };
             SetDefaultLeavePadButtonDelegate(0);
@@ -43,8 +42,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    enterButton[1] = (s, ev) =>
 		    {
                 this.game.DefaultButtonAndLabels();
-		        Game.PadPoints.Where(SC02IsLegalClick)
-		            .Aggregate(GameColor.BaseColor, (c, point) => game[point].LabelDisplay.Background = GameColor.LabelBackground);
+		        Game.PadPoints.Where(SC02IsLegalClick).Select(p=>game[p]).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
             //显示将被攻击的角色
@@ -52,15 +50,14 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    {
 		        if (!SC02IsLegalClick(game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
-		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
-		    };
+		        game.MouseCharacter.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(1);
             //显示将回血的角色
 		    enterButton[2] = (s, ev) =>
 		    {
                 this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => c != this && SC03IsTargetLegal(c))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        game.Characters.Where(c => c != this && SC03IsTargetLegal(c)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
@@ -145,7 +142,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private bool SC01IsLegalClick(Point point)
         {
-            if (Calculate.Distance(point, this) > SC01Range || game[point] == null) return false;
+            if (point.Distance(this) > SC01Range || game[point] == null) return false;
             if (point == this.Position)
             {
                 pointTemp1 = point;
@@ -184,7 +181,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private bool SC02IsLegalClick(Point point)
         {
-            if (Calculate.Distance(point, this) > SC01Range) return false;
+            if (point.Distance(this) > SC01Range) return false;
             return IsEnemy(game[point]);
         }
 

@@ -99,7 +99,7 @@ namespace JLQ_MBE_BattleSimulation
                         //清屏
                         game.DefaultButtonAndLabels();
                         game.SetButtonBackground(game.MousePoint, character.AttackRange);
-                        character.LabelDisplay.Background = LabelBackground;
+                        character.SetLabelBackground();
                     }
                     //如果ctrl被按下
                     else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -110,7 +110,7 @@ namespace JLQ_MBE_BattleSimulation
                         game.DefaultButtonAndLabels();
 
                         game.SetButtonBackground(game.MousePoint, character.MoveAbility);
-                        character.LabelDisplay.Background = LabelBackground;
+                        character.SetLabelBackground();
                     }
 
                 };
@@ -310,7 +310,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private void SC(int index)
         {
-            if (GameSection != JLQ_MBE_BattleSimulation.Section.Round) return;
+            if (GameSection != Section.Round) return;
             if (!game.IsSCing)
             {
                 game.IsSCing = true;

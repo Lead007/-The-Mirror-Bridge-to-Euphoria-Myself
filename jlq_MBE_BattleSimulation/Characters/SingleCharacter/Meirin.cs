@@ -22,10 +22,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        foreach (var c in game.Characters.Where(c => IsFriend(c, false)))
-		        {
-		            c.LabelDisplay.Background = GameColor.LabelBackground;
-		        }
+                game.Characters.Where(c => IsFriend(c, false)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
@@ -46,7 +43,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             game.HandleIsLegalClick = point =>
             {
                 var c = game[point];
-                return IsEnemy(c) && Calculate.Distance(c, this) <= this.AttackRange;
+                return IsEnemy(c) && c.Distance(this) <= this.AttackRange;
             };
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleSelf = () =>

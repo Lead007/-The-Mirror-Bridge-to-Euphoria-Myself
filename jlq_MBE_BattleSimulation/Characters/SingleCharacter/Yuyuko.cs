@@ -22,7 +22,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             if (HandleIsHit(target)) return false;
             //计算伤害增益
             float gain;
-            switch (Calculate.Distance(this, target))
+            switch (this.Distance(target))
             {
                 case 1:
                     gain = 1.2f;

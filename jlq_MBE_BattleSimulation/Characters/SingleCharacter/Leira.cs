@@ -22,8 +22,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        var c = game.MouseCharacter;
 		        if (!IsFriend(c, false)) return;
 		        game.DefaultButtonAndLabels();
-		        c.LabelDisplay.Background = GameColor.LabelBackground;
-		    };
+		        c.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(1);
 		}
 

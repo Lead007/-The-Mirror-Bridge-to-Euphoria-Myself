@@ -19,7 +19,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             //显示将攻击的敌人
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (SC01IsLegalClick(game.MousePoint)) game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
+		        if (SC01IsLegalClick(game.MousePoint)) game.MouseCharacter.SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡03
@@ -29,8 +29,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        var c = game.MouseCharacter;
 		        if (!IsEnemy(c)) return;
 		        game.DefaultButtonAndLabels();
-		        c.LabelDisplay.Background = GameColor.LabelBackground;
-		    };
+		        c.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(2);
 		}
 
@@ -45,7 +45,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 0.7f);
-                var buff = new BuffAddDefence(SCee, this, this.Interval, -20, game);
+                var buff = new BuffAddAttack(SCee, this, this.Interval, -20, game);
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);
@@ -102,7 +102,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 	    private bool SC01IsLegalClick(Point point)
 	    {
             var c = game[point];
-            return IsEnemy(c) && Calculate.Distance(c, this) <= this.AttackRange;
+            return IsEnemy(c) && c.Distance(this) <= this.AttackRange;
         }
 
     }

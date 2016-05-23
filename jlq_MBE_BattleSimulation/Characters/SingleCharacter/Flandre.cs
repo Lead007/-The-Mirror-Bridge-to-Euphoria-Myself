@@ -17,20 +17,19 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    enterButton[0] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        FList.Aggregate(GameColor.BaseColor, (c, f) => f.LabelDisplay.Background = GameColor.LabelBackground);
+                FList.SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
 		    enterButton[1] = (s, ev) =>
 		    {
-		        SC02points.Aggregate(0.0, (c, p) => game.GetButton(p).Opacity = 1);
+		        SC02points.Select(game.GetButton).SetButtonColor();
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
 		    enterPad[2] = (s, ev) =>
 		    {
 		        if (!game.HandleIsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => Calculate.IsIn33(game.MousePoint, c.Position))
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
@@ -42,7 +41,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         private List<FlandreLittle> FList { get; } = new List<FlandreLittle>();
 
         private IEnumerable<Point> SC02points
-            => Game.PadPoints.Where(p => Calculate.Distance(p, this) <= SC02Range && game[p] == null);
+            => Game.PadPoints.Where(p => p.Distance(this) <= SC02Range && game[p] == null);
 
         public override void PreparingSection()
         {
@@ -104,7 +103,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         {
             game.HandleIsLegalClick =
                 point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
-            game.HandleIsTargetLegal = (SCee, point) => Calculate.IsIn33(point, SCee.Position) && IsEnemy(SCee);
+            game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee.Position) && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             AddPadButtonEvent(2);
         }

@@ -20,8 +20,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		    enterButton[0] = (s, ev) =>
 		    {
                 game.DefaultButtonAndLabels();
-		        Enemy.Where(c => c.Y > this.Y)
-		            .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		        Enemy.Where(c => c.Y > this.Y).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
 		}

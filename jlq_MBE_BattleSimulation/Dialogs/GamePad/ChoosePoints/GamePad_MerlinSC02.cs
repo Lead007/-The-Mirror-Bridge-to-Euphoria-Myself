@@ -20,13 +20,13 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChoosePoints
 
         protected override IEnumerable<Character> LegalCharacters(Point point)
         {
-            return game.Characters.Where(c => Calculate.Distance(point, c) <= 2);
+            return game.Characters.Where(c => point.Distance(c) <= 2);
         }
 
         protected override void SetLabelBackground(Character c)
         {
             if (game.CurrentCharacter.IsFriend(c))
-                c.LabelDisplay.Background = GameColor.LabelBackground;
+                c.SetLabelBackground();
             else if (game.CurrentCharacter.IsEnemy(c))
                 c.LabelDisplay.Background = GameColor.LabelBackground2;
         }

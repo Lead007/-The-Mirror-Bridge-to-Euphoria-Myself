@@ -20,13 +20,11 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        game.DefaultButtonAndLabels();
 		        if (IsWhite)
 		        {
-		            game.Characters.Where(c => IsInRangeAndFriend(SC01Range, c, false))
-		                .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		            game.Characters.Where(c => IsInRangeAndFriend(SC01Range, c, false)).SetLabelBackground();
 		        }
 		        else
 		        {
-		            game.Characters.Where(c => IsInRangeAndEnemy(SC01Range, c))
-		                .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+		            game.Characters.Where(c => IsInRangeAndEnemy(SC01Range, c)).SetLabelBackground();
 		        }
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
@@ -35,8 +33,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		        if (IsWhite && (!SC02WhiteIsLegalClick(game.MousePoint))) return;
 		        if ((!IsWhite) && (!IsEnemy(game.MouseCharacter))) return;
 		        game.DefaultButtonAndLabels();
-		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground;
-		    };
+		        game.MouseCharacter.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(1);
 		}
 
@@ -188,7 +186,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private bool SC02WhiteIsLegalClick(Point point)
         {
-            return Calculate.Distance(point, this) <= SC02Range && IsFriend(game[point]);
+            return point.Distance(this) <= SC02Range && IsFriend(game[point]);
         }
 	}
 }
