@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Number", "RationalNumber\Number.csproj", "{5D334A83-3A42-47DB-BEEA-B2EB3EFC779A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomHelper", "RandomHelper\RandomHelper.csproj", "{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5D334A83-3A42-47DB-BEEA-B2EB3EFC779A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D334A83-3A42-47DB-BEEA-B2EB3EFC779A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D334A83-3A42-47DB-BEEA-B2EB3EFC779A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

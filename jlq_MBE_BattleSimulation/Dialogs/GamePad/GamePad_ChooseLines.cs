@@ -11,12 +11,27 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
 {
     public abstract class GamePad_ChooseLines : Dialog_GamePad
     {
+        #region Enums
+        /// <summary>选择按钮在棋盘网格的方向</summary>
+        protected enum Direction
+        {
+            /// <summary>左</summary>
+            Left,
+            /// <summary>右</summary>
+            Right,
+            /// <summary>下</summary>
+            Buttom,
+            /// <summary>中</summary>
+            Top
+        }
+        #endregion
+
         protected int LineNum { get; }
         public Queue<int> LinesChoose { get; } = new Queue<int>();
         protected GamePad_ChooseLines(Direction direction, int lineNum, Game game) : base(game)
         {
             this.LineNum = lineNum;
-            this.GridPad.Loaded += (s, ev) => game.EnemyCanAttack.Aggregate(GameColor.BaseColor,
+            this.GridPad.Loaded += (s, ev) => this.game.EnemyCanAttack.Aggregate(GameColor.BaseColor,
                 (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
             this.Grids[(int) direction].Loaded += (s, ev) =>
             {

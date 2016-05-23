@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using RandomHelper;
 
 namespace JLQ_MBE_BattleSimulation.Characters
 {
@@ -47,10 +48,9 @@ namespace JLQ_MBE_BattleSimulation.Characters
         public override void BeAttacked(int damage, Character attacker)
         {
             base.BeAttacked(damage, attacker);
-            var legalTarget = this.LegalHitBackTarget.ToArray();
-            if (legalTarget.Length == 0) return;
-            var index = random.Next(legalTarget.Length);
-            var target = legalTarget[index];
+            //获取目标
+            if (!this.LegalHitBackTarget.Any()) return;
+            var target = random.RandomElement(this.LegalHitBackTarget);
             //判断是否命中
             if (HandleIsHit(target)) return;
             //造成无来源伤害

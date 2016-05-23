@@ -43,6 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
+    <Reference Include="RandomHelper">
+      <HintPath>..\RandomHelper\bin\Release\RandomHelper.dll</HintPath>
+    </Reference>
     <Reference Include="RationalNumber">
       <HintPath>..\RationalNumber\bin\Release\RationalNumber.dll</HintPath>
     </Reference>
@@ -105,6 +108,7 @@
     <Compile Include="Dialogs\Dialog_GamePad.xaml.cs">
       <DependentUpon>Dialog_GamePad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LunasaSC02.cs" />
     <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_MerlinSC02.cs" />
     <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LyricaSC02.cs" />
     <Compile Include="Dialogs\GamePad\GamePad_ChooseLines.cs" />

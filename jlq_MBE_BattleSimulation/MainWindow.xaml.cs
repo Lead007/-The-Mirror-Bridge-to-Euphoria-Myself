@@ -20,6 +20,7 @@ using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
 using Data;
 using JLQ_MBE_BattleSimulation.Dialogs;
+using RandomHelper;
 using static JLQ_MBE_BattleSimulation.GameColor;
 
 namespace JLQ_MBE_BattleSimulation
@@ -279,13 +280,9 @@ namespace JLQ_MBE_BattleSimulation
                 MessageBox.Show("空格不足！", "添加失败", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var count = Calculate.CharacterDataList.Count;
-            for (var i = 0; i < number; i++)
+            foreach (var p in game.random.RandomElements(number, pointsCanAdd))
             {
-                var index = game.random.Next(pointsCanAdd.Count);
-                var displayIndex = game.random.Next(count);
-                AddCharacter(pointsCanAdd[index], group, Calculate.CharacterDataList.ElementAt(displayIndex).Display);
-                pointsCanAdd.RemoveAt(index);
+                AddCharacter(p, group, game.random.RandomElement(Calculate.CharacterDataList).Display);
             }
             if (checkBox.IsChecked == false) return;
             MessageBox.Show("生成成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);

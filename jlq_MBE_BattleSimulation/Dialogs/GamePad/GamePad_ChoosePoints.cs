@@ -95,7 +95,6 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
                             {
                                 SetLabelBackground(c);
                             }
-
                         };
                         #endregion
                     }

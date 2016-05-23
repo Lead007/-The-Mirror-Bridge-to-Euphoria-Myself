@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using RandomHelper;
 using static JLQ_MBE_BattleSimulation.GameColor;
 
 namespace JLQ_MBE_BattleSimulation
@@ -129,7 +130,7 @@ namespace JLQ_MBE_BattleSimulation
         public Character characterLastAdd { get; set; }= null;
 
 
-    /// <summary>每个格子能否被到达</summary>
+        /// <summary>每个格子能否被到达</summary>
         public bool[,] CanReachPoint { get; } = new bool[Column, Row];
 
         /// <summary>可能死亡的角色列表</summary>
@@ -549,8 +550,7 @@ namespace JLQ_MBE_BattleSimulation
                     }
                 }
             }
-            var i = random.Next(stack.Count);
-            CurrentCharacter = stack.ElementAt(i);
+            CurrentCharacter = random.RandomElement(stack);
             UpdateLabelBackground();
 
             var ct = CurrentCharacter.CurrentTime;
