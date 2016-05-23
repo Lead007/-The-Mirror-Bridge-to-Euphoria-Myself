@@ -16,14 +16,22 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             : base(id, position, group, random, game)
         {
             //符卡01
-            //显示将被攻击的目标
-            enterButton[0] = (s, ev) =>
+            //显示将被攻击的角色
+            enterPad[0] = (s, ev) =>
             {
+                if (Calculate.Distance(game.MousePoint, this) > SC01Range) return;
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => IsInRangeAndEnemy(SC01Range, c))
-                    .Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                var cs = Enemy.Where(c => Calculate.IsIn33(game.MousePoint, c.Position)).ToList();
+                if (cs.Count == 1)
+                {
+                    cs[0].LabelDisplay.Background = GameColor.LabelBackground2;
+                }
+                else
+                {
+                    cs.Aggregate(GameColor.BaseColor, (cu, c) => c.LabelDisplay.Background = GameColor.LabelBackground);
+                }
             };
-            SetDefaultLeaveSCButtonDelegate(0);
+            SetDefaultLeavePadButtonDelegate(0);
             //符卡02
             //显示将被影响的目标和被监禁的范围
             enterPad[1] = (s, ev) =>
@@ -43,6 +51,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         /// <summary>符卡01的参数</summary>
         private const int SC01Range = 4;
+        private float SC01Gain;
         /// <summary>符卡02的参数</summary>
         private const int SC02Gain = 10;
 
@@ -59,14 +68,19 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡01：梦想封印，对所有4格内的敌人造成1.0倍率的弹幕攻击</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC01Range, SCee);
-            game.HandleTarget = t => HandleDoDanmakuAttack(t);
+            game.HandleIsLegalClick = point => Calculate.Distance(point, this) <= SC01Range;
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && Calculate.IsIn33(point, SCee.Position);
+            game.HandleSelf = () => SC01Gain =
+                game.Characters.Count(c => game.HandleIsTargetLegal(c, game.MousePoint)) == 1 ? 6 : 1.5f;
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01Gain);
+            AddPadButtonEvent(0);
         }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
             base.EndSC01();
+            RemovePadButtonEvent(0);
         }
 
         /// <summary>符卡02</summary>
@@ -89,7 +103,6 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 buff2.BuffTrigger();
             };
             AddPadButtonEvent(1);
-            game.LabelGameTip.Content = "符卡提示：单击所选择的3×3区域的中心";
         }
 
         /// <summary>结束符卡02</summary>
@@ -108,17 +121,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
-
-        }
-
-        public override void SCShow()
-        {
-            AddSCButtonEvent(0);
-        }
-
-        public override void ResetSCShow()
-        {
-            RemoveSCButtonEvent(0);
+            base.EndSC03();
         }
     }
 }

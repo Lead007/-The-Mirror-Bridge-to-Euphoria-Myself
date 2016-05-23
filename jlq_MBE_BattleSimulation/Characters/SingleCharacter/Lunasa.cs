@@ -7,7 +7,6 @@ using System.Windows;
 using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 using JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines;
-using JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChoosePoints;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {

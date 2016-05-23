@@ -16,8 +16,17 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		public Merlin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
-
-        }
+		    enterPad[0] = (s, ev) =>
+		    {
+		        if (!SC01IsLegalClick(game.MousePoint)) return;
+		        var cs = Enemy.Where(c => SC01IsTargetLegal(c, game.MousePoint)).ToList();
+		        if (!cs.Any()) return;
+                game.DefaultButtonAndLabels();
+                var ce = cs[0];
+		        if (ce != null) ce.LabelDisplay.Background = GameColor.LabelBackground;
+		    };
+            SetDefaultLeavePadButtonDelegate(0);
+		}
 
         public override void PreparingSection()
         {
@@ -34,13 +43,21 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            //TODO SC01
+            game.HandleIsLegalClick = SC01IsLegalClick;
+            game.HandleIsTargetLegal = SC01IsTargetLegal;
+            game.HandleTarget = SCee =>
+            {
+                var d = Math.Max(Math.Abs(SCee.X - this.X), Math.Abs(SCee.Y - this.Y));
+                HandleDoDanmakuAttack(SCee, 1.6f - 0.1f*d);
+            };
+            AddPadButtonEvent(0);
         }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-
+            base.EndSC01();
+            RemovePadButtonEvent(0);
         }
 
         /// <summary>符卡02</summary>
@@ -77,5 +94,31 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             base.EndSC02();
         }
 
+        private bool IsInLine(Character SCee, Point point)
+        {
+            if (point.X == this.X)
+            {
+                return SCee.X == this.X && ((point.Y > this.Y) == (SCee.Y > this.Y));
+            }
+            if (point.Y == this.Y)
+            {
+                return SCee.Y == this.Y && ((point.X > this.X) == (SCee.X > this.X));
+            }
+            return Math.Abs(SCee.X - this.X) == Math.Abs(SCee.Y - this.Y) &&
+                   ((point.Y > this.Y) == (SCee.Y > this.Y)) && (point.X > this.X) == (SCee.X > this.X);
+        }
+
+        private bool SC01IsLegalClick(Point point)
+        {
+            return Math.Abs(point.X - this.X) <= 1 && Math.Abs(point.Y - this.Y) <= 1 && point != this.Position;
+        }
+
+        private bool SC01IsTargetLegal(Character SCee, Point point)
+        {
+            var cInLine = Enemy.Where(c => IsInLine(c, point)).ToList();
+            if (!cInLine.Any()) return false;
+            var min = cInLine.Min(c => Calculate.Distance(c, this));
+            return IsInLine(SCee, point) && Calculate.Distance(SCee, this) == min;
+        }
     }
 }

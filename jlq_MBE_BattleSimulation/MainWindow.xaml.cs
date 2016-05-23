@@ -431,7 +431,6 @@ namespace JLQ_MBE_BattleSimulation
             labelShow.Content = "战斗模式";
             label2.Visibility = Visibility.Hidden;
             game.LabelID.Visibility = Visibility.Hidden;
-            game.LabelGameTip.Visibility = Visibility.Visible;
             comboBoxDisplay.Text = "";
             comboBoxDisplay.IsEnabled = false;
             comboBoxEnemy.IsEnabled = false;
@@ -532,7 +531,6 @@ namespace JLQ_MBE_BattleSimulation
         private void gridGameInformation_Loaded(object sender, RoutedEventArgs e)
         {
             gridGameInformation.Children.Add(game.LabelID);
-            gridGameInformation.Children.Add(game.LabelGameTip);
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

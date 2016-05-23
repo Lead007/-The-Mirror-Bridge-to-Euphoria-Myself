@@ -626,14 +626,8 @@ namespace JLQ_MBE_BattleSimulation
         {
             EndSC();
         }
-        ///// <summary>成为当前行动角色时按钮的移动响应</summary>
-        //public abstract void SCShow();
-        ///// <summary>按钮移动响应复位</summary>
-        //public abstract void ResetSCShow();
-        //TODO back abstract
         /// <summary>成为当前行动角色时按钮的移动响应</summary>
         public virtual void SCShow(){ }
-
         /// <summary>按钮移动响应复位</summary>
         public virtual void ResetSCShow(){ }
         #endregion

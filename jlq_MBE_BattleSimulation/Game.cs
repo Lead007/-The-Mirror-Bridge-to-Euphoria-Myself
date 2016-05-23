@@ -175,8 +175,6 @@ namespace JLQ_MBE_BattleSimulation
         public Label[] LabelsGroup { get; } = new Label[3];
         /// <summary>显示当前添加ID的标签</summary>
         public Label LabelID { get; }
-        /// <summary>游戏提示标签</summary>
-        public Label LabelGameTip { get; }
         #endregion
 
         /// <summary>生成可到达点矩阵</summary>
@@ -356,18 +354,6 @@ namespace JLQ_MBE_BattleSimulation
             };
             LabelID.SetValue(Grid.ColumnProperty, 1);
             LabelID.SetValue(Grid.RowProperty, 1);
-            #endregion
-            #region LabelGameTip
-            LabelGameTip = new Label
-            {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                Visibility = Visibility.Hidden,
-                Foreground = Brushes.Blue
-            };
-            LabelGameTip.SetValue(Grid.RowProperty, 1);
-            LabelGameTip.SetValue(Grid.ColumnSpanProperty, 2);
             #endregion
             #region GridPad
             GridPad = new Grid();
@@ -786,7 +772,6 @@ namespace JLQ_MBE_BattleSimulation
             HandleTarget = null;
             HandleIsLegalClick = null;
             ButtonSC.Aggregate(BaseColor, (c, b) => b.Background = BaseColor);
-            LabelGameTip.Content = "";
             switch (ScSelect)
             {
                 case 1:
