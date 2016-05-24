@@ -129,6 +129,10 @@
     <value>Group.cgp</value>
     <comment>角色阵营文件名</comment>
   </data>
+  <data name="HelpError" xml:space="preserve">
+    <value>找不到帮助文件，请联系开发者。</value>
+    <comment>找不到帮助文件时的错误信息</comment>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>Position.pos</value>
     <comment>角色位置文件名</comment>

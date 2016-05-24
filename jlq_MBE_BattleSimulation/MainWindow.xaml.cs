@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -40,8 +41,17 @@ namespace JLQ_MBE_BattleSimulation
 
             #region 读取角色各数据
             var data = new XmlDocument();
-            var reader = XmlReader.Create("Resources/Data/data.xml", new XmlReaderSettings {IgnoreComments = true /*忽略注释*/});
-            data.Load(reader);
+            XmlReader reader = null;
+            try
+            {
+                reader = XmlReader.Create("Resources/Data/data.xml", new XmlReaderSettings { IgnoreComments = true /*忽略注释*/});
+                data.Load(reader);
+            }
+            catch (Exception)
+            {
+                Game.ErrorMessageBox("找不到数据文件，程序无法运行。请联系开发者。");
+                this.Close();
+            }
             Calculate.CharacterDataList = DataLoader.LoadDatas(data);
             reader.Close();
             foreach (var cd in Calculate.CharacterDataList)
@@ -354,22 +364,6 @@ namespace JLQ_MBE_BattleSimulation
             #endregion
         }
 
-
-        /// <summary>帮助-操作菜单</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuHelp_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Pause
-            MessageBox.Show(
-                "加人模式左键添加己方单位，中键添加中立单位，右键单击敌方单位；\n鼠标悬停在单位上方显示数据，按住shift微移鼠标显示单位详细信息；\n点击自身可跳过行动阶段；\n若暴击则会beep。", "操作",
-                MessageBoxButton.OK, MessageBoxImage.Question);
-            //TODO Continue
-        }
-
-        /// <summary>关闭时询问是否关闭窗口</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("是否退出？", "退出", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -379,17 +373,11 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
-        /// <summary>退出菜单</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        /// <summary>清除已添加的所有单位</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void menuClear_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("确认清除所有角色？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
@@ -399,9 +387,6 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
-        /// <summary>模式切换</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void menuPattern_Click(object sender, RoutedEventArgs e)
         {
             #region 合法性
@@ -450,9 +435,6 @@ namespace JLQ_MBE_BattleSimulation
             #endregion
         }
 
-        /// <summary>撤销上一次添加的角色</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void menuBackout_Click(object sender, RoutedEventArgs e)
         {
             if (game.characterLastAdd == null) return;
@@ -469,27 +451,43 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
+        private void menuHelp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(Directory.GetCurrentDirectory() + @"\Resources\Help\Operators.txt");
+            }
+            catch
+            {
+                Game.ErrorMessageBox(Properties.Resources.HelpError);
+            }
+        }
+
         private void menuShow_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "红色字体为己方单位，黑色字体为中立单位，绿色字体为敌方单位；\n" + "战斗模式下：\n淡粉色为当前行动单位；\n淡蓝色为当前行动单位可攻击的单位；\n淡黄色为可以移动至的位置\n" +
-                "鼠标悬停在单位上方：\n按下Shift显示该角色的攻击范围；\n按下Ctrl显示该角色的移动范围。", "显示", MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            try
+            {
+                Process.Start(Directory.GetCurrentDirectory() + @"\Resources\Help\Show.txt");
+            }
+            catch
+            {
+                Game.ErrorMessageBox(Properties.Resources.HelpError);
+            }
         }
 
         private void buttonGenerateFriend_Click(object sender, RoutedEventArgs e)
         {
-            RandomlyAddCharacters(Group.Friend, Int32.Parse(comboBoxFriend.Text));
+            RandomlyAddCharacters(Group.Friend, int.Parse(comboBoxFriend.Text));
         }
 
         private void buttonGenerateEnemy_Click(object sender, RoutedEventArgs e)
         {
-            RandomlyAddCharacters(Group.Enemy, Int32.Parse(comboBoxEnemy.Text));
+            RandomlyAddCharacters(Group.Enemy, int.Parse(comboBoxEnemy.Text));
         }
 
         private void buttonGenerateMiddle_Click(object sender, RoutedEventArgs e)
         {
-            RandomlyAddCharacters(Group.Middle, Int32.Parse(comboBoxMiddle.Text));
+            RandomlyAddCharacters(Group.Middle, int.Parse(comboBoxMiddle.Text));
         }
 
         private void borderPad_Loaded(object sender, RoutedEventArgs e)

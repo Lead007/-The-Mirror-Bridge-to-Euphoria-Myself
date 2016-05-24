@@ -609,23 +609,22 @@ namespace JLQ_MBE_BattleSimulation
         #region 符卡
         /// <summary>符卡01</summary>
         public abstract void SC01();
-
         /// <summary>结束使用符卡01</summary>
         public virtual void EndSC01()
         {
             EndSC();
         }
+
         /// <summary>符卡02</summary>
         public abstract void SC02();
-
         /// <summary>结束使用符卡02</summary>
         public virtual void EndSC02()
         {
             EndSC();
         }
+
         /// <summary>符卡03</summary>
         public abstract void SC03();
-
         /// <summary>结束使用符卡03</summary>
         public virtual void EndSC03()
         {

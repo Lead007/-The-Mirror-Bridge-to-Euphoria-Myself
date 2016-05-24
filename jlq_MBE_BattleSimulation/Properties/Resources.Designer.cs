@@ -89,6 +89,15 @@ namespace JLQ_MBE_BattleSimulation.Properties {
         }
         
         /// <summary>
+        ///   查找类似 找不到帮助文件，请联系开发者。 的本地化字符串。
+        /// </summary>
+        internal static string HelpError {
+            get {
+                return ResourceManager.GetString("HelpError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Position.pos 的本地化字符串。
         /// </summary>
         internal static string Position {
