@@ -23,18 +23,33 @@ namespace JLQ_MBE_BattleSimulation
         public static Brush PadBrush => Brushes.Blue;
         /// <summary>对话框中的按钮颜色</summary>
         public static Brush DialogButtonBrush => Brushes.SaddleBrown;
-        /// <summary>按钮单击后的颜色</summary>
-        public static Brush LinearBrush { get; private set; }
+        /// <summary>游戏按钮单击后的颜色</summary>
+        public static Brush GameButtonLinearBrush { get; }
+        #region 符卡
+        /// <summary>符卡按钮的文字颜色</summary>
+        public static Brush ScButtonForeBrush => Brushes.White;
+        /// <summary>符卡按钮的默认颜色</summary>
+        public static Brush ScButtonDefaultBrush => Brushes.DarkSlateGray;
+        /// <summary>符卡按钮单击后的颜色</summary>
+        public static Brush ScButtonLinearBrush { get; }
+        #endregion
 
         /// <summary>生成颜色</summary>
-        public static void GenerateColors()
+        static GameColor()
         {
-            LinearBrush = new LinearGradientBrush(
+            GameButtonLinearBrush = new LinearGradientBrush(
                 new GradientStopCollection(new List<GradientStop>
                 {
                     new GradientStop(Colors.Lime, 0),
                     new GradientStop(Colors.Yellow, 0.5),
                     new GradientStop(Colors.Turquoise, 1)
+                }));
+            ScButtonLinearBrush = new LinearGradientBrush(
+                new GradientStopCollection(new List<GradientStop>
+                {
+                    new GradientStop(Colors.Crimson, 0),
+                    new GradientStop(Colors.Fuchsia, 0.5),
+                    new GradientStop(Colors.Violet, 1)
                 }));
         }
     }

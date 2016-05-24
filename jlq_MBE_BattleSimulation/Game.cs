@@ -26,21 +26,23 @@ namespace JLQ_MBE_BattleSimulation
         public const int Row = 9;
 
         /// <summary>默认点</summary>
-        public static Point DefaultPoint => new Point(-1, -1);
+        public static Point DefaultPoint { get; }
         /// <summary>棋盘中心</summary>
-        public static Point CenterPoint => new Point(4, 4);
+        public static Point CenterPoint { get; }
 
         /// <summary>棋盘点集</summary>
-        public static List<Point> PadPoints
+        public static List<Point> PadPoints { get; }
+
+        static Game()
         {
-            get
-            {
-                var points = new List<Point>();
-                for (var i = 0; i < Column; i++)
-                    for (var j = 0; j < Row; j++)
-                        points.Add(new Point(i, j));
-                return points;
-            }
+            DefaultPoint = new Point(-1, -1);
+            CenterPoint = new Point(4, 4);
+            #region PadPoints
+            PadPoints = new List<Point>();
+            for (var i = 0; i < Column; i++)
+                for (var j = 0; j < Row; j++)
+                    PadPoints.Add(new Point(i, j));
+            #endregion
         }
         #endregion
 
@@ -242,7 +244,7 @@ namespace JLQ_MBE_BattleSimulation
             ButtonMove.Click += (s, ev) =>
             {
                 if (IsSCing || IsAttacking) return;
-                ButtonMove.Background = IsMoving ? BaseColor : LinearBrush;
+                ButtonMove.Background = IsMoving ? BaseColor : GameButtonLinearBrush;
                 IsMoving = !IsMoving;
             };
             #endregion
@@ -263,7 +265,7 @@ namespace JLQ_MBE_BattleSimulation
             ButtonAttack.Click += (s, ev) =>
             {
                 if (IsSCing || IsMoving) return;
-                ButtonAttack.Background = IsAttacking ? BaseColor : LinearBrush;
+                ButtonAttack.Background = IsAttacking ? BaseColor : GameButtonLinearBrush;
                 IsAttacking = !IsAttacking;
             };
             #endregion
@@ -303,7 +305,10 @@ namespace JLQ_MBE_BattleSimulation
             {
                 ButtonSC[i] = new Button
                 {
+                    Background = ScButtonDefaultBrush,
                     Content = "SC0" + (i + 1),
+                    Foreground = Brushes.White,
+                    FontSize = 18,
                     IsEnabled = false,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch
@@ -749,7 +754,7 @@ namespace JLQ_MBE_BattleSimulation
         public void SC(int index)
         {
             ScSelect = index;
-            ButtonSC[index - 1].Background = LinearBrush;
+            ButtonSC[index - 1].Background = ScButtonLinearBrush;
             switch (index)
             {
                 case 1:
@@ -770,7 +775,7 @@ namespace JLQ_MBE_BattleSimulation
             HandleIsTargetLegal = null;
             HandleTarget = null;
             HandleIsLegalClick = null;
-            ButtonSC.Aggregate(BaseColor, (c, b) => b.Background = BaseColor);
+            ButtonSC.Aggregate(BaseColor, (c, b) => b.Background = ScButtonDefaultBrush);
             switch (ScSelect)
             {
                 case 1:

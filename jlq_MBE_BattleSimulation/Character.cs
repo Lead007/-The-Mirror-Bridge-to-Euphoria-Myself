@@ -211,7 +211,7 @@ namespace JLQ_MBE_BattleSimulation
 
         #region 显示
         /// <summary>所有在GUI上显示的控件</summary>
-        public List<FrameworkElement> ListControls = new List<FrameworkElement>();
+        public List<FrameworkElement> ListControls { get; } = new List<FrameworkElement>();
         /// <summary>显示Display的Label</summary>
         public Label LabelDisplay { get; set; }
         /// <summary>显示Hp的ProgressBar</summary>
@@ -283,13 +283,13 @@ namespace JLQ_MBE_BattleSimulation
 
         #region 符卡相关委托
         /// <summary>进入符卡按钮01的委托</summary>
-        protected MouseEventHandler[] enterButton = new MouseEventHandler[3];
+        protected MouseEventHandler[] enterButton { get; set; } = new MouseEventHandler[3];
         /// <summary>离开符卡按钮01的委托</summary>
-        protected MouseEventHandler[] leaveButton = new MouseEventHandler[3];
+        protected MouseEventHandler[] leaveButton { get; set; } = new MouseEventHandler[3];
         /// <summary>单击符卡按钮01后进入棋盘按钮的委托</summary>
-        protected MouseEventHandler[] enterPad = new MouseEventHandler[3];
+        protected MouseEventHandler[] enterPad { get; set; } = new MouseEventHandler[3];
         /// <summary>单击符卡按钮01后离开棋盘按钮的委托</summary>
-        protected MouseEventHandler[] leavePad = new MouseEventHandler[3];
+        protected MouseEventHandler[] leavePad { get; set; } = new MouseEventHandler[3];
         #endregion
 
 
@@ -600,6 +600,11 @@ namespace JLQ_MBE_BattleSimulation
             return IsInRangeAndEnemy(this.Position, range, c);
         }
 
+        public virtual void AddBuff(Buff buff)
+        {
+            this.BuffList.Add(buff);
+        }
+
 
         #region 符卡
         /// <summary>符卡01</summary>
@@ -626,10 +631,23 @@ namespace JLQ_MBE_BattleSimulation
         {
             EndSC();
         }
+
         /// <summary>成为当前行动角色时按钮的移动响应</summary>
-        public virtual void SCShow(){ }
+        public virtual void SCShow()
+        {
+            for (var i = 0; i < 3; i++)
+            {
+                if (enterButton[i] != null) AddSCButtonEvent(i);
+            }
+        }
         /// <summary>按钮移动响应复位</summary>
-        public virtual void ResetSCShow(){ }
+        public virtual void ResetSCShow()
+        {
+            for (var i = 0; i < 3; i++)
+            {
+                if (enterButton[i] != null) RemoveSCButtonEvent(i);
+            }
+        }
         #endregion
 
 

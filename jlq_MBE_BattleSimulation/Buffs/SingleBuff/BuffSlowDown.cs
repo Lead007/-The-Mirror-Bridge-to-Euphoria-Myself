@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>增加行动间隔的buff</summary>
-    public class BuffSlowDown : BuffExecuteImmediately 
+    public class BuffSlowDown : BuffExecuteImmediately, IControl
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

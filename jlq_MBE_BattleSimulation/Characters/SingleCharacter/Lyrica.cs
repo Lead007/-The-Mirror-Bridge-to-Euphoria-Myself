@@ -81,17 +81,5 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         {
             base.EndSC02();
         }
-
-        public override void SCShow()
-        {
-            base.SCShow();
-            AddSCButtonEvent(0);
-        }
-
-        public override void ResetSCShow()
-        {
-            base.ResetSCShow();
-            RemoveSCButtonEvent(0);
-        }
 	}
 }

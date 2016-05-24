@@ -16,6 +16,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		public Youmu(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡01
+            //显示将被攻击的角色，鼠标处角色特殊标出
 		    enterPad[0] = (s, ev) =>
 		    {
 		        if (!SC01IsLegalClick(game.MousePoint)) return;
@@ -26,6 +28,16 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		                c.LabelDisplay.Background = c == mc ? GameColor.LabelBackground2 : GameColor.LabelBackground);
 		    };
             SetDefaultLeavePadButtonDelegate(0);
+            //符卡03
+            //显示将受影响的角色
+		    enterPad[2] = (s, ev) =>
+		    {
+		        var c = game.MouseCharacter;
+		        if (!IsEnemy(c)) return;
+		        game.DefaultButtonAndLabels();
+		        c.SetLabelBackground();
+		    };
+            SetDefaultLeavePadButtonDelegate(2);
 		}
 
         private const int SC01Range = 3;
@@ -46,7 +58,6 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 }
             }
         }
-
 
         //TODO 天赋
 
@@ -111,11 +122,13 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 SCee.HitRateAdd = -20;
                 SCee.DodgeRateAdd = -20;
             };
+            AddPadButtonEvent(2);
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
             base.EndSC03();
+            RemovePadButtonEvent(2);
         }
 
         private bool SC01IsLegalClick(Point point)

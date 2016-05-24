@@ -114,15 +114,5 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             }
             return SCee.Y == this.Y && SCee.X < this.X;
         }
-
-        public override void SCShow()
-        {
-            AddSCButtonEvent(1);
-        }
-
-        public override void ResetSCShow()
-        {
-            RemoveSCButtonEvent(1);
-        }
 	}
 }

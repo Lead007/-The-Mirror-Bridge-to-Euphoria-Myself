@@ -16,6 +16,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		public Merlin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡01
+            //显示将被攻击的角色
 		    enterPad[0] = (s, ev) =>
 		    {
 		        if (!SC01IsLegalClick(game.MousePoint)) return;

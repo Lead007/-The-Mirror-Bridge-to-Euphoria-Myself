@@ -136,22 +136,6 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
-        public override void SCShow()
-        {
-            for (var i = 0; i < 2; i++)
-            {
-                AddSCButtonEvent(i);
-            }
-        }
-
-        public override void ResetSCShow()
-        {
-            for (var i = 0; i < 2; i++)
-            {
-                RemoveSCButtonEvent(i);
-            }
-        }
-
         private bool SC01IsLegalClick(Point point)
         {
             var c = game[point];

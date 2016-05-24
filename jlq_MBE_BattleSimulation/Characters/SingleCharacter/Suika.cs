@@ -6,26 +6,48 @@ using System.Threading.Tasks;
 using System.Windows;
 using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
+using JLQ_MBE_BattleSimulation.Buffs;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
+    /// <summary>伊吹萃香</summary>
     public class Suika : Character
 	{
 		public Suika(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡01
+            //显示将受影响的角色
 		    enterButton[0] = (s, ev) =>
 		    {
 		        Enemy.Where(c => this.Position.IsIn33(c.Position)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
+            //符卡02
+            //显示将受攻击的角色
 		    enterPad[1] = (s, ev) =>
 		    {
 		        if (game.MousePoint.Distance(this) > 3) return;
 		        Enemy.Where(c => game.MousePoint.Distance(c) <= 2).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
+            //符卡03
+            //显示将受攻击的角色
+		    enterButton[2] = (s, ev) =>
+		    {
+		        Enemy.Where(c => IsInRangeAndEnemy(SC03Range, c)).SetLabelBackground();
+		    };
+            SetDefaultLeaveSCButtonDelegate(2);
 		}
+
+        private const int SC03Range = 2;
+        public bool SC03IsBuffing = false;
+
+        public override void AddBuff(Buff buff)
+        {
+            if (buff is IControl && SC03IsBuffing) return;
+            base.AddBuff(buff);
+        }
 
         //TODO 天赋
 
@@ -67,22 +89,20 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            //TODO SC03
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC03Range, SCee);
+            game.HandleSelf = () =>
+            {
+                var buff1 = new BuffGainDefence(this, this, this.Interval, -0.2f, game);
+                buff1.BuffTrigger();
+                var buff2 = new BuffSuikaUncontrolable(this, 2*this.Interval, game);
+                buff2.BuffTrigger();
+            };
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 2.5f);
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
-
-        }
-
-        public override void SCShow()
-        {
-            AddSCButtonEvent(0);
-        }
-
-        public override void ResetSCShow()
-        {
-            RemoveSCButtonEvent(0);
+            base.EndSC03();
         }
 	}
 }

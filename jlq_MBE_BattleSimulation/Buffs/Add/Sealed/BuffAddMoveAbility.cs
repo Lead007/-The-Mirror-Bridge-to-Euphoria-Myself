@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace JLQ_MBE_BattleSimulation.Buffs.Add.Sealed
 {
     /// <summary>增加机动的buff</summary>
-    public class BuffAddMoveAbility : BuffAddProperty
+    public class BuffAddMoveAbility : BuffAddProperty, IControl
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

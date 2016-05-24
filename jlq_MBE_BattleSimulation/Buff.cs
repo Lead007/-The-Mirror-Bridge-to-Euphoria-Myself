@@ -56,12 +56,13 @@ namespace JLQ_MBE_BattleSimulation
             this.game = game;
             HandleBuffAffect = (bee, ber) => BuffAffect();
             HandleBuffCancels = (bee, ber) => Cancel();
-            buffee.BuffList.Add(this);
+            buffee.AddBuff(this);
         }
 
         /// <summary>buff引发</summary>
         public void BuffTrigger()
         {
+            if (!Buffee.BuffList.Contains(this)) return;
             HandleBuffAffect(Buffee, Buffer);
         }
 

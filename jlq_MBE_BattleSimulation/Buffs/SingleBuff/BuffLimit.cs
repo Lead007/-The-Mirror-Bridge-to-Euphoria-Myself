@@ -8,7 +8,7 @@ using System.Windows;
 namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
 {
     /// <summary>被限制在特定区域内的buff</summary>
-    public class BuffLimit : BuffExecuteImmediately
+    public class BuffLimit : BuffExecuteImmediately, IControl
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

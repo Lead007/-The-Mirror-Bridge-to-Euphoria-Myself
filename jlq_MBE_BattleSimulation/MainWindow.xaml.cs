@@ -51,9 +51,6 @@ namespace JLQ_MBE_BattleSimulation
             comboBoxDisplay.Items.Remove("芙分");
             #endregion
 
-            #region 初始化颜色
-            GenerateColors();
-            #endregion
             #region 初始化game对象
             game = new Game();
             game.EventGridPadClick += GridPadMouseDown;

@@ -75,7 +75,9 @@
     <Compile Include="Buffs\Add\Sealed\BuffAddDodgeRate.cs" />
     <Compile Include="Buffs\Add\Sealed\BuffAddHitRate.cs" />
     <Compile Include="Buffs\Gain\Sealed\BuffGainHitRate.cs" />
+    <Compile Include="Buffs\IControl.cs" />
     <Compile Include="Buffs\SingleBuff\BuffBeAttacked.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffSuikaUncontrolable.cs" />
     <Compile Include="Characters\SingleCharacter\Alice.cs" />
     <Compile Include="AttackModel.cs" />
     <Compile Include="Buffs\SingleBuff\BuffAddDamageTimes.cs" />

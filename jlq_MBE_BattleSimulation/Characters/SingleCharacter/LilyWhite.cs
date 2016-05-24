@@ -174,16 +174,6 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             base.EndSC03();
         }
 
-        public override void SCShow()
-        {
-            AddSCButtonEvent(0);
-        }
-
-        public override void ResetSCShow()
-        {
-            RemoveSCButtonEvent(0);
-        }
-
         private bool SC02WhiteIsLegalClick(Point point)
         {
             return point.Distance(this) <= SC02Range && IsFriend(game[point]);

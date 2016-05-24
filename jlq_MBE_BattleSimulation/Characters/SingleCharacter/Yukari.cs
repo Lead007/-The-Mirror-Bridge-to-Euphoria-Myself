@@ -32,6 +32,15 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		            game.EndSection();
 		        }
 		    };
+            //符卡02
+            //显示将被攻击的角色
+		    enterPad[1] = (s, ev) =>
+		    {
+		        if (game.MousePoint.Distance(this) != 1) return;
+		        game.DefaultButtonAndLabels();
+		        Enemy.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
+		    };
+            SetDefaultLeavePadButtonDelegate(1);
             //符卡03
             //显示所有敌方角色
 		    enterButton[2] = (s, ev) =>
@@ -43,6 +52,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		}
 
         private readonly DGridPadClick _skillMove;
+        private const float SC02Gain = 0.7f;
 
         //天赋
         public override void PreparingSection()
@@ -76,13 +86,17 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            //TODO SC02
+            game.HandleIsLegalClick = point => point.Distance(this) == 1;
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && SC02IsTargetLegal(SCee, point);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02Gain);
+            AddPadButtonEvent(1);
         }
 
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
-
+            base.EndSC02();
+            RemovePadButtonEvent(1);
         }
         /// <summary>符卡03</summary>
         public override void SC03()
@@ -100,14 +114,10 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             base.EndSC03();
         }
 
-        public override void SCShow()
+        private bool SC02IsTargetLegal(Character SCee, Point point)
         {
-            AddSCButtonEvent(2);
+            return (point.X == this.X && SCee.X == this.X && ((SCee.Y > this.Y) == (point.Y > this.Y))) ||
+                   (point.Y == this.Y && SCee.Y == this.Y && ((SCee.X > this.X) == (point.X > this.X)));
         }
-
-        public override void ResetSCShow()
-        {
-            RemoveSCButtonEvent(2);
-        }
-	}
+    }
 }
