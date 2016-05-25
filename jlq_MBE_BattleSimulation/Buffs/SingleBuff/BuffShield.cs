@@ -25,9 +25,8 @@ namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
             {
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 2, 2, 0),
-                Width = 15,
-                Height = 15
+                Width = 10,
+                Height = 10
             };
             try
             {
@@ -38,49 +37,21 @@ namespace JLQ_MBE_BattleSimulation.Buffs.SingleBuff
                 _imageShield.Source = BitmapConverter.BitmapToBitmapImage(Properties.Resources.Error);
             }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
-            HasPrevented = true;
         }
 
         private readonly Image _imageShield;
-        private bool _hasPrevented;
         private DBeAttacked temp;
-
-        private bool HasPrevented
-        {
-            get { return _hasPrevented;}
-            set
-            {
-                _hasPrevented = value;
-                _imageShield.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-            }
-        }
-
-        /// <summary>重写ToString方法</summary>
-        /// <returns>字符串化结果</returns>
-        public override string ToString()
-            => string.Format("{0}({1}使用) By:{2} 剩余时间：{3}", Name, HasPrevented ? "未" : "已", Buffer.Name, Time);
 
         protected override void BuffAffect()
         {
-            Buffee.ListControls.Add(_imageShield);
-            Buffee.Set();
-            game.GridPad.Children.Add(_imageShield);
+            Buffee.AddStateControl(_imageShield);
             temp = Buffee.HandleBeAttacked.Clone() as DBeAttacked;
-            Buffee.HandleBeAttacked = (damage, attacker) =>
-            {
-                if (HasPrevented)
-                {
-                    HasPrevented = false;
-                    return;
-                }
-                temp(damage, attacker);
-            };
+            Buffee.HandleBeAttacked = (damage, attacker) => this.BuffEnd();
         }
 
         protected override void Cancel()
         {
-            game.GridPad.Children.Remove(_imageShield);
-            Buffee.ListControls.Remove(_imageShield);
+            Buffee.RemoveStateControl(_imageShield);
             Buffee.HandleBeAttacked = temp;
             base.Cancel();
         }

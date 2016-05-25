@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MoreEnumerable;
 
 namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
 {
@@ -26,17 +27,34 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
         }
         #endregion
 
-        protected int LineNum { get; }
-        public Queue<int> LinesChoose { get; } = new Queue<int>();
+        public ArrayQueue<int> LinesChoose { get; }
+        protected Button[] buttons { get; } = new Button[9];
         protected GamePad_ChooseLines(Direction direction, int lineNum, Game game) : base(game)
         {
-            this.LineNum = lineNum;
-            this.GridPad.Loaded += (s, ev) => this.game.EnemyCanAttack.Aggregate(GameColor.BaseColor,
-                (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
+            this.LinesChoose = new ArrayQueue<int>(lineNum);
+            #region Queue Events
+            this.LinesChoose.ItemDequeue += i =>
+            {
+                buttons[i].Content = string.Empty;
+                game.Characters.Where(
+                    c => (direction > Direction.Right ? c.X : c.Y) == i && c != game.CurrentCharacter)
+                    .SetLabelBackground(GameColor.LabelDefalutBackground);
+            };
+            this.LinesChoose.ItemEnqueue += i =>
+            {
+                buttons[i].Content = tick;
+                foreach (var c in game.Characters.Where(
+                    c => (direction > Direction.Right ? c.X : c.Y) == i && c != game.CurrentCharacter))
+                {
+                    this.SetLabelBackground(c);
+                }
+            };
+            #endregion
+            this.GridPad.Loaded +=
+                (s, ev) => this.game.EnemyCanAttack.SetLabelBackground(GameColor.LabelDefalutBackground);
             this.Grids[(int) direction].Loaded += (s, ev) =>
             {
                 #region buttons
-                var buttons = new Button[9];
                 for (var i = 0; i < 9; i++)
                 {
                     buttons[i] = new Button
@@ -58,23 +76,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
                             ? Grid.ColumnProperty
                             : Grid.RowProperty);
                         if (LinesChoose.Contains(j)) return;
-                        buttons[j].Content = tick;
-                        if (LinesChoose.Count == LineNum)
-                        {
-                            var index = LinesChoose.Dequeue();
-                            buttons[index].Content = string.Empty;
-                            game.Characters.Where(
-                                c => (direction > Direction.Right ? c.X : c.Y) == index && c != game.CurrentCharacter)
-                                .Aggregate(GameColor.BaseColor,
-                                    (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
-                        }
                         LinesChoose.Enqueue(j);
-                        foreach (var c in
-                            game.Characters.Where(
-                                c => (direction > Direction.Right ? c.X : c.Y) == j && c != game.CurrentCharacter))
-                        {
-                            SetLabelBackground(c);
-                        }
                     };
                     #endregion
                 }
@@ -83,7 +85,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
             #region ButtonSure
             this.ButtonSure.Click += (s, ev) =>
             {
-                if (this.LinesChoose.Count != LineNum)
+                if (this.LinesChoose.Count != lineNum)
                 {
                     Game.IllegalMessageBox("选择行数不够！");
                     return;

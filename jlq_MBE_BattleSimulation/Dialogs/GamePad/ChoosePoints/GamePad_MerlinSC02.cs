@@ -12,10 +12,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChoosePoints
     {
         public GamePad_MerlinSC02(Game game) : base(2, game)
         {
-            foreach (var b in GridPad.Children.OfType<Button>())
-            {
 
-            }
         }
 
         protected override IEnumerable<Character> LegalCharacters(Point point)

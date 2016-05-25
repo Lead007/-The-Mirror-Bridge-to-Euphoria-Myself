@@ -17,6 +17,16 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 		public Meirin(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡01
+            //显示将被攻击的角色
+		    enterPad[0] = (s, ev) =>
+		    {
+		        var c = game.MouseCharacter;
+		        if (!IsEnemy(c)) return;
+		        game.DefaultButtonAndLabels();
+		        c.SetLabelBackground();
+		    };
+            SetDefaultLeavePadButtonDelegate(0);
             //符卡03
             //显示所有己方角色
 		    enterButton[2] = (s, ev) =>
@@ -52,15 +62,14 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                 buff.BuffTrigger();
             };
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.3f);
-            //显示可选择的敌人
-            game.DefaultButtonAndLabels();
-            game.UpdateLabelBackground();
+            AddPadButtonEvent(0);
         }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
             base.EndSC01();
+            RemovePadButtonEvent(0);
         }
 
         /// <summary>符卡02</summary>

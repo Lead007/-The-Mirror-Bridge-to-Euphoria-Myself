@@ -6,17 +6,36 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MoreEnumerable;
 
 namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
 {
     public abstract class GamePad_ChoosePoints : Dialog_GamePad
     {
-        protected int PointNum { get; }
-        protected Point MousePoint { get; set; }
-        public Queue<Point> PointsChoose { get; } = new Queue<Point>(); 
+        public ArrayQueue<Point> PointsChoose { get; } 
         protected GamePad_ChoosePoints(int pointNum, Game game) : base(game)
         {
-            PointNum = pointNum;
+            PointsChoose = new ArrayQueue<Point>(pointNum);
+            #region Queue Events
+            PointsChoose.ItemDequeue += p =>
+            {
+                var border = GetBorder(p);
+                border.BorderBrush = GameColor.PadBrush;
+                border.BorderThickness = new Thickness(1);
+                LegalCharacters(p).Where(c => c != game.CurrentCharacter)
+                    .SetLabelBackground(GameColor.LabelDefalutBackground);
+            };
+            PointsChoose.ItemEnqueue += p =>
+            {
+                var borderP = GetBorder(p);
+                borderP.BorderThickness = new Thickness(3);
+                borderP.BorderBrush = Brushes.Red;
+                foreach (var c in LegalCharacters(p).Where(c => c != game.CurrentCharacter))
+                {
+                    SetLabelBackground(c);
+                }
+            };
+            #endregion
             GridPad.Loaded += (s, ev) =>
             {
                 #region buttons
@@ -46,54 +65,31 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
                             var row = (int)button.GetValue(Grid.RowProperty);
                             var point = new Point(column, row);
                             if (PointsChoose.Contains(point)) return;
-                            var borderP = GetBorder(point);
-                            borderP.BorderThickness = new Thickness(3);
-                            borderP.BorderBrush = Brushes.Red;
-                            if (PointsChoose.Count == PointNum)
-                            {
-                                var p = PointsChoose.Dequeue();
-                                var border = GetBorder(p);
-                                border.BorderBrush = GameColor.PadBrush;
-                                border.BorderThickness = new Thickness(1);
-                                LegalCharacters(p)
-                                    .Where(c => c != game.CurrentCharacter)
-                                    .Aggregate(GameColor.BaseColor,
-                                        (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
-                            }
                             PointsChoose.Enqueue(point);
-                            foreach (var c in LegalCharacters(point).Where(c => c != game.CurrentCharacter))
-                            {
-                                SetLabelBackground(c);
-                            }
                         };
                         #endregion
                         #region MouseEnter
                         buttons[i, j].MouseEnter += (sender, e) =>
                         {
-                            var button = sender as Button;
-                            var column = (int) button.GetValue(Grid.ColumnProperty);
-                            var row = (int)button.GetValue(Grid.RowProperty);
-                            MousePoint = new Point(column, row);
-                            if (PointsChoose.Contains(MousePoint)) return;
-                            foreach (var c in LegalCharacters(MousePoint).Where(c => c != game.CurrentCharacter))
+                            var mousePoint = GetMousePoint(sender as Button);
+                            if (PointsChoose.Contains(mousePoint)) return;
+                            foreach (var c in LegalCharacters(mousePoint).Where(c => c != game.CurrentCharacter))
                             {
-                                SetLabelBackground(c);
+                                this.SetLabelBackground(c);
                             }
                         };
                         #endregion
                         #region MouseLeave
                         buttons[i, j].MouseLeave += (sender, e) =>
                         {
-                            var p = MousePoint;
+                            var p = GetMousePoint(sender as Button);
                             if (PointsChoose.Contains(p)) return;
-                            LegalCharacters(p)
-                                .Where(c => c != game.CurrentCharacter)
-                                .Aggregate(GameColor.BaseColor,
-                                    (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
-                            MousePoint = Game.DefaultPoint;
-                            foreach (var c in PointsChoose.SelectMany(point => LegalCharacters(point).Where(c => c != game.CurrentCharacter)))
+                            LegalCharacters(p).Where(c => c != game.CurrentCharacter)
+                                .SetLabelBackground(GameColor.LabelDefalutBackground);
+                            foreach (var c in PointsChoose.SelectMany(
+                                point => LegalCharacters(point).Where(c => c != game.CurrentCharacter)))
                             {
-                                SetLabelBackground(c);
+                                this.SetLabelBackground(c);
                             }
                         };
                         #endregion
@@ -103,7 +99,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
             #region ButtonSure
             this.ButtonSure.Click += (s, ev) =>
             {
-                if (this.PointsChoose.Count != PointNum)
+                if (this.PointsChoose.Count != pointNum)
                 {
                     Game.IllegalMessageBox("选择点数不够！");
                     return;
@@ -117,7 +113,12 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
         protected Border GetBorder(Point p)
         {
             return GridPad.Children.OfType<Border>().FirstOrDefault(
-                b => (int) b.GetValue(Grid.ColumnProperty) == p.X && (int) b.GetValue(Grid.RowProperty) == p.Y);
+                b => (int)b.GetValue(Grid.ColumnProperty) == p.X && (int)b.GetValue(Grid.RowProperty) == p.Y);
+        }
+
+        protected Point GetMousePoint(Button sender)
+        {
+            return new Point((int)sender.GetValue(Grid.ColumnProperty), (int)sender.GetValue(Grid.RowProperty));
         }
 
         protected abstract IEnumerable<Character> LegalCharacters(Point point);

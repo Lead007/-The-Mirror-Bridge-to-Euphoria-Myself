@@ -28,9 +28,9 @@ namespace JLQ_MBE_BattleSimulation
         public readonly bool IsPositive;
 
         /// <summary>buff效果的委托对象</summary>
-        protected DBuffAffect HandleBuffAffect { get; set; }
+        protected Action<Character, Character> HandleBuffAffect { get; set; }
         /// <summary>取消buff的委托对象</summary>
-        protected DBuffCancel HandleBuffCancels { get; set; }
+        protected Action<Character, Character> HandleBuffCancels { get; set; }
         /// <summary>游戏对象</summary>
         protected Game game;
 

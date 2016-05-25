@@ -118,8 +118,8 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         {
             var cInLine = Enemy.Where(c => IsInLine(c, point)).ToList();
             if (!cInLine.Any()) return false;
-            var min = cInLine.Min(c => c.Distance(this));
-            return IsInLine(SCee, point) && SCee.Distance(this) == min;
+            var ct = cInLine.OrderBy(c => c.Distance(this)).First();
+            return SCee == ct;
         }
     }
 }

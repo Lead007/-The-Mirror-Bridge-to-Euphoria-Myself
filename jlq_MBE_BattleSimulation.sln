@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Number", "RationalNumber\Nu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomHelper", "RandomHelper\RandomHelper.csproj", "{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreEnumerable", "MoreEnumerable\MoreEnumerable.csproj", "{05E21B5E-3445-4198-B261-F2E7C25A2F6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2468D9F2-50DD-4C26-9788-17BF8BCC9CC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05E21B5E-3445-4198-B261-F2E7C25A2F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05E21B5E-3445-4198-B261-F2E7C25A2F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05E21B5E-3445-4198-B261-F2E7C25A2F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05E21B5E-3445-4198-B261-F2E7C25A2F6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

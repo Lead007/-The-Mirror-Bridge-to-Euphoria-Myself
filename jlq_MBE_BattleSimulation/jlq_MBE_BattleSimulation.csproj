@@ -43,6 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
+    <Reference Include="MoreEnumerable">
+      <HintPath>..\MoreEnumerable\bin\Release\MoreEnumerable.dll</HintPath>
+    </Reference>
     <Reference Include="RandomHelper">
       <HintPath>..\RandomHelper\bin\Release\RandomHelper.dll</HintPath>
     </Reference>

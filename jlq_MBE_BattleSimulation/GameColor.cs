@@ -33,7 +33,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>符卡按钮单击后的颜色</summary>
         public static Brush ScButtonLinearBrush { get; }
         #endregion
-
+        
         /// <summary>生成颜色</summary>
         static GameColor()
         {

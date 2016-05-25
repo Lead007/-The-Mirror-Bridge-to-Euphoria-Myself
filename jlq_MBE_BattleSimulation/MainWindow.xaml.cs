@@ -246,7 +246,7 @@ namespace JLQ_MBE_BattleSimulation
                     #region 绘制屏幕
                     if (game.HasAttacked)
                     {
-                        game.EnemyCanAttack.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
+                        game.EnemyCanAttack.SetLabelBackground(GameColor.LabelDefalutBackground);
                     }
                     game.Generate_CanReachPoint();
                     game.PaintButtons();

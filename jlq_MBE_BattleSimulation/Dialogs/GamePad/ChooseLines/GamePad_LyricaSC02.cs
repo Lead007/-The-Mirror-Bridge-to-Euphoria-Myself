@@ -16,7 +16,6 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines
             this.GridLeft.Loaded += (sender, e) =>
             {
                 #region buttons
-                var buttons = GridLeft.Children.Cast<Button>().ToArray();
                 for (var i = 0; i < Game.Row; i++)
                 {
                     #region MouseEnter
@@ -26,10 +25,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines
                         if (LinesChoose.Contains(j)) return;
                         foreach (var c in game.Characters.Where(c => c.Y == j && c != game.CurrentCharacter))
                         {
-                            if (game.CurrentCharacter.IsFriend(c))
-                                c.SetLabelBackground();
-                            else if (game.CurrentCharacter.IsEnemy(c))
-                                c.LabelDisplay.Background = GameColor.LabelBackground2;
+                            this.SetLabelBackground(c);
                         }
                     };
                     #endregion
@@ -39,8 +35,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines
                         var j = (int) (s as Button).GetValue(Grid.RowProperty);
                         if (LinesChoose.Contains(j)) return;
                         game.Characters.Where(c => c.Y == j && c != game.CurrentCharacter)
-                            .Aggregate(GameColor.BaseColor,
-                                (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
+                            .SetLabelBackground(GameColor.LabelDefalutBackground);
                     };
                     #endregion
                 }
@@ -53,7 +48,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChooseLines
             if (game.CurrentCharacter.IsFriend(c))
                 c.SetLabelBackground();
             else if (game.CurrentCharacter.IsEnemy(c))
-                c.LabelDisplay.Background = GameColor.LabelBackground2;
+                c.SetLabelBackground(GameColor.LabelBackground2);
         }
     }
 }

@@ -186,14 +186,14 @@ namespace JLQ_MBE_BattleSimulation
 
 
         #region 符卡相关
-        /// <summary>传递参数，如何获取目标以及所需参数列表</summary>
-        public DIsTargetLegal HandleIsTargetLegal { get; set; }
-        /// <summary>传递参数，如何处理自己</summary>
-        public DHandleSelf HandleSelf { get; set; }
-        /// <summary>传递参数，如何处理目标</summary>
-        public DHandleTarget HandleTarget { get; set; }
         /// <summary>传递参数，判断单击位置是否有效</summary>
-        public DIsLegalClick HandleIsLegalClick { get; set; }
+        public Func<Point, bool> HandleIsLegalClick { get; set; }
+        /// <summary>传递参数，如何获取目标以及所需参数列表</summary>
+        public Func<Character, Point, bool> HandleIsTargetLegal { get; set; }
+        /// <summary>传递参数，如何处理自己</summary>
+        public Action HandleSelf { get; set; }
+        /// <summary>传递参数，如何处理目标</summary>
+        public Action<Character> HandleTarget { get; set; }
         /// <summary>当前符卡序号，0为不处于符卡状态</summary> 
         public int ScSelect { get; set; }
         /// <summary>是否处于符卡状态</summary>
@@ -692,8 +692,7 @@ namespace JLQ_MBE_BattleSimulation
         public void DefaultButtonAndLabels()
         {
             ResetPadButtons();
-            Characters.Where(c => c != CurrentCharacter)
-                .Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
+            Characters.Where(c => c != CurrentCharacter).SetLabelBackground(LabelDefalutBackground);
             SetCurrentLabel();
         }
 
@@ -728,7 +727,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>更新角色标签颜色</summary>
         public void UpdateLabelBackground()
         {
-            Characters.Aggregate(BaseColor, (cu, c) => c.LabelDisplay.Background = LabelDefalutBackground);
+            Characters.SetLabelBackground(LabelDefalutBackground);
             SetCurrentLabel();
             if (HasAttacked) return;
             EnemyCanAttack.SetLabelBackground();

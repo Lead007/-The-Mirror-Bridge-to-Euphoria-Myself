@@ -157,9 +157,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
         private bool SC03IsLegalClick(Point point)
         {
-            return point.Distance(this) <= SC03Const1 && (point.X == this.X || point.Y == this.Y) &&
-                   IsEnemy(game[point]);
-
+            return IsInRangeAndEnemy(SC03Const1, point) && (point.X == this.X || point.Y == this.Y);
         }
 
         private Point Destination(Character SCee)

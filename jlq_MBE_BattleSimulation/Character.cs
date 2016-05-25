@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -220,6 +219,8 @@ namespace JLQ_MBE_BattleSimulation
         public ProgressBar BarMp { get; set; }
         /// <summary>显示剩余时间的ProgressBar</summary>
         public ProgressBar BarTime { get; set; }
+        /// <summary>显示状态的控件</summary>
+        public List<FrameworkElement> StateControls { get; } = new List<FrameworkElement>(); 
         #endregion
 
 
@@ -526,10 +527,31 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>更新显示display的位置</summary>
         public void Set()
         {
-            foreach (var c in ListControls)
+            foreach (var c in ListControls.Concat(StateControls))
             {
                 c.SetValue(Grid.ColumnProperty, this.X);
                 c.SetValue(Grid.RowProperty, this.Y);
+            }
+        }
+
+        /// <summary>添加显示状态的控件</summary>
+        /// <param name="item">待添加的控件</param>
+        public void AddStateControl(FrameworkElement item)
+        {
+            var count = StateControls.Count;
+            item.Margin = new Thickness(0, 2 + 12*count, 2, 0);
+            this.StateControls.Add(item);
+            this.Set();
+            game.GridPad.Children.Add(item);
+        }
+
+        public void RemoveStateControl(FrameworkElement item)
+        {
+            game.GridPad.Children.Remove(item);
+            this.StateControls.Remove(item);
+            for (int i = 0, count = StateControls.Count; i < count; i++)
+            {
+                StateControls[i].Margin = new Thickness(0, 2 + 12*i, 2, 0);
             }
         }
         #endregion
@@ -738,6 +760,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.HandleIsLegalClick = null;
             game.HandleIsTargetLegal = null;
+            game.HandleSelf = null;
             game.HandleTarget = null;
         }
 
@@ -804,6 +827,25 @@ namespace JLQ_MBE_BattleSimulation
             return origin.Distance(c) <= range && IsEnemy(c);
         }
 
+        /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
+        /// <param name="origin">点</param>
+        /// <param name="range">范围</param>
+        /// <param name="p">待判断的点</param>
+        /// <returns>是否符合</returns>
+        protected bool IsInRangeAndEnemy(Point origin, int range, Point p)
+        {
+            return origin.Distance(p) <= range && IsEnemy(game[p]);
+        }
+
+        /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
+        /// <param name="range">范围</param>
+        /// <param name="p">待判断的点</param>
+        /// <returns>是否符合</returns>
+        protected bool IsInRangeAndEnemy(int range, Point p)
+        {
+            return p.Distance(this) <= range && IsEnemy(game[p]);
+        }
+
         /// <summary>是否是在自己周围某范围内的队友</summary>
         /// <param name="range">范围</param>
         /// <param name="c">待判断的角色</param>
@@ -813,6 +855,28 @@ namespace JLQ_MBE_BattleSimulation
         {
             if (c == null) return false;
             return c.Distance(this) <= range && IsFriend(c, containThis);
+        }
+
+        /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
+        /// <param name="origin">点</param>
+        /// <param name="range">范围</param>
+        /// <param name="p">待判断的点</param>
+        /// <param name="containThis">自己是否返回true</param>
+        /// <returns>是否符合</returns>
+        protected bool IsInRangeAndFriend(Point origin, int range, Point p, bool containThis = true)
+        {
+            return origin.Distance(p) <= range && IsFriend(game[p], containThis);
+        }
+
+        /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
+        /// <param name="origin">点</param>
+        /// <param name="range">范围</param>
+        /// <param name="p">待判断的点</param>
+        /// <param name="containThis">自己是否返回true</param>
+        /// <returns>是否符合</returns>
+        protected bool IsInRangeAndFriend(int range, Point p, bool containThis = true)
+        {
+            return p.Distance(this) <= range && IsFriend(game[p], containThis);
         }
         #endregion
     }

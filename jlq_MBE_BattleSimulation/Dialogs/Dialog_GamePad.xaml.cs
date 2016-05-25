@@ -78,8 +78,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
                 GridPad.Children.Remove(ui);
                 game.GridPad.Children.Add(ui);
             }
-            game.Characters.Aggregate(GameColor.BaseColor,
-                (cu, c) => c.LabelDisplay.Background = GameColor.LabelDefalutBackground);
+            game.Characters.SetLabelBackground(GameColor.LabelDefalutBackground);
             game.SetCurrentLabel();
             if (!game.HasAttacked) game.UpdateLabelBackground();
         }
