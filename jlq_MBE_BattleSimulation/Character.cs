@@ -210,7 +210,9 @@ namespace JLQ_MBE_BattleSimulation
 
         #region 显示
         /// <summary>所有在GUI上显示的控件</summary>
-        public List<FrameworkElement> ListControls { get; } = new List<FrameworkElement>();
+        public IEnumerable<FrameworkElement> ListControls => StaticControls.Concat(StateControls);
+        /// <summary>固定显示的控件</summary>
+        public List<FrameworkElement> StaticControls { get; } = new List<FrameworkElement>();
         /// <summary>显示Display的Label</summary>
         public Label LabelDisplay { get; set; }
         /// <summary>显示Hp的ProgressBar</summary>
@@ -371,10 +373,10 @@ namespace JLQ_MBE_BattleSimulation
             };
             #endregion
             #region 将控件添加至ListControls
-            ListControls.Add(LabelDisplay);
-            ListControls.Add(BarHp);
-            ListControls.Add(BarMp);
-            ListControls.Add(BarTime);
+            StaticControls.Add(LabelDisplay);
+            StaticControls.Add(BarHp);
+            StaticControls.Add(BarMp);
+            StaticControls.Add(BarTime);
             Set();
             #endregion
             #endregion
@@ -527,7 +529,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>更新显示display的位置</summary>
         public void Set()
         {
-            foreach (var c in ListControls.Concat(StateControls))
+            foreach (var c in ListControls)
             {
                 c.SetValue(Grid.ColumnProperty, this.X);
                 c.SetValue(Grid.RowProperty, this.Y);
@@ -653,7 +655,7 @@ namespace JLQ_MBE_BattleSimulation
             EndSC();
         }
 
-        /// <summary>成为当前行动角色时按钮的移动响应</summary>
+        /// <summary>成为当前行动角色时符卡按钮的移动响应</summary>
         public virtual void SCShow()
         {
             for (var i = 0; i < 3; i++)
@@ -661,7 +663,7 @@ namespace JLQ_MBE_BattleSimulation
                 if (enterButton[i] != null) AddSCButtonEvent(i);
             }
         }
-        /// <summary>按钮移动响应复位</summary>
+        /// <summary>符卡按钮移动响应复位</summary>
         public virtual void ResetSCShow()
         {
             for (var i = 0; i < 3; i++)

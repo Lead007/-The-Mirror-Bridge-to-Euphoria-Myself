@@ -108,7 +108,7 @@
         <Button x:Name="buttonLoad" Content="Load" HorizontalAlignment="Left" Margin="274,44,0,0" VerticalAlignment="Top" Width="75" Height="21" Click="buttonLoad_Click"/>
         <Label x:Name="label1" Content="当前阶段：" HorizontalAlignment="Left" Margin="104,47,0,0" Grid.Row="2" VerticalAlignment="Top" Width="73"/>
         <Border BorderBrush="Red" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Padding="1" CornerRadius="5" Margin="2,5,2,2">
-            <Grid x:Name="gridGame" Loaded="gridGame_Loaded" >
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -121,9 +121,27 @@
                     <ColumnDefinition Width="7*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="label3" Content="己方角色数量：" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top"/>
-                <Label x:Name="label5" Content="中立角色数量:" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top"/>
-                <Label x:Name="label7" Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top"/>
+                <Grid x:Name="gridGame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Loaded="gridGame_Loaded">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="buttonJump" Content="跳过回合" HorizontalAlignment="Center" VerticalAlignment="Center" Width="115" Click="buttonJump_Click" IsEnabled="False" Height="25" Grid.Column="2" FontWeight="SemiBold"/>
+                </Grid>
+                <Grid x:Name="gridCount" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Grid.Row="1" Loaded="gridCount_Loaded">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="label3" Content="己方角色数量：" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <Label x:Name="label5" Content="中立角色数量:" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <Label x:Name="label7" Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                </Grid>
             </Grid>
         </Border>
         <Grid x:Name="gridGameInformation" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="239" Margin="36,28,0,0" Height="81" Loaded="gridGameInformation_Loaded">

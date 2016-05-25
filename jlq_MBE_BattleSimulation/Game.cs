@@ -231,16 +231,14 @@ namespace JLQ_MBE_BattleSimulation
             ButtonMove = new Button
             {
                 Content = "移动",
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 Margin = new Thickness(0, 2, 0, 0),
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 Width = 115,
                 FontWeight = FontWeights.SemiBold,
                 Height = 25,
                 IsEnabled = false
             };
-            ButtonMove.SetValue(Grid.ColumnProperty, 1);
-            ButtonMove.SetValue(Grid.ColumnSpanProperty, 2);
             ButtonMove.Click += (s, ev) =>
             {
                 if (IsSCing || IsAttacking) return;
@@ -252,16 +250,15 @@ namespace JLQ_MBE_BattleSimulation
             ButtonAttack = new Button
             {
                 Content = "攻击",
-                HorizontalAlignment = HorizontalAlignment.Right,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 Margin = new Thickness(0, 2, 0, 0),
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 Width = 115,
                 FontWeight = FontWeights.SemiBold,
                 Height = 25,
                 IsEnabled = false
             };
-            ButtonAttack.SetValue(Grid.ColumnProperty, 3);
-            ButtonAttack.SetValue(Grid.ColumnSpanProperty, 2);
+            ButtonAttack.SetValue(Grid.ColumnProperty, 1);
             ButtonAttack.Click += (s, ev) =>
             {
                 if (IsSCing || IsMoving) return;
@@ -324,7 +321,6 @@ namespace JLQ_MBE_BattleSimulation
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Top
                 };
-                LabelsGroup[i].SetValue(Grid.RowProperty, 1);
                 LabelsGroup[i].SetValue(Grid.ColumnProperty, 5 - 2*i);
             }
             #endregion
@@ -500,8 +496,8 @@ namespace JLQ_MBE_BattleSimulation
         {
             IsSCing = false;
             CharactersMayDie.Clear();
-            GameSection = JLQ_MBE_BattleSimulation.Section.End;
-            BuffSettle(JLQ_MBE_BattleSimulation.Section.End);
+            GameSection = Section.End;
+            BuffSettle(Section.End);
             //Thread.Sleep(1000);
             CurrentCharacter.HandleEndSection();
             if (!IsEndSectionContinue) return;

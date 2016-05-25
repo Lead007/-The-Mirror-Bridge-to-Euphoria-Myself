@@ -46,7 +46,12 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            LightLabels.Aggregate(Visibility.Collapsed, (c, l) => l.Visibility = Visibility.Visible);
+            foreach (var c in LightCharacters.Where(c => !game.Characters.Contains(c)))
+            {
+                LightLabels.RemoveAll(l => c.StateControls.Contains(l));
+                LightCharacters.Remove(c);
+            }
+            LightLabels.Aggregate(Visibility.Visible, (c, l) => l.Visibility = Visibility.Visible);
         }
 
         public override void EndSection()

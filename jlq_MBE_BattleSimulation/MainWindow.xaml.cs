@@ -298,9 +298,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>清除所有角色</summary>
         private void ClearCharacters()
         {
-            IEnumerable<FrameworkElement> controls = new List<FrameworkElement>();
-            controls = game.Characters.Select(c => c.ListControls).Aggregate(controls, (current, l) => current.Concat(l));
-            foreach (var c in controls)
+            foreach (var c in game.Characters.SelectMany(c => c.ListControls))
             {
                 game.GridPad.Children.Remove(c);
             }
@@ -364,6 +362,13 @@ namespace JLQ_MBE_BattleSimulation
             #endregion
         }
 
+        private void buttonJump_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameSection != Section.Round || game.IsMoving || game.IsAttacking || game.IsSCing) return;
+            game.DefaultButtonAndLabels();
+            game.EndSection();
+        }
+
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("是否退出？", "退出", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -373,6 +378,7 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
+        #region Menus
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -428,6 +434,7 @@ namespace JLQ_MBE_BattleSimulation
             buttonLoad.IsEnabled = false;
             game.ButtonAttack.IsEnabled = true;
             game.ButtonMove.IsEnabled = true;
+            buttonJump.IsEnabled = true;
             game.ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = true);
             labelShow.Foreground = Brushes.Black;
             game.TurnToBattle();
@@ -474,7 +481,9 @@ namespace JLQ_MBE_BattleSimulation
                 Game.ErrorMessageBox(Properties.Resources.HelpError);
             }
         }
+        #endregion
 
+        #region 随机生成
         private void buttonGenerateFriend_Click(object sender, RoutedEventArgs e)
         {
             RandomlyAddCharacters(Group.Friend, int.Parse(comboBoxFriend.Text));
@@ -489,7 +498,9 @@ namespace JLQ_MBE_BattleSimulation
         {
             RandomlyAddCharacters(Group.Middle, int.Parse(comboBoxMiddle.Text));
         }
+        #endregion
 
+        #region Loaded
         private void borderPad_Loaded(object sender, RoutedEventArgs e)
         {
             borderPad.Child = game.GridPad;
@@ -504,7 +515,11 @@ namespace JLQ_MBE_BattleSimulation
         {
             gridGame.Children.Add(game.ButtonAttack);
             gridGame.Children.Add(game.ButtonMove);
-            game.LabelsGroup.Aggregate(0, (c, l) => gridGame.Children.Add(l));
+        }
+
+        private void gridCount_Loaded(object sender, RoutedEventArgs e)
+        {
+            game.LabelsGroup.Aggregate(0, (c, l) => gridCount.Children.Add(l));
         }
 
         private void gridSC01_Loaded(object sender, RoutedEventArgs e)
@@ -527,6 +542,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             gridGameInformation.Children.Add(game.LabelID);
         }
+        #endregion
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
