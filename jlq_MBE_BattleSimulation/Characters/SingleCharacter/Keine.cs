@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using RandomHelper;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -15,7 +16,25 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 
 		}
 
-        //TODO 天赋
+        private bool _isBaize = false;
+
+        private bool IsBaize
+        {
+            get { return _isBaize; }
+            set
+            {
+                _isBaize = value;
+                this.LabelDisplay.Content = value ? "慧白" : "慧";
+                this.CloseAmendmentX = value ? (2/1.1) : (1.1/2);
+            }
+        }
+
+        //天赋
+        public override void EndSection()
+        {
+            base.EndSection();
+            _isBaize = random.NextBool(1.0/6);
+        }
 
         //符卡
         /// <summary>符卡01</summary>

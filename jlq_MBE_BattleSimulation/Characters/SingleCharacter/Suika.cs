@@ -40,6 +40,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
+        private const int skillAdd = 0;//TODO skill add
         private const int SC03Range = 2;
         public bool SC03IsBuffing = false;
 
@@ -49,7 +50,12 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             base.AddBuff(buff);
         }
 
-        //TODO 天赋
+        //天赋
+        public override void BeAttacked(int damage, Character attacker)
+        {
+            base.BeAttacked(damage, attacker);
+            this.AttackAdd = skillAdd;
+        }
 
         //符卡
         /// <summary>符卡01</summary>

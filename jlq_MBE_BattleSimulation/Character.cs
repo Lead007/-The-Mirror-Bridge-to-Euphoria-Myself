@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Data;
 using Number;
+using RandomHelper;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -706,7 +707,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否命中</returns>
         protected virtual bool IsHit(Character target)
         {
-            return random.NextDouble() > this.HitRate(target);
+            return !random.NextBool(this.HitRate(target));
         }
         /// <summary>近战增益</summary>
         /// <param name="target">攻击目标</param>
@@ -730,7 +731,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <returns>是否暴击</returns>
         protected virtual bool IsCriticalHit(Character target)
         {
-            return random.NextDouble() <= this.CriticalHitRate;
+            return random.NextBool(this.CriticalHitRate);
         }
 
         #region 重置

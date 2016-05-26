@@ -7,6 +7,7 @@ using System.Windows;
 using JLQ_MBE_BattleSimulation.Buffs.Add.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
+using JLQ_MBE_BattleSimulation.Dialogs.GamePad.ChoosePoints;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -33,6 +34,22 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(2);
         }
 
+        public override void PreparingSection()
+        {
+            base.PreparingSection();
+            if (game.Characters.Count > Game.Column*Game.Row - 12)
+            {
+                game.ButtonSC[0].IsEnabled = false;
+            }
+        }
+
+        public override void EndSection()
+        {
+            base.EndSection();
+            game.ButtonSC[0].IsEnabled = true;
+        }
+
+        //天赋
         protected override float HitBackGain => 0.1f;
 
         protected override IEnumerable<Character> LegalHitBackTarget
@@ -42,13 +59,27 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            //TODO SC01
+            var dialog = new GamePad_RanSC01(game);
+            var result = dialog.ShowDialog();
+            if (result == true)
+            {
+                game.HandleIsTargetLegal = (SCee, point) => dialog.PointsChoose.Any(p => p.Distance(SCee) == 1);
+                game.HandleTarget = SCee =>
+                {
+                    var count = dialog.PointsChoose.Count(p => p.Distance(SCee) == 1);
+                    HandleDoDanmakuAttack(SCee, 0.3f*count);
+                };
+            }
+            else
+            {
+                game.HandleIsLegalClick = point => false;
+            }
         }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-
+            base.EndSC01();
         }
 
         /// <summary>符卡02</summary>

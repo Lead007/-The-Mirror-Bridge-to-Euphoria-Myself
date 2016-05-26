@@ -47,5 +47,14 @@ namespace RandomHelper
             }
             return result;
         }
+
+        /// <summary>给定概率获取随机值是否在概率之下</summary>
+        /// <param name="random">随机数对象</param>
+        /// <param name="probability">概率</param>
+        /// <returns>是否符合概率</returns>
+        public static bool NextBool(this Random random, double probability)
+        {
+            return random.NextDouble() < probability;
+        }
     }
 }

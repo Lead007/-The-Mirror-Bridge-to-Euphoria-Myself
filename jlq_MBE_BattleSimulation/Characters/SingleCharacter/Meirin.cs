@@ -8,6 +8,7 @@ using JLQ_MBE_BattleSimulation.Buffs.Add.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.Gain.Sealed;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
 using Number;
+using RandomHelper;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -42,7 +43,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
         //TODO 天赋
 	    public override void BeAttacked(int damage, Character attacker)
 	    {
-	        if (random.NextDouble() < 0.2) return;
+	        if (random.NextBool(0.2)) return;
 	        base.BeAttacked((int)(damage*0.8), attacker);
 	    }
 

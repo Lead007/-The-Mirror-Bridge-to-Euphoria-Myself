@@ -64,7 +64,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
                             var column = (int)button.GetValue(Grid.ColumnProperty);
                             var row = (int)button.GetValue(Grid.RowProperty);
                             var point = new Point(column, row);
-                            if (PointsChoose.Contains(point)) return;
+                            if (IsLegalClick(point)) return;
                             PointsChoose.Enqueue(point);
                         };
                         #endregion
@@ -72,7 +72,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
                         buttons[i, j].MouseEnter += (sender, e) =>
                         {
                             var mousePoint = GetMousePoint(sender as Button);
-                            if (PointsChoose.Contains(mousePoint)) return;
+                            if (IsLegalClick(mousePoint)) return;
                             foreach (var c in LegalCharacters(mousePoint).Where(c => c != game.CurrentCharacter))
                             {
                                 this.SetLabelBackground(c);
@@ -83,7 +83,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
                         buttons[i, j].MouseLeave += (sender, e) =>
                         {
                             var p = GetMousePoint(sender as Button);
-                            if (PointsChoose.Contains(p)) return;
+                            if (IsLegalClick(p)) return;
                             LegalCharacters(p).Where(c => c != game.CurrentCharacter)
                                 .SetLabelBackground(GameColor.LabelDefalutBackground);
                             foreach (var c in PointsChoose.SelectMany(
@@ -121,7 +121,20 @@ namespace JLQ_MBE_BattleSimulation.Dialogs.GamePad
             return new Point((int)sender.GetValue(Grid.ColumnProperty), (int)sender.GetValue(Grid.RowProperty));
         }
 
+        /// <summary>选择的点是否合法</summary>
+        /// <param name="point">选择的点</param>
+        /// <returns>是否合法</returns>
+        protected virtual bool IsLegalClick(Point point)
+        {
+            return !PointsChoose.Contains(point);
+        }
+
+        /// <summary>合法的角色列表</summary>
+        /// <param name="point">选择的点</param>
+        /// <returns>合法的角色列表</returns>
         protected abstract IEnumerable<Character> LegalCharacters(Point point);
+        /// <summary>设置选中的角色的标签颜色</summary>
+        /// <param name="c">角色</param>
         protected abstract void SetLabelBackground(Character c);
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using JLQ_MBE_BattleSimulation.Buffs.SingleBuff;
+using RandomHelper;
 
 namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
 {
@@ -76,19 +77,10 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleTarget = SCee =>
             {
-                var plist = SC02points.ToList();
-                var ps = new Point[3];
-                for (var i = 0; i < SC02Num; i++)
-                {
-                    var index = random.Next(plist.Count);
-                    var point = plist[index];
-                    plist.Remove(point);
-                    ps[i] = point;
-                }
-                foreach (var p in ps)
+                foreach (var p in random.RandomElements(SC02Num, SC02points))
                 {
                     game.AddCharacter(p, this.Group, "芙分");
-                    this.FList.Add((FlandreLittle) game.Characters.Last());
+                    this.FList.Add(game.Characters.Last() as FlandreLittle);
                 }
             };
         }

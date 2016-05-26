@@ -343,7 +343,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             #endregion
             game.HandleSelf?.Invoke();
-            foreach (var c in game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint)))
+            foreach (var c in game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint)).ToList())
             {
                 game.HandleTarget(c);
             }

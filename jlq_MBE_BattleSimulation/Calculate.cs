@@ -42,7 +42,7 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         /// <summary>储存角色列表中所有角色的原始数据</summary>
-        public static List<CharacterData> CharacterDataList = new List<CharacterData>();
+        public static IEnumerable<CharacterData> CharacterDataList;
 
         #region Distance
         /// <summary>求两点距离，参数可交换</summary>
