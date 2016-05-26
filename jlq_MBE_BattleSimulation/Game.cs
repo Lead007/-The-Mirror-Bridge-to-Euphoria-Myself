@@ -186,6 +186,9 @@ namespace JLQ_MBE_BattleSimulation
 
 
         #region 符卡相关
+        /// <summary>所有符卡相关的委托</summary>
+        public Delegate[] ScDelegates
+            => new Delegate[] {HandleIsLegalClick, HandleIsTargetLegal, HandleSelf, HandleTarget};
         /// <summary>传递参数，判断单击位置是否有效</summary>
         public Func<Point, bool> HandleIsLegalClick { get; set; }
         /// <summary>传递参数，如何获取目标以及所需参数列表</summary>

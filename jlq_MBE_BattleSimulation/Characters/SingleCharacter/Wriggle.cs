@@ -48,7 +48,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
             base.PreparingSection();
             foreach (var c in LightCharacters.Where(c => !game.Characters.Contains(c)))
             {
-                LightLabels.RemoveAll(l => c.StateControls.Contains(l));
+                LightLabels.RemoveAll(l => c.StatesControls.Contains(l));
                 LightCharacters.Remove(c);
             }
             LightLabels.Aggregate(Visibility.Visible, (c, l) => l.Visibility = Visibility.Visible);
@@ -151,7 +151,7 @@ namespace JLQ_MBE_BattleSimulation.Characters.SingleCharacter
                             brush = Brushes.DarkGreen;
                             break;
                     }
-                    var l = SCee.StateControls.OfType<Label>().Intersect(this.LightLabels).First();
+                    var l = SCee.StatesControls.OfType<Label>().Intersect(this.LightLabels).First();
                     l.Background = brush;
                     l.Content = "荧" + (count + 1);
                 }

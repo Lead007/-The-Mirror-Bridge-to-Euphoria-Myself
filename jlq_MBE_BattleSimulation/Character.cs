@@ -199,30 +199,33 @@ namespace JLQ_MBE_BattleSimulation
         #endregion
 
         /// <summary>位置，X为Grid.Column，Y为Grid.Row</summary>
-        public Point Position { get; protected set; }
+        public Point Position { get; private set; }
 
         /// <summary>是否已移动</summary>
         public virtual bool HasMoved { get; set; }
         /// <summary>是否已攻击</summary>
         public virtual bool HasAttacked { get; set; }
+
         /// <summary>作为buff承受者的buff列表</summary>
-        public List<Buff> BuffList { get; protected set; }
+        public List<Buff> BuffList { get; protected set; } = new List<Buff>();
 
         #region 显示
         /// <summary>所有在GUI上显示的控件</summary>
         public IEnumerable<FrameworkElement> ListControls => StaticControls.Concat(StateControls);
         /// <summary>固定显示的控件</summary>
-        public List<FrameworkElement> StaticControls { get; } = new List<FrameworkElement>();
+        private List<FrameworkElement> StaticControls { get; } = new List<FrameworkElement>();
         /// <summary>显示Display的Label</summary>
-        public Label LabelDisplay { get; set; }
+        public Label LabelDisplay { get; }
         /// <summary>显示Hp的ProgressBar</summary>
-        public ProgressBar BarHp { get; set; }
+        private ProgressBar BarHp { get; }
         /// <summary>显示Mp的ProgressBar</summary>
-        public ProgressBar BarMp { get; set; }
+        private ProgressBar BarMp { get; }
         /// <summary>显示剩余时间的ProgressBar</summary>
-        public ProgressBar BarTime { get; set; }
+        private ProgressBar BarTime { get; }
         /// <summary>显示状态的控件</summary>
-        public List<FrameworkElement> StateControls { get; } = new List<FrameworkElement>(); 
+        private List<FrameworkElement> StateControls { get; } = new List<FrameworkElement>();
+        /// <summary>显示状态的控件</summary>
+        public IEnumerable<FrameworkElement> StatesControls => StateControls; 
         #endregion
 
 
@@ -249,9 +252,9 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>暴击增益</summary>
         protected float CriticalHitGain => 1.5f;
         /// <summary>暴击率</summary>
-        private float CriticalHitRate => 0.2f;
+        protected float CriticalHitRate => 0.2f;
         /// <summary>伤害浮动</summary>
-        private float DamageFloat => 0.1f;
+        protected float DamageFloat => 0.1f;
         #endregion
         /// <summary>是否死亡</summary>
         public bool IsDead => 0 >= Hp;
@@ -259,6 +262,11 @@ namespace JLQ_MBE_BattleSimulation
         public int X => (int)this.Position.X;
         /// <summary>Row坐标</summary>
         public int Y => (int)this.Position.Y;
+
+        /// <summary>对此角色而言的敌人列表</summary>
+        public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
+        /// <summary>阻挡行动的敌人列表</summary>
+        public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemy.Select(c => c.Position));
         #endregion
 
         #region 游戏相关委托
@@ -385,7 +393,6 @@ namespace JLQ_MBE_BattleSimulation
             this.Mp = MaxMp;
             this.CurrentTime = this.Data.Interval;
 
-            BuffList = new List<Buff>();
             this.random = random;
             this.game = game;
             #region 初始化委托
@@ -547,6 +554,8 @@ namespace JLQ_MBE_BattleSimulation
             game.GridPad.Children.Add(item);
         }
 
+        /// <summary>移除显示状态的控件</summary>
+        /// <param name="item">待移除的控件</param>
         public void RemoveStateControl(FrameworkElement item)
         {
             game.GridPad.Children.Remove(item);
@@ -558,16 +567,11 @@ namespace JLQ_MBE_BattleSimulation
         }
         #endregion
 
-        /// <summary>对此角色而言的敌人列表</summary>
-        public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
-
         /// <summary>准备阶段</summary>
         public virtual void PreparingSection() { }
         /// <summary>结束阶段</summary>
         public virtual void EndSection() { }
 
-        /// <summary>阻挡行动的敌人列表</summary>
-        public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemy.Select(c => c.Position));
 
 
         /// <summary>检测灵力是否足够</summary>
@@ -686,7 +690,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>将不合法的Position坐标项转化为合法值</summary>
         /// <param name="coordinate">待转化值</param>
         /// <param name="max">最大值</param>
-        /// <returns></returns>
+        /// <returns>合法的坐标值</returns>
         private static int GetValidPosition(int coordinate, int max)
         {
             if (coordinate < 0)
@@ -760,10 +764,10 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>结束符卡结算</summary>
         private void EndSC()
         {
-            game.HandleIsLegalClick = null;
-            game.HandleIsTargetLegal = null;
-            game.HandleSelf = null;
-            game.HandleTarget = null;
+            for (int i = 0, length = game.ScDelegates.Length; i < length; i++)
+            {
+                game.ScDelegates[i] = null;
+            }
         }
 
         #region 符卡桌面事件相关

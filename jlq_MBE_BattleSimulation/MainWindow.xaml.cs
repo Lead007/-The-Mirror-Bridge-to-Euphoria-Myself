@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
+using Bitmap;
 using Data;
 using JLQ_MBE_BattleSimulation.Dialogs;
 using RandomHelper;
@@ -38,6 +39,8 @@ namespace JLQ_MBE_BattleSimulation
         public MainWindow()
         {
             InitializeComponent();
+            //TODO Add Icon
+            //this.Icon = BitmapConverter.BitmapToBitmapImage();
 
             #region 读取角色各数据
             var data = new XmlDocument();
