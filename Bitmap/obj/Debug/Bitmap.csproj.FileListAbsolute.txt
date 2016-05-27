@@ -1,0 +1,4 @@
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\bin\Debug\Bitmap.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\bin\Debug\Bitmap.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\obj\Debug\Bitmap.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Bitmap\obj\Debug\Bitmap.pdb

@@ -9,7 +9,7 @@ using JLQ_GameBase;
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>魔理沙</summary>
-    public class Marisa : Character
+    public class Marisa : Character, IHuman
     {
         public Marisa(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)
@@ -49,6 +49,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(2);
         }
 
+        public Human HumanKind => Human.FullHuman;
+
         private float SCGain = 1.0f;
         private const float SC02Gain = 2.5f;
         private const int SC03Const1 = 2;
@@ -63,7 +65,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 SCGain = 1 + Mp/4000;
             }
         }
-
 
         //符卡
         /// <summary>符卡01：星屑幻想，选定一块3*3的区域，对其内敌人造成1.0倍率的弹幕攻击。</summary>

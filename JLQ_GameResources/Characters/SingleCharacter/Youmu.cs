@@ -12,8 +12,8 @@ using MoreEnumerable;
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>魂魄妖梦</summary>
-    public class Youmu : Character
-	{
+    public class Youmu : Character, IHuman
+    {
 		public Youmu(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
@@ -39,6 +39,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
+
+        public Human HumanKind => Human.HalfHuman;
 
         private const int SC01Range = 3;
 
@@ -94,7 +96,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => false;
             game.HandleSelf = () =>
             {
-                this.BuffList.RemoveAll(b => !b.IsPositive);
+                this.BuffList.RemoveAll(b => b.IsPositive == false);
                 var buff1 = new BuffGainBeDamaged(this, this, this.Interval + 1, -0.25f, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffGainAttack(this, this, this.Interval + 1, 0.5f, game);

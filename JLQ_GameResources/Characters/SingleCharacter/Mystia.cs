@@ -88,7 +88,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff1.BuffTrigger();
                 var buff2 = new BuffAddDodgeRate(SCee, this, BuffTime, -10, game);
                 buff2.BuffTrigger();
-                var buffs = SCee.BuffList.Where(b => b.IsPositive).ToList();
+                var buffs = SCee.BuffList.Where(b => b.IsPositive == true).ToList();
                 if (!buffs.Any()) return;
                 var bs = random.RandomElement(buffs);
                 bs.BuffEnd();

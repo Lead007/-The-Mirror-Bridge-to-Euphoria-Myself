@@ -11,8 +11,8 @@ using MoreEnumerable;
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>十六夜咲夜</summary>
-    public class Sakuya : Character
-	{
+    public class Sakuya : Character, IHuman
+    {
 		public Sakuya(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
@@ -26,7 +26,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(1);
 		}
 
-	    private Character _cChange;
+        public Human HumanKind => Human.FullHuman;
+
+        private Character _cChange;
 	    private const int SC02Range = 2;
         private const float SC02Gain = 0.2f;
 

@@ -73,6 +73,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 var column = (int)button.GetValue(Grid.ColumnProperty);
                 var row = (int)button.GetValue(Grid.RowProperty);
+                #region MouseMove
                 button.MouseMove += (s, ev) =>
                 {
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
@@ -84,14 +85,20 @@ namespace JLQ_MBE_BattleSimulation
                         button.ToolTip = game.TipShow(new Point(column, row));
                     }
                 };
+                #endregion
+                #region MouseEnter
                 button.MouseEnter += (s, ev) =>
                 {
                     game.MousePoint = new Point(column, row);
                 };
+                #endregion
+                #region MouseLeave
                 button.MouseLeave += (s, ev) =>
                 {
                     game.MousePoint = new Point(-1, -1);
                 };
+                #endregion
+                #region KeyDown
                 button.KeyDown += (s, ev) =>
                 {
                     //如果shift和ctrl都没被按下或不在行动阶段或不在棋盘内或该点无角色或该点角色为当前角色则无效
@@ -121,8 +128,9 @@ namespace JLQ_MBE_BattleSimulation
                         game.SetButtonBackground(game.MousePoint, character.MoveAbility);
                         character.SetLabelBackground();
                     }
-
                 };
+                #endregion
+                #region KeyUp
                 button.KeyUp += (s, ev) =>
                 {
                     //如果不在行动阶段或仍有shift或ctrl在棋盘内则无效
@@ -132,6 +140,7 @@ namespace JLQ_MBE_BattleSimulation
                     //恢复原本显示
                     game.ResetShow();
                 };
+                #endregion
             }
             #endregion
         }
@@ -139,7 +148,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>当前行动角色</summary>
         private Character CurrentCharacter => game.CurrentCharacter;
         /// <summary>当前游戏阶段</summary>
-        private JLQ_GameBase.Section? GameSection => game.GameSection;
+        private Section? GameSection => game.GameSection;
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -148,8 +157,23 @@ namespace JLQ_MBE_BattleSimulation
         private void AddCharacter(Point point, Group group, string display)
         {
             var name = Calculate.CharacterDataList.First(c => c.Display == display).Name;
-            var assembly = typeof (Reimu).Assembly;
-            var type = assembly.GetTypes().First(t => t.Name == name);
+            Type type;
+            try
+            {
+                type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).First(t => t.Name == name);
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    type = typeof (Reimu).Assembly.GetTypes().First(t => t.Name == name);
+                }
+                catch
+                {
+                    Game.ErrorMessageBox("未找到包含该角色的程序集，请联系开发者。");
+                    return;
+                }
+            }
             game.AddCharacter(point, group, type);
             menuBackout.IsEnabled = true;
             var labelTemp = game.LabelsGroup[(int)group + 1];

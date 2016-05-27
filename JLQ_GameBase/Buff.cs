@@ -23,16 +23,16 @@ namespace JLQ_GameBase
         /// <summary>buff剩余时间</summary>
         public int Time { get; protected set; }
         /// <summary>buff名称</summary>
-        public readonly string Name;
+        public string Name { get; }
         /// <summary>是否为正面buff</summary>
-        public readonly bool IsPositive;
+        public bool? IsPositive { get; }
 
         /// <summary>buff效果的委托对象</summary>
         protected Action<Character, Character> HandleBuffAffect { get; set; }
         /// <summary>取消buff的委托对象</summary>
         protected Action<Character, Character> HandleBuffCancels { get; set; }
         /// <summary>游戏对象</summary>
-        protected Game game;
+        protected Game game { get; }
 
         /// <summary>buff发出者</summary>
         public Character Buffer;
@@ -46,7 +46,7 @@ namespace JLQ_GameBase
         /// <param name="name">buff名称</param>
         /// <param name="isPositive">是否为正面buff</param>
         /// <param name="game">游戏对象</param>
-        protected Buff(Character buffee, Character buffer, int time, string name, bool isPositive, Game game)
+        protected Buff(Character buffee, Character buffer, int time, string name, bool? isPositive, Game game)
         {
             this.Buffer = buffer;
             this.Buffee = buffee;

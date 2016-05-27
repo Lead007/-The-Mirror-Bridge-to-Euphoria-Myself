@@ -68,6 +68,7 @@
     <Compile Include="Buffs\SingleBuff\BuffAddRumiaSkillNum.cs" />
     <Compile Include="Buffs\SingleBuff\BuffBeDanmakuAttacked.cs" />
     <Compile Include="Buffs\SingleBuff\BuffBlooding.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffCannotAttackAndBeAttacked.cs" />
     <Compile Include="Buffs\SingleBuff\BuffCannotMove.cs" />
     <Compile Include="Buffs\SingleBuff\BuffDecreaseMoveAbilityWhenHit.cs" />
     <Compile Include="Buffs\SingleBuff\BuffLetBloodingWhenBeAttacked.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Characters\SingleCharacter\Flandre.cs" />
     <Compile Include="Characters\SingleCharacter\FlandreLittle.cs" />
     <Compile Include="Characters\SingleCharacter\Gedama.cs" />
+    <Compile Include="Characters\SingleCharacter\IHuman.cs" />
     <Compile Include="Characters\SingleCharacter\Kaguya.cs" />
     <Compile Include="Characters\SingleCharacter\Keine.cs" />
     <Compile Include="Characters\SingleCharacter\Koakuma.cs" />

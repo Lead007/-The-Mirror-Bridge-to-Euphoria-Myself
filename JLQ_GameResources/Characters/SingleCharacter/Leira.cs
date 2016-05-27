@@ -11,8 +11,8 @@ using Number;
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>蕾拉·普莉兹姆利巴</summary>
-    public class Leira : CharacterPrismriver
-	{
+    public class Leira : CharacterPrismriver, IHuman
+    {
 		public Leira(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
@@ -27,6 +27,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             SetDefaultLeavePadButtonDelegate(1);
 		}
+
+        public Human HumanKind => Human.FullHuman;
 
         private static RationalNumber SC02Gain => new RationalNumber(1, 5, true, false);
 

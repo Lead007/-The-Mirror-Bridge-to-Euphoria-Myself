@@ -8,13 +8,15 @@ using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
-    public class Mokou : Character
-	{
-		public Mokou(int id, Point position, Group group, Random random, Game game)
+    public class Mokou : Character, IHuman
+    {
+        public Mokou(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
 
 		}
+
+        public Human HumanKind => Human.Mokou;
 
         //TODO 天赋
 

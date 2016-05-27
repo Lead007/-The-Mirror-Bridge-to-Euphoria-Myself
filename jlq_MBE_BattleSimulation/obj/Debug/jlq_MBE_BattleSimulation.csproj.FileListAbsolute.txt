@@ -29,3 +29,4 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleS
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.csproj.GenerateResource.Cache
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.exe
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\obj\Debug\jlq_MBE_BattleSimulation.csprojResolveAssemblyReference.cache

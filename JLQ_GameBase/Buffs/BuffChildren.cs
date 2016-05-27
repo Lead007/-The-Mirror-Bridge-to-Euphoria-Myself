@@ -16,7 +16,7 @@ namespace JLQ_GameBase.Buffs
         /// <param name="name">buff名称</param>
         /// <param name="isPositive">是否为正面buff</param>
         /// <param name="game">游戏对象</param>
-        protected BuffExecuteImmediately(Character buffee, Character buffer, int time, string name, bool isPositive, Game game)
+        protected BuffExecuteImmediately(Character buffee, Character buffer, int time, string name, bool? isPositive, Game game)
             : base(buffee, buffer, time, name, isPositive, game)
         {
 
@@ -35,7 +35,7 @@ namespace JLQ_GameBase.Buffs
         /// <param name="isPositive">是否为正面buff</param>
         /// <param name="game">游戏对象</param>
         protected BuffExecuteInSection(Character buffee, Character buffer, int time, Section executeSection, string name,
-            bool isPositive, Game game) : base(buffee, buffer, time, name, isPositive, game)
+            bool? isPositive, Game game) : base(buffee, buffer, time, name, isPositive, game)
         {
             this.ExecuteSection = executeSection;
         }

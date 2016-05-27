@@ -11,3 +11,5 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\b
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\RandomHelper.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\obj\Release\JLQ_BaseBuffs.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\obj\Release\JLQ_BaseBuffs.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\MoreEnumerable.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\MoreEnumerable.pdb

@@ -12,7 +12,7 @@ using JLQ_GameResources.Buffs.SingleBuff;
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>灵梦</summary>
-    public class Reimu : CharacterTeleportMoving
+    public class Reimu : CharacterTeleportMoving, IHuman
     {
         public Reimu(int id, Point position, Group group, Random random, Game game)
             : base(id, position, group, random, game)
@@ -59,6 +59,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private List<Character> SC02CharactersBeSlowed = new List<Character>();
 
+        public Human HumanKind => Human.FullHuman;
 
         /// <summary>天赋：1.2倍灵力获取</summary>
         /// <param name="mp">获得的灵力量</param>

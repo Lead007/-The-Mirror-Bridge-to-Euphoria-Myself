@@ -295,13 +295,13 @@ namespace JLQ_GameBase
 
         #region 符卡相关委托
         /// <summary>进入符卡按钮01的委托</summary>
-        protected MouseEventHandler[] enterButton { get; set; } = new MouseEventHandler[3];
+        protected MouseEventHandler[] enterButton { get; set; } = new MouseEventHandler[] {null, null, null};
         /// <summary>离开符卡按钮01的委托</summary>
-        protected MouseEventHandler[] leaveButton { get; set; } = new MouseEventHandler[3];
+        protected MouseEventHandler[] leaveButton { get; set; } = new MouseEventHandler[] { null, null, null };
         /// <summary>单击符卡按钮01后进入棋盘按钮的委托</summary>
-        protected MouseEventHandler[] enterPad { get; set; } = new MouseEventHandler[3];
+        protected MouseEventHandler[] enterPad { get; set; } = new MouseEventHandler[] { null, null, null };
         /// <summary>单击符卡按钮01后离开棋盘按钮的委托</summary>
-        protected MouseEventHandler[] leavePad { get; set; } = new MouseEventHandler[3];
+        protected MouseEventHandler[] leavePad { get; set; } = new MouseEventHandler[] { null, null, null };
         #endregion
 
 
@@ -454,7 +454,7 @@ namespace JLQ_GameBase
             //计算近战补正
             var closeGain = HandleCloseGain(target);
             //造成伤害
-            return DoingAttack(target, times*closeGain);
+            return HandleDoingAttack(target, times*closeGain);
         }
 
         /// <summary>弹幕攻击</summary>
@@ -463,7 +463,7 @@ namespace JLQ_GameBase
         /// <returns>是否暴击</returns>
         public virtual bool DoDanmakuAttack(Character target, float times = 1.0f)
         {
-            return !HandleIsHit(target) && DoingAttack(target, times);
+            return !HandleIsHit(target) && HandleDoingAttack(target, times);
         }
 
         /// <summary>命中后的伤害结算</summary>
@@ -665,7 +665,7 @@ namespace JLQ_GameBase
         {
             for (var i = 0; i < 3; i++)
             {
-                if (enterButton[i] != null) AddSCButtonEvent(i);
+                AddSCButtonEvent(i);
             }
         }
         /// <summary>符卡按钮移动响应复位</summary>
@@ -673,7 +673,7 @@ namespace JLQ_GameBase
         {
             for (var i = 0; i < 3; i++)
             {
-                if (enterButton[i] != null) RemoveSCButtonEvent(i);
+                RemoveSCButtonEvent(i);
             }
         }
         #endregion
@@ -776,6 +776,7 @@ namespace JLQ_GameBase
         /// <param name="index">符卡按钮索引</param>
         protected void AddSCButtonEvent(int index)
         {
+            if (enterButton[index] == null) return;
             game.ButtonSC[index].MouseEnter += enterButton[index];
             game.ButtonSC[index].MouseLeave += leaveButton[index];
         }
@@ -783,6 +784,7 @@ namespace JLQ_GameBase
         /// <param name="index">符卡按钮索引</param>
         protected void RemoveSCButtonEvent(int index)
         {
+            if (enterButton[index] == null) return;
             game.ButtonSC[index].MouseEnter -= enterButton[index];
             game.ButtonSC[index].MouseLeave -= leaveButton[index];
         }
