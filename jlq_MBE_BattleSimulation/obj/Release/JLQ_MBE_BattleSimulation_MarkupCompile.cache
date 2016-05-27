@@ -1,20 +1,20 @@
-﻿JLQ_MBE_BattleSimulation
+﻿jlq_MBE_BattleSimulation
 
 
 winexe
 C#
 .cs
-D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_MBE_BattleSimulation\obj\Release\
-JLQ_MBE_BattleSimulation
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\obj\Release\
+jlq_MBE_BattleSimulation
 none
 false
 TRACE
-D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_MBE_BattleSimulation\App.xaml
-3-1557579808
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\App.xaml
+2-1000878365
 
-911379333572
-202033820921
-Dialogs\Dialog_GamePad.xaml;MainWindow.xaml;Dialogs\Dialog_ChoosePath.xaml;
+6-574278980
+212079309411
+Dialogs\Dialog_ChoosePath.xaml;MainWindow.xaml;
 
 False
 

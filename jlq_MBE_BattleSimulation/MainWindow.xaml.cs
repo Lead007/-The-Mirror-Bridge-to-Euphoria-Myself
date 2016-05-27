@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -22,8 +21,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Bitmap;
 using Data;
 using JLQ_MBE_BattleSimulation.Dialogs;
+using JLQ_GameBase;
+using JLQ_GameResources.Characters.SingleCharacter;
 using RandomHelper;
-using static JLQ_MBE_BattleSimulation.GameColor;
+using static JLQ_GameBase.GameColor;
 
 namespace JLQ_MBE_BattleSimulation
 {
@@ -98,7 +99,7 @@ namespace JLQ_MBE_BattleSimulation
                     //如果shift和ctrl都没被按下或不在行动阶段或不在棋盘内或该点无角色或该点角色为当前角色则无效
                     if ((!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ||
                            Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) ||
-                        GameSection != JLQ_MBE_BattleSimulation.Section.Round || game.MousePoint == new Point(-1, -1) ||
+                        GameSection != Section.Round || game.MousePoint == new Point(-1, -1) ||
                         game.Characters.All(c => c.Position != game.MousePoint) ||
                         game.MousePoint == game.CurrentPosition) return;
                     //如果shift被按下
@@ -127,7 +128,7 @@ namespace JLQ_MBE_BattleSimulation
                 button.KeyUp += (s, ev) =>
                 {
                     //如果不在行动阶段或仍有shift或ctrl在棋盘内则无效
-                    if (GameSection != JLQ_MBE_BattleSimulation.Section.Round) return;
+                    if (GameSection != Section.Round) return;
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ||
                         Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
                     //恢复原本显示
@@ -140,7 +141,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>当前行动角色</summary>
         private Character CurrentCharacter => game.CurrentCharacter;
         /// <summary>当前游戏阶段</summary>
-        private Section? GameSection => game.GameSection;
+        private JLQ_GameBase.Section? GameSection => game.GameSection;
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -148,13 +149,16 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="display">显示的字符串</param>
         private void AddCharacter(Point point, Group group, string display)
         {
-            game.AddCharacter(point, group, display);
+            var name = Calculate.CharacterDataList.First(c => c.Display == display).Name;
+            var assembly = typeof (Reimu).Assembly;
+            var type = assembly.GetTypes().First(t => t.Name == name);
+            game.AddCharacter(point, group, type);
             menuBackout.IsEnabled = true;
             var labelTemp = game.LabelsGroup[(int)group + 1];
             labelTemp.Content = Convert.ToInt32(labelTemp.Content) + 1;
         }
 
-        
+
 
         /// <summary>网格单击事件</summary>
         /// <param name="leftButton">鼠标左键状态</param>
@@ -165,7 +169,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 #region 加人模式
                 //如果没选角色Display则操作非法
-                if (String.IsNullOrEmpty(comboBoxDisplay.Text))
+                if (string.IsNullOrEmpty(comboBoxDisplay.Text))
                 {
                     Game.IllegalMessageBox("请选择角色！");
                     return;
@@ -187,7 +191,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 #region 战斗模式
                 #region 如果不是行动阶段则操作非法
-                if (GameSection != JLQ_MBE_BattleSimulation.Section.Round) return;
+                if (GameSection != Section.Round) return;
                 #endregion
                 if (game.ScSelect != 0)
                 {
@@ -469,7 +473,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             catch
             {
-                Game.ErrorMessageBox(Properties.Resources.HelpError);
+                Game.ErrorMessageBox(jlq_MBE_BattleSimulation.Properties.Resources.HelpError);
             }
         }
 
@@ -481,7 +485,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             catch
             {
-                Game.ErrorMessageBox(Properties.Resources.HelpError);
+                Game.ErrorMessageBox(jlq_MBE_BattleSimulation.Properties.Resources.HelpError);
             }
         }
         #endregion
@@ -580,11 +584,11 @@ namespace JLQ_MBE_BattleSimulation
             {
                 var pathc = game.LoadPath + i + "\\";
                 Point pp;
-                if (File.Exists(pathc + Properties.Resources.Position))
+                if (File.Exists(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Position))
                 {
-                    using (Stream reader = File.OpenRead(pathc + Properties.Resources.Position))
+                    using (Stream reader = File.OpenRead(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Position))
                     {
-                        pp = (Point) formatter.Deserialize(reader);
+                        pp = (Point)formatter.Deserialize(reader);
                     }
                 }
                 else
@@ -593,9 +597,9 @@ namespace JLQ_MBE_BattleSimulation
                     p = p.Y == Game.Row - 1 ? new Point(p.X + 1, 0) : new Point(p.X, p.Y + 1);
                 }
                 Group gg;
-                if (File.Exists(pathc + Properties.Resources.Group))
+                if (File.Exists(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Group))
                 {
-                    using (Stream reader = File.OpenRead(pathc + Properties.Resources.Group))
+                    using (Stream reader = File.OpenRead(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Group))
                     {
                         gg = (Group)formatter.Deserialize(reader);
                     }
@@ -605,9 +609,9 @@ namespace JLQ_MBE_BattleSimulation
                     gg = g;
                 }
                 CharacterData cd;
-                if (File.Exists(pathc + Properties.Resources.Data))
+                if (File.Exists(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Data))
                 {
-                    using (Stream reader = File.OpenRead(pathc + Properties.Resources.Data))
+                    using (Stream reader = File.OpenRead(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Data))
                     {
                         cd = (CharacterData)formatter.Deserialize(reader);
                     }

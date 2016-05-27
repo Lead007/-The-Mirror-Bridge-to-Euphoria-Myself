@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
+using JLQ_GameBase;
 
 namespace JLQ_MBE_BattleSimulation.Dialogs
 {
@@ -82,15 +83,15 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
                 var pathc = path + c.ID;
                 Directory.CreateDirectory(pathc);
                 pathc += "\\";
-                using (Stream writer = File.Create(pathc + Properties.Resources.Data))
+                using (Stream writer = File.Create(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Data))
                 {
                     formatter.Serialize(writer, Calculate.CharacterDataList.First(cd => cd.Name == c.Name));
                 }
-                using (Stream writer = File.Create(pathc + Properties.Resources.Group))
+                using (Stream writer = File.Create(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Group))
                 {
                     formatter.Serialize(writer, c.Group);
                 }
-                using (Stream writer = File.Create(pathc + Properties.Resources.Position))
+                using (Stream writer = File.Create(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Position))
                 {
                     formatter.Serialize(writer, c.Position);
                 }

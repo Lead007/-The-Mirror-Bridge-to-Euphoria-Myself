@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace JLQ_MBE_BattleSimulation.Properties
+namespace jlq_MBE_BattleSimulation.Properties
 {
 
 

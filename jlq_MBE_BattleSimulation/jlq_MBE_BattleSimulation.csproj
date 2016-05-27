@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{27492CF3-0CBE-4D7F-9580-6B46DAD89E83}</ProjectGuid>
+    <ProjectGuid>{AA76231E-DEC7-481F-AF6B-9ACE6604281E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JLQ_MBE_BattleSimulation</RootNamespace>
-    <AssemblyName>JLQ_MBE_BattleSimulation</AssemblyName>
+    <RootNamespace>jlq_MBE_BattleSimulation</RootNamespace>
+    <AssemblyName>jlq_MBE_BattleSimulation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -24,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\JLQ_MBE_BattleSimulation.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,12 +38,14 @@
     <Reference Include="Bitmap">
       <HintPath>..\Bitmap\bin\Release\Bitmap.dll</HintPath>
     </Reference>
-    <Reference Include="Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Data">
       <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
-    <Reference Include="MoreEnumerable">
-      <HintPath>..\MoreEnumerable\bin\Release\MoreEnumerable.dll</HintPath>
+    <Reference Include="JLQ_GameBase">
+      <HintPath>..\JLQ_GameBase\bin\Release\JLQ_GameBase.dll</HintPath>
+    </Reference>
+    <Reference Include="JLQ_GameResources">
+      <HintPath>..\JLQ_GameResources\bin\Release\JLQ_GameResources.dll</HintPath>
     </Reference>
     <Reference Include="RandomHelper">
       <HintPath>..\RandomHelper\bin\Release\RandomHelper.dll</HintPath>
@@ -74,92 +75,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Buffs\Add\Sealed\BuffAddAttack.cs" />
-    <Compile Include="Buffs\Add\Sealed\BuffAddDodgeRate.cs" />
-    <Compile Include="Buffs\Add\Sealed\BuffAddHitRate.cs" />
-    <Compile Include="Buffs\Gain\Sealed\BuffGainHitRate.cs" />
-    <Compile Include="Buffs\IControl.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffBeAttacked.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffSuikaUncontrolable.cs" />
-    <Compile Include="Characters\SingleCharacter\Alice.cs" />
-    <Compile Include="AttackModel.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffAddDamageTimes.cs" />
-    <Compile Include="Buffs\Add\Sealed\BuffAddMoveAbility.cs" />
-    <Compile Include="Buffs\Add\BuffAddProperty.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffBeDanmakuAttacked.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffBlooding.cs" />
-    <Compile Include="Buffs\BuffChildren.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffCure.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffDecreaseMoveAbilityWhenHit.cs" />
-    <Compile Include="Buffs\Gain\Sealed\BuffGainAttack.cs" />
-    <Compile Include="Buffs\Add\Sealed\BuffAddAttackRange.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffGainBeDamaged.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffAddRumiaSkillNum.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffCannotMove.cs" />
-    <Compile Include="Buffs\Add\Sealed\BuffAddDefence.cs" />
-    <Compile Include="Buffs\Gain\Sealed\BuffGainDefence.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffGainDoDamage.cs" />
-    <Compile Include="Buffs\Gain\Sealed\BuffGainDodgeRate.cs" />
-    <Compile Include="Buffs\Gain\BuffGainProperty.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffLetBloodingWhenBeAttacked.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffLimit.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffMpGain.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffShield.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffSlowDown.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffSlowDownGain.cs" />
-    <Compile Include="Characters\SingleCharacter\Chen.cs" />
-    <Compile Include="Characters\SingleCharacter\Cirno.cs" />
-    <Compile Include="Comparer.cs" />
-    <Compile Include="Characters\SingleCharacter\Daiyousei.cs" />
-    <Compile Include="DelegateEvent.cs" />
-    <Compile Include="Characters\SingleCharacter\Eirin.cs" />
-    <Compile Include="Dialogs\Dialog_GamePad.xaml.cs">
-      <DependentUpon>Dialog_GamePad.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LunasaSC02.cs" />
-    <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_MerlinSC02.cs" />
-    <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LyricaSC02.cs" />
-    <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_RanSC01.cs" />
-    <Compile Include="Dialogs\GamePad\GamePad_ChooseLines.cs" />
-    <Compile Include="Dialogs\GamePad\GamePad_ChoosePoints.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Characters\SingleCharacter\Flandre.cs" />
-    <Compile Include="Characters\SingleCharacter\FlandreLittle.cs" />
-    <Compile Include="GameColor.cs" />
-    <Compile Include="Characters\SingleCharacter\Gedama.cs" />
-    <Compile Include="Characters\SingleCharacter\Kaguya.cs" />
-    <Compile Include="Characters\SingleCharacter\Keine.cs" />
-    <Compile Include="Characters\SingleCharacter\Koakuma.cs" />
-    <Compile Include="Characters\SingleCharacter\Leira.cs" />
-    <Compile Include="Characters\SingleCharacter\Letty.cs" />
-    <Compile Include="Characters\SingleCharacter\LilyWhite.cs" />
-    <Compile Include="Characters\SingleCharacter\Lunasa.cs" />
-    <Compile Include="Characters\SingleCharacter\Lyrica.cs" />
-    <Compile Include="Characters\SingleCharacter\Marisa.cs" />
-    <Compile Include="Characters\SingleCharacter\Meirin.cs" />
-    <Compile Include="Characters\SingleCharacter\Merlin.cs" />
-    <Compile Include="Characters\SingleCharacter\Mokou.cs" />
-    <Compile Include="Characters\SingleCharacter\Mystia.cs" />
-    <Compile Include="Characters\SingleCharacter\Patchouli.cs" />
-    <Compile Include="Characters\SingleCharacter\Ran.cs" />
-    <Compile Include="Characters\SingleCharacter\Reimiria.cs" />
-    <Compile Include="Characters\SingleCharacter\Reimu.cs" />
-    <Compile Include="Characters\SingleCharacter\Reisen.cs" />
-    <Compile Include="Characters\SingleCharacter\Rin.cs" />
-    <Compile Include="Characters\SingleCharacter\Rumia.cs" />
-    <Compile Include="Characters\SingleCharacter\Sakuya.cs" />
-    <Compile Include="Characters\SingleCharacter\Suika.cs" />
-    <Compile Include="Characters\SingleCharacter\Tewi.cs" />
-    <Compile Include="Dialogs\Dialog_ChoosePath.xaml.cs">
-      <DependentUpon>Dialog_ChoosePath.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Characters\SingleCharacter\Wriggle.cs" />
-    <Compile Include="Characters\SingleCharacter\Youmu.cs" />
-    <Compile Include="Characters\SingleCharacter\Yukari.cs" />
-    <Compile Include="Characters\SingleCharacter\Yuyuko.cs" />
-    <Page Include="Dialogs\Dialog_GamePad.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Dialogs\Dialog_ChoosePath.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -169,23 +87,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Buff.cs" />
-    <Compile Include="Calculate.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="Characters\CharacterChildren.cs" />
-    <Compile Include="Converter.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Dialogs\Dialog_ChoosePath.xaml.cs">
+      <DependentUpon>Dialog_ChoosePath.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Dialogs\Dialog_ChoosePath.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Paint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -215,7 +125,6 @@
   <ItemGroup>
     <None Include="Resources\Error.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

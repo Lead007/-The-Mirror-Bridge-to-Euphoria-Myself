@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09CB5F81-1002-4582-B4A4-510445816B17}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JLQ_GameResources</RootNamespace>
+    <AssemblyName>JLQ_GameResources</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bitmap">
+      <HintPath>..\Bitmap\bin\Release\Bitmap.dll</HintPath>
+    </Reference>
+    <Reference Include="JLQ_BaseBuffs">
+      <HintPath>..\JLQ_BaseBuffs\bin\Release\JLQ_BaseBuffs.dll</HintPath>
+    </Reference>
+    <Reference Include="JLQ_GameBase">
+      <HintPath>..\JLQ_GameBase\bin\Release\JLQ_GameBase.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreEnumerable">
+      <HintPath>..\MoreEnumerable\bin\Release\MoreEnumerable.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationBuildTasks" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RandomHelper">
+      <HintPath>..\RandomHelper\bin\Release\RandomHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="RationalNumber">
+      <HintPath>..\RationalNumber\bin\Release\RationalNumber.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Buffs\SingleBuff\BuffAddDamageTimes.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffAddRumiaSkillNum.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffBeDanmakuAttacked.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffBlooding.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffCannotMove.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffDecreaseMoveAbilityWhenHit.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffLetBloodingWhenBeAttacked.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffLimit.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffShield.cs" />
+    <Compile Include="Buffs\SingleBuff\BuffSuikaUncontrolable.cs" />
+    <Compile Include="Characters\CharacterChildren.cs" />
+    <Compile Include="Characters\SingleCharacter\Alice.cs" />
+    <Compile Include="Characters\SingleCharacter\Chen.cs" />
+    <Compile Include="Characters\SingleCharacter\Cirno.cs" />
+    <Compile Include="Characters\SingleCharacter\Daiyousei.cs" />
+    <Compile Include="Characters\SingleCharacter\Eirin.cs" />
+    <Compile Include="Characters\SingleCharacter\Flandre.cs" />
+    <Compile Include="Characters\SingleCharacter\FlandreLittle.cs" />
+    <Compile Include="Characters\SingleCharacter\Gedama.cs" />
+    <Compile Include="Characters\SingleCharacter\Kaguya.cs" />
+    <Compile Include="Characters\SingleCharacter\Keine.cs" />
+    <Compile Include="Characters\SingleCharacter\Koakuma.cs" />
+    <Compile Include="Characters\SingleCharacter\Leira.cs" />
+    <Compile Include="Characters\SingleCharacter\Letty.cs" />
+    <Compile Include="Characters\SingleCharacter\LilyWhite.cs" />
+    <Compile Include="Characters\SingleCharacter\Lunasa.cs" />
+    <Compile Include="Characters\SingleCharacter\Lyrica.cs" />
+    <Compile Include="Characters\SingleCharacter\Marisa.cs" />
+    <Compile Include="Characters\SingleCharacter\Meirin.cs" />
+    <Compile Include="Characters\SingleCharacter\Merlin.cs" />
+    <Compile Include="Characters\SingleCharacter\Mokou.cs" />
+    <Compile Include="Characters\SingleCharacter\Mystia.cs" />
+    <Compile Include="Characters\SingleCharacter\Patchouli.cs" />
+    <Compile Include="Characters\SingleCharacter\Ran.cs" />
+    <Compile Include="Characters\SingleCharacter\Reimiria.cs" />
+    <Compile Include="Characters\SingleCharacter\Reimu.cs" />
+    <Compile Include="Characters\SingleCharacter\Reisen.cs" />
+    <Compile Include="Characters\SingleCharacter\Rin.cs" />
+    <Compile Include="Characters\SingleCharacter\Rumia.cs" />
+    <Compile Include="Characters\SingleCharacter\Sakuya.cs" />
+    <Compile Include="Characters\SingleCharacter\Suika.cs" />
+    <Compile Include="Characters\SingleCharacter\Tewi.cs" />
+    <Compile Include="Characters\SingleCharacter\Wriggle.cs" />
+    <Compile Include="Characters\SingleCharacter\Youmu.cs" />
+    <Compile Include="Characters\SingleCharacter\Yukari.cs" />
+    <Compile Include="Characters\SingleCharacter\Yuyuko.cs" />
+    <Compile Include="Dialogs\Dialog_GamePad.xaml.cs">
+      <DependentUpon>Dialog_GamePad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LunasaSC02.cs" />
+    <Compile Include="Dialogs\GamePad\ChooseLines\GamePad_LyricaSC02.cs" />
+    <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_MerlinSC02.cs" />
+    <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_RanSC01.cs" />
+    <Compile Include="Dialogs\GamePad\GamePad_ChooseLines.cs" />
+    <Compile Include="Dialogs\GamePad\GamePad_ChoosePoints.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Dialogs\Dialog_GamePad.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

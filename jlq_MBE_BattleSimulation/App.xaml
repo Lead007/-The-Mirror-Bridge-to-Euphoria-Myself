@@ -1,7 +1,7 @@
-﻿<Application x:Class="JLQ_MBE_BattleSimulation.App"
+﻿<Application x:Class="jlq_MBE_BattleSimulation.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:JLQ_MBE_BattleSimulation"
+             xmlns:local="clr-namespace:jlq_MBE_BattleSimulation"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

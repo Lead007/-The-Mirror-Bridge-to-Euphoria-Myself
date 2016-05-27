@@ -100,7 +100,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/JLQ_MBE_BattleSimulation;component/dialogs/dialog_choosepath.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/jlq_MBE_BattleSimulation;component/dialogs/dialog_choosepath.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Dialogs\Dialog_ChoosePath.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
