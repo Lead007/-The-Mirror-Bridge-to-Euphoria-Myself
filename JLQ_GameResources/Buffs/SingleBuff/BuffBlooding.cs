@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
 using JLQ_GameResources.Characters.SingleCharacter;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Buffs.SingleBuff
 {
@@ -28,10 +29,7 @@ namespace JLQ_GameResources.Buffs.SingleBuff
         protected override void BuffAffect()
         {
             Buffee.HandleBeAttacked(bloodNum, null);
-            foreach (var c in game.Characters.Where(c => c is Flandre))
-            {
-                c.Cure(bloodNum);
-            }
+            game.Characters.OfType<Flandre>().DoAction(c => c.Cure(bloodNum));
         }
     }
 }

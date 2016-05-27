@@ -44,11 +44,9 @@ namespace JLQ_GameResources.Dialogs.GamePad
             this.LinesChoose.ItemEnqueue += i =>
             {
                 buttons[i].Content = tick;
-                foreach (var c in game.Characters.Where(
-                    c => (direction > Direction.Right ? c.X : c.Y) == i && c != game.CurrentCharacter))
-                {
-                    this.SetLabelBackground(c);
-                }
+                game.Characters.Where(
+                    c => (direction > Direction.Right ? c.X : c.Y) == i && c != game.CurrentCharacter)
+                    .DoAction(this.SetLabelBackground);
             };
             #endregion
             this.GridPad.Loaded +=

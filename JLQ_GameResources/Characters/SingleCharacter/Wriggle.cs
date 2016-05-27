@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -51,13 +52,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 LightLabels.RemoveAll(l => c.StatesControls.Contains(l));
                 LightCharacters.Remove(c);
             }
-            LightLabels.Aggregate(Visibility.Visible, (c, l) => l.Visibility = Visibility.Visible);
+            LightLabels.DoAction(l => l.Visibility = Visibility.Visible);
         }
 
         public override void EndSection()
         {
             base.EndSection();
-            LightLabels.Aggregate(Visibility.Collapsed, (c, l) => l.Visibility = Visibility.Hidden);
+            LightLabels.DoAction(l => l.Visibility = Visibility.Hidden);
         }
 
         //天赋

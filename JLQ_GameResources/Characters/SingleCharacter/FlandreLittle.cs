@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -20,13 +21,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            game.ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = false);
+            game.ButtonSC.DoAction(b => b.IsEnabled = false);
         }
 
         public override void EndSection()
         {
             base.EndSection();
-            game.ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = true);
+            game.ButtonSC.DoAction(b => b.IsEnabled = true);
         }
 
         public override bool DoAttack(Character target, float times = 1)

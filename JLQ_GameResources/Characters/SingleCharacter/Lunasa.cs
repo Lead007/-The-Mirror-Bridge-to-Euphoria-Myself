@@ -8,6 +8,7 @@ using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Dialogs.GamePad.ChooseLines;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -31,10 +32,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            foreach (var buff in game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c)).Select(c => new BuffSlowDownGain(c, this, this.Interval, 0.1f, game)))
-            {
-                buff.BuffTrigger();
-            }
+            game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c))
+                .Select(c => new BuffSlowDownGain(c, this, this.Interval, 0.1f, game))
+                .DoAction(b => b.BuffTrigger());
         }
 
         //符卡

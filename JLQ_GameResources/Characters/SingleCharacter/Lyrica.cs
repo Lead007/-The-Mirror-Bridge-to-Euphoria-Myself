@@ -7,6 +7,7 @@ using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Dialogs.GamePad.ChooseLines;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -31,10 +32,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            foreach (var c in game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c)))
-            {
-                c.BeAttacked(10, this);
-            }
+            game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c)).DoAction(c => c.BeAttacked(10, this));
         }
 
         //符卡

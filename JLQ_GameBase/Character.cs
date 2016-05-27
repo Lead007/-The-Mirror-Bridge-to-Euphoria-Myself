@@ -509,7 +509,7 @@ namespace JLQ_GameBase
         public string Tip(Character target)
         {
             return string.Format("命中几率: {0}%\n平均伤害值: {1}\n<按下Shift查看详细信息>",
-                Calculate.Floor(this.HitRate(target)*100),
+                (this.HitRate(target)*100).Floor(),
                 Calculate.Damage(this.Attack, target.Defence));
         }
         #endregion

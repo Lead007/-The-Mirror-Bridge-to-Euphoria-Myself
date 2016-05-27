@@ -7,6 +7,7 @@ using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -24,8 +25,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        game.DefaultButtonAndLabels();
 		        var mc = game.MouseCharacter;
 		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position))
-		            .Aggregate(GameColor.BaseColor, (cu, c) =>
-		                c.LabelDisplay.Background = c == mc ? GameColor.LabelBackground2 : GameColor.LabelBackground);
+		            .DoAction(c => c.SetLabelBackground(c == mc ? GameColor.LabelBackground2 : GameColor.LabelBackground));
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡03
@@ -99,7 +99,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff1.BuffTrigger();
                 var buff2 = new BuffGainAttack(this, this, this.Interval + 1, 0.5f, game);
                 buff2.BuffTrigger();
-                game.ButtonSC.Aggregate(false, (cu, b) => b.IsEnabled = false);
+                game.ButtonSC.DoAction(b => b.IsEnabled = false);
                 _attackTime++;
             };
         }

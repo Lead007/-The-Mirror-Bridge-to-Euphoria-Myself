@@ -31,10 +31,7 @@ namespace JLQ_GameResources.Dialogs.GamePad
                 var borderP = GetBorder(p);
                 borderP.BorderThickness = new Thickness(3);
                 borderP.BorderBrush = Brushes.Red;
-                foreach (var c in LegalCharacters(p).Where(c => c != game.CurrentCharacter))
-                {
-                    SetLabelBackground(c);
-                }
+                LegalCharacters(p).Where(c => c != game.CurrentCharacter).DoAction(this.SetLabelBackground);
             };
             #endregion
             GridPad.Loaded += (s, ev) =>
@@ -75,10 +72,9 @@ namespace JLQ_GameResources.Dialogs.GamePad
                         {
                             var mousePoint = GetMousePoint(sender as Button);
                             if (!IsLegalClick(mousePoint)) return;
-                            foreach (var c in LegalCharacters(mousePoint).Where(c => c != game.CurrentCharacter))
-                            {
-                                this.SetLabelBackground(c);
-                            }
+                            LegalCharacters(mousePoint)
+                                .Where(c => c != game.CurrentCharacter)
+                                .DoAction(this.SetLabelBackground);
                         };
                         #endregion
                         #region MouseLeave
@@ -88,11 +84,9 @@ namespace JLQ_GameResources.Dialogs.GamePad
                             if (!IsLegalClick(p)) return;
                             LegalCharacters(p).Where(c => c != game.CurrentCharacter)
                                 .SetLabelBackground(GameColor.LabelDefalutBackground);
-                            foreach (var c in PointsChoose.SelectMany(
-                                point => LegalCharacters(point).Where(c => c != game.CurrentCharacter)))
-                            {
-                                this.SetLabelBackground(c);
-                            }
+                            PointsChoose.SelectMany(
+                                point => LegalCharacters(point).Where(c => c != game.CurrentCharacter))
+                                .DoAction(this.SetLabelBackground);
                         };
                         #endregion
                     }

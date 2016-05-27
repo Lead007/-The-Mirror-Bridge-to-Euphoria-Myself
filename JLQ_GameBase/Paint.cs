@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MoreEnumerable;
 
 namespace JLQ_GameBase
 {
@@ -29,10 +30,7 @@ namespace JLQ_GameBase
         /// <param name="characters">角色枚举集合</param>
         public static void SetLabelBackground(this IEnumerable<Character> characters)
         {
-            foreach (var c in characters)
-            {
-                c.SetLabelBackground();
-            }
+            characters.DoAction(c => c.SetLabelBackground());
         }
 
         /// <summary>将角色枚举集合内所有角色标签颜色设为指定的颜色</summary>
@@ -40,10 +38,7 @@ namespace JLQ_GameBase
         /// <param name="color">指定的颜色</param>
         public static void SetLabelBackground(this IEnumerable<Character> characters, Brush color)
         {
-            foreach (var c in characters)
-            {
-                c.SetLabelBackground(color);
-            }
+            characters.DoAction(c => c.SetLabelBackground(color));
         }
 
         /// <summary>将按钮颜色设为淡黄色</summary>
@@ -57,7 +52,7 @@ namespace JLQ_GameBase
         /// <param name="buttons">按钮枚举集合</param>
         public static void SetButtonColor(this IEnumerable<Button> buttons)
         {
-            buttons.Aggregate(0.0, (c, b) => b.Opacity = 1);
+            buttons.DoAction(b => b.SetButtonColor());
         }
 
         /// <summary>将按钮颜色设为无色</summary>
@@ -71,7 +66,7 @@ namespace JLQ_GameBase
         /// <param name="buttons">按钮枚举集合</param>
         public static void ResetButtonColor(this IEnumerable<Button> buttons)
         {
-            buttons.Aggregate(0.0, (c, b) => b.Opacity = 0);
+            buttons.DoAction(b => b.ResetButtonColor());
         }
     }
 }

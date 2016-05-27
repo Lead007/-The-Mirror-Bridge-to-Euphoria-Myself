@@ -7,6 +7,7 @@ using System.Windows;
 using JLQ_BaseBuffs.Add.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
+using MoreEnumerable;
 using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -33,12 +34,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         public override void PreparingSection()
         {
-            foreach (var buff in
-                Enemy.Where(c => c.Distance(this) <= skillRange)
-                .Select(c => new BuffSlowDownGain(c, this, this.Interval, skillGain, game)))
-            {
-                buff.BuffTrigger();
-            }
+            Enemy.Where(c => c.Distance(this) <= skillRange)
+                .Select(c => new BuffSlowDownGain(c, this, this.Interval, skillGain, game))
+                .DoAction(b => b.BuffTrigger());
         }
 
         //TODO 天赋

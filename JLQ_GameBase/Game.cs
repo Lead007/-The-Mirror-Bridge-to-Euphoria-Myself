@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using RandomHelper;
 using JLQ_GameBase.Buffs;
+using MoreEnumerable;
 using static JLQ_GameBase.GameColor;
 
 namespace JLQ_GameBase
@@ -119,7 +120,7 @@ namespace JLQ_GameBase
                 CurrentCharacter.HasAttacked = value;
                 ButtonAttack.IsEnabled = !HasAttacked;
                 ButtonAttack.Background = BaseColor;
-                ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = !value);
+                ButtonSC.DoAction(b => b.IsEnabled = !value);
             }
         }
         /// <summary>是否正在攻击中</summary>
@@ -443,7 +444,7 @@ namespace JLQ_GameBase
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
         /// <param name="group">角色的阵营</param>
-        /// <param name="display">显示的字符串</param>
+        /// <param name="cType">添加的角色类型</param>
         public void AddCharacter(Point point, Group group, Type cType)
         {
             #region 调用对应的构造函数创建角色对象而已
@@ -451,7 +452,7 @@ namespace JLQ_GameBase
             characterLastAdd = cType.GetConstructors().First().Invoke(parameters) as Character;
             #endregion
             #region 各种加入列表
-            characterLastAdd.ListControls.Aggregate(0, (cu, c) => GridPad.Children.Add(c));
+            characterLastAdd.ListControls.DoAction(c => GridPad.Children.Add(c));
             Characters.Add(characterLastAdd);
             ID++;
             #endregion
@@ -463,10 +464,7 @@ namespace JLQ_GameBase
         {
             var labelTemp = LabelsGroup[(int)target.Group + 1];
             labelTemp.Content = Convert.ToInt32(labelTemp.Content) - 1;
-            foreach (var c in target.ListControls)
-            {
-                GridPad.Children.Remove(c);
-            }
+            target.ListControls.DoAction(c => GridPad.Children.Remove(c));
             Characters.Remove(target);
         }
 
@@ -543,12 +541,9 @@ namespace JLQ_GameBase
             UpdateLabelBackground();
 
             var ct = CurrentCharacter.CurrentTime;
-            Characters.Aggregate(0, (cu, c) => c.CurrentTime -= ct);
+            Characters.DoAction(c => c.CurrentTime -= ct);
             var tempList = (from l in Characters.Select(c => c.BuffList) from b in l where b.Round(ct) select b).ToList();
-            foreach (var b in tempList)
-            {
-                b.BuffEnd();
-            }
+            tempList.DoAction(b => b.BuffEnd());
             CurrentCharacter.CurrentTime = CurrentCharacter.Interval;
 
             Generate_CanReachPoint();
@@ -561,19 +556,13 @@ namespace JLQ_GameBase
         {
             foreach (var model in CharactersMayDie.Where(m => m.Target.IsDead))
             {
-                if (model.Attacker != null)
-                {
-                    MessageBox.Show(
-                        String.Format("{0}号{1}{2}被{3}号{4}{5}杀死", model.Target.ID, Calculate.Convert(model.Target.Group),
-                            model.Target.Name, model.Attacker.ID, Calculate.Convert(model.Attacker.Group),
-                            model.Attacker.Name), "死亡", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    MessageBox.Show(
-                        String.Format("{0}号{1}{2}被无来源伤害杀死", model.Target.ID, Calculate.Convert(model.Target.Group),
-                            model.Target.Name), "死亡", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                var s = model.Attacker != null
+                    ? string.Format("{0}号{1}{2}被{3}号{4}{5}杀死", model.Target.ID, Calculate.Convert(model.Target.Group),
+                        model.Target.Name, model.Attacker.ID, Calculate.Convert(model.Attacker.Group),
+                        model.Attacker.Name)
+                    : string.Format("{0}号{1}{2}被无来源伤害杀死", model.Target.ID, Calculate.Convert(model.Target.Group),
+                        model.Target.Name);
+                MessageBox.Show(s, "死亡", MessageBoxButton.OK, MessageBoxImage.Warning);
                 RemoveCharacter(model.Target);
             }
             #region 游戏是否结束
@@ -627,8 +616,7 @@ namespace JLQ_GameBase
                 }
             }
             HandleAssignPointCanReach(CurrentCharacter.Position, CurrentCharacter.MoveAbility);
-            Characters.Where(c => c.Position != CurrentCharacter.Position)
-                .Aggregate(false, (cu, c) => CanReachPoint[c.X, c.Y] = false);
+            Characters.Where(c => c.Position != CurrentCharacter.Position).DoAction(c=> CanReachPoint[c.X, c.Y] = false);
         }
 
         /// <summary>将所有可以到达的点在bool二维数组中置为true</summary>
@@ -770,7 +758,7 @@ namespace JLQ_GameBase
             HandleIsTargetLegal = null;
             HandleTarget = null;
             HandleIsLegalClick = null;
-            ButtonSC.Aggregate(BaseColor, (c, b) => b.Background = ScButtonDefaultBrush);
+            ButtonSC.DoAction(b => b.Background = ScButtonDefaultBrush);
             switch (ScSelect)
             {
                 case 1:

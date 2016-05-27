@@ -23,6 +23,7 @@ using Data;
 using JLQ_MBE_BattleSimulation.Dialogs;
 using JLQ_GameBase;
 using JLQ_GameResources.Characters.SingleCharacter;
+using MoreEnumerable;
 using RandomHelper;
 using static JLQ_GameBase.GameColor;
 
@@ -58,10 +59,7 @@ namespace JLQ_MBE_BattleSimulation
             }
             Calculate.CharacterDataList = DataLoader.LoadDatas(data);
             reader.Close();
-            foreach (var cd in Calculate.CharacterDataList)
-            {
-                comboBoxDisplay.Items.Add(cd.Display);
-            }
+            Calculate.CharacterDataList.DoAction(cd => comboBoxDisplay.Items.Add(cd.Display));
             comboBoxDisplay.Items.Remove("芙分");
             #endregion
 
@@ -294,10 +292,8 @@ namespace JLQ_MBE_BattleSimulation
                 MessageBox.Show("空格不足！", "添加失败", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            foreach (var p in game.random.RandomElements(number, pointsCanAdd))
-            {
-                AddCharacter(p, group, game.random.RandomElement(Calculate.CharacterDataList).Display);
-            }
+            game.random.RandomElements(number, pointsCanAdd)
+                .DoAction(p => AddCharacter(p, group, game.random.RandomElement(Calculate.CharacterDataList).Display));
             if (checkBox.IsChecked == false) return;
             MessageBox.Show("生成成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -305,19 +301,13 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>清除所有角色</summary>
         private void ClearCharacters()
         {
-            foreach (var c in game.Characters.SelectMany(c => c.ListControls))
-            {
-                game.GridPad.Children.Remove(c);
-            }
+            game.Characters.SelectMany(c => c.ListControls).DoAction(c => game.GridPad.Children.Remove(c));
             game.Characters.Clear();
             game.characterLastAdd = null;
             menuBackout.IsEnabled = false;
             game.ID = 1;
             game.LabelID.Content = "1";
-            foreach (var l in game.LabelsGroup)
-            {
-                l.Content = "0";
-            }
+            game.LabelsGroup.DoAction(l => l.Content = "0");
         }
 
         private void SC(int index)
@@ -347,10 +337,8 @@ namespace JLQ_MBE_BattleSimulation
             }
             #endregion
             game.HandleSelf?.Invoke();
-            foreach (var c in game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint)).ToList())
-            {
-                game.HandleTarget(c);
-            }
+            game.Characters.Where(c => game.HandleIsTargetLegal(c, game.MousePoint))
+                .ToList().DoAction(c => game.HandleTarget(c));
             game.EndSC();
             game.HasAttacked = true;
             game.HandleIsDead();
@@ -442,7 +430,7 @@ namespace JLQ_MBE_BattleSimulation
             game.ButtonAttack.IsEnabled = true;
             game.ButtonMove.IsEnabled = true;
             buttonJump.IsEnabled = true;
-            game.ButtonSC.Aggregate(false, (c, b) => b.IsEnabled = true);
+            game.ButtonSC.DoAction(b => b.IsEnabled = true);
             labelShow.Foreground = Brushes.Black;
             game.TurnToBattle();
             game.PreparingSection();
@@ -526,7 +514,7 @@ namespace JLQ_MBE_BattleSimulation
 
         private void gridCount_Loaded(object sender, RoutedEventArgs e)
         {
-            game.LabelsGroup.Aggregate(0, (c, l) => gridCount.Children.Add(l));
+            game.LabelsGroup.DoAction(l => gridCount.Children.Add(l));
         }
 
         private void gridSC01_Loaded(object sender, RoutedEventArgs e)

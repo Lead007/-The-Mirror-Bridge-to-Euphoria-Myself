@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using JLQ_GameBase;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Dialogs.GamePad.ChooseLines
 {
@@ -24,10 +25,8 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChooseLines
                     {
                         var j = (int) (s as Button).GetValue(Grid.RowProperty);
                         if (LinesChoose.Contains(j)) return;
-                        foreach (var c in game.Characters.Where(c => c.Y == j && c != game.CurrentCharacter))
-                        {
-                            this.SetLabelBackground(c);
-                        }
+                        game.Characters.Where(c => c.Y == j && c != game.CurrentCharacter)
+                            .DoAction(this.SetLabelBackground);
                     };
                     #endregion
                     #region MouseLeave

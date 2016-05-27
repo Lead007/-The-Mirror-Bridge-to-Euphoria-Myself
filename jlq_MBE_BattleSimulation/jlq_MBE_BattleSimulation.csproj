@@ -47,6 +47,10 @@
     <Reference Include="JLQ_GameResources">
       <HintPath>..\JLQ_GameResources\bin\Release\JLQ_GameResources.dll</HintPath>
     </Reference>
+    <Reference Include="MoreEnumerable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MoreEnumerable\bin\Release\MoreEnumerable.dll</HintPath>
+    </Reference>
     <Reference Include="RandomHelper">
       <HintPath>..\RandomHelper\bin\Release\RandomHelper.dll</HintPath>
     </Reference>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using JLQ_GameBase;
+using MoreEnumerable;
 using RandomHelper;
 
 namespace JLQ_GameResources.Characters
@@ -145,10 +146,7 @@ namespace JLQ_GameResources.Characters
             game.HandleIsTargetLegal = (SCee, point) => _cps.Any(c => c.IsInRangeAndEnemy(SC03Range, SCee));
             game.HandleTarget = SCee =>
             {
-                foreach (var c in _cps)
-                {
-                    c.HandleDoDanmakuAttack(SCee, SC03Gain);
-                }
+                _cps.DoAction(c => c.HandleDoDanmakuAttack(SCee, SC03Gain));
             };
         }
         /// <summary>结束符卡03</summary>

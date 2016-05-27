@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -115,7 +116,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => false;
             game.HandleSelf = () =>
             {
-                game.ButtonSC.Aggregate(false, (cu, b) => b.IsEnabled = false);
+                game.ButtonSC.DoAction(b => b.IsEnabled = false);
                 _attackTime += 2;
                 _moveTime++;
             };

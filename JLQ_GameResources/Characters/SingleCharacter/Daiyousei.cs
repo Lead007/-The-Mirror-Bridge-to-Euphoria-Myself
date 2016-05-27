@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using JLQ_GameBase;
+using MoreEnumerable;
 using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -74,10 +75,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>天赋：雾之湖的恩惠</summary>
         public override void PreparingSection()
         {
-            foreach (var c in game.Characters.Where(c => IsInRangeAndFriend(skillRange, c, false)))
-            {
-                c.Cure(skillGain);
-            }
+            base.PreparingSection();
+            game.Characters.Where(c => IsInRangeAndFriend(skillRange, c, false)).DoAction(c => c.Cure(skillGain));
         }
 
         //符卡
