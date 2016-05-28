@@ -8,6 +8,7 @@ using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
+    /// <summary>因幡帝</summary>
     public class Tewi : Character
 	{
 		public Tewi(int id, Point position, Group group, Random random, Game game)

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Data;
+using MoreEnumerable;
 using Number;
 using RandomHelper;
 
@@ -183,6 +184,11 @@ namespace JLQ_GameBase
             {
                 _mp = value;
                 BarMp.Value = value;
+                if (game.CurrentCharacter != this) return;
+                for (var i = 0; i < 3; i++)
+                {
+                    game.ButtonSC[i].IsEnabled = IsMpEnough(SCMpUse[i]);
+                }
             }
         }
 
@@ -268,6 +274,8 @@ namespace JLQ_GameBase
         public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
         /// <summary>阻挡行动的敌人列表</summary>
         public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemy.Select(c => c.Position));
+        /// <summary>符卡的灵力消耗</summary>
+        public virtual int[] SCMpUse { get; } = new[] {0, 0, 0};//TODO SC Mp Use
         #endregion
 
         #region 游戏相关委托
@@ -569,9 +577,19 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>准备阶段</summary>
-        public virtual void PreparingSection() { }
+        public virtual void PreparingSection()
+        {
+            for (var i = 0; i < 3; i++)
+            {
+                if (!IsMpEnough(SCMpUse[i])) game.ButtonSC[i].IsEnabled = false;
+            }
+        }
+
         /// <summary>结束阶段</summary>
-        public virtual void EndSection() { }
+        public virtual void EndSection()
+        {
+            game.ButtonSC.DoAction(b => b.IsEnabled = true);
+        }
 
 
 
