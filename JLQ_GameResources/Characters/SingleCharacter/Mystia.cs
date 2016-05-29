@@ -36,7 +36,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (game.MousePoint.Distance(this) > 4) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
+		        Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -45,7 +45,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (game.MousePoint.Distance(this) > 4) return;
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsFriend(c) && game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
+		        game.Characters.Where(c => IsFriend(c) && game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
@@ -81,7 +81,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC02()
         {
             game.HandleIsLegalClick = point => point.Distance(this) <= 4;
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffAddHitRate(SCee, this, BuffTime, -10, game);
@@ -106,7 +106,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC03()
         {
             game.HandleIsLegalClick = point => point.Distance(this) <= 4;
-            game.HandleIsTargetLegal = (SCee, point) => IsFriend(SCee) && point.IsIn33(SCee.Position);
+            game.HandleIsTargetLegal = (SCee, point) => IsFriend(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
                 SCee.Cure(0.2*SCee.Attack);

@@ -15,8 +15,17 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		public Koakuma(int id, Point position, Group group, Random random, Game game)
 			: base(id, position, group, random, game)
 		{
+            //符卡01
+            //显示将受影响的角色
+		    enterPad[0] = (s, ev) =>
+		    {
+		        if (!IsInRangeAndEnemy(SC01Range, game.MousePoint)) return;
+		        game.DefaultButtonAndLabels();
+		        game.MouseCharacter.SetLabelBackground();
+		    };
+            SetDefaultLeavePadButtonDelegate(0);
             //符卡02
-            //显示将获得buff的队友
+            //显示将受影响的角色
 		    enterPad[1] = (s, ev) =>
 		    {
 		        var c = game.MouseCharacter;
@@ -39,7 +48,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= SC01Range && IsEnemy(game[point]);
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(SC01Range, point);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
@@ -47,9 +56,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff.BuffTrigger();
             };
             //显示可攻击目标
-            game.DefaultButtonAndLabels();
-            game.SetCurrentLabel();
-            Enemy.Where(c => c.Distance(this) <= SC01Range).SetLabelBackground();
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.Where(c => c.Distance(this) <= SC01Range).SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡01</summary>
@@ -69,6 +80,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 var buff2 = new BuffMpGain(SCee, this, this.BuffTime, SCee.MaxMp/10, game);
             };
             AddPadButtonEvent(1);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                game.Characters.Where(c => IsFriend(c)).SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡02</summary>

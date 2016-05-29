@@ -17,14 +17,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 			: base(id, position, group, random, game)
 		{
             //符卡01
-            //显示有效单击点
-		    enterButton[0] = (s, ev) =>
-		    {
-		        this.game.DefaultButtonAndLabels();
-		        Game.PadPoints.Where(point => this.Position != point && SC01IsLegalClick(point)).Select(p=>game[p]).SetLabelBackground();
-		        pointTemp1 = Game.DefaultPoint;
-		    };
-            SetDefaultLeaveSCButtonDelegate(0);
             //显示将瞬移到的点和将回血的角色
 		    enterPad[0] = (s, ev) =>
 		    {
@@ -40,13 +32,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
-            //显示有效单击点
-		    enterButton[1] = (s, ev) =>
-		    {
-                this.game.DefaultButtonAndLabels();
-		        Game.PadPoints.Where(SC02IsLegalClick).Select(p=>game[p]).SetLabelBackground();
-		    };
-            SetDefaultLeaveSCButtonDelegate(1);
             //显示将被攻击的角色
 		    enterPad[1] = (s, ev) =>
 		    {
@@ -55,6 +40,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        game.MouseCharacter.SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
+            //符卡03
             //显示将回血的角色
 		    enterButton[2] = (s, ev) =>
 		    {
@@ -88,6 +74,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleSelf = () => Move(pointTemp1);
             game.HandleTarget = SCee => SCee.Cure(0.7*this.Attack);
             AddPadButtonEvent(0);
+            game.HandleResetShow = () =>
+            {
+                this.game.DefaultButtonAndLabels();
+                Game.PadPoints.Where(point => this.Position != point && SC01IsLegalClick(point))
+                    .Select(p => game[p])
+                    .SetLabelBackground();
+                pointTemp1 = Game.DefaultPoint;
+            };
         }
 
         /// <summary>结束符卡01</summary>
@@ -104,6 +98,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.5f);
             AddPadButtonEvent(1);
+            game.HandleResetShow = () =>
+            {
+                this.game.DefaultButtonAndLabels();
+                Game.PadPoints.Where(SC02IsLegalClick).Select(p => game[p]).SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡02</summary>

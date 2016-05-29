@@ -186,6 +186,18 @@ namespace JLQ_GameBase
         /// <summary>判断是否死亡</summary>
         public DIsDead HandleIsDead { get; set; }
 
+        private Action _handleResetShow;
+        /// <summary>重置显示</summary>
+        public Action HandleResetShow
+        {
+            get { return _handleResetShow; }
+            set
+            {
+                _handleResetShow = value;
+                _handleResetShow?.Invoke();
+            }
+        }
+
 
         #region 符卡相关
         /// <summary>所有符卡相关的委托</summary>
@@ -208,11 +220,11 @@ namespace JLQ_GameBase
         /// <summary>Game类的构造函数</summary>
         public Game()
         {
-            HandleAssignPointCanReach = AssignPointCanReach;
-            HandleIsDead = IsDead;
 
             #region 窗体显示
+
             #region LabelSection
+
             LabelSection = new Label
             {
                 Content = "游戏还未开始",
@@ -231,8 +243,11 @@ namespace JLQ_GameBase
                 Converter = new ConverterContentToColor()
             };
             LabelSection.SetBinding(Label.ForegroundProperty, binding);
+
             #endregion
+
             #region ButtonMove
+
             ButtonMove = new Button
             {
                 Content = "移动",
@@ -250,8 +265,11 @@ namespace JLQ_GameBase
                 ButtonMove.Background = IsMoving ? BaseColor : GameButtonLinearBrush;
                 IsMoving = !IsMoving;
             };
+
             #endregion
+
             #region ButtonAttack
+
             ButtonAttack = new Button
             {
                 Content = "攻击",
@@ -270,8 +288,11 @@ namespace JLQ_GameBase
                 ButtonAttack.Background = IsAttacking ? BaseColor : GameButtonLinearBrush;
                 IsAttacking = !IsAttacking;
             };
+
             #endregion
+
             #region Buttons
+
             for (var i = 0; i < Column; i++)
             {
                 for (var j = 0; j < Row; j++)
@@ -300,8 +321,11 @@ namespace JLQ_GameBase
                         EventGridPadClick(MouseButtonState.Pressed, MouseButtonState.Released);
                 }
             }
+
             #endregion
+
             #region ButtonSC
+
             ButtonSC = new Button[3];
             for (var i = 0; i < 3; i++)
             {
@@ -316,8 +340,11 @@ namespace JLQ_GameBase
                     VerticalAlignment = VerticalAlignment.Stretch
                 };
             }
+
             #endregion
+
             #region LabelsGroup
+
             for (var i = 0; i < 3; i++)
             {
                 LabelsGroup[i] = new Label
@@ -328,8 +355,11 @@ namespace JLQ_GameBase
                 };
                 LabelsGroup[i].SetValue(Grid.ColumnProperty, 5 - 2*i);
             }
+
             #endregion
+
             #region PadBorders
+
             for (var i = 0; i < Column; i++)
             {
                 for (var j = 0; j < Row; j++)
@@ -349,8 +379,11 @@ namespace JLQ_GameBase
                     borders[i, j].SetValue(Panel.ZIndexProperty, 0);
                 }
             }
+
             #endregion
+
             #region LabelID
+
             LabelID = new Label
             {
                 Content = "1",
@@ -360,8 +393,11 @@ namespace JLQ_GameBase
             };
             LabelID.SetValue(Grid.ColumnProperty, 1);
             LabelID.SetValue(Grid.RowProperty, 1);
+
             #endregion
+
             #region GridPad
+
             GridPad = new Grid();
             for (var i = 0; i < Column; i++)
             {
@@ -382,15 +418,25 @@ namespace JLQ_GameBase
                     GridPad.Children.Add(button);
                 }
             };
+
             #endregion
+
             #endregion
 
             #region Save与Load相关
+
             this.ApplicationPath = Directory.GetCurrentDirectory();
             this.ResourcePath = ApplicationPath + @"\Resources";
             this.SavePath = ApplicationPath;
             this.LoadPath = ApplicationPath;
             if (this.SavePath.Last() != '\\') this.SavePath += "\\";
+
+            #endregion
+
+            #region 初始化委托
+            HandleAssignPointCanReach = AssignPointCanReach;
+            HandleIsDead = IsDead;
+            _handleResetShow = ResetShow;
             #endregion
         }
 
@@ -449,7 +495,7 @@ namespace JLQ_GameBase
         {
             #region 调用对应的构造函数创建角色对象而已
             object[] parameters = { ID, point, group, random, this };
-            characterLastAdd = cType.GetConstructors().First().Invoke(parameters) as Character;
+            characterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
             #endregion
             #region 各种加入列表
             characterLastAdd.ListControls.DoAction(c => GridPad.Children.Add(c));

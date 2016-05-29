@@ -23,7 +23,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (game.MousePoint.Distance(this) > SC02Range) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
+		        Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -32,7 +32,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) > SC03Range) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
+                Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(2);
         }
@@ -66,7 +66,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsLegalClick = point => point.Distance(this) <= SC02Range;
             game.HandleIsTargetLegal =
-                (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
+                (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.3f);
@@ -89,7 +89,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsLegalClick = point => point.Distance(this) <= SC03Range;
             game.HandleIsTargetLegal =
-                (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
+                (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.7f);

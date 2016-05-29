@@ -121,6 +121,15 @@ namespace JLQ_GameBase
             return origin.IsInSquare(point, 3);
         }
 
+        /// <summary>目标角色是否在源点3*3范围内</summary>
+        /// <param name="origin">源点</param>
+        /// <param name="c">待测角色</param>
+        /// <returns>是否在范围内</returns>
+        public static bool IsIn33(this Point origin, Character c)
+        {
+            return origin.IsIn33(c.Position);
+        }
+
         /// <summary>目标点是否在以源点为中心的正方形内</summary>
         /// <param name="origin">源点</param>
         /// <param name="point">待测点</param>

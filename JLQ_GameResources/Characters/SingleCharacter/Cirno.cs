@@ -21,7 +21,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将攻击的敌人
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (SC01IsLegalClick(game.MousePoint)) game.MouseCharacter.SetLabelBackground();
+		        if (!IsInRangeAndEnemy(this.AttackRange, game.MousePoint)) return;
+		        game.DefaultButtonAndLabels();
+		        game.MouseCharacter.SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡03
@@ -42,7 +44,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = SC01IsLegalClick;
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(this.AttackRange, point);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
@@ -51,6 +53,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                game.UpdateLabelBackground();
+            };
         }
 
         /// <summary>结束符卡01</summary>
@@ -63,7 +70,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
+            game.HandleIsTargetLegal = (SCee, point) => false;
             game.HandleSelf = () =>
             {
                 var buff = new BuffAddDamageTimes(this, this.BuffTime, 2, game);
@@ -71,7 +78,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 var buff2 = new BuffDecreaseMoveAbilityWhenHit(this, this, this.BuffTime, -1, game);
                 buff2.BuffTrigger();
             };
-            game.HandleTarget = SCee => { };
         }
 
         /// <summary>结束符卡02</summary>
@@ -93,6 +99,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff2.BuffTrigger();
             };
             AddPadButtonEvent(2);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.SetLabelBackground();
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
@@ -100,12 +111,5 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC03();
             RemovePadButtonEvent(2);
         }
-
-	    private bool SC01IsLegalClick(Point point)
-	    {
-            var c = game[point];
-            return IsEnemy(c) && c.Distance(this) <= this.AttackRange;
-        }
-
     }
 }

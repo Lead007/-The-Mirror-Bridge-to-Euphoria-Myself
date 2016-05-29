@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
+using JLQ_GameResources.Characters.SingleCharacter;
 using MoreEnumerable;
 
-namespace JLQ_GameResources.Characters.SingleCharacter
+namespace JLQ_GameResources.Characters.CharacterBeCalled
 {
     public class FlandreLittle : Flandre
     {

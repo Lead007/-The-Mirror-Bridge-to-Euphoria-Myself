@@ -45,6 +45,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
             AddPadButtonEvent(0);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡01</summary>

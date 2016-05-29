@@ -22,7 +22,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将受影响的角色
 		    enterButton[0] = (s, ev) =>
 		    {
-		        Enemy.Where(c => this.Position.IsIn33(c.Position)).SetLabelBackground();
+		        Enemy.Where(c => this.Position.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
             //符卡02
@@ -63,7 +63,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffGainHitRate(SCee, this, this.Interval, -0.2f, game);
@@ -106,6 +106,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff2.BuffTrigger();
             };
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 2.5f);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.Where(c => this.Distance(c) <= SC03Range).SetLabelBackground();
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

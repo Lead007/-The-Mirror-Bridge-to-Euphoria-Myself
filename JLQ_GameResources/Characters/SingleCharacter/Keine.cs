@@ -21,9 +21,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		{
 		    enterButton[0] = (s, ev) =>
 		    {
+		        if (!IsBaize) return;
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndFriend(4, c, false)).SetLabelBackground();
-		        Enemy.Where(c => this.Distance(c) <= 4).SetLabelBackground(GameColor.LabelBackground2);
+		        var cs = game.Characters.Where(c => this.Distance(c) <= 4).ToList();
+		        cs.Where(SC01BaizeFriendIsTargetLegal).SetLabelBackground();
+		        cs.Where(SC01BaizeEnemyIsTargetLegal).SetLabelBackground(GameColor.LabelBackground2);
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
 		    enterPad[0] = (s, ev) =>
@@ -95,9 +97,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             if (IsBaize)
             {
                 game.HandleIsTargetLegal = (SCee, point) =>
-                    this.Distance(SCee) <= 4 && SCee != this &&
-                    ((IsEnemy(SCee) && SCee is IHuman) ||
-                     (!(SCee is IHuman) && IsFriend(SCee)));
+                    this.Distance(SCee) <= 4 &&
+                    (SC01BaizeFriendIsTargetLegal(SCee) || SC01BaizeEnemyIsTargetLegal(SCee));
                 game.HandleTarget = SCee =>
                 {
                     if (IsFriend(SCee))
@@ -128,6 +129,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     var buff = new BuffCannotAttackAndBeAttacked(SCee, this, this.Interval, game);
                     buff.BuffTrigger();
+                };
+                game.HandleResetShow = () =>
+                {
+                    game.DefaultButtonAndLabels();
+                    game.Characters.SetLabelBackground();
+                    game.SetCurrentLabel();
                 };
             }
             AddPadButtonEvent(0);
@@ -178,6 +185,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     SCee.HandleBeAttacked = (damage, attacker) => SCee.BeAttacked(damage*3/2, attacker);
                 };
+                game.HandleResetShow = () =>
+                {
+                    game.DefaultButtonAndLabels();
+                    game.Characters.Where(c => IsFriend(c)).SetLabelBackground();
+                };
             }
             AddPadButtonEvent(2);
         }
@@ -188,5 +200,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
+        private bool SC01BaizeFriendIsTargetLegal(Character SCee)
+        {
+            return SCee is IHuman && IsFriend(SCee);
+        }
+
+        private bool SC01BaizeEnemyIsTargetLegal(Character SCee)
+        {
+            return IsEnemy(SCee) && !(SCee is IHuman);
+        }
     }
 }

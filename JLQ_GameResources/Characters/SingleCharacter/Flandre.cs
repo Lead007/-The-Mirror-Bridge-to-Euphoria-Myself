@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
+using JLQ_GameResources.Characters.CharacterBeCalled;
 using RandomHelper;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -31,7 +32,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (!game.HandleIsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).SetLabelBackground();
+		        Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
@@ -96,7 +97,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsLegalClick =
                 point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
-            game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee.Position) && IsEnemy(SCee);
+            game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee) && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             AddPadButtonEvent(2);
         }

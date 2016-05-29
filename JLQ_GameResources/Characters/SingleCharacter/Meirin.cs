@@ -24,10 +24,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将被攻击的角色
 		    enterPad[0] = (s, ev) =>
 		    {
-		        var c = game.MouseCharacter;
-		        if (!IsEnemy(c)) return;
+		        if (!IsInRangeAndEnemy(this.AttackRange, game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        c.SetLabelBackground();
+		        game.MouseCharacter.SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡03
@@ -53,11 +52,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point =>
-            {
-                var c = game[point];
-                return IsEnemy(c) && c.Distance(this) <= this.AttackRange;
-            };
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(this.AttackRange, point);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleSelf = () =>
             {
@@ -66,6 +61,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.3f);
             AddPadButtonEvent(0);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                game.UpdateLabelBackground();
+            };
         }
 
         /// <summary>结束符卡01</summary>

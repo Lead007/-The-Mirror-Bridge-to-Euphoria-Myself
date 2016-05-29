@@ -33,7 +33,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
-            //显示将被攻击的角色和将移动至的位置（若存在）
+            //显示将被受影响的角色和其将被移动至的位置（若存在）
             enterPad[2] = (s, ev) =>
             {
                 if (!SC03IsLegalClick(game.MousePoint)) return;
@@ -98,6 +98,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC02();
             RemovePadButtonEvent(1);
         }
+
         /// <summary>符卡03</summary>
         public override void SC03()
         {
@@ -119,9 +120,15 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 }
                 var point = Destination(SCee);
                 if (game[point] == null) SCee.Move(point);
-                SCee.HandleBeAttacked((int)damage, this);
+                SCee.HandleBeAttacked((int) damage, this);
             };
             AddPadButtonEvent(2);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.Where(c => this.Distance(c) <= SC03Const1 && (c.X == this.X || c.Y == this.Y))
+                    .SetLabelBackground();
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
@@ -137,7 +144,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private bool SC01IsTargetLegal(Character SCee, Point point)
         {
-            return point.IsIn33(SCee.Position) && IsEnemy(SCee);
+            return point.IsIn33(SCee) && IsEnemy(SCee);
         }
 
         private bool SC02IsTargetLegal(Character SCee, Point point)

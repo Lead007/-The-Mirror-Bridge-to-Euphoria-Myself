@@ -23,7 +23,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) > SC01Range) return;
                 game.DefaultButtonAndLabels();
-                var cs = Enemy.Where(c => game.MousePoint.IsIn33(c.Position)).ToList();
+                var cs = Enemy.Where(c => game.MousePoint.IsIn33(c)).ToList();
                 if (cs.Count == 1)
                 {
                     cs[0].LabelDisplay.Background = GameColor.LabelBackground2;
@@ -72,7 +72,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC01()
         {
             game.HandleIsLegalClick = point => point.Distance(this) <= SC01Range;
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleSelf = () => SC01Gain =
                 game.Characters.Count(c => game.HandleIsTargetLegal(c, game.MousePoint)) == 1 ? 6 : 1.5f;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01Gain);
@@ -91,7 +91,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsLegalClick =
                 point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
-            game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee.Position) && IsEnemy(SCee);
+            game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee) && IsEnemy(SCee);
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffSlowDown(SCee, this, this.BuffTime, SC02Gain, game);

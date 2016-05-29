@@ -32,7 +32,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeaveSCButtonDelegate(0);
 		    enterPad[1] = (s, ev) =>
 		    {
-		        if (IsWhite && (!SC02WhiteIsLegalClick(game.MousePoint))) return;
+		        if (IsWhite && (!IsInRangeAndFriend(SC02Range, game.MousePoint))) return;
 		        if ((!IsWhite) && (!IsEnemy(game.MouseCharacter))) return;
 		        game.DefaultButtonAndLabels();
 		        game.MouseCharacter.SetLabelBackground();
@@ -122,19 +122,29 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             if (IsWhite)
             {
-                game.HandleIsLegalClick = SC02WhiteIsLegalClick;
+                game.HandleIsLegalClick = point => IsInRangeAndFriend(SC02Range, point);
                 game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
                 game.HandleTarget = SCee => SCee.MpGain(2*SCee.Attack);
+                game.HandleResetShow = () =>
+                {
+                    game.DefaultButtonAndLabels();
+                    game.Characters.Where(c => IsInRangeAndFriend(SC02Range, c)).SetLabelBackground();
+                };
             }
             else
             {
-                game.HandleIsLegalClick = point => IsEnemy(game[point]);
+                game.HandleIsLegalClick = point => IsInRangeAndEnemy(SC02Range, game[point]);
                 game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
                 game.HandleTarget = SCee =>
                 {
                     HandleDoDanmakuAttack(SCee, SC02BlackGain);
                     var buff = new BuffGainDefence(SCee, this, 2*this.Interval, SC02BlackGain2, game);
                     buff.BuffTrigger();
+                };
+                game.HandleResetShow = () =>
+                {
+                    game.DefaultButtonAndLabels();
+                    Enemy.Where(c => this.Distance(c) <= SC02Range).SetLabelBackground();
                 };
             }
             AddPadButtonEvent(1);
@@ -174,11 +184,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void EndSC03()
         {
             base.EndSC03();
-        }
-
-        private bool SC02WhiteIsLegalClick(Point point)
-        {
-            return point.Distance(this) <= SC02Range && IsFriend(game[point]);
         }
 	}
 }

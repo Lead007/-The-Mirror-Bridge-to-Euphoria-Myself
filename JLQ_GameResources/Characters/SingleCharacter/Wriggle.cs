@@ -158,6 +158,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 }
             };
             AddPadButtonEvent(2);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.SetLabelBackground();
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

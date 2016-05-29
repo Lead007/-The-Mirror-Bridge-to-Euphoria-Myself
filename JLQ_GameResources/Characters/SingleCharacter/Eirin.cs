@@ -8,6 +8,7 @@ using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
+    /// <summary>八意永琳</summary>
     public class Eirin : Character
 	{
 		public Eirin(int id, Point position, Group group, Random random, Game game)

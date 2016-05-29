@@ -16,18 +16,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 			: base(id, position, group, random, game)
 		{
             //符卡01
-            //显示有效单击点
-            enterButton[0] = (s, ev) =>
-		    {
-		        this.game.DefaultButtonAndLabels();
-		        Game.PadPoints.Where(SC01IsLegalClick).Select(p=>game[p]).SetLabelBackground();
-		        pointTemp1 = Game.DefaultPoint;
-		    };
-            SetDefaultLeaveSCButtonDelegate(0);
             //显示将瞬移到的点和将被攻击的目标
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (!this.game.HandleIsLegalClick(this.game.MousePoint)) return;
+		        if (!SC01IsLegalClick(this.game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
 		        if (this.Position != pointTemp1)
 		        {
@@ -38,13 +30,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
-            //显示有效单击点
-            enterButton[1] = (s, ev) =>
-		    {
-		        this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(SC02Range, c)).SetLabelBackground();
-		    };
-            SetDefaultLeaveSCButtonDelegate(1);
             //显示将被攻击的目标
 		    enterPad[1] = (s, ev) =>
 		    {
@@ -94,6 +79,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleSelf = () => Move(pointTemp1);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01DamageGain);
             AddPadButtonEvent(0);
+            game.HandleResetShow = () =>
+            {
+                this.game.DefaultButtonAndLabels();
+                Game.PadPoints.Where(SC01IsLegalClick).Select(p => game[p]).SetLabelBackground();
+                pointTemp1 = Game.DefaultPoint;
+            };
         }
 
         /// <summary>结束符卡01</summary>
@@ -113,8 +104,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02DamageGain);
-            enterButton[1](null, null);
-
+            game.HandleResetShow = () =>
+            {
+                this.game.DefaultButtonAndLabels();
+                game.Characters.Where(c => IsInRangeAndEnemy(SC02Range, c)).SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡02</summary>

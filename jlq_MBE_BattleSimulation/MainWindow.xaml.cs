@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,22 +35,33 @@ namespace JLQ_MBE_BattleSimulation
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region 静态
+        /// <summary>当前文件的路径</summary>
+        private static string CurrentPath { get; } = Directory.GetCurrentDirectory();
+        #endregion
+
         /// <summary>game对象</summary>
-        private readonly Game game;
+        private Game game { get; } = new Game();
 
         /// <summary>构造函数</summary>
         public MainWindow()
         {
             InitializeComponent();
-            //TODO Add Icon
-            //this.Icon = BitmapConverter.BitmapToBitmapImage();
+            //this.Icon = BitmapConverter.BitmapToBitmapImage(TODO Add Icon);
+            //Application.Current.DispatcherUnhandledException += (s, e) =>
+            //{
+            //    MessageBox.Show(e.Exception.ToString());
+            //    e.Handled = true;
+            //};
 
             #region 读取角色各数据
+
             var data = new XmlDocument();
             XmlReader reader = null;
             try
             {
-                reader = XmlReader.Create("Resources/Data/data.xml", new XmlReaderSettings { IgnoreComments = true /*忽略注释*/});
+                reader = XmlReader.Create("Resources/Data/data.xml",
+                    new XmlReaderSettings {IgnoreComments = true /*忽略注释*/});
                 data.Load(reader);
             }
             catch (Exception)
@@ -61,19 +73,24 @@ namespace JLQ_MBE_BattleSimulation
             reader.Close();
             Calculate.CharacterDataList.DoAction(cd => comboBoxDisplay.Items.Add(cd.Display));
             comboBoxDisplay.Items.Remove("芙分");
+
             #endregion
 
             #region 初始化game对象
-            game = new Game();
+
             game.EventGridPadClick += GridPadMouseDown;
+
             #endregion
 
             #region 生成棋盘按钮事件
+
             foreach (var button in game.Buttons)
             {
-                var column = (int)button.GetValue(Grid.ColumnProperty);
-                var row = (int)button.GetValue(Grid.RowProperty);
+                var column = (int) button.GetValue(Grid.ColumnProperty);
+                var row = (int) button.GetValue(Grid.RowProperty);
+
                 #region MouseMove
+
                 button.MouseMove += (s, ev) =>
                 {
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
@@ -85,20 +102,29 @@ namespace JLQ_MBE_BattleSimulation
                         button.ToolTip = game.TipShow(new Point(column, row));
                     }
                 };
+
                 #endregion
+
                 #region MouseEnter
+
                 button.MouseEnter += (s, ev) =>
                 {
                     game.MousePoint = new Point(column, row);
                 };
+
                 #endregion
+
                 #region MouseLeave
+
                 button.MouseLeave += (s, ev) =>
                 {
                     game.MousePoint = new Point(-1, -1);
                 };
+
                 #endregion
+
                 #region KeyDown
+
                 button.KeyDown += (s, ev) =>
                 {
                     //如果shift和ctrl都没被按下或不在行动阶段或不在棋盘内或该点无角色或该点角色为当前角色则无效
@@ -129,8 +155,11 @@ namespace JLQ_MBE_BattleSimulation
                         character.SetLabelBackground();
                     }
                 };
+
                 #endregion
+
                 #region KeyUp
+
                 button.KeyUp += (s, ev) =>
                 {
                     //如果不在行动阶段或仍有shift或ctrl在棋盘内则无效
@@ -138,10 +167,37 @@ namespace JLQ_MBE_BattleSimulation
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ||
                         Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
                     //恢复原本显示
-                    game.ResetShow();
+                    game.HandleResetShow();
                 };
+
                 #endregion
             }
+
+            #endregion
+
+            #region 加载mods
+
+            var p = CurrentPath + "\\Resources\\Mods";
+            if (!Directory.Exists(p)) Directory.CreateDirectory(p);
+            try
+            {
+                foreach (var assembly in
+                    Directory.GetFiles(p).Where(s => string.Compare(s, s.Length - 4, ".dll", 0, 4, true) == 0))
+                {
+                    try
+                    {
+                        Assemblies.Add(Assembly.LoadFile(assembly));
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
             #endregion
         }
 
@@ -149,6 +205,9 @@ namespace JLQ_MBE_BattleSimulation
         private Character CurrentCharacter => game.CurrentCharacter;
         /// <summary>当前游戏阶段</summary>
         private Section? GameSection => game.GameSection;
+
+        /// <summary>外置程序集</summary>
+        private List<Assembly> Assemblies { get; } = new List<Assembly>(); 
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -160,13 +219,13 @@ namespace JLQ_MBE_BattleSimulation
             Type type;
             try
             {
-                type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).First(t => t.Name == name);
+                type = typeof(Reimu).Assembly.GetTypes().First(t => t.Name == name);
             }
             catch (Exception)
             {
                 try
                 {
-                    type = typeof (Reimu).Assembly.GetTypes().First(t => t.Name == name);
+                    type = Assemblies.SelectMany(a => a.GetTypes()).First(t => t.Name == name);
                 }
                 catch
                 {
@@ -339,7 +398,7 @@ namespace JLQ_MBE_BattleSimulation
             if (GameSection != Section.Round) return;
             if (!game.IsSCing)
             {
-                if (!CurrentCharacter.IsMpEnough(CurrentCharacter.SCMpUse[index]))
+                if (!CurrentCharacter.IsMpEnough(CurrentCharacter.SCMpUse[index - 1]))
                 {
                     Game.IllegalMessageBox("灵力不足！");
                     return;
@@ -486,7 +545,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             try
             {
-                Process.Start(Directory.GetCurrentDirectory() + @"\Resources\Help\Operators.txt");
+                Process.Start(CurrentPath + @"\Resources\Help\Operators.txt");
             }
             catch
             {
@@ -498,7 +557,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             try
             {
-                Process.Start(Directory.GetCurrentDirectory() + @"\Resources\Help\Show.txt");
+                Process.Start(CurrentPath + @"\Resources\Help\Show.txt");
             }
             catch
             {

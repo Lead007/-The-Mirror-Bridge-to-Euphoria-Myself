@@ -82,7 +82,7 @@
     <Compile Include="Characters\SingleCharacter\Daiyousei.cs" />
     <Compile Include="Characters\SingleCharacter\Eirin.cs" />
     <Compile Include="Characters\SingleCharacter\Flandre.cs" />
-    <Compile Include="Characters\SingleCharacter\FlandreLittle.cs" />
+    <Compile Include="Characters\CharacterBeCalled\FlandreLittle.cs" />
     <Compile Include="Characters\SingleCharacter\Gedama.cs" />
     <Compile Include="Characters\SingleCharacter\IHuman.cs" />
     <Compile Include="Characters\SingleCharacter\Kaguya.cs" />

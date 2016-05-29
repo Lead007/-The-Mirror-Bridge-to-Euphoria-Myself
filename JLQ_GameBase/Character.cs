@@ -184,7 +184,7 @@ namespace JLQ_GameBase
             {
                 _mp = value;
                 BarMp.Value = value;
-                if (game.CurrentCharacter != this) return;
+                if (!game.IsBattle || game.CurrentCharacter != this) return;
                 for (var i = 0; i < 3; i++)
                 {
                     game.ButtonSC[i].IsEnabled = IsMpEnough(SCMpUse[i]);
@@ -324,11 +324,15 @@ namespace JLQ_GameBase
             this.ID = id;
             this.Position = position;
             this.Group = group;
+            this.game = game;
             this.Data =
                 Calculate.CharacterDataList.First(cd => cd.Name == this.GetType().Name);
             this.MaxMp = 1000;
+
             #region 初始化显示
+
             #region LabelDisplay
+
             this.LabelDisplay = new Label
             {
                 Margin = new Thickness(2, 2, 2, 11),
@@ -352,8 +356,11 @@ namespace JLQ_GameBase
                     LabelDisplay.Foreground = Brushes.Green;
                     break;
             }
+
             #endregion
+
             #region BarHp
+
             this.BarHp = new ProgressBar
             {
                 Margin = new Thickness(2, 0, 2, 8),
@@ -364,8 +371,11 @@ namespace JLQ_GameBase
                 Maximum = this.MaxHp,
                 Value = this.Hp
             };
+
             #endregion
+
             #region BarTime
+
             this.BarTime = new ProgressBar
             {
                 Margin = new Thickness(2, 0, 2, 2),
@@ -376,8 +386,11 @@ namespace JLQ_GameBase
                 Maximum = this.Interval,
                 Value = this.CurrentTime
             };
+
             #endregion
+
             #region BarMp
+
             this.BarMp = new ProgressBar
             {
                 Margin = new Thickness(2, 0, 2, 5),
@@ -388,14 +401,19 @@ namespace JLQ_GameBase
                 Maximum = this.MaxMp,
                 Value = this.Mp
             };
+
             #endregion
+
             #region 将控件添加至ListControls
+
             StaticControls.Add(LabelDisplay);
             StaticControls.Add(BarHp);
             StaticControls.Add(BarMp);
             StaticControls.Add(BarTime);
             Set();
+
             #endregion
+
             #endregion
 
             this.Hp = this.MaxHp;
@@ -403,8 +421,9 @@ namespace JLQ_GameBase
             this.CurrentTime = this.Data.Interval;
 
             this.random = random;
-            this.game = game;
+
             #region 初始化委托
+
             HandleDoAttack = DoAttack;
             HandleDoDanmakuAttack = DoDanmakuAttack;
             HandleDoingAttack = DoingAttack;
@@ -415,6 +434,7 @@ namespace JLQ_GameBase
             HandlePreparingSection = PreparingSection;
             HandleEndSection = EndSection;
             HandleEnemyBlock = e => from p in e select p;
+
             #endregion
         }
 
@@ -783,6 +803,7 @@ namespace JLQ_GameBase
         /// <summary>结束符卡结算</summary>
         private void EndSC()
         {
+            game.HandleResetShow = game.ResetShow;
             for (int i = 0, length = game.ScDelegates.Length; i < length; i++)
             {
                 game.ScDelegates[i] = null;
@@ -832,14 +853,14 @@ namespace JLQ_GameBase
         /// <param name="index">符卡索引</param>
         protected void SetDefaultLeaveSCButtonDelegate(int index)
         {
-            leaveButton[index] = (s, ev) => this.game.ResetShow();
+            leaveButton[index] = (s, ev) => game.HandleResetShow();
         }
 
         /// <summary>设置离开棋盘按钮事件所添加的委托</summary>
         /// <param name="index">符卡索引</param>
         protected void SetDefaultLeavePadButtonDelegate(int index)
         {
-            leavePad[index] = (s, ev) => this.game.ResetShow();
+            leavePad[index] = (s, ev) => game.HandleResetShow();
         }
         #endregion
 

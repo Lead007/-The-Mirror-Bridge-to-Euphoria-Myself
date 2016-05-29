@@ -48,6 +48,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && (SCee.X == point.X || SCee.Y == point.Y);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
             AddPadButtonEvent(0);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.Where(c => this.Distance(c) <= 3).SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡01</summary>
@@ -68,6 +73,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(1);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡02</summary>

@@ -24,7 +24,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        if (!SC01IsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
 		        var mc = game.MouseCharacter;
-		        Enemy.Where(c => game.MousePoint.IsIn33(c.Position))
+		        Enemy.Where(c => game.MousePoint.IsIn33(c))
 		            .DoAction(c => c.SetLabelBackground(c == mc ? GameColor.LabelBackground2 : GameColor.LabelBackground));
 		    };
             SetDefaultLeavePadButtonDelegate(0);
@@ -68,7 +68,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC01()
         {
             game.HandleIsLegalClick = SC01IsLegalClick;
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee.Position);
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
                 if (SCee.Position == game.MousePoint)
@@ -125,6 +125,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 SCee.DodgeRateAdd = -20;
             };
             AddPadButtonEvent(2);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                Enemy.SetLabelBackground();
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

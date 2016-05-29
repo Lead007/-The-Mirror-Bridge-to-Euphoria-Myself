@@ -104,6 +104,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02Gain);
             AddPadButtonEvent(1);
+            game.HandleResetShow = () =>
+            {
+                game.DefaultButtonAndLabels();
+                game.Characters.Where(c => this.Distance(c) <= 2*this.AttackRange).SetLabelBackground();
+            };
         }
 
         /// <summary>结束符卡02</summary>
