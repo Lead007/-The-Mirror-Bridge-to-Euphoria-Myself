@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>八云紫</summary>
     public class Yukari : CharacterTeleportMoving
 	{
-		public Yukari(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Yukari(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //天赋
 		    _skillMove = (l, m) =>

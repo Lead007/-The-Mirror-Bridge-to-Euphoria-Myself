@@ -24,3 +24,5 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResourc
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\obj\Release\JLQ_GameResources.csproj.GenerateResource.Cache
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\obj\Release\JLQ_GameResources.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\obj\Release\JLQ_GameResources.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\ExceptionHelper.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\ExceptionHelper.pdb

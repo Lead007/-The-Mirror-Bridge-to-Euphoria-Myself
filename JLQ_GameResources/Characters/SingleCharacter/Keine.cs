@@ -16,8 +16,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>上白泽慧音</summary>
     public class Keine : Character, IHuman
 	{
-		public Keine(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Keine(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 		    enterButton[0] = (s, ev) =>
 		    {

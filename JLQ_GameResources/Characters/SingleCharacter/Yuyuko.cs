@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>西行寺幽幽子</summary>
     public class Yuyuko : Character
 	{
-		public Yuyuko(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Yuyuko(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 
 		}

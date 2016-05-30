@@ -14,8 +14,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>灵梦</summary>
     public class Reimu : CharacterTeleportMoving, IHuman
     {
-        public Reimu(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        public Reimu(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
             //符卡01
             //显示将被攻击的角色

@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>爱丽丝·玛格特洛依德</summary>
 	public class Alice : Character
 	{
-		public Alice(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Alice(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 
 		}

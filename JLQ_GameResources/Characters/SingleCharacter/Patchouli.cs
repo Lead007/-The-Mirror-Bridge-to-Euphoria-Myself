@@ -14,8 +14,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>帕秋莉</summary>
     public class Patchouli : Character
 	{
-		public Patchouli(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Patchouli(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡02
             //显示将被影响的敌人

@@ -1,0 +1,5 @@
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\ExceptionHelper\bin\Release\ExceptionHelper.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\ExceptionHelper\bin\Release\ExceptionHelper.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\ExceptionHelper\obj\Release\ExceptionHelper.csprojResolveAssemblyReference.cache
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\ExceptionHelper\obj\Release\ExceptionHelper.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\ExceptionHelper\obj\Release\ExceptionHelper.pdb

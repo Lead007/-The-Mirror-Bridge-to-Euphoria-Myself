@@ -20,8 +20,8 @@ namespace JLQ_GameResources.Characters
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected CharacterTeleportMoving(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        protected CharacterTeleportMoving(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
 
         }
@@ -38,8 +38,8 @@ namespace JLQ_GameResources.Characters
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected CharacterHitBack(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        protected CharacterHitBack(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
 
         }
@@ -70,8 +70,8 @@ namespace JLQ_GameResources.Characters
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected CharacterMayRepeatedlyDoDamage(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        protected CharacterMayRepeatedlyDoDamage(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
 
         }
@@ -103,8 +103,8 @@ namespace JLQ_GameResources.Characters
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected CharacterPrismriver(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        protected CharacterPrismriver(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
 
         }
@@ -120,8 +120,8 @@ namespace JLQ_GameResources.Characters
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected CharacterPoltergeist(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        protected CharacterPoltergeist(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
             //符卡03
             //显示将被攻击的角色

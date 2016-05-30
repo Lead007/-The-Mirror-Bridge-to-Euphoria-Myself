@@ -12,8 +12,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>藤原妹红</summary>
     public class Mokou : Character, IHuman
     {
-        public Mokou(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+        public Mokou(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示有效单击点

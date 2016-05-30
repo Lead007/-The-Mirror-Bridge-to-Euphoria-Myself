@@ -15,8 +15,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>八云蓝</summary>
     public class Ran : CharacterHitBack
 	{
-		public Ran(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Ran(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡03
             //显示将被影响的目标和被监禁的范围

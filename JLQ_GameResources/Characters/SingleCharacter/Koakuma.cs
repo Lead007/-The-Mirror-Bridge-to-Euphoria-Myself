@@ -12,8 +12,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>小恶魔</summary>
     public class Koakuma : Character
 	{
-		public Koakuma(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Koakuma(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将受影响的角色

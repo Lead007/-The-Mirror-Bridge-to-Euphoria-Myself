@@ -19,8 +19,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <param name="group">阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-		public Reimiria(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Reimiria(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡02
             //显示将被攻击的角色

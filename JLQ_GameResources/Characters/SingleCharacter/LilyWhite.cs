@@ -13,8 +13,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 {
     public class LilyWhite : Character
 	{
-		public LilyWhite(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public LilyWhite(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 		    this.LabelDisplay.Content = "莉吹";
 		    enterButton[0] = (s, ev) =>

@@ -12,8 +12,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>冴月麟</summary>
     public class Rin : CharacterHitBack
 	{
-		public Rin(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Rin(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将瞬移到的点和将被攻击的目标

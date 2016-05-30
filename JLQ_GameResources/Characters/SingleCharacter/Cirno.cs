@@ -14,8 +14,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>琪露诺</summary>
     public class Cirno : CharacterMayRepeatedlyDoDamage
 	{
-		public Cirno(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Cirno(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将攻击的敌人

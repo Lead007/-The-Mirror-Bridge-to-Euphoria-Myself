@@ -319,7 +319,7 @@ namespace JLQ_GameBase
         /// <param name="group">角色阵营</param>
         /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-        protected Character(int id, Point position, Group group, Random random, Game game)
+        protected Character(int id, Point position, Group group, Game game)
         {
             this.ID = id;
             this.Position = position;
@@ -420,7 +420,7 @@ namespace JLQ_GameBase
             this.Mp = MaxMp;
             this.CurrentTime = this.Data.Interval;
 
-            this.random = random;
+            this.random = game.random;
 
             #region 初始化委托
 

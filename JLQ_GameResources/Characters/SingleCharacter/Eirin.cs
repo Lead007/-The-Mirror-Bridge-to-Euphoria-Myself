@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>八意永琳</summary>
     public class Eirin : Character
 	{
-		public Eirin(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Eirin(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 
 		}

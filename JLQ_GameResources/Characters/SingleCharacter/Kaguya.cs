@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>蓬莱山辉夜</summary>
     public class Kaguya : Character
 	{
-		public Kaguya(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Kaguya(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡02
             //显示将被攻击的角色

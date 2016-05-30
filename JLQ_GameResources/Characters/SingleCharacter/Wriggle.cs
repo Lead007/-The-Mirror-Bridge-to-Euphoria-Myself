@@ -15,8 +15,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>莉格露·奈特巴格</summary>
     public class Wriggle : Character
 	{
-		public Wriggle(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Wriggle(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将被攻击的角色

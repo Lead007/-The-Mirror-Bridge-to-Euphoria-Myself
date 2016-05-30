@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>魔理沙</summary>
     public class Marisa : Character, IHuman
     {
-        public Marisa(int id, Point position, Group group, Random random, Game game)
-            : base(id, position, group, random, game)
+        public Marisa(int id, Point position, Group group, Game game)
+            : base(id, position, group, game)
         {
             //符卡01
             //显示将被攻击的角色

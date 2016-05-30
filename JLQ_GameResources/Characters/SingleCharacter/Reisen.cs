@@ -12,8 +12,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>铃仙·优昙华院·因幡</summary>
     public class Reisen : Character
 	{
-		public Reisen(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Reisen(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 		    enterPad[0] = (s, ev) =>
 		    {

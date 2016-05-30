@@ -10,8 +10,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 {
     public class Gedama : Character
 	{
-		public Gedama(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Gedama(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 
 		}

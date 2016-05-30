@@ -14,8 +14,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>魂魄妖梦</summary>
     public class Youmu : Character, IHuman
     {
-		public Youmu(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Youmu(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将被攻击的角色，鼠标处角色特殊标出

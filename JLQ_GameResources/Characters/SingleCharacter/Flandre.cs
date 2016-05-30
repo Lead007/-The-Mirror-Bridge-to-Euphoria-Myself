@@ -14,8 +14,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>芙兰</summary>
     public class Flandre : Character
 	{
-		public Flandre(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Flandre(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 		    enterButton[0] = (s, ev) =>
 		    {
@@ -81,7 +81,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 foreach (var p in random.RandomElements(SC02Num, SC02points))
                 {
-                    game.AddCharacter(p, this.Group, typeof(FlandreLittle));
+                    game.AddCharacter(p, this.Group, typeof (FlandreLittle), p, this.Group, this.game);
                     this.FList.Add(game.Characters.Last() as FlandreLittle);
                 }
             };

@@ -13,8 +13,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>蕾拉·普莉兹姆利巴</summary>
     public class Leira : CharacterPrismriver, IHuman
     {
-		public Leira(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Leira(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡02
             //显示将回血的角色

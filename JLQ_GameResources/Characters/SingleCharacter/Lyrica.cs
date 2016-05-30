@@ -14,8 +14,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>莉莉卡·普莉兹姆利巴</summary>
     public class Lyrica : CharacterPoltergeist
 	{
-		public Lyrica(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Lyrica(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将被攻击的角色

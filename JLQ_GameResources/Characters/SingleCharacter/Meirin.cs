@@ -17,8 +17,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>红美铃</summary>
     public class Meirin : Character
 	{
-		public Meirin(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Meirin(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将被攻击的角色

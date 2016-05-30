@@ -13,8 +13,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>橙</summary>
     public class Chen : Character
 	{
-		public Chen(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Chen(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //天赋
 		    _skillMove = (l, m) =>

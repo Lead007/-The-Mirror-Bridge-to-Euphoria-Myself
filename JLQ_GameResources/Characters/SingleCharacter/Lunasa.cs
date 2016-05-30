@@ -15,8 +15,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>露娜萨·普莉兹姆利巴</summary>
     public class Lunasa : CharacterPoltergeist
 	{
-		public Lunasa(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Lunasa(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将被攻击的角色

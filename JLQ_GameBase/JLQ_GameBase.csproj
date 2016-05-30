@@ -33,6 +33,9 @@
     <Reference Include="Data">
       <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
+    <Reference Include="ExceptionHelper">
+      <HintPath>..\ExceptionHelper\bin\Release\ExceptionHelper.dll</HintPath>
+    </Reference>
     <Reference Include="MoreEnumerable">
       <HintPath>..\MoreEnumerable\bin\Release\MoreEnumerable.dll</HintPath>
     </Reference>

@@ -15,8 +15,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>蕾蒂</summary>
     public class Letty : Character
 	{
-		public Letty(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Letty(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 		    enterPad[0] = (s, ev) =>
 		    {

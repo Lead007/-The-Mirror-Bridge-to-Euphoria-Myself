@@ -13,8 +13,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>十六夜咲夜</summary>
     public class Sakuya : Character, IHuman
     {
-		public Sakuya(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Sakuya(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 		    enterPad[1] = (s, ev) =>
 		    {

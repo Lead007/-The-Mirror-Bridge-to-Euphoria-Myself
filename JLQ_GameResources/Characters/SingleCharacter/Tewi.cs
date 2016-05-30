@@ -11,8 +11,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>因幡帝</summary>
     public class Tewi : Character
 	{
-		public Tewi(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Tewi(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
 
 		}

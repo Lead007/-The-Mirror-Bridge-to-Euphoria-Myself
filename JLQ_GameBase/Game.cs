@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using ExceptionHelper;
 using RandomHelper;
 using JLQ_GameBase.Buffs;
 using MoreEnumerable;
@@ -468,7 +469,7 @@ namespace JLQ_GameBase
             EnemyAsCurrent.Where(c => CurrentCharacter.Distance(c) <= CurrentCharacter.AttackRange);
 
         /// <summary>对当前行动者的阻挡列表</summary>
-        public virtual IEnumerable<Point> EnemyBlock => CurrentCharacter.EnemyBlock;
+        public IEnumerable<Point> EnemyBlock => CurrentCharacter.EnemyBlock;
         /// <summary>对当前行动者的敌人列表</summary>
         public IEnumerable<Character> EnemyAsCurrent => CurrentCharacter.Enemy;
 
@@ -494,14 +495,47 @@ namespace JLQ_GameBase
         public void AddCharacter(Point point, Group group, Type cType)
         {
             #region 调用对应的构造函数创建角色对象而已
-            object[] parameters = { ID, point, group, random, this };
-            characterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
+            try
+            {
+                object[] parameters = {ID, point, group, this};
+                characterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
+                ID++;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return;
+            }
             #endregion
-            #region 各种加入列表
-            characterLastAdd.ListControls.DoAction(c => GridPad.Children.Add(c));
+            AddCharacterToList(characterLastAdd);
+        }
+
+        /// <summary>添加角色</summary>
+        /// <param name="point">添加的位置</param>
+        /// <param name="group">角色的阵营</param>
+        /// <param name="cType">添加的角色类型</param>
+        /// <param name="parameters">该角色的构造函数的参数列表</param>
+        public void AddCharacter(Point point, Group group, Type cType, params object[] parameters)
+        {
+            #region 调用对应的构造函数创建角色对象而已
+            try
+            {
+                characterLastAdd =
+                    cType.GetConstructor(parameters.Select(o => o.GetType()).ToArray()).Invoke(parameters) as Character;
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+                return;
+            }
+            #endregion
+            AddCharacterToList(characterLastAdd);
+        }
+
+        private void AddCharacterToList(Character c)
+        {
+            characterLastAdd.ListControls.DoAction(cc => GridPad.Children.Add(cc));
             Characters.Add(characterLastAdd);
-            ID++;
-            #endregion
         }
 
         /// <summary>移除角色</summary>
@@ -627,7 +661,7 @@ namespace JLQ_GameBase
         /// <returns>文字显示</returns>
         public string StringShow(Point position)
         {
-            return Characters.FirstOrDefault(c => c.Position == position)?.ToString() ?? null;
+            return this[position]?.ToString() ?? null;
         }
         /// <summary>格子的信息提示</summary>
         /// <param name="position">格子</param>
@@ -635,7 +669,7 @@ namespace JLQ_GameBase
         public string TipShow(Point position)
         {
             if (CurrentCharacter == null) return null;
-            return Characters.FirstOrDefault(c => c.Position == position)?.Tip(CurrentCharacter) ?? null;
+            return this[position]?.Tip(CurrentCharacter) ?? null;
         }
 
         /// <summary>错误提示</summary>

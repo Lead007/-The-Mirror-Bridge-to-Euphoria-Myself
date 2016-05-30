@@ -13,8 +13,8 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled
 {
     public class FlandreLittle : Flandre
     {
-        public FlandreLittle(int id, Point position, Group group, Random random, Game game)
-            : base(0, position, group, random, game)
+        public FlandreLittle(Point position, Group group, Game game)
+            : base(0, position, group, game)
         {
             
         }

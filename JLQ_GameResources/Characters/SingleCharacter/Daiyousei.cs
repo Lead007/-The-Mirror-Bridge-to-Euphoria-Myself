@@ -13,8 +13,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>大妖精</summary>
     public class Daiyousei : Character
 	{
-		public Daiyousei(int id, Point position, Group group, Random random, Game game)
-			: base(id, position, group, random, game)
+		public Daiyousei(int id, Point position, Group group, Game game)
+			: base(id, position, group, game)
 		{
             //符卡01
             //显示将瞬移到的点和将回血的角色
