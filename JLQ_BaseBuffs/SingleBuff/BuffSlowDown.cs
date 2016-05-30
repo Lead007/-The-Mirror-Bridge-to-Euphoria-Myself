@@ -9,7 +9,8 @@ using JLQ_GameBase.Buffs;
 namespace JLQ_BaseBuffs.SingleBuff
 {
     /// <summary>增加行动间隔的buff</summary>
-    public class BuffSlowDown : BuffExecuteImmediately, IControl
+    [BuffKind(BuffKinds.Control)]
+    public class BuffSlowDown : BuffExecuteImmediately
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

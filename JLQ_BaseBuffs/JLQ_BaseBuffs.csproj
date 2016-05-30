@@ -53,12 +53,12 @@
     <Compile Include="Add\Sealed\BuffAddDodgeRate.cs" />
     <Compile Include="Add\Sealed\BuffAddHitRate.cs" />
     <Compile Include="Add\Sealed\BuffAddMoveAbility.cs" />
+    <Compile Include="BuffKind.cs" />
     <Compile Include="Gain\BuffGainProperty.cs" />
     <Compile Include="Gain\Sealed\BuffGainAttack.cs" />
     <Compile Include="Gain\Sealed\BuffGainDefence.cs" />
     <Compile Include="Gain\Sealed\BuffGainDodgeRate.cs" />
     <Compile Include="Gain\Sealed\BuffGainHitRate.cs" />
-    <Compile Include="IControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingleBuff\BuffBeAttacked.cs" />
     <Compile Include="SingleBuff\BuffCure.cs" />

@@ -8,7 +8,8 @@ using JLQ_GameBase;
 namespace JLQ_BaseBuffs.Add.Sealed
 {
     /// <summary>增加机动的buff</summary>
-    public class BuffAddMoveAbility : BuffAddProperty, IControl
+    [BuffKind(BuffKinds.Control)]
+    public class BuffAddMoveAbility : BuffAddProperty
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

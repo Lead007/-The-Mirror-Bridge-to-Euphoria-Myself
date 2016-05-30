@@ -10,7 +10,8 @@ using JLQ_BaseBuffs;
 namespace JLQ_GameResources.Buffs.SingleBuff
 {
     /// <summary>无法移动的buff</summary>
-    public class BuffCannotMove : BuffExecuteImmediately, IControl
+    [BuffKind(BuffKinds.Control)]
+    public class BuffCannotMove : BuffExecuteImmediately
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

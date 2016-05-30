@@ -11,7 +11,8 @@ using JLQ_GameBase.Buffs;
 namespace JLQ_GameResources.Buffs.SingleBuff
 {
     /// <summary>被限制在特定区域内的buff</summary>
-    public class BuffLimit : BuffExecuteImmediately, IControl
+    [BuffKind(BuffKinds.Control)]
+    public class BuffLimit : BuffExecuteImmediately
     {
         /// <summary>构造函数</summary>
         /// <param name="buffee">buff承受者</param>

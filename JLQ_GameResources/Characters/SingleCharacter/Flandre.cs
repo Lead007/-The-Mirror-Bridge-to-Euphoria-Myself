@@ -76,8 +76,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleTarget = SCee =>
+            game.HandleIsTargetLegal = (SCee, point) => false;
+            game.HandleSelf = () =>
             {
                 foreach (var p in random.RandomElements(SC02Num, SC02points))
                 {

@@ -13,3 +13,5 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\o
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\obj\Release\JLQ_BaseBuffs.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\MoreEnumerable.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\MoreEnumerable.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\ExceptionHelper.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_BaseBuffs\bin\Release\ExceptionHelper.pdb

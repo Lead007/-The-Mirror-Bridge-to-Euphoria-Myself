@@ -48,7 +48,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         public override void AddBuff(Buff buff)
         {
-            if (buff is IControl && SC03IsBuffing) return;
+            var b = Attribute.GetCustomAttributes(buff.GetType(), typeof (BuffKindAttribute))
+                .OfType<BuffKindAttribute>()
+                .Any(a => a.Kind == BuffKinds.Control);
+            if (SC03IsBuffing && b) return;
             base.AddBuff(buff);
         }
 
