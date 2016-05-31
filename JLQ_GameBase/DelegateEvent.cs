@@ -40,14 +40,6 @@ namespace JLQ_GameBase
     /// <param name="attacker">伤害来源</param>
     public delegate void DBeAttacked(int damage, Character attacker);
     //回合制相关
-    /// <summary>生成可到达点</summary>
-    /// <param name="origin">起点</param>
-    /// <param name="step">步数</param>
-    public delegate void DAssignPointCanReach(Point origin, int step);
-    /// <summary>角色独立的准备阶段</summary>
-    public delegate void DPreparingSection();
-    /// <summary>角色独立的结束阶段</summary>
-    public delegate void DEndSection();
     /// <summary>判断死亡角色的委托</summary>
     public delegate void DIsDead();
     /// <summary>修改阻挡的敌人列表</summary>

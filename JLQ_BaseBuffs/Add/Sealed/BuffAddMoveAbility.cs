@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JLQ_BaseBuffs.Attributes;
 using JLQ_GameBase;
 
 namespace JLQ_BaseBuffs.Add.Sealed

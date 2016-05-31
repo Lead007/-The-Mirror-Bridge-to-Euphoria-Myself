@@ -47,12 +47,14 @@ namespace JLQ_MBE_BattleSimulation
         public MainWindow()
         {
             InitializeComponent();
+            #region 待完成
             //this.Icon = BitmapConverter.BitmapToBitmapImage(TODO Add Icon);
             //Application.Current.DispatcherUnhandledException += (s, e) =>
             //{
             //    MessageBox.Show(e.Exception.ToString());
             //    e.Handled = true;
             //};
+            #endregion
 
             #region 读取角色各数据
 
@@ -68,6 +70,7 @@ namespace JLQ_MBE_BattleSimulation
             {
                 Game.ErrorMessageBox("找不到数据文件，程序无法运行。请联系开发者。");
                 this.Close();
+                return;
             }
             Calculate.CharacterDataList = DataLoader.LoadDatas(data);
             reader.Close();

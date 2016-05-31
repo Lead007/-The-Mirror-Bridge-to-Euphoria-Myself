@@ -214,7 +214,7 @@ namespace JLQ_GameBase
         public virtual bool HasAttacked { get; set; }
 
         /// <summary>作为buff承受者的buff列表</summary>
-        public List<Buff> BuffList { get; protected set; } = new List<Buff>();
+        public List<Buff> BuffList { get; } = new List<Buff>();
 
         #region 显示
         /// <summary>所有在GUI上显示的控件</summary>
@@ -294,9 +294,9 @@ namespace JLQ_GameBase
         /// <summary>是否暴击的委托对象</summary>
         protected DIsCriticalHit HandleIsCriticalHit { get; set; }
         /// <summary>准备阶段委托</summary>
-        public DPreparingSection HandlePreparingSection { get; set; }
+        public Action HandlePreparingSection { get; set; }
         /// <summary>结束阶段委托</summary>
-        public DEndSection HandleEndSection { get; protected set; }
+        public Action HandleEndSection { get; protected set; }
         /// <summary>修改阻挡的敌人列表的委托</summary>
         public DEnemyBlock HandleEnemyBlock { get; set; }
         #endregion
@@ -317,7 +317,6 @@ namespace JLQ_GameBase
         /// <param name="id">角色ID</param>
         /// <param name="position">角色位置</param>
         /// <param name="group">角色阵营</param>
-        /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
         protected Character(int id, Point position, Group group, Game game)
         {
@@ -478,7 +477,7 @@ namespace JLQ_GameBase
         public virtual bool DoAttack(Character target, float times = 1.0f)
         {
             //判断是否命中
-            if (HandleIsHit(target)) return false;
+            if (!HandleIsHit(target)) return false;
             //计算近战补正
             var closeGain = HandleCloseGain(target);
             //造成伤害
@@ -491,7 +490,7 @@ namespace JLQ_GameBase
         /// <returns>是否暴击</returns>
         public virtual bool DoDanmakuAttack(Character target, float times = 1.0f)
         {
-            return !HandleIsHit(target) && HandleDoingAttack(target, times);
+            return HandleIsHit(target) && HandleDoingAttack(target, times);
         }
 
         /// <summary>命中后的伤害结算</summary>
@@ -745,7 +744,7 @@ namespace JLQ_GameBase
         /// <returns>是否命中</returns>
         protected virtual bool IsHit(Character target)
         {
-            return !random.NextBool(this.HitRate(target));
+            return random.NextBool(this.HitRate(target));
         }
         /// <summary>近战增益</summary>
         /// <param name="target">攻击目标</param>
@@ -796,7 +795,6 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>伤害浮动</summary>
-        /// <returns>浮动带来的伤害系数</returns>
         protected double FloatDamage => (2*random.NextDouble() - 1)*this.DamageFloat + 1;
         #endregion
 
@@ -917,7 +915,6 @@ namespace JLQ_GameBase
         }
 
         /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
-        /// <param name="origin">点</param>
         /// <param name="range">范围</param>
         /// <param name="p">待判断的点</param>
         /// <param name="containThis">自己是否返回true</param>

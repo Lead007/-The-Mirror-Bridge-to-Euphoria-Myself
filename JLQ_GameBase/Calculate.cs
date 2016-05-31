@@ -18,8 +18,7 @@ namespace JLQ_GameBase
         /// <returns>命中率</returns>
         private static double HitRate(int relativeHitRate, int distance)
         {
-            var p = 1.0 / (1 + Math.Pow(0.93, relativeHitRate));
-            return (p > 0.95 ? 0.95 : (p < 0.05 ? 0.05 : p)) * (1.0f - 0.05f * distance);
+            return 1/(1 + Math.Pow(0.93, relativeHitRate - Math.Max(0, 4*(distance - 2))));
         }
 
         /// <summary>计算命中率</summary>

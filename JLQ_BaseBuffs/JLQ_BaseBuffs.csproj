@@ -53,7 +53,7 @@
     <Compile Include="Add\Sealed\BuffAddDodgeRate.cs" />
     <Compile Include="Add\Sealed\BuffAddHitRate.cs" />
     <Compile Include="Add\Sealed\BuffAddMoveAbility.cs" />
-    <Compile Include="BuffKind.cs" />
+    <Compile Include="Attributes\BuffKind.cs" />
     <Compile Include="Gain\BuffGainProperty.cs" />
     <Compile Include="Gain\Sealed\BuffGainAttack.cs" />
     <Compile Include="Gain\Sealed\BuffGainDefence.cs" />
@@ -68,6 +68,7 @@
     <Compile Include="SingleBuff\BuffSlowDown.cs" />
     <Compile Include="SingleBuff\BuffSlowDownGain.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

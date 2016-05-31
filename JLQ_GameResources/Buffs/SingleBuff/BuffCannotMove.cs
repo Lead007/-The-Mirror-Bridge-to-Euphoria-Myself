@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
-using JLQ_BaseBuffs;
+using JLQ_BaseBuffs.Attributes;
 
 namespace JLQ_GameResources.Buffs.SingleBuff
 {

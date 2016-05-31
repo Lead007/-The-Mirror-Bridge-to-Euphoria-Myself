@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using JLQ_BaseBuffs;
+using JLQ_BaseBuffs.Attributes;
 using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
 

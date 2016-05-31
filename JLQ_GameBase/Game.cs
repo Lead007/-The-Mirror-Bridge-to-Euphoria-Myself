@@ -183,7 +183,7 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>生成可到达点矩阵</summary>
-        public DAssignPointCanReach HandleAssignPointCanReach { get; set; }
+        public Action<Point,int> HandleAssignPointCanReach { get; set; }
         /// <summary>判断是否死亡</summary>
         public DIsDead HandleIsDead { get; set; }
 
@@ -446,14 +446,14 @@ namespace JLQ_GameBase
         /// <returns>在该位置的角色</returns>
         public Character this[Point position] => Characters.FirstOrDefault(c => c.Position == position);
 
-        //当前行动者属性
-
+        #region 当前行动者属性
         /// <summary>当前行动者的位置</summary>
         public Point CurrentPosition => CurrentCharacter.Position;
         /// <summary>当前行动者的scName</summary>
         public string[] ScName => CurrentCharacter.ScName;
         /// <summary>当前行动者的scDisc</summary>
         public string[] ScDisc => CurrentCharacter.ScDisc;
+        #endregion
 
         #region 宏观整个游戏的各方列表
         /// <summary>友军列表</summary>
@@ -548,7 +548,7 @@ namespace JLQ_GameBase
             Characters.Remove(target);
         }
 
-        //游戏流程
+        #region 游戏流程
         /// <summary>准备阶段</summary>
         public void PreparingSection()
         {
@@ -589,6 +589,7 @@ namespace JLQ_GameBase
             IsEndSectionContinue = true;
             PreparingSection();
         }
+        #endregion
 
 
         /// <summary>更新下个行动的角色,取currentTime最小的角色中Interval最大的角色中的随机一个</summary>
@@ -800,7 +801,7 @@ namespace JLQ_GameBase
         /// <summary>将当前行动角色标签颜色设为淡粉色</summary>
         public void SetCurrentLabel()
         {
-            CurrentCharacter.LabelDisplay.Background = Brushes.LightPink;
+            CurrentCharacter.SetLabelBackground(Brushes.LightPink);
         }
 
         /// <summary>恢复全盘显示</summary>

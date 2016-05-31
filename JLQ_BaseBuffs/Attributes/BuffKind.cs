@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JLQ_BaseBuffs
+namespace JLQ_BaseBuffs.Attributes
 {
     public enum BuffKinds
     {
