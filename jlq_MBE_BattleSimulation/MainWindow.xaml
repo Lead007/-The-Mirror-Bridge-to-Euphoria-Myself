@@ -93,6 +93,8 @@
                     <MenuItem Header="撤销上一次加人" Name="menuBackout" IsEnabled="False" Click="menuBackout_Click"/>
                     <MenuItem Header="清除所有单位" Name="menuClear" Click="menuClear_Click"/>
                     <Separator/>
+                    <MenuItem Header="Mods" Name="menuMods" Click="menuMods_Click" />
+                    <Separator/>
                     <MenuItem Header="退出" Name="menuExit" Click="menuExit_Click"/>
                 </MenuItem>
                 <MenuItem Header="帮助">

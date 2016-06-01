@@ -32,3 +32,5 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleS
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\obj\Release\jlq_MBE_BattleSimulation.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\bin\Release\ExceptionHelper.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\bin\Release\ExceptionHelper.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\bin\Release\FileHelper.dll
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\jlq_MBE_BattleSimulation\bin\Release\FileHelper.pdb

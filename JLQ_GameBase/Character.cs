@@ -325,7 +325,7 @@ namespace JLQ_GameBase
             this.Group = group;
             this.game = game;
             this.Data =
-                Calculate.CharacterDataList.First(cd => cd.Name == this.GetType().Name);
+                Game.CharacterDatas.First(cd => cd.Name == this.GetType().Name);
             this.MaxMp = 1000;
 
             #region 初始化显示

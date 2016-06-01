@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Data;
 using ExceptionHelper;
 using RandomHelper;
 using JLQ_GameBase.Buffs;
@@ -29,19 +30,22 @@ namespace JLQ_GameBase
         public const int Row = 9;
 
         /// <summary>默认点</summary>
-        public static Point DefaultPoint { get; }
+        public static Point DefaultPoint { get; } = new Point(-1, -1);
         /// <summary>棋盘中心</summary>
-        public static Point CenterPoint { get; }
+        public static Point CenterPoint { get; } = new Point(4, 4);
 
         /// <summary>棋盘点集</summary>
-        public static List<Point> PadPoints { get; }
+        public static List<Point> PadPoints { get; } = new List<Point>();
 
+        /// <summary>显示在ComboBox中的角色数据列表</summary>
+        public static IEnumerable<CharacterData> CharacterDataListShow { get; set; } = new List<CharacterData>();
+        /// <summary>不显示在ComboBox中的角色数据列表</summary>
+        public static IEnumerable<CharacterData> CharacterDataListUnshow { get; set; } = new List<CharacterData>();
+        /// <summary>所有角色列表</summary>
+        public static IEnumerable<CharacterData> CharacterDatas => CharacterDataListShow.Concat(CharacterDataListUnshow); 
         static Game()
         {
-            DefaultPoint = new Point(-1, -1);
-            CenterPoint = new Point(4, 4);
             #region PadPoints
-            PadPoints = new List<Point>();
             for (var i = 0; i < Column; i++)
                 for (var j = 0; j < Row; j++)
                     PadPoints.Add(new Point(i, j));
@@ -77,7 +81,7 @@ namespace JLQ_GameBase
         public Section? GameSection
         {
             get { return _section; }
-            set
+            private set
             {
                 _section = value;
                 LabelSection.Content = Calculate.Convert(value);
@@ -132,7 +136,7 @@ namespace JLQ_GameBase
         public List<Character> Characters { get; } = new List<Character>();
 
         /// <summary>加人模式上一个添加的角色</summary>
-        public Character characterLastAdd { get; set; }= null;
+        public Character CharacterLastAdd { get; set; }
 
 
         /// <summary>每个格子能否被到达</summary>
@@ -498,7 +502,7 @@ namespace JLQ_GameBase
             try
             {
                 object[] parameters = {ID, point, group, this};
-                characterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
+                CharacterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
                 ID++;
             }
             catch (Exception ex)
@@ -507,7 +511,7 @@ namespace JLQ_GameBase
                 return;
             }
             #endregion
-            AddCharacterToList(characterLastAdd);
+            AddCharacterToList(CharacterLastAdd);
         }
 
         /// <summary>添加角色</summary>
@@ -520,7 +524,7 @@ namespace JLQ_GameBase
             #region 调用对应的构造函数创建角色对象而已
             try
             {
-                characterLastAdd =
+                CharacterLastAdd =
                     cType.GetConstructor(parameters.Select(o => o.GetType()).ToArray()).Invoke(parameters) as Character;
             }
             catch (Exception ex)
@@ -529,13 +533,13 @@ namespace JLQ_GameBase
                 return;
             }
             #endregion
-            AddCharacterToList(characterLastAdd);
+            AddCharacterToList(CharacterLastAdd);
         }
 
         private void AddCharacterToList(Character c)
         {
-            characterLastAdd.ListControls.DoAction(cc => GridPad.Children.Add(cc));
-            Characters.Add(characterLastAdd);
+            CharacterLastAdd.ListControls.DoAction(cc => GridPad.Children.Add(cc));
+            Characters.Add(CharacterLastAdd);
         }
 
         /// <summary>移除角色</summary>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,6 @@ namespace JLQ_GameBase
 {
     public static class Calculate
     {
-        public static IEnumerable<CharacterData> CharacterDataList; 
         /// <summary>计算命中率</summary>
         /// <param name="relativeHitRate">攻击者对防御者的相对命中率</param>
         /// <param name="distance">攻击者对防御者的相对距离</param>

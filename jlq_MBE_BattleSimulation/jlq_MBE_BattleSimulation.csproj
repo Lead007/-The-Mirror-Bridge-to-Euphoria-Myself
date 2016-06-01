@@ -41,6 +41,9 @@
     <Reference Include="Data">
       <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
+    <Reference Include="FileHelper">
+      <HintPath>..\FileHelper\bin\Release\FileHelper.dll</HintPath>
+    </Reference>
     <Reference Include="JLQ_GameBase">
       <HintPath>..\JLQ_GameBase\bin\Release\JLQ_GameBase.dll</HintPath>
     </Reference>

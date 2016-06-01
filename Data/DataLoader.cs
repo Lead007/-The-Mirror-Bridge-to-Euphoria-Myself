@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
 
 namespace Data
 {
@@ -13,7 +14,7 @@ namespace Data
         /// <summary>读取data.xml</summary>
         /// <param name="data">XML文件对象</param>
         /// <returns>数据列表</returns>
-        public static List<CharacterData> LoadDatas(XmlDocument data)
+        public static List<CharacterData> LoadData(XmlDocument data)
         {
             var list = new List<CharacterData>();
             var xnl = data.SelectSingleNode("/data/datas").ChildNodes;
@@ -48,5 +49,32 @@ namespace Data
             }
             return list;
         }
+
+        /// <summary>读取xml路径枚举集合中的每个xml</summary>
+        /// <param name="xmlPaths">xml路径枚举集合</param>
+        /// <returns>数据列表</returns>
+        public static List<CharacterData> LoadDatas(IEnumerable<string> xmlPaths)
+        {
+            var data = new XmlDocument();
+            IEnumerable<CharacterData> result = new List<CharacterData>();
+            foreach (var path in xmlPaths)
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    try
+                    {
+                        var reader = XmlReader.Create(stream, new XmlReaderSettings { IgnoreComments = true /*忽略注释*/});
+                        data.Load(reader);
+                        result = result.Concat(DataLoader.LoadData(data));
+                        reader.Close();
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+            }
+            return result.ToList();
+        } 
     }
 }

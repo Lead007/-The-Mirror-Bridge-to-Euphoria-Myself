@@ -21,6 +21,7 @@ using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
 using Bitmap;
 using Data;
+using FileHelper;
 using JLQ_MBE_BattleSimulation.Dialogs;
 using JLQ_GameBase;
 using JLQ_GameResources.Characters.SingleCharacter;
@@ -58,13 +59,13 @@ namespace JLQ_MBE_BattleSimulation
 
             #region 读取角色各数据
 
+            #region 会在ComboBox中显示的数据
             var data = new XmlDocument();
-            XmlReader reader = null;
+            IEnumerable<string> xmls;
             try
             {
-                reader = XmlReader.Create("Resources/Data/data.xml",
-                    new XmlReaderSettings {IgnoreComments = true /*忽略注释*/});
-                data.Load(reader);
+                xmls = Directory.GetFiles(CurrentPath + "\\Resources\\Data\\ShowInComboBox")
+                    .GetPathsWithFileExtension(".xml");
             }
             catch (Exception)
             {
@@ -72,10 +73,21 @@ namespace JLQ_MBE_BattleSimulation
                 this.Close();
                 return;
             }
-            Calculate.CharacterDataList = DataLoader.LoadDatas(data);
-            reader.Close();
-            Calculate.CharacterDataList.DoAction(cd => comboBoxDisplay.Items.Add(cd.Display));
-            comboBoxDisplay.Items.Remove("芙分");
+            Game.CharacterDataListShow = DataLoader.LoadDatas(xmls);
+            if (!Game.CharacterDataListShow.Any())
+            {
+                Game.ErrorMessageBox("找不到数据文件，程序无法运行。请联系开发者。");
+                this.Close();
+                return;
+            }
+            Game.CharacterDataListShow.DoAction(cd => comboBoxDisplay.Items.Add(cd.Display));
+            #endregion
+            #region 不会在ComboBox显示的数据
+            var unshowPath = CurrentPath + "\\Resources\\Data\\Unshow";
+            if (!Directory.Exists(unshowPath)) Directory.CreateDirectory(unshowPath);
+            xmls = Directory.GetFiles(unshowPath).GetPathsWithFileExtension(".xml");
+            Game.CharacterDataListUnshow = DataLoader.LoadDatas(xmls);
+            #endregion
 
             #endregion
 
@@ -184,8 +196,7 @@ namespace JLQ_MBE_BattleSimulation
             if (!Directory.Exists(p)) Directory.CreateDirectory(p);
             try
             {
-                foreach (var assembly in
-                    Directory.GetFiles(p).Where(s => string.Compare(s, s.Length - 4, ".dll", 0, 4, true) == 0))
+                foreach (var assembly in Directory.GetFiles(p).GetPathsWithFileExtension(".dll"))
                 {
                     try
                     {
@@ -218,7 +229,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="display">显示的字符串</param>
         private void AddCharacter(Point point, Group group, string display)
         {
-            var name = Calculate.CharacterDataList.First(c => c.Display == display).Name;
+            var name = Game.CharacterDataListShow.First(c => c.Display == display).Name;
             Type type;
             try
             {
@@ -379,7 +390,7 @@ namespace JLQ_MBE_BattleSimulation
                 return;
             }
             game.random.RandomElements(number, pointsCanAdd)
-                .DoAction(p => AddCharacter(p, group, game.random.RandomElement(Calculate.CharacterDataList).Display));
+                .DoAction(p => AddCharacter(p, group, game.random.RandomElement(Game.CharacterDataListShow).Display));
             if (checkBox.IsChecked == false) return;
             MessageBox.Show("生成成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -389,7 +400,7 @@ namespace JLQ_MBE_BattleSimulation
         {
             game.Characters.SelectMany(c => c.ListControls).DoAction(c => game.GridPad.Children.Remove(c));
             game.Characters.Clear();
-            game.characterLastAdd = null;
+            game.CharacterLastAdd = null;
             menuBackout.IsEnabled = false;
             game.ID = 1;
             game.LabelID.Content = "1";
@@ -448,6 +459,7 @@ namespace JLQ_MBE_BattleSimulation
             #endregion
         }
 
+        #region 窗体事件处理程序
         private void buttonJump_Click(object sender, RoutedEventArgs e)
         {
             if (GameSection != Section.Round || game.IsMoving || game.IsAttacking || game.IsSCing) return;
@@ -530,17 +542,17 @@ namespace JLQ_MBE_BattleSimulation
 
         private void menuBackout_Click(object sender, RoutedEventArgs e)
         {
-            if (game.characterLastAdd == null) return;
-            game.RemoveCharacter(game.characterLastAdd);
+            if (game.CharacterLastAdd == null) return;
+            game.RemoveCharacter(game.CharacterLastAdd);
             game.ID--;
             if (game.Characters.Count == 0)
             {
-                game.characterLastAdd = null;
+                game.CharacterLastAdd = null;
                 menuBackout.IsEnabled = false;
             }
             else
             {
-                game.characterLastAdd = game.Characters.Last();
+                game.CharacterLastAdd = game.Characters.Last();
             }
         }
 
@@ -566,6 +578,12 @@ namespace JLQ_MBE_BattleSimulation
             {
                 Game.ErrorMessageBox(jlq_MBE_BattleSimulation.Properties.Resources.HelpError);
             }
+        }
+
+        private void menuMods_Click(object sender, RoutedEventArgs e)
+        {
+            var mods = Assemblies.Aggregate("已加载的Mods：", (s, a) => s += ("\n" + a.GetName()));
+            MessageBox.Show(mods, "已加载的Mods", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion
 
@@ -657,7 +675,7 @@ namespace JLQ_MBE_BattleSimulation
             game.LoadPath = dialog.FileName.Substring(0, index + 1);
             var p = new Point(0, 0);
             const Group g = Group.Friend;
-            var d = Calculate.CharacterDataList.First(cd => cd.Name == "Reimu");
+            var d = Game.CharacterDataListShow.First(cd => cd.Name == "Reimu");
             var formatter = new BinaryFormatter();
             for (var i = 1; Directory.Exists(game.LoadPath + i); i++)
             {
@@ -703,5 +721,6 @@ namespace JLQ_MBE_BattleSimulation
             }
             MessageBox.Show("载入成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+        #endregion
     }
 }

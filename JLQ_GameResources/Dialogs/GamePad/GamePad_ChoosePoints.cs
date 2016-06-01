@@ -95,7 +95,7 @@ namespace JLQ_GameResources.Dialogs.GamePad
             #region ButtonSure
             this.ButtonSure.Click += (s, ev) =>
             {
-                if (this.PointsChoose.Count != pointNum)
+                if (!this.PointsChoose.IsFull)
                 {
                     Game.IllegalMessageBox("选择点数不够！");
                     return;

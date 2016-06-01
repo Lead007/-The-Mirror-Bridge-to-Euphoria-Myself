@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- The datas of shoujyoudachi from jlq_MBE-->
+<data>
+  <datas>
+    <charc id="FlandreLittle">
+      <display>芙分</display>
+      <maxHp>75</maxHp>
+      <att>65</att>
+      <def>45</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.2</clo>
+      <spd>39</spd>
+      <mov>3</mov>
+      <rang>1</rang>
+    </charc>
+  </datas>
+  <sc>
+    <charc id="FlandreLittle">
+      <name id="0"></name>
+      <name id="1"></name>
+      <name id="2"></name>
+      <name id="3"></name>
+      <disc id="0"></disc>
+      <disc id="1"></disc>
+      <disc id="2"></disc>
+      <disc id="3"></disc>
+    </charc>
+  </sc>
+</data>

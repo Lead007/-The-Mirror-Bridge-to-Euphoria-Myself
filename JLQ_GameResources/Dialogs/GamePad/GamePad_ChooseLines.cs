@@ -84,7 +84,7 @@ namespace JLQ_GameResources.Dialogs.GamePad
             #region ButtonSure
             this.ButtonSure.Click += (s, ev) =>
             {
-                if (this.LinesChoose.Count != lineNum)
+                if (!this.LinesChoose.IsFull)
                 {
                     Game.IllegalMessageBox("选择行数不够！");
                     return;
