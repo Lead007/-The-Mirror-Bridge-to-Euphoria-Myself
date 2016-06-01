@@ -64,7 +64,7 @@ namespace JLQ_GameBase
 
         #region 鼠标位置相关
         /// <summary>鼠标的网格位置</summary>
-        public Point MousePoint { get; set; } = new Point(-1, -1);
+        public Point MousePoint { get; set; } = Game.DefaultPoint;
 
         /// <summary>鼠标网格位置的Column值</summary>
         public int MouseColumn => (int)MousePoint.X;
@@ -152,7 +152,7 @@ namespace JLQ_GameBase
 
         #region Save与Load相关
         /// <summary>应用路径</summary>
-        public string ApplicationPath { get; }
+        public string ApplicationPath { get; } = Directory.GetCurrentDirectory();
         /// <summary>资源文件夹路径</summary>
         public string ResourcePath { get; }
         /// <summary>Save按钮的路径</summary>
@@ -430,7 +430,6 @@ namespace JLQ_GameBase
 
             #region Save与Load相关
 
-            this.ApplicationPath = Directory.GetCurrentDirectory();
             this.ResourcePath = ApplicationPath + @"\Resources";
             this.SavePath = ApplicationPath;
             this.LoadPath = ApplicationPath;
@@ -664,10 +663,7 @@ namespace JLQ_GameBase
         /// <summary>格子的文字显示</summary>
         /// <param name="position">格子</param>
         /// <returns>文字显示</returns>
-        public string StringShow(Point position)
-        {
-            return this[position]?.ToString() ?? null;
-        }
+        public string StringShow(Point position) => this[position]?.ToString() ?? null;
         /// <summary>格子的信息提示</summary>
         /// <param name="position">格子</param>
         /// <returns>信息提示</returns>
@@ -680,15 +676,11 @@ namespace JLQ_GameBase
         /// <summary>错误提示</summary>
         /// <param name="message">提示信息</param>
         public static void ErrorMessageBox(string message)
-        {
-            MessageBox.Show(message, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+            => MessageBox.Show(message, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
         /// <summary>非法操作提示</summary>
         /// <param name="message">提示信息</param>
         public static void IllegalMessageBox(string message)
-        {
-            MessageBox.Show(message, "操作非法", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+            => MessageBox.Show(message, "操作非法", MessageBoxButton.OK, MessageBoxImage.Error);
 
         /// <summary>生成bool二维数组</summary>
         public void Generate_CanReachPoint()
@@ -738,30 +730,24 @@ namespace JLQ_GameBase
                 .Where(buff => buff.ExecuteSection == section))
             {
                 buff.BuffTrigger();
-                Thread.Sleep(200);
+                //Thread.Sleep(200);
             }
         }
 
         /// <summary>获得对应点的按钮</summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public Button GetButton(Point point)
-        {
-            return Buttons[(int)point.X, (int)point.Y];
-        }
+        public Button GetButton(Point point) => Buttons[(int)point.X, (int)point.Y];
 
         /// <summary>改为战斗模式</summary>
-        public void TurnToBattle()
-        {
-            IsBattle = true;
-        }
+        public void TurnToBattle() => IsBattle = true;
 
         #region 棋盘绘制相关
         /// <summary>恢复棋盘和角色正常颜色</summary>
         public void DefaultButtonAndLabels()
         {
             ResetPadButtons();
-            Characters.Where(c => c != CurrentCharacter).SetLabelBackground(LabelDefalutBackground);
+            Characters.SetLabelBackground(LabelDefalutBackground);
             SetCurrentLabel();
         }
 
@@ -769,9 +755,9 @@ namespace JLQ_GameBase
         /// <param name="origin">起始点</param>
         /// <param name="range">范围</param>
         public void SetButtonBackground(Point origin, int range)
-        {
-            PadPoints.Where(point => point.Distance(origin) <= range && this[point] == null).Select(GetButton).SetButtonColor();
-        }
+            => PadPoints.Where(point => point.Distance(origin) <= range && this[point] == null)
+                .Select(GetButton)
+                .SetButtonColor();
 
         /// <summary>生成可到达点的按钮颜色</summary>
         public void PaintButtons()
@@ -788,10 +774,7 @@ namespace JLQ_GameBase
         }
 
         /// <summary>将全部棋盘按钮置透明</summary>
-        public void ResetPadButtons()
-        {
-            ArrayButtons.ResetButtonColor();
-        }
+        public void ResetPadButtons() => ArrayButtons.ResetButtonColor();
 
         /// <summary>更新角色标签颜色</summary>
         public void UpdateLabelBackground()
@@ -803,10 +786,7 @@ namespace JLQ_GameBase
         }
 
         /// <summary>将当前行动角色标签颜色设为淡粉色</summary>
-        public void SetCurrentLabel()
-        {
-            CurrentCharacter.SetLabelBackground(Brushes.LightPink);
-        }
+        public void SetCurrentLabel() => CurrentCharacter.SetLabelBackground(Brushes.LightPink);
 
         /// <summary>恢复全盘显示</summary>
         public void ResetShow()

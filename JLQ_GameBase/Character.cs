@@ -440,24 +440,15 @@ namespace JLQ_GameBase
         #region 治疗
         /// <summary>治疗</summary>
         /// <param name="hp">治疗的体力值</param>
-        public void Cure(int hp)
-        {
-            this.Hp = Math.Min(this.MaxHp, this.Hp + hp);
-        }
+        public void Cure(int hp) => this.Hp = Math.Min(this.MaxHp, this.Hp + hp);
 
         /// <summary>治疗</summary>
         /// <param name="hp">治疗的体力值</param>
-        public void Cure(double hp)
-        {
-            Cure((int)hp);
-        }
+        public void Cure(double hp) => Cure((int)hp);
 
         /// <summary>治疗最大体力值的一定比值</summary>
         /// <param name="x">治疗量与最大体力值的比值</param>
-        public void Cure(RationalNumber x)
-        {
-            Cure(x.Value*MaxHp);
-        }
+        public void Cure(RationalNumber x) => Cure(x.Value*MaxHp);
         #endregion
 
         /// <summary>被攻击</summary>
@@ -489,9 +480,7 @@ namespace JLQ_GameBase
         /// <param name="times">伤害值增益</param>
         /// <returns>是否暴击</returns>
         public virtual bool DoDanmakuAttack(Character target, float times = 1.0f)
-        {
-            return HandleIsHit(target) && HandleDoingAttack(target, times);
-        }
+            => HandleIsHit(target) && HandleDoingAttack(target, times);
 
         /// <summary>命中后的伤害结算</summary>
         /// <param name="target">攻击目标</param>
@@ -534,11 +523,9 @@ namespace JLQ_GameBase
         /// <param name="target">攻击接受者</param>
         /// <returns></returns>
         public string Tip(Character target)
-        {
-            return string.Format("命中几率: {0}%\n平均伤害值: {1}\n<按下Shift查看详细信息>",
+            => string.Format("命中几率: {0}%\n平均伤害值: {1}\n<按下Shift查看详细信息>",
                 (this.HitRate(target)*100).Floor(),
                 Calculate.Damage(this.Attack, target.Defence));
-        }
         #endregion
 
         #region 移动
@@ -554,10 +541,8 @@ namespace JLQ_GameBase
         /// <param name="relativeX">移动的列向相对坐标</param>
         /// <param name="relativeY">移动的行向相对坐标</param>
         public virtual void Move(int relativeX, int relativeY)
-        {
-            Move(new Point(GetValidPosition((int)this.X + relativeX, Game.Column),
-                GetValidPosition((int)this.Y + relativeY, Game.Row)));
-        }
+            => Move(new Point(GetValidPosition((int) this.X + relativeX, Game.Column),
+                GetValidPosition((int) this.Y + relativeY, Game.Row)));
         #endregion
 
         #region 显示更新
@@ -605,20 +590,14 @@ namespace JLQ_GameBase
         }
 
         /// <summary>结束阶段</summary>
-        public virtual void EndSection()
-        {
-            game.ButtonSC.DoAction(b => b.IsEnabled = true);
-        }
+        public virtual void EndSection() => game.ButtonSC.DoAction(b => b.IsEnabled = true);
 
 
 
         /// <summary>检测灵力是否足够</summary>
         /// <param name="mp">消耗的灵力量</param>
         /// <returns>灵力是否足够</returns>
-        public bool IsMpEnough(int mp)
-        {
-            return Mp >= mp;
-        }
+        public bool IsMpEnough(int mp) => Mp >= mp;
 
         /// <summary>灵力消耗</summary>
         /// <param name="mp">消耗的灵力量</param>
@@ -632,10 +611,7 @@ namespace JLQ_GameBase
 
         /// <summary>灵力获取</summary>
         /// <param name="mp">获得的灵力量</param>
-        public virtual void MpGain(int mp)
-        {
-            Mp = Math.Min(MaxMp, Mp + mp);
-        }
+        public virtual void MpGain(int mp) => Mp = Math.Min(MaxMp, Mp + mp);
 
         /// <summary>判断角色是否为敌人</summary>
         /// <param name="c">待判断的角色</param>
@@ -653,6 +629,7 @@ namespace JLQ_GameBase
         /// <returns>是否为队友</returns>
         public bool IsFriend(Character c, bool containThis = true)
         {
+            if (c == null) return false;
             if (containThis) return c.Group == this.Group;
             return c != this && c.Group == this.Group;
         }
@@ -661,41 +638,26 @@ namespace JLQ_GameBase
         /// <param name="range">范围</param>
         /// <param name="c">待判断的角色</param>
         /// <returns>是否符合</returns>
-        public bool IsInRangeAndEnemy(int range, Character c)
-        {
-            return IsInRangeAndEnemy(this.Position, range, c);
-        }
+        public bool IsInRangeAndEnemy(int range, Character c) => IsInRangeAndEnemy(this.Position, range, c);
 
-        public virtual void AddBuff(Buff buff)
-        {
-            this.BuffList.Add(buff);
-        }
+        public virtual void AddBuff(Buff buff) => this.BuffList.Add(buff);
 
 
         #region 符卡
         /// <summary>符卡01</summary>
         public abstract void SC01();
         /// <summary>结束使用符卡01</summary>
-        public virtual void EndSC01()
-        {
-            EndSC();
-        }
+        public virtual void EndSC01() => EndSC();
 
         /// <summary>符卡02</summary>
         public abstract void SC02();
         /// <summary>结束使用符卡02</summary>
-        public virtual void EndSC02()
-        {
-            EndSC();
-        }
+        public virtual void EndSC02() => EndSC();
 
         /// <summary>符卡03</summary>
         public abstract void SC03();
         /// <summary>结束使用符卡03</summary>
-        public virtual void EndSC03()
-        {
-            EndSC();
-        }
+        public virtual void EndSC03() => EndSC();
 
         /// <summary>成为当前行动角色时符卡按钮的移动响应</summary>
         public virtual void SCShow()
@@ -720,23 +682,13 @@ namespace JLQ_GameBase
         #region 私有或受保护函数
         /// <summary>受伤</summary>
         /// <param name="damage">伤害值</param>
-        private void Damage(int damage)
-        {
-            Hp -= damage;
-        }
+        private void Damage(int damage) => Hp -= damage;
 
         /// <summary>将不合法的Position坐标项转化为合法值</summary>
         /// <param name="coordinate">待转化值</param>
         /// <param name="max">最大值</param>
         /// <returns>合法的坐标值</returns>
-        private static int GetValidPosition(int coordinate, int max)
-        {
-            if (coordinate < 0)
-            {
-                return 0;
-            }
-            return coordinate > max ? max : coordinate;
-        }
+        private static int GetValidPosition(int coordinate, int max) => coordinate < 0 ? 0 : Math.Min(coordinate, max);
 
         #region 造成伤害时的计算
         /// <summary>是否命中</summary>
@@ -868,10 +820,7 @@ namespace JLQ_GameBase
         /// <param name="c">待判断的角色</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndEnemy(Point origin, int range, Character c)
-        {
-            if (c == null) return false;
-            return origin.Distance(c) <= range && IsEnemy(c);
-        }
+            => IsEnemy(c) && origin.Distance(c) <= range;
 
         /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
         /// <param name="origin">点</param>
@@ -879,18 +828,13 @@ namespace JLQ_GameBase
         /// <param name="p">待判断的点</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndEnemy(Point origin, int range, Point p)
-        {
-            return origin.Distance(p) <= range && IsEnemy(game[p]);
-        }
+            => origin.Distance(p) <= range && IsEnemy(game[p]);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
         /// <param name="range">范围</param>
         /// <param name="p">待判断的点</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndEnemy(int range, Point p)
-        {
-            return p.Distance(this) <= range && IsEnemy(game[p]);
-        }
+        protected bool IsInRangeAndEnemy(int range, Point p) => p.Distance(this) <= range && IsEnemy(game[p]);
 
         /// <summary>是否是在自己周围某范围内的队友</summary>
         /// <param name="range">范围</param>
@@ -898,10 +842,7 @@ namespace JLQ_GameBase
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndFriend(int range, Character c, bool containThis = true)
-        {
-            if (c == null) return false;
-            return c.Distance(this) <= range && IsFriend(c, containThis);
-        }
+            => IsFriend(c, containThis) && c.Distance(this) <= range;
 
         /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
         /// <param name="origin">点</param>
@@ -910,9 +851,7 @@ namespace JLQ_GameBase
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndFriend(Point origin, int range, Point p, bool containThis = true)
-        {
-            return origin.Distance(p) <= range && IsFriend(game[p], containThis);
-        }
+            => origin.Distance(p) <= range && IsFriend(game[p], containThis);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
         /// <param name="range">范围</param>
@@ -920,9 +859,7 @@ namespace JLQ_GameBase
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndFriend(int range, Point p, bool containThis = true)
-        {
-            return p.Distance(this) <= range && IsFriend(game[p], containThis);
-        }
+            => p.Distance(this) <= range && IsFriend(game[p], containThis);
         #endregion
     }
 }

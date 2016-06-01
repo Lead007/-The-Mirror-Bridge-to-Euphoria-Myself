@@ -30,13 +30,13 @@ namespace RandomHelper
         {
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("选取长度不能为负数");
+                throw new ArgumentOutOfRangeException("选取长度不能为负数。");
             }
             var result = new List<T>();
             var l = list.ToList();
             if (count > l.Count)
             {
-                throw new ArgumentOutOfRangeException("选取长度超过了枚举集合的长度极限");
+                throw new ArgumentOutOfRangeException("选取长度超过了枚举集合的长度极限。");
             }
             for (var i = 0; i < count; i++)
             {
@@ -52,9 +52,6 @@ namespace RandomHelper
         /// <param name="random">随机数对象</param>
         /// <param name="probability">返回值为true概率</param>
         /// <returns>是否符合概率</returns>
-        public static bool NextBool(this Random random, double probability)
-        {
-            return random.NextDouble() < probability;
-        }
+        public static bool NextBool(this Random random, double probability) => random.NextDouble() < probability;
     }
 }

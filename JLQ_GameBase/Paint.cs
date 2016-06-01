@@ -13,60 +13,39 @@ namespace JLQ_GameBase
     {
         /// <summary>将角色标签颜色设为淡蓝色</summary>
         /// <param name="c">角色</param>
-        public static void SetLabelBackground(this Character c)
-        {
-            c.LabelDisplay.Background = GameColor.LabelBackground;
-        }
+        public static void SetLabelBackground(this Character c) => c.LabelDisplay.Background = GameColor.LabelBackground;
 
         /// <summary>将角色标签颜色设为指定的颜色</summary>
         /// <param name="c">角色</param>
         /// <param name="color">指定的颜色</param>
-        public static void SetLabelBackground(this Character c, Brush color)
-        {
-            c.LabelDisplay.Background = color;
-        }
+        public static void SetLabelBackground(this Character c, Brush color) => c.LabelDisplay.Background = color;
 
         /// <summary>将角色枚举集合内所有角色标签颜色设为淡蓝色</summary>
         /// <param name="characters">角色枚举集合</param>
         public static void SetLabelBackground(this IEnumerable<Character> characters)
-        {
-            characters.DoAction(c => c.SetLabelBackground());
-        }
+            => characters.DoAction(c => c.SetLabelBackground());
 
         /// <summary>将角色枚举集合内所有角色标签颜色设为指定的颜色</summary>
         /// <param name="characters">角色枚举集合</param>
         /// <param name="color">指定的颜色</param>
         public static void SetLabelBackground(this IEnumerable<Character> characters, Brush color)
-        {
-            characters.DoAction(c => c.SetLabelBackground(color));
-        }
+            => characters.DoAction(c => c.SetLabelBackground(color));
 
         /// <summary>将按钮颜色设为淡黄色</summary>
         /// <param name="button">按钮</param>
-        public static void SetButtonColor(this Button button)
-        {
-            button.Opacity = 1;
-        }
+        public static void SetButtonColor(this Button button) => button.Opacity = 1;
 
         /// <summary>将按钮枚举集合内所有按钮颜色设为淡黄色</summary>
         /// <param name="buttons">按钮枚举集合</param>
-        public static void SetButtonColor(this IEnumerable<Button> buttons)
-        {
-            buttons.DoAction(b => b.SetButtonColor());
-        }
+        public static void SetButtonColor(this IEnumerable<Button> buttons) => buttons.DoAction(b => b.SetButtonColor());
 
         /// <summary>将按钮颜色设为无色</summary>
         /// <param name="button">按钮</param>
-        public static void ResetButtonColor(this Button button)
-        {
-            button.Opacity = 0;
-        }
+        public static void ResetButtonColor(this Button button) => button.Opacity = 0;
 
         /// <summary>将按钮枚举集合内所有按钮颜色设为无色</summary>
         /// <param name="buttons">按钮枚举集合</param>
         public static void ResetButtonColor(this IEnumerable<Button> buttons)
-        {
-            buttons.DoAction(b => b.ResetButtonColor());
-        }
+            => buttons.DoAction(b => b.ResetButtonColor());
     }
 }
