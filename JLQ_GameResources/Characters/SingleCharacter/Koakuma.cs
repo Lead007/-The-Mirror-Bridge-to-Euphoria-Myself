@@ -59,7 +59,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => c.Distance(this) <= SC01Range).SetLabelBackground();
+                Enemies.Where(c => c.Distance(this) <= SC01Range).SetLabelBackground();
             };
         }
 
@@ -101,7 +101,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
-
+            base.EndSC03();
         }
     }
 }

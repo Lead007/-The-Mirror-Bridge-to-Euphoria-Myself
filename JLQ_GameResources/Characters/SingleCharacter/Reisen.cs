@@ -17,9 +17,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		{
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (!IsInRangeAndEnemy(3, game.MousePoint)) return;
+		        if (!IsInRangeAndEnemy(SC01Range, game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => c.X == game.MouseColumn || c.Y == game.MouseRow).SetLabelBackground();
+		        Enemies.Where(c => c.X == game.MouseColumn || c.Y == game.MouseRow).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		    enterPad[1] = (s, ev) =>
@@ -33,10 +33,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        Enemy.SetLabelBackground();
+		        Enemies.SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
+
+        private const int SC01Range = 3;
 
         //TODO 天赋
 
@@ -44,14 +46,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => IsInRangeAndEnemy(3, point);
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(SC01Range, point);
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && (SCee.X == point.X || SCee.Y == point.Y);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
             AddPadButtonEvent(0);
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => this.Distance(c) <= 3).SetLabelBackground();
+                EnemyInRange(SC01Range).SetLabelBackground();
             };
         }
 
@@ -76,7 +78,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.SetLabelBackground();
+                Enemies.SetLabelBackground();
             };
         }
 

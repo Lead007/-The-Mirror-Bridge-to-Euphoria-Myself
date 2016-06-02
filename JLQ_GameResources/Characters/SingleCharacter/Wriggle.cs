@@ -23,7 +23,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterPad[0] = (s, ev) =>
 		    {
 		        if (game.MousePoint.Distance(this) != 1) return;
-		        var cs = Enemy.Where(c => SC01IsTargetLegal(c, game.MousePoint)).ToList();
+		        var cs = Enemies.Where(c => SC01IsTargetLegal(c, game.MousePoint)).ToList();
 		        if (!cs.Any()) return;
 		        game.DefaultButtonAndLabels();
 		        cs[0].SetLabelBackground();
@@ -161,7 +161,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.SetLabelBackground();
+                Enemies.SetLabelBackground();
             };
         }
         /// <summary>结束符卡03</summary>
@@ -179,7 +179,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private bool SC01IsTargetLegal(Character SCee, Point point)
         {
-            var cs = Enemy.Where(c => IsInLine(SCee, point)).ToList();
+            var cs = Enemies.Where(c => IsInLine(SCee, point)).ToList();
             if (!cs.Any()) return false;
             var ct = cs.OrderBy(c => c.Distance(this)).First();
             return SCee == ct;

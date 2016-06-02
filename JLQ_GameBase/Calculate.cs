@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Data;
 
 namespace JLQ_GameBase
 {
@@ -49,6 +48,31 @@ namespace JLQ_GameBase
         /// <returns></returns>
         public static int Distance(this Character character1, Character character2)
             => character1.Position.Distance(character2);
+
+        /// <summary>某点是否在一点范围内</summary>
+        /// <param name="point1">点1</param>
+        /// <param name="point2">点2</param>
+        /// <param name="distance">距离</param>
+        /// <returns>是否在距离内</returns>
+        public static bool IsInRange(this Point point1, Point point2, int distance)
+            => point1.Distance(point2) <= distance;
+
+        /// <summary>某角色是否在一点范围内</summary>
+        /// <param name="point1">点1</param>
+        /// <param name="character1">角色</param>
+        /// <param name="distance">距离</param>
+        /// <returns>是否在距离内</returns>
+        public static bool IsInRange(this Point point1, Character character1, int distance)
+            => point1.IsInRange(character1.Position, distance);
+
+        /// <summary>某角色是否在一角色范围内</summary>
+        /// <param name="character1">角色1</param>
+        /// <param name="character2">角色2</param>
+        /// <param name="distance">距离</param>
+        /// <returns>是否在距离内</returns>
+        public static bool IsInRange(this Character character1, Character character2, int distance)
+            => character1.Position.IsInRange(character2, distance);
+
         #endregion
 
         #region Convert

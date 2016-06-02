@@ -29,7 +29,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     var c = game[p];
                     if (c == null) game.GetButton(p).SetButtonColor();
-                    else if (Enemy.Contains(c)) c.SetLabelBackground();
+                    else if (IsEnemy(c)) c.SetLabelBackground();
                 }
             };
             SetDefaultLeavePadButtonDelegate(2);

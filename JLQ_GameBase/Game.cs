@@ -131,13 +131,11 @@ namespace JLQ_GameBase
         /// <summary>是否正在攻击中</summary>
         public bool IsAttacking { get; set; }
 
-
         /// <summary>游戏中所有角色列表</summary>
         public List<Character> Characters { get; } = new List<Character>();
 
         /// <summary>加人模式上一个添加的角色</summary>
         public Character CharacterLastAdd { get; set; }
-
 
         /// <summary>每个格子能否被到达</summary>
         public bool[,] CanReachPoint { get; } = new bool[Column, Row];
@@ -474,7 +472,7 @@ namespace JLQ_GameBase
         /// <summary>对当前行动者的阻挡列表</summary>
         public IEnumerable<Point> EnemyBlock => CurrentCharacter.EnemyBlock;
         /// <summary>对当前行动者的敌人列表</summary>
-        public IEnumerable<Character> EnemyAsCurrent => CurrentCharacter.Enemy;
+        public IEnumerable<Character> EnemyAsCurrent => CurrentCharacter.Enemies;
 
         /// <summary>棋盘按钮数组的一维数组形式</summary>
         public Button[] ArrayButtons
@@ -755,7 +753,7 @@ namespace JLQ_GameBase
         /// <param name="origin">起始点</param>
         /// <param name="range">范围</param>
         public void SetButtonBackground(Point origin, int range)
-            => PadPoints.Where(point => point.Distance(origin) <= range && this[point] == null)
+            => PadPoints.Where(point => origin.IsInRange(point, range) && this[point] == null)
                 .Select(GetButton)
                 .SetButtonColor();
 

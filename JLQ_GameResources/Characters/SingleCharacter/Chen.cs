@@ -39,20 +39,21 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    };
             enterPad[1] = (s, ev) =>
             {
-                if (game.MousePoint.Distance(this) > SC02Range) return;
+                if (!game.MousePoint.IsInRange(this, SC02Range)) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => game.MousePoint.Distance(c) <= 1).SetLabelBackground();
+                EnemyInMouseRange(SC02Range2).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        Enemy.SetLabelBackground();
+		        Enemies.SetLabelBackground();
             };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
         private const int SC02Range = 4;
+        private const int SC02Range2 = 1;
         private readonly DGridPadClick _skillMove;
 
         //天赋
@@ -94,8 +95,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= SC02Range;
-            game.HandleIsTargetLegal = (SCee, point) => point.Distance(SCee) <= 1 && IsEnemy(SCee);
+            game.HandleIsLegalClick = point => point.IsInRange(this, SC02Range);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC02Range2, SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
             AddPadButtonEvent(1);
         }

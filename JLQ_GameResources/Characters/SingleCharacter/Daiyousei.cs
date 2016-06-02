@@ -35,7 +35,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将被攻击的角色
 		    enterPad[1] = (s, ev) =>
 		    {
-		        if (!SC02IsLegalClick(game.MousePoint)) return;
+		        if (!IsInRangeAndEnemy(SC02Range, game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
 		        game.MouseCharacter.SetLabelBackground();
             };
@@ -45,16 +45,17 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterButton[2] = (s, ev) =>
 		    {
                 this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => c != this && SC03IsTargetLegal(c)).SetLabelBackground();
+		        game.Characters.Where(c => IsInRangeAndFriend(SC03Range, c, false)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
         private const int skillRange = 2;
-        private static RationalNumber skillGain => new RationalNumber(1, 20, true, false);
+        private static RationalNumber skillGain { get; } = new RationalNumber(1, 20, true, false);
         private const int SC01Range = 4;
-        private const int SC02Range = 2;
+        private const int SC02Range = 4;
         private const float SC02Gain = 1.5f;
+        private const int SC03Range = 2;
 
         private Point pointTemp1 = Game.DefaultPoint;
 
@@ -94,14 +95,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡02：花仙炮，对4格内一敌方目标造成1.5倍率的伤害。</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = SC02IsLegalClick;
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(SC02Range, point);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.5f);
             AddPadButtonEvent(1);
             game.HandleResetShow = () =>
             {
                 this.game.DefaultButtonAndLabels();
-                Game.PadPoints.Where(SC02IsLegalClick).Select(p => game[p]).SetLabelBackground();
+                EnemyInRange(SC02Range).SetLabelBackground();
             };
         }
 
@@ -114,7 +115,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡03：妖精狂欢，使2格内所有己方角色恢复自己攻击力1.5倍率的血量</summary>
         public override void SC03()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SC03IsTargetLegal(SCee);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndFriend(SC03Range, SCee);
             game.HandleTarget = SCee => SCee.Cure(SCee.Attack*SC02Gain);
         }
         /// <summary>结束符卡03</summary>
@@ -125,7 +126,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private bool SC01IsLegalClick(Point point)
         {
-            if (point.Distance(this) > SC01Range || game[point] == null) return false;
+            if (!point.IsInRange(this, SC01Range) || game[point] == null) return false;
             if (point == this.Position)
             {
                 pointTemp1 = point;
@@ -160,17 +161,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             if (game[pointTemp1] == null) return true;
             pointTemp1 = Game.DefaultPoint;
             return false;
-        }
-
-        private bool SC02IsLegalClick(Point point)
-        {
-            if (point.Distance(this) > SC01Range) return false;
-            return IsEnemy(game[point]);
-        }
-
-        private bool SC03IsTargetLegal(Character SCee)
-        {
-            return IsInRangeAndFriend(SC02Range, SCee);
         }
     }
 }

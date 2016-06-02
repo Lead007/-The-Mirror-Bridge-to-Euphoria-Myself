@@ -32,7 +32,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (!game.HandleIsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
+		        Enemies.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}

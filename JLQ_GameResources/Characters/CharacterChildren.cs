@@ -14,12 +14,6 @@ namespace JLQ_GameResources.Characters
     /// <summary>移动无视敌方角色的碰撞箱的角色</summary>
     public abstract class CharacterTeleportMoving : Character
     {
-        /// <summary>构造函数</summary>
-        /// <param name="id">ID</param>
-        /// <param name="position">角色位置</param>
-        /// <param name="group">角色阵营</param>
-        /// <param name="random">随机数对象</param>
-        /// <param name="game">游戏对象</param>
         protected CharacterTeleportMoving(int id, Point position, Group group, Game game)
             : base(id, position, group, game)
         {
@@ -32,12 +26,6 @@ namespace JLQ_GameResources.Characters
 
     public abstract class CharacterHitBack : Character
     {
-        /// <summary>构造函数</summary>
-        /// <param name="id">ID</param>
-        /// <param name="position">角色位置</param>
-        /// <param name="group">角色阵营</param>
-        /// <param name="random">随机数对象</param>
-        /// <param name="game">游戏对象</param>
         protected CharacterHitBack(int id, Point position, Group group, Game game)
             : base(id, position, group, game)
         {
@@ -64,12 +52,6 @@ namespace JLQ_GameResources.Characters
     /// <summary>可能有多次普通的角色</summary>
     public abstract class CharacterMayRepeatedlyDoDamage : Character
     {
-        /// <summary>构造函数</summary>
-        /// <param name="id">ID</param>
-        /// <param name="position">角色位置</param>
-        /// <param name="group">角色阵营</param>
-        /// <param name="random">随机数对象</param>
-        /// <param name="game">游戏对象</param>
         protected CharacterMayRepeatedlyDoDamage(int id, Point position, Group group, Game game)
             : base(id, position, group, game)
         {
@@ -97,12 +79,6 @@ namespace JLQ_GameResources.Characters
     /// <summary>普莉兹姆利巴角色</summary>
     public abstract class CharacterPrismriver : Character
     {
-        /// <summary>构造函数</summary>
-        /// <param name="id">ID</param>
-        /// <param name="position">角色位置</param>
-        /// <param name="group">角色阵营</param>
-        /// <param name="random">随机数对象</param>
-        /// <param name="game">游戏对象</param>
         protected CharacterPrismriver(int id, Point position, Group group, Game game)
             : base(id, position, group, game)
         {
@@ -114,12 +90,6 @@ namespace JLQ_GameResources.Characters
     /// <summary>骚灵角色</summary>
     public abstract class CharacterPoltergeist : CharacterPrismriver
     {
-        /// <summary>构造函数</summary>
-        /// <param name="id">ID</param>
-        /// <param name="position">角色位置</param>
-        /// <param name="group">角色阵营</param>
-        /// <param name="random">随机数对象</param>
-        /// <param name="game">游戏对象</param>
         protected CharacterPoltergeist(int id, Point position, Group group, Game game)
             : base(id, position, group, game)
         {

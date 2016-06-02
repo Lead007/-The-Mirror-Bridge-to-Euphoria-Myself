@@ -32,8 +32,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c))
-                .Select(c => new BuffSlowDownGain(c, this, this.Interval, 0.1f, game))
+            EnemyInRange(skillRange).Select(c => new BuffSlowDownGain(c, this, this.Interval, 0.1f, game))
                 .DoAction(b => b.BuffTrigger());
         }
 
@@ -48,7 +47,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.SetLabelBackground();
+                Enemies.SetLabelBackground();
             };
         }
 

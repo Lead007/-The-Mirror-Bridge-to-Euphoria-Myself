@@ -29,7 +29,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
+                Enemies.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -43,7 +43,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 var point = Destination(c);
                 if (game[point] == null)
                 {
-                    game.Buttons[(int)point.X, (int)point.Y].SetButtonColor();
+                    game.GetButton(point).SetButtonColor();
                 }
             };
             SetDefaultLeavePadButtonDelegate(2);
@@ -126,7 +126,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => this.Distance(c) <= SC03Const1 && (c.X == this.X || c.Y == this.Y))
+                Enemies.Where(c => this.Distance(c) <= SC03Const1 && (c.X == this.X || c.Y == this.Y))
                     .SetLabelBackground();
             };
         }

@@ -20,8 +20,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (!SC02IsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC02Range, c)).SetLabelBackground();
-		        game.MouseCharacter.LabelDisplay.Background = GameColor.LabelBackground2;
+		        EnemyInMouseRange(SC02Range).SetLabelBackground();
+                game.MouseCharacter.SetLabelBackground(GameColor.LabelBackground2);
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}
@@ -107,7 +107,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => this.Distance(c) <= 2*this.AttackRange).SetLabelBackground();
+                EnemyInRange(2*this.AttackRange).SetLabelBackground();
             };
         }
 
@@ -136,7 +136,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
 	    private bool SC02IsLegalClick(Point point)
 	    {
-	        return point.Distance(this) <= 2*this.AttackRange && game[point] != null;
-        }
+	        return point.IsInRange(this, 2*this.AttackRange) && game[point] != null;
+	    }
     }
 }

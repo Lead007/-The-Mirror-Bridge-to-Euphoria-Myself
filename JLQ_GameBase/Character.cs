@@ -18,7 +18,7 @@ namespace JLQ_GameBase
     public abstract class Character
     {
         //以下为字段
-        #region 只读属性字段
+        #region 只读属性
         /// <summary>ID</summary>
         public int ID { get; }
         #region 角色数据
@@ -27,7 +27,7 @@ namespace JLQ_GameBase
         /// <summary>角色名字</summary>
         public string Name => Data.Name;
         /// <summary>角色最大血量</summary>
-        public int MaxHp => Data.MaxHp;
+        public virtual int MaxHp => Data.MaxHp;
         /// <summary>角色显示</summary>
         public string Display => Data.Display;
         /// <summary>角色符卡名字</summary>
@@ -194,7 +194,7 @@ namespace JLQ_GameBase
 
         private int _currentTime;
         /// <summary>当前剩余冷却时间</summary>
-        public int CurrentTime
+        public virtual int CurrentTime
         {
             get { return _currentTime; }
             set
@@ -224,7 +224,7 @@ namespace JLQ_GameBase
         /// <summary>显示Display的Label</summary>
         public Label LabelDisplay { get; }
         /// <summary>显示Hp的ProgressBar</summary>
-        private ProgressBar BarHp { get; }
+        protected ProgressBar BarHp { get; }
         /// <summary>显示Mp的ProgressBar</summary>
         private ProgressBar BarMp { get; }
         /// <summary>显示剩余时间的ProgressBar</summary>
@@ -241,7 +241,7 @@ namespace JLQ_GameBase
         /// <summary>攻击</summary>
         public int Attack => Math.Max(0, (Data.Attack*_attackX).Floor() + _attackAdd);
         /// <summary>防御</summary>
-        public int Defence => Math.Max(0, (Data.Defence*_defenceX).Floor() + _defenceAdd);
+        public virtual int Defence => Math.Max(0, (Data.Defence*_defenceX).Floor() + _defenceAdd);
         /// <summary>命中率</summary>
         public int HitRate => Math.Max(0, (Data.HitRate*_hitRateX).Floor() + _hitRateAdd);
         /// <summary>闪避率</summary>
@@ -271,9 +271,9 @@ namespace JLQ_GameBase
         public int Y => (int)this.Position.Y;
 
         /// <summary>对此角色而言的敌人列表</summary>
-        public IEnumerable<Character> Enemy => game.Characters.Where(IsEnemy);
+        public IEnumerable<Character> Enemies => game.Characters.Where(IsEnemy);
         /// <summary>阻挡行动的敌人列表</summary>
-        public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemy.Select(c => c.Position));
+        public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemies.Select(c => c.Position));
         /// <summary>符卡的灵力消耗</summary>
         public virtual int[] SCMpUse { get; } = new[] {0, 0, 0};//TODO SC Mp Use
         #endregion
@@ -508,11 +508,11 @@ namespace JLQ_GameBase
         /// <returns>各数据字符串化的结果</returns>
         public override string ToString()
         {
-            var result = string.Format("HP: {0} / {1}\nMP: {2} / {3}\n攻击: {4}\n防御: {5}\n" +
-                                          "命中率: {6}\n闪避率: {7}\n近战补正: {8}{9}\n" +
-                                          "行动间隔: {10}\n机动: {11}\n攻击范围: {12}\n剩余冷却时间: {13}", Hp, MaxHp, Mp,
-                MaxMp, Attack, Defence, HitRate, DodgeRate, CloseAmendment, (CloseAmendment%1 == 0) ? ".0" : "",
-                Interval, MoveAbility, AttackRange, CurrentTime);
+            var result = string.Format("HP： {0} / {1}\nMP： {2} / {3}\n攻击： {4}\n防御： {5}\n" +
+                                       "命中率： {6}\n闪避率： {7}\n近战补正： {8}\n" +
+                                       "行动间隔： {9}\n机动： {10}\n攻击范围： {11}\n剩余冷却时间： {12}", Hp, MaxHp, Mp,
+                MaxMp, Attack, Defence, HitRate, DodgeRate, CloseAmendment, Interval, MoveAbility, AttackRange,
+                CurrentTime);
             if (!BuffList.Any()) return result;
             result += "\nBUFF:\n";
             result = BuffList.Aggregate(result, (current, buff) => current + buff.ToString() + "\n");
@@ -523,7 +523,7 @@ namespace JLQ_GameBase
         /// <param name="target">攻击接受者</param>
         /// <returns></returns>
         public string Tip(Character target)
-            => string.Format("命中几率: {0}%\n平均伤害值: {1}\n<按下Shift查看详细信息>",
+            => string.Format("命中几率： {0}%\n平均伤害值： {1}\n<按下Shift查看详细信息>",
                 (this.HitRate(target)*100).Floor(),
                 Calculate.Damage(this.Attack, target.Defence));
         #endregion
@@ -616,12 +616,7 @@ namespace JLQ_GameBase
         /// <summary>判断角色是否为敌人</summary>
         /// <param name="c">待判断的角色</param>
         /// <returns>是否为敌人</returns>
-        public bool IsEnemy(Character c)
-        {
-            if (c == null) return false;
-            return /*当前角色中立且c非中立*/ (this.Group == Group.Middle && c.Group != Group.Middle) ||
-                /*当前角色非中立且c与之敌对*/ (this.Group != Group.Middle && c.Group == (Group)(-(int)this.Group));
-        }
+        public bool IsEnemy(Character c) => c != null && this.Group != c.Group;
 
         /// <summary>判断角色是否为队友</summary>
         /// <param name="c">待判断的角色</param>
@@ -820,7 +815,7 @@ namespace JLQ_GameBase
         /// <param name="c">待判断的角色</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndEnemy(Point origin, int range, Character c)
-            => IsEnemy(c) && origin.Distance(c) <= range;
+            => IsEnemy(c) && origin.IsInRange(c, range);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
         /// <param name="origin">点</param>
@@ -828,13 +823,13 @@ namespace JLQ_GameBase
         /// <param name="p">待判断的点</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndEnemy(Point origin, int range, Point p)
-            => origin.Distance(p) <= range && IsEnemy(game[p]);
+            => origin.IsInRange(p, range) && IsEnemy(game[p]);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
         /// <param name="range">范围</param>
         /// <param name="p">待判断的点</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndEnemy(int range, Point p) => p.Distance(this) <= range && IsEnemy(game[p]);
+        protected bool IsInRangeAndEnemy(int range, Point p) => p.IsInRange(this, range) && IsEnemy(game[p]);
 
         /// <summary>是否是在自己周围某范围内的队友</summary>
         /// <param name="range">范围</param>
@@ -842,7 +837,7 @@ namespace JLQ_GameBase
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndFriend(int range, Character c, bool containThis = true)
-            => IsFriend(c, containThis) && c.Distance(this) <= range;
+            => IsFriend(c, containThis) && this.IsInRange(c, range);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
         /// <param name="origin">点</param>
@@ -851,7 +846,7 @@ namespace JLQ_GameBase
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndFriend(Point origin, int range, Point p, bool containThis = true)
-            => origin.Distance(p) <= range && IsFriend(game[p], containThis);
+            => origin.IsInRange(p, range) && IsFriend(game[p], containThis);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
         /// <param name="range">范围</param>
@@ -859,7 +854,26 @@ namespace JLQ_GameBase
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
         protected bool IsInRangeAndFriend(int range, Point p, bool containThis = true)
-            => p.Distance(this) <= range && IsFriend(game[p], containThis);
+            => p.IsInRange(this, range) && IsFriend(game[p], containThis);
+
+        /// <summary>在范围内的敌人</summary>
+        /// <param name="origin">起始点</param>
+        /// <param name="range">范围</param>
+        /// <returns>在范围内的敌人</returns>
+        protected IEnumerable<Character> EnemyInRange(Point origin, int range)
+            => Enemies.Where(c => origin.IsInRange(c, range));
+
+        /// <summary>在鼠标点范围内的敌人</summary>
+        /// <param name="range">范围</param>
+        /// <returns>在范围内的敌人</returns>
+        protected IEnumerable<Character> EnemyInMouseRange(int range)
+            => Enemies.Where(c => game.MousePoint.IsInRange(c, range));
+
+        /// <summary>在范围内的敌人</summary>
+        /// <param name="range">范围</param>
+        /// <returns>在范围内的敌人</returns>
+        protected IEnumerable<Character> EnemyInRange(int range) => Enemies.Where(c => this.IsInRange(c, range));
+
         #endregion
     }
 }

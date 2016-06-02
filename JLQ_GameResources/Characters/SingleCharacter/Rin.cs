@@ -25,7 +25,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        {
 		            game.GetButton(pointTemp1).SetButtonColor();
 		        }
-		        game.Characters.Where(c => IsInRangeAndEnemy(pointTemp1, SC01Range2, c)).SetLabelBackground();
+		        EnemyInRange(pointTemp1, SC01Range2).SetLabelBackground();
                 pointTemp1 = Game.DefaultPoint;
             };
             SetDefaultLeavePadButtonDelegate(0);
@@ -43,7 +43,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             enterPad[2] = (s, ev) =>
 		    {
 		        this.game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC03Range, c)).SetLabelBackground();
+		        EnemyInMouseRange(SC03Range).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
@@ -66,9 +66,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         //天赋
         protected override float HitBackGain => 0.3f;
 
-        protected override IEnumerable<Character> LegalHitBackTarget
-            => game.Characters.Where(c => IsInRangeAndEnemy(skillRange, c));
-
+        protected override IEnumerable<Character> LegalHitBackTarget => EnemyInRange(skillRange);
 
         //符卡
         /// <summary>符卡01：乘着风，瞬移到3格内一名敌方角色面前，并释放旋风对自身2格内所有敌方单位造成0.5倍率的伤害</summary>
@@ -97,17 +95,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡02：孤独绽放的，对4格内一名敌方单位造成2.0倍率的伤害</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point =>
-            {
-                var c = game[point];
-                return c != null && IsInRangeAndEnemy(SC02Range, c);
-            };
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(SC02Range, point);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02DamageGain);
             game.HandleResetShow = () =>
             {
-                this.game.DefaultButtonAndLabels();
-                game.Characters.Where(c => IsInRangeAndEnemy(SC02Range, c)).SetLabelBackground();
+                game.DefaultButtonAndLabels();
+                EnemyInRange(SC02Range).SetLabelBackground();
             };
         }
 

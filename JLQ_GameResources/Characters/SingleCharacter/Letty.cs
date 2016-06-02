@@ -20,9 +20,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		{
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (game.MousePoint.Distance(this) > SC01Range) return;
+		        if (game.MousePoint.IsInRange(this, SC01Range)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.Distance(c) <= 1).SetLabelBackground();
+		        EnemyInMouseRange(SC01Range2).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		}
@@ -30,11 +30,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private const int skillRange = 2;
         private const float skillGain = 0.3f;
         private const int SC01Range = 4;
-        private static RationalNumber SC02Gain = new RationalNumber(2, 5, true, false);
+        private const int SC01Range2 = 1;
+        private static RationalNumber SC02Gain { get; } = new RationalNumber(2, 5, true, false);
 
         public override void PreparingSection()
         {
-            Enemy.Where(c => c.Distance(this) <= skillRange)
+            Enemies.Where(c => c.Distance(this) <= skillRange)
                 .Select(c => new BuffSlowDownGain(c, this, this.Interval, skillGain, game))
                 .DoAction(b => b.BuffTrigger());
         }
@@ -45,8 +46,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= SC01Range;
-            game.HandleIsTargetLegal = (SCee, point) => point.Distance(SCee) <= 1 && IsEnemy(SCee);
+            game.HandleIsLegalClick = point => point.IsInRange(this, SC01Range);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC01Range2, SCee);
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee);
@@ -83,7 +84,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
-
+            base.EndSC03();
         }
 
 	}

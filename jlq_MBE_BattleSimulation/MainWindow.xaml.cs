@@ -620,7 +620,11 @@ namespace JLQ_MBE_BattleSimulation
                 var j = i + 1;
                 game.ButtonSC[i].Click += (s, ev) =>
                 {
-                    if (game.IsMoving || game.IsAttacking) return;
+                    if (game.IsMoving || game.IsAttacking)
+                    {
+                        game.EndSC();
+                        return;
+                    }
                     SC(j);
                 };
             }

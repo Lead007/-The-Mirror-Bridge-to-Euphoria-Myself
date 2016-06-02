@@ -22,7 +22,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterButton[0] = (s, ev) =>
 		    {
                 game.DefaultButtonAndLabels();
-		        Enemy.Where(c => c.Y > this.Y).SetLabelBackground();
+		        Enemies.Where(c => c.Y > this.Y).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
 		}

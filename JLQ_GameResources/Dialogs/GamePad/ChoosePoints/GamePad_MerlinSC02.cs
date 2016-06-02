@@ -9,6 +9,7 @@ using JLQ_GameBase;
 
 namespace JLQ_GameResources.Dialogs.GamePad.ChoosePoints
 {
+    /// <summary>梅露兰·普莉兹姆利巴 的符卡02的对话框</summary>
     public sealed class GamePad_MerlinSC02 : GamePad_ChoosePoints
     {
         public GamePad_MerlinSC02(Game game) : base(2, game)

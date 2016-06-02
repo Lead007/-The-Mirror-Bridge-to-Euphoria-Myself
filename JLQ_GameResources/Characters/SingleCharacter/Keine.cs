@@ -23,7 +23,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (!IsBaize) return;
 		        game.DefaultButtonAndLabels();
-		        var cs = game.Characters.Where(c => this.Distance(c) <= 4).ToList();
+		        var cs = game.Characters.Where(c => this.IsInRange(c, SC01RangeBaize)).ToList();
 		        cs.Where(SC01BaizeFriendIsTargetLegal).SetLabelBackground();
 		        cs.Where(SC01BaizeEnemyIsTargetLegal).SetLabelBackground(GameColor.LabelBackground2);
 		    };
@@ -42,7 +42,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        if (IsBaize)
 		        {
 		            game.DefaultButtonAndLabels();
-		            Enemy.Where(c => Math.Abs(c.X - this.X) <= 1).SetLabelBackground();
+		            Enemies.Where(c => Math.Abs(c.X - this.X) <= 1).SetLabelBackground();
 		        }
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
@@ -57,14 +57,15 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		            var cc = game.MouseCharacter;
 		            if (!IsFriend(cc)) return;
 		            game.DefaultButtonAndLabels();
-		            Enemy.Where(c => cc.Distance(c) <= c.AttackRange + c.MoveAbility).SetLabelBackground();
+		            EnemyInRange(cc.Position, cc.AttackRange + cc.MoveAbility).SetLabelBackground();
 		        }
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
 
-        private bool _isBaize;
+        private const int SC01RangeBaize = 4;
 
+        private bool _isBaize;
         private bool IsBaize
         {
             get { return _isBaize; }
@@ -74,14 +75,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 this.LabelDisplay.Content = value ? "白学家" : "慧";
                 this.CloseAmendmentX = value ? (2/1.1) : (1.1/2);
                 if (value) return;
-                SC01Buffs.DoAction(b=>b.BuffEnd());
+                SC01Buffs.DoAction(b => b.BuffEnd());
                 SC01Buffs.Clear();
             }
         }
 
         public Human HumanKind => Human.HalfHuman;
 
-        private List<Buff> SC01Buffs = new List<Buff>();
+        private List<Buff> SC01Buffs { get; }= new List<Buff>();
 
         //天赋
         public override void EndSection()
@@ -97,8 +98,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             if (IsBaize)
             {
                 game.HandleIsTargetLegal = (SCee, point) =>
-                    this.Distance(SCee) <= 4 &&
-                    (SC01BaizeFriendIsTargetLegal(SCee) || SC01BaizeEnemyIsTargetLegal(SCee));
+                    this.IsInRange(SCee, SC01RangeBaize) &&
+                    (SC01BaizeFriendIsTargetLegal(SCee) ||
+                     SC01BaizeEnemyIsTargetLegal(SCee));
                 game.HandleTarget = SCee =>
                 {
                     if (IsFriend(SCee))
@@ -171,7 +173,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             if (IsBaize)
             {
+                game.HandleIsLegalClick = point => IsFriend(game[point]);
+                game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+                game.HandleTarget = SCee =>
+                {
 
+                };
             }
             else
             {
@@ -179,7 +186,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 game.HandleIsTargetLegal = (SCee, point) =>
                 {
                     var c = game[point];
-                    return point.Distance(SCee) <= c.MoveAbility + c.AttackRange;
+                    return point.IsInRange(SCee, c.MoveAbility + c.AttackRange);
                 };
                 game.HandleTarget = SCee =>
                 {

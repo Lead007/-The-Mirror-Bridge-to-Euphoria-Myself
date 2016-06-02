@@ -20,35 +20,39 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将被攻击的角色和将受影响的角色
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (game.MousePoint.Distance(this) > 3) return;
+		        if (!game.MousePoint.IsInRange(this, SC01Range)) return;
 		        game.DefaultButtonAndLabels();
 		        var c1 = game.MouseCharacter;
 		        if (IsEnemy(c1))
 		        {
 		            c1.SetLabelBackground(GameColor.LabelBackground2);
 		        }
-		        Enemy.Where(c => game.MousePoint.Distance(c) == 1).SetLabelBackground();
+		        Enemies.Where(c => game.MousePoint.Distance(c) == 1).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
             //显示将受影响的角色
 		    enterPad[1] = (s, ev) =>
 		    {
-		        if (game.MousePoint.Distance(this) > 4) return;
+		        if (!game.MousePoint.IsInRange(this, SC02Range)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
+		        Enemies.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
             //显示将受影响的角色
 		    enterPad[2] = (s, ev) =>
 		    {
-		        if (game.MousePoint.Distance(this) > 4) return;
+                if (!game.MousePoint.IsInRange(this, SC03Range)) return;
 		        game.DefaultButtonAndLabels();
 		        game.Characters.Where(c => IsFriend(c) && game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(2);
 		}
+
+        private const int SC01Range = 3;
+        private const int SC02Range = 4;
+        private const int SC03Range = 4;
 
         //TODO 天赋
 
@@ -56,8 +60,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= 3;
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.Distance(SCee) <= 1;
+            game.HandleIsLegalClick = point => point.IsInRange(this, SC01Range);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, 1, SCee);
             game.HandleTarget = SCee =>
             {
                 if (SCee.Position == game.MousePoint)
@@ -80,7 +84,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= 4;
+            game.HandleIsLegalClick = point => point.IsInRange(this, SC02Range);
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
@@ -105,7 +109,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= 4;
+            game.HandleIsLegalClick = point => point.IsInRange(this, SC03Range);
             game.HandleIsTargetLegal = (SCee, point) => IsFriend(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {

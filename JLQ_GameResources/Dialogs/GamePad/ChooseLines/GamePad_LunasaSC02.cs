@@ -11,6 +11,8 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChooseLines
 {
     public sealed class GamePad_LunasaSC02 : GamePad_ChooseLines
     {
+        /// <summary>露娜萨·普莉兹姆利巴 的符卡02的对话框</summary>
+        /// <param name="game"></param>
         public GamePad_LunasaSC02(Game game) : base(Direction.Top, 2, game)
         {
             this.GridTop.Loaded += (sender, e) =>

@@ -107,23 +107,16 @@ namespace JLQ_GameResources.Dialogs.GamePad
         }
 
         protected Border GetBorder(Point p)
-        {
-            return GridPad.Children.OfType<Border>().FirstOrDefault(
-                b => (int)b.GetValue(Grid.ColumnProperty) == p.X && (int)b.GetValue(Grid.RowProperty) == p.Y);
-        }
+            => GridPad.Children.OfType<Border>().FirstOrDefault(
+                b => (int) b.GetValue(Grid.ColumnProperty) == p.X && (int) b.GetValue(Grid.RowProperty) == p.Y);
 
         protected Point GetMousePoint(Button sender)
-        {
-            return new Point((int)sender.GetValue(Grid.ColumnProperty), (int)sender.GetValue(Grid.RowProperty));
-        }
+            => new Point((int) sender.GetValue(Grid.ColumnProperty), (int) sender.GetValue(Grid.RowProperty));
 
         /// <summary>选择的点是否合法</summary>
         /// <param name="point">选择的点</param>
         /// <returns>是否合法</returns>
-        protected virtual bool IsLegalClick(Point point)
-        {
-            return !PointsChoose.Contains(point);
-        }
+        protected virtual bool IsLegalClick(Point point) => !PointsChoose.Contains(point);
 
         /// <summary>合法的角色列表</summary>
         /// <param name="point">选择的点</param>

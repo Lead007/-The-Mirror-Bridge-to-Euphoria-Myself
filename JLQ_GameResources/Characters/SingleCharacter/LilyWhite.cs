@@ -144,7 +144,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 game.HandleResetShow = () =>
                 {
                     game.DefaultButtonAndLabels();
-                    Enemy.Where(c => this.Distance(c) <= SC02Range).SetLabelBackground();
+                    EnemyInRange(SC02Range).SetLabelBackground();
                 };
             }
             AddPadButtonEvent(1);

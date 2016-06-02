@@ -35,7 +35,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            var ps = game.Characters.Where(c => IsFriend(c) && c is CharacterPrismriver).ToList();
+            var ps = game.Characters.Where(c => IsFriend(c)).OfType<CharacterPrismriver>().ToList();
             var count = ps.Count;
             foreach (var c in ps)
             {
@@ -82,7 +82,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
-
+            base.EndSC03();
         }
 
     }

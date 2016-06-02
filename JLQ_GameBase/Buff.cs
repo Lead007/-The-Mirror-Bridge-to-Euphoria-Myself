@@ -12,14 +12,9 @@ namespace JLQ_GameBase
     /// 默认的buff类可能会利用buff者自身与施加buff者的相关数据，可以对施加buff者造成影响；
     /// 更复杂的buff需要自建子类；
     /// 每个角色的buff效果自己编写，会有一些静态的buff供调用；
-    /// 开发者备注：静态的buff需要有一系列参数，每人使用lambda表达式代入参数的具体值；
     /// </summary>
     public abstract class Buff
     {
-        /// <summary>
-        /// 将Interval设为此值，则buff无限剩余时间
-        /// </summary>
-        public const int Infinite = Int32.MaxValue;
         /// <summary>buff剩余时间</summary>
         public int Time { get; protected set; }
         /// <summary>buff名称</summary>
@@ -76,7 +71,6 @@ namespace JLQ_GameBase
                 Time = 0;
                 return true;
             }
-            if (Time == Infinite) return false;
             Time -= time;
             return false;
         } 

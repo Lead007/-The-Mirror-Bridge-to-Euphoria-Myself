@@ -97,7 +97,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private bool SC01IsLegalClick(Point point)
         {
             var c = game[point];
-            if (c == null || (!IsInRangeAndEnemy(3, c))) return false;
+            if (!IsInRangeAndEnemy(3, c)) return false;
             pointTemp1 = c.Y == this.Y
                 ? new Point(c.X + (c.X > this.X ? -1 : 1), c.Y)
                 : new Point(c.X, c.Y + (c.Y > this.Y ? -1 : 1));

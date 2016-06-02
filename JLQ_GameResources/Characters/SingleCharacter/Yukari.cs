@@ -39,7 +39,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (game.MousePoint.Distance(this) != 1) return;
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
+		        Enemies.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
@@ -47,7 +47,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        Enemy.SetLabelBackground();
+		        Enemies.SetLabelBackground();
             };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
@@ -81,7 +81,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-
+            base.EndSC01();
         }
 
         /// <summary>符卡02</summary>

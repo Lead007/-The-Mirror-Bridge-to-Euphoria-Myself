@@ -23,13 +23,15 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterPad[0] = (s, ev) =>
 		    {
 		        if (!SC01IsLegalClick(game.MousePoint)) return;
-		        var cs = Enemy.Where(c => SC01IsTargetLegal(c, game.MousePoint)).ToList();
+		        var cs = Enemies.Where(c => SC01IsTargetLegal(c, game.MousePoint)).ToList();
 		        if (!cs.Any()) return;
                 game.DefaultButtonAndLabels();
 		        cs[0].SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		}
+
+        private const int SC02Range = 2;
 
         public override void PreparingSection()
         {
@@ -66,7 +68,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                game.HandleIsTargetLegal = (SCee, point) => dialog.PointsChoose.Any(p => p.Distance(SCee) <= 2);
+                game.HandleIsTargetLegal = (SCee, point) => dialog.PointsChoose.Any(p => p.IsInRange(SCee, SC02Range));
                 game.HandleTarget = SCee =>
                 {
                     if (IsFriend(SCee))
@@ -114,7 +116,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private bool SC01IsTargetLegal(Character SCee, Point point)
         {
-            var cInLine = Enemy.Where(c => IsInLine(c, point)).ToList();
+            var cInLine = Enemies.Where(c => IsInLine(c, point)).ToList();
             if (!cInLine.Any()) return false;
             var ct = cInLine.OrderBy(c => c.Distance(this)).First();
             return SCee == ct;

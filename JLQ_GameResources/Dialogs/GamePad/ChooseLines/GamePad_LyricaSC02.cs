@@ -11,6 +11,7 @@ using MoreEnumerable;
 
 namespace JLQ_GameResources.Dialogs.GamePad.ChooseLines
 {
+    /// <summary>莉莉卡·普莉兹姆利巴 的符卡02的对话框</summary>
     public sealed class GamePad_LyricaSC02 : GamePad_ChooseLines
     {
         public GamePad_LyricaSC02(Game game) : base(Direction.Left, 3, game)

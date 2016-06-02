@@ -27,14 +27,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    {
 		        if (game.MouseCharacter != null) return;
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(c => IsInRangeAndEnemy(game.MousePoint, SC01Range, c)).SetLabelBackground();
+                EnemyInMouseRange(SC01Range).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
             //显示将被攻击的角色
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        game.Characters.Where(SCee => IsInRangeAndEnemy(SC03Range, SCee)).SetLabelBackground();
+                EnemyInRange(SC03Range).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
@@ -51,8 +51,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 	    public override void PreparingSection()
 	    {
 	        _skillBeSymboled.Clear();
-	        var num = Math.Min(SkillNum, Enemy.Count());
-	        var cList = Enemy.OrderBy(c => c.Hp, new IntRandomComparer(random));
+	        var num = Math.Min(SkillNum, Enemies.Count());
+	        var cList = Enemies.OrderBy(c => c.Hp, new IntRandomComparer(random));
 	        for (var i = 0; i < num; i++)
 	        {
 	            var c = cList.ElementAt(i);

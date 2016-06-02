@@ -21,9 +21,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将被攻击的角色
             enterPad[0] = (s, ev) =>
             {
-                if (game.MousePoint.Distance(this) > SC01Range) return;
+                if (game.MousePoint.IsInRange(this, SC01Range)) return;
                 game.DefaultButtonAndLabels();
-                var cs = Enemy.Where(c => game.MousePoint.IsIn33(c)).ToList();
+                var cs = Enemies.Where(c => game.MousePoint.IsIn33(c)).ToList();
                 if (cs.Count == 1)
                 {
                     cs[0].LabelDisplay.Background = GameColor.LabelBackground2;
@@ -71,7 +71,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01：梦想封印，对所有4格内的敌人造成1.0倍率的弹幕攻击</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = point => point.Distance(this) <= SC01Range;
+            game.HandleIsLegalClick = point => point.IsInRange(this, SC01Range);
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleSelf = () => SC01Gain =
                 game.Characters.Count(c => game.HandleIsTargetLegal(c, game.MousePoint)) == 1 ? 6 : 1.5f;

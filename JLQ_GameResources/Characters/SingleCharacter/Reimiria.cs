@@ -13,12 +13,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>蕾米</summary>
     public class Reimiria : CharacterMayRepeatedlyDoDamage
 	{
-        /// <summary>构造函数</summary>
-        /// <param name="id">ID</param>
-        /// <param name="position">位置</param>
-        /// <param name="group">阵营</param>
-        /// <param name="random">随机数对象</param>
-        /// <param name="game">游戏对象</param>
 		public Reimiria(int id, Point position, Group group, Game game)
 			: base(id, position, group, game)
 		{
@@ -27,7 +21,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             enterButton[1] = (s, ev) =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.SetLabelBackground();
+                Enemies.SetLabelBackground();
             };
             SetDefaultLeaveSCButtonDelegate(1);
             //符卡03
@@ -36,7 +30,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                Enemy.Where(c => SC03IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
+                Enemies.Where(c => SC03IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(2);
         }

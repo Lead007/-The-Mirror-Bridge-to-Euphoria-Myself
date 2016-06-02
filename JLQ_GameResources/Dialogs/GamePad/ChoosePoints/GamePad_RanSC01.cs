@@ -10,6 +10,8 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChoosePoints
 {
     public sealed class GamePad_RanSC01 : GamePad_ChoosePoints
     {
+        /// <summary>八云蓝 的符卡01的对话框</summary>
+        /// <param name="game"></param>
         public GamePad_RanSC01(Game game) : base(12, game)
         {
             
@@ -22,7 +24,7 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChoosePoints
 
         protected override IEnumerable<Character> LegalCharacters(Point point)
         {
-            return game.CurrentCharacter.Enemy.Where(c => point.Distance(c) == 1);
+            return game.CurrentCharacter.Enemies.Where(c => point.Distance(c) == 1);
         }
 
         protected override void SetLabelBackground(Character c)

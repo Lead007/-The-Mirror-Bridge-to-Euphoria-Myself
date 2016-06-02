@@ -19,7 +19,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterPad[1] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-		        Enemy.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
+		        Enemies.Where(c => game.MousePoint.IsIn33(c)).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}

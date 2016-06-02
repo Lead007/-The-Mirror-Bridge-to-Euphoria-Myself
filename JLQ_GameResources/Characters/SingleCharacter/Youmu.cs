@@ -24,7 +24,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        if (!SC01IsLegalClick(game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
 		        var mc = game.MouseCharacter;
-		        Enemy.Where(c => game.MousePoint.IsIn33(c))
+		        Enemies.Where(c => game.MousePoint.IsIn33(c))
 		            .DoAction(c => c.SetLabelBackground(c == mc ? GameColor.LabelBackground2 : GameColor.LabelBackground));
 		    };
             SetDefaultLeavePadButtonDelegate(0);
@@ -128,7 +128,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.SetLabelBackground();
+                Enemies.SetLabelBackground();
             };
         }
         /// <summary>结束符卡03</summary>

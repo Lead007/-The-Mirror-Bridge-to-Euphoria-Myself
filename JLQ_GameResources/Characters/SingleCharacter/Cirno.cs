@@ -88,7 +88,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsLegalClick = point => game[point] != null && IsEnemy(game[point]);
+            game.HandleIsLegalClick = point => IsEnemy(game[point]);
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
@@ -102,7 +102,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemy.SetLabelBackground();
+                Enemies.SetLabelBackground();
             };
         }
         /// <summary>结束符卡03</summary>
