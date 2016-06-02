@@ -14,7 +14,31 @@
       <mov>3</mov>
       <rang>1</rang>
     </charc>
-  </datas>
+	<charc id="AliceFigure1">
+      <display>…œ∫£</display>
+      <maxHp>97</maxHp>
+      <att>65</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.2</clo>
+      <spd>2147483647</spd>
+      <mov>1</mov>
+      <rang>1</rang>
+    </charc>
+  	<charc id="AliceFigure2">
+      <display>≈Ó¿≥</display>
+      <maxHp>97</maxHp>
+      <att>65</att>
+      <def>80</def>
+      <hit>80</hit>
+      <dod>60</dod>
+      <clo>1.2</clo>
+      <spd>2147483647</spd>
+      <mov>1</mov>
+      <rang>1</rang>
+    </charc>
+</datas>
   <sc>
     <charc id="FlandreLittle">
       <name id="0"></name>
@@ -26,5 +50,25 @@
       <disc id="2"></disc>
       <disc id="3"></disc>
     </charc>
-  </sc>
+	<charc id="AliceFigure1">
+      <name id="0"></name>
+      <name id="1"></name>
+      <name id="2"></name>
+      <name id="3"></name>
+      <disc id="0"></disc>
+      <disc id="1"></disc>
+      <disc id="2"></disc>
+      <disc id="3"></disc>
+    </charc>
+  	<charc id="AliceFigure2">
+      <name id="0"></name>
+      <name id="1"></name>
+      <name id="2"></name>
+      <name id="3"></name>
+      <disc id="0"></disc>
+      <disc id="1"></disc>
+      <disc id="2"></disc>
+      <disc id="3"></disc>
+    </charc>
+</sc>
 </data>

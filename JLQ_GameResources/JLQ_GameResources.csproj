@@ -75,6 +75,9 @@
     <Compile Include="Buffs\SingleBuff\BuffLimit.cs" />
     <Compile Include="Buffs\SingleBuff\BuffShield.cs" />
     <Compile Include="Buffs\SingleBuff\BuffSuikaUncontrolable.cs" />
+    <Compile Include="Characters\CharacterBeCalled\AliceFigure.cs" />
+    <Compile Include="Characters\CharacterBeCalled\AliceFigures\AliceFigure1.cs" />
+    <Compile Include="Characters\CharacterBeCalled\AliceFigures\AliceFigure2.cs" />
     <Compile Include="Characters\CharacterChildren.cs" />
     <Compile Include="Characters\SingleCharacter\Alice.cs" />
     <Compile Include="Characters\SingleCharacter\Chen.cs" />

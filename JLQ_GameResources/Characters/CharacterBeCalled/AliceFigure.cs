@@ -5,19 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using JLQ_GameBase;
-using JLQ_GameResources.Buffs.SingleBuff;
-using JLQ_GameResources.Characters.SingleCharacter;
 using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.CharacterBeCalled
 {
-    /// <summary>芙兰 召唤出的分身</summary>
-    public class FlandreLittle : Flandre
+    /// <summary>爱丽丝·玛格特洛依德 召唤出的人偶</summary>
+    public abstract class AliceFigure : Character
     {
-        public FlandreLittle(Point position, Group group, Game game)
+        protected AliceFigure(Point position, Group group, Game game)
             : base(0, position, group, game)
         {
-            
+
         }
 
         public override void PreparingSection()
@@ -32,11 +30,23 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled
             game.ButtonSC.DoAction(b => b.IsEnabled = true);
         }
 
-        public override bool DoAttack(Character target, float times = 1)
+        #region SC
+
+        public override void SC01()
         {
-            var b = base.DoAttack(target, times);
-            var buff = new BuffBlooding(target, this, this.BuffTime, game);
-            return b;
+            throw new NotImplementedException();
         }
+
+        public override void SC02()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SC03()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
