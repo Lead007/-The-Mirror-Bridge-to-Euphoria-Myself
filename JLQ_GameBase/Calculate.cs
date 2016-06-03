@@ -138,5 +138,15 @@ namespace JLQ_GameBase
             var i = (length - 1)/2;
             return Math.Abs(origin.X - point.X) <= i && Math.Abs(origin.Y - point.Y) <= i;
         }
+        /// <summary>说中的面前</summary>
+        /// <param name="origin">源点</param>
+        /// <param name="target">目标点</param>
+        /// <returns>面前</returns>
+        public static Point FacePoint(this Point origin, Point target)
+        {
+            return origin.Y == target.Y
+                ? new Point(origin.X + (origin.X > target.X ? -1 : 1), origin.Y)
+                : new Point(origin.X, origin.Y + (origin.Y > target.Y ? -1 : 1));
+        }
     }
 }

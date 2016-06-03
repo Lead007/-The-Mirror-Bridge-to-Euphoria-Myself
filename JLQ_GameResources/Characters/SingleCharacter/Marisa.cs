@@ -18,9 +18,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将被攻击的角色
             enterPad[0] = (s, ev) =>
             {
-                if (!SC01IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
-                game.Characters.Where(c => SC01IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
+                EnemyInMouseRange(1).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
@@ -29,15 +28,32 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                Enemies.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
+                if (game.MouseColumn == this.X)
+                {
+                    Enemies.Where(c => c.X == this.X && ((game.MouseRow > this.Y) == (c.Y > this.Y)))
+                        .SetLabelBackground();
+                    Enemies.Where(c =>
+                        Math.Abs(c.X - this.X) == 1 && ((game.MouseRow > this.Y) == (c.Y > this.Y)) && c.Y != this.Y)
+                        .SetLabelBackground(GameColor.LabelBackground2);
+                }
+                else
+                {
+                    Enemies.Where(c => c.Y == this.Y && ((game.MouseColumn > this.X) == (c.X > this.X)))
+                        .SetLabelBackground();
+                    Enemies.Where(c =>
+                        Math.Abs(c.Y - this.Y) == 1 && ((game.MouseColumn > this.X) == (c.X > this.X)) && c.X != this.X)
+                        .SetLabelBackground(GameColor.LabelBackground2);
+                }
             };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
-            //显示将被受影响的角色和其将被移动至的位置（若存在）
+            //显示将瞬移到的点、将被受影响的角色和其将被移动至的位置（若存在）
             enterPad[2] = (s, ev) =>
             {
                 if (!SC03IsLegalClick(game.MousePoint)) return;
                 game.DefaultButtonAndLabels();
+                var p = this.Position.FacePoint(game.MousePoint);
+                if (this.Position != p) game.GetButton(p).SetButtonColor();
                 var c = game.MouseCharacter;
                 c.SetLabelBackground();
                 var point = Destination(c);
@@ -52,7 +68,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public Human HumanKind => Human.FullHuman;
 
         private float SCGain = 1.0f;
-        private const float SC02Gain = 2.5f;
+        private const float SC02Gain1 = 2;
+        private const float SC02Gain2 = 1.5f;
         private const int SC03Const1 = 2;
         private const int SC03Const2 = 2;
 
@@ -70,8 +87,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01：星屑幻想，选定一块3*3的区域，对其内敌人造成1.0倍率的弹幕攻击。</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = SC01IsLegalClick;
-            game.HandleIsTargetLegal = SC01IsTargetLegal;
+            game.HandleIsLegalClick = point => true;
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, 1, SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SCGain);
             AddPadButtonEvent(0);
         }
@@ -88,7 +105,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsLegalClick = point => point.Distance(this) == 1;
             game.HandleIsTargetLegal = (SCee, point) => SC02IsTargetLegal(SCee, point) && IsEnemy(SCee);
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, (float) (SC02Gain*SCGain));
+            game.HandleTarget =
+                SCee => HandleDoDanmakuAttack(SCee,
+                    (float)
+                        ((Math.Min(Math.Abs(SCee.X - this.X), Math.Abs(SCee.Y - this.Y)) == 0
+                            ? SC02Gain1
+                            : SC02Gain2)*SCGain));
             AddPadButtonEvent(1);
         }
 
@@ -104,6 +126,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsLegalClick = SC03IsLegalClick;
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+            game.HandleSelf = () => Move(this.Position.FacePoint(game.MousePoint));
             game.HandleTarget = SCee =>
             {
                 //判断是否命中
@@ -126,8 +149,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                Enemies.Where(c => this.Distance(c) <= SC03Const1 && (c.X == this.X || c.Y == this.Y))
-                    .SetLabelBackground();
+                Enemies.Where(c => SC03IsLegalClick(c.Position)).SetLabelBackground();
             };
         }
         /// <summary>结束符卡03</summary>
@@ -137,37 +159,18 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
-        private static bool SC01IsLegalClick(Point point)
-        {
-            return point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
-        }
-
-        private bool SC01IsTargetLegal(Character SCee, Point point)
-        {
-            return point.IsIn33(SCee) && IsEnemy(SCee);
-        }
-
         private bool SC02IsTargetLegal(Character SCee, Point point)
         {
             if (point.X == this.X)
             {
-                if (point.Y > this.Y)
-                {
-                    return SCee.X == this.X && SCee.Y > this.Y;
-                }
-                return SCee.X == this.X && SCee.Y < this.Y;
+                return Math.Abs(SCee.X - this.X) <= 1 && ((point.Y > this.Y) == (SCee.Y > this.Y)) && SCee.Y != this.Y;
             }
-            if (point.X > this.X)
-            {
-                return SCee.Y == this.Y && SCee.X > this.X;
-            }
-            return SCee.Y == this.Y && SCee.X < this.X;
+            return Math.Abs(SCee.Y - this.Y) <= 1 && ((point.X > this.X) == (SCee.X > this.X)) && SCee.X != this.X;
         }
 
-        private bool SC03IsLegalClick(Point point)
-        {
-            return IsInRangeAndEnemy(SC03Const1, point) && (point.X == this.X || point.Y == this.Y);
-        }
+        private bool SC03IsLegalClick(Point point) =>
+            IsInRangeAndEnemy(SC03Const1, point) && (point.X == this.X || point.Y == this.Y) &&
+            IsCurrentOrNull(game[this.Position.FacePoint(point)]);
 
         private Point Destination(Character SCee)
         {
@@ -181,6 +184,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                         ? Math.Min(SCee.X + 2, Game.Column - 1)
                         : Math.Max(SCee.X - SC03Const2, 0),
                     SCee.Y);
+        }
+
+        private bool IsCurrentOrNull(Character c)
+        {
+            return c == null || c == this;
         }
     }
 }

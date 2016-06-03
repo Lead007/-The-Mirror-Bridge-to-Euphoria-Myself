@@ -19,14 +19,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将瞬移到的点和将被攻击的目标
 		    enterPad[0] = (s, ev) =>
 		    {
-		        if (!SC01IsLegalClick(this.game.MousePoint)) return;
+		        if (!game.HandleIsLegalClick(this.game.MousePoint)) return;
 		        this.game.DefaultButtonAndLabels();
-		        if (this.Position != pointTemp1)
+		        var p = this.Position.FacePoint(game.MousePoint);
+		        if (this.Position != p)
 		        {
-		            game.GetButton(pointTemp1).SetButtonColor();
-		        }
-		        EnemyInRange(pointTemp1, SC01Range2).SetLabelBackground();
-                pointTemp1 = Game.DefaultPoint;
+                    game.GetButton(p).SetButtonColor();
+                }
+		        EnemyInRange(p, SC01Range2).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
@@ -61,8 +61,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private const int SC03Range = 1;
         private const float SC03DamageGain = 0.7f;
 
-	    private Point pointTemp1 = Game.DefaultPoint;
-
         //天赋
         protected override float HitBackGain => 0.3f;
 
@@ -72,16 +70,21 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01：乘着风，瞬移到3格内一名敌方角色面前，并释放旋风对自身2格内所有敌方单位造成0.5倍率的伤害</summary>
         public override void SC01()
         {
-            game.HandleIsLegalClick = SC01IsLegalClick;
-            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(pointTemp1, SC01Range2, SCee);
-            game.HandleSelf = () => Move(pointTemp1);
+            game.HandleIsLegalClick = point =>
+            {
+                if (!IsInRangeAndEnemy(SC01Range, game[point])) return false;
+                var ct = game[this.Position.FacePoint(point)];
+                return ct == null || ct == this;
+            };
+            game.HandleIsTargetLegal =
+                (SCee, point) => IsInRangeAndEnemy(this.Position.FacePoint(point), SC01Range2, SCee);
+            game.HandleSelf = () => Move(this.Position.FacePoint(game.MousePoint));
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01DamageGain);
             AddPadButtonEvent(0);
             game.HandleResetShow = () =>
             {
                 this.game.DefaultButtonAndLabels();
-                Game.PadPoints.Where(SC01IsLegalClick).Select(p => game[p]).SetLabelBackground();
-                pointTemp1 = Game.DefaultPoint;
+                Game.PadPoints.Where(game.HandleIsLegalClick).Select(p => game[p]).SetLabelBackground();
             };
         }
 
@@ -123,18 +126,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             base.EndSC03();
             RemovePadButtonEvent(2);
-        }
-
-        private bool SC01IsLegalClick(Point point)
-        {
-            var c = game[point];
-            if (c == null || (!IsInRangeAndEnemy(SC01Range, c))) return false;
-            pointTemp1 = c.Y == this.Y
-                ? new Point(c.X + (c.X > this.X ? -1 : 1), c.Y)
-                : new Point(c.X, c.Y + (c.Y > this.Y ? -1 : 1));
-            if (this.Position == pointTemp1 || game[pointTemp1] == null) return true;
-            pointTemp1 = Game.DefaultPoint;
-            return false;
         }
     }
 }
