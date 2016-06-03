@@ -233,14 +233,13 @@ namespace JLQ_GameBase
             LabelSection = new Label
             {
                 Content = "游戏还未开始",
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(197, 47, 0, 0),
                 Width = 115,
                 FontWeight = FontWeights.SemiBold,
                 Height = 25
             };
-            LabelSection.SetValue(Grid.RowProperty, 2);
+            LabelSection.SetValue(Grid.ColumnProperty, 1);
             var binding = new Binding
             {
                 Source = LabelSection,
@@ -394,6 +393,7 @@ namespace JLQ_GameBase
                 Content = "1",
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
+                FontSize = 16,
                 FontWeight = FontWeights.SemiBold
             };
             LabelID.SetValue(Grid.ColumnProperty, 1);

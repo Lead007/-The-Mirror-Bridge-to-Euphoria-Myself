@@ -251,7 +251,7 @@ namespace JLQ_MBE_BattleSimulation
             game.AddCharacter(point, group, type);
             menuBackout.IsEnabled = true;
             var labelTemp = game.LabelsGroup[(int)group + 1];
-            labelTemp.Content = Convert.ToInt32(labelTemp.Content) + 1;
+            labelTemp.Content = Convert.ToInt32(labelTemp.ContentStringFormat) + 1;
         }
         /// <summary>添加角色</summary>
         /// <param name="info">添加的角色信息</param>
@@ -398,6 +398,12 @@ namespace JLQ_MBE_BattleSimulation
             MessageBox.Show("生成成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        private void ChangeAddNum(MouseWheelEventArgs e, Label sender)
+        {
+            var i = int.Parse(sender.Content as string);
+            sender.Content = (e.Delta > 0 ? Math.Min(10, i + 1) : Math.Max(1, i - 1)).ToString();
+        }
+
         /// <summary>清除所有角色</summary>
         private void ClearCharacters()
         {
@@ -519,12 +525,12 @@ namespace JLQ_MBE_BattleSimulation
             game.LabelID.Visibility = Visibility.Hidden;
             comboBoxDisplay.Text = "";
             comboBoxDisplay.IsEnabled = false;
-            comboBoxEnemy.IsEnabled = false;
-            comboBoxEnemy.Text = "";
-            comboBoxFriend.IsEnabled = false;
-            comboBoxFriend.Text = "";
-            comboBoxMiddle.IsEnabled = false;
-            comboBoxMiddle.Text = "";
+            labelEnemy.IsEnabled = false;
+            labelEnemy.Content = "";
+            labelFriend.IsEnabled = false;
+            labelFriend.Content = "";
+            labelMiddle.IsEnabled = false;
+            labelMiddle.Content = "";
             buttonGenerateFriend.IsEnabled = false;
             buttonGenerateEnemy.IsEnabled = false;
             buttonGenerateMiddle.IsEnabled = false;
@@ -589,20 +595,27 @@ namespace JLQ_MBE_BattleSimulation
 
         #region 随机生成
         private void buttonGenerateFriend_Click(object sender, RoutedEventArgs e)
-            => RandomlyAddCharacters(Group.Friend, int.Parse(comboBoxFriend.Text));
+            => RandomlyAddCharacters(Group.Friend, int.Parse(labelFriend.Content as string));
 
         private void buttonGenerateEnemy_Click(object sender, RoutedEventArgs e)
-            => RandomlyAddCharacters(Group.Enemy, int.Parse(comboBoxEnemy.Text));
+            => RandomlyAddCharacters(Group.Enemy, int.Parse(labelEnemy.Content as string));
 
         private void buttonGenerateMiddle_Click(object sender, RoutedEventArgs e)
-            => RandomlyAddCharacters(Group.Middle, int.Parse(comboBoxMiddle.Text));
+            => RandomlyAddCharacters(Group.Middle, int.Parse(labelMiddle.Content as string));
+
+        private void labelFriend_MouseWheel(object sender, MouseWheelEventArgs e)
+            => ChangeAddNum(e, labelFriend);
+
+        private void labelMiddle_MouseWheel(object sender, MouseWheelEventArgs e)
+            => ChangeAddNum(e, labelMiddle);
+
+        private void labelEnemy_MouseWheel(object sender, MouseWheelEventArgs e)
+            => ChangeAddNum(e, labelEnemy);
         #endregion
 
         #region Loaded
         private void borderPad_Loaded(object sender, RoutedEventArgs e)
             => borderPad.Child = game.GridPad;
-
-        private void gridWindow_Loaded(object sender, RoutedEventArgs e) => gridWindow.Children.Add(game.LabelSection);
 
         private void gridGame_Loaded(object sender, RoutedEventArgs e)
         {
@@ -635,6 +648,8 @@ namespace JLQ_MBE_BattleSimulation
 
         private void gridGameInformation_Loaded(object sender, RoutedEventArgs e)
             => gridGameInformation.Children.Add(game.LabelID);
+
+        private void gridSection_Loaded(object sender, RoutedEventArgs e) => gridSection.Children.Add(game.LabelSection);
         #endregion
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

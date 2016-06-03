@@ -90,6 +90,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.ButtonSC[2].IsEnabled = true;
         }
 
+        public override string ToString()
+            => (IsWhite ? "霍瓦特状态\n" : "布莱克状态\n") + base.ToString();
+
         //符卡
         /// <summary>符卡01</summary>
         public override void SC01()

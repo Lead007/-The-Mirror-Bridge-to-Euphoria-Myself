@@ -63,6 +63,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(2);
 		}
 
+        public Human HumanKind => Human.HalfHuman;
+
         private const int SC01RangeBaize = 4;
 
         private bool _isBaize;
@@ -80,8 +82,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             }
         }
 
-        public Human HumanKind => Human.HalfHuman;
-
         private List<Buff> SC01Buffs { get; }= new List<Buff>();
 
         //天赋
@@ -90,6 +90,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSection();
             IsBaize = random.NextBool(1.0/6);
         }
+
+        public override string ToString() => (IsBaize ? "白泽状态\n" : string.Empty) + base.ToString();
 
         //符卡
         /// <summary>符卡01</summary>
