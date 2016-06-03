@@ -276,6 +276,14 @@ namespace JLQ_GameBase
         public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemies.Select(c => c.Position));
         /// <summary>符卡的灵力消耗</summary>
         public virtual int[] SCMpUse { get; } = new[] {0, 0, 0};//TODO SC Mp Use
+
+        /// <summary>用于保存的角色信息</summary>
+        internal CharacterInfo Info => new CharacterInfo
+        {
+            Position = this.Position,
+            CGroup = this.Group,
+            Display = this.Display
+        };
         #endregion
 
         #region 游戏相关委托

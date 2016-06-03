@@ -41,7 +41,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
             {
                 textBoxName.Text = textBoxName.Text.Substring(0, textBoxName.Text.Length - 1);
             }
-            labelPath.Content = game.SavePath + textBoxName.Text + "   ";
+            labelPath.Content = game.SavePath + textBoxName.Text + ".pad\t";
             if (!string.IsNullOrWhiteSpace(textBoxName.Text))
             {
                 textBoxName.BorderBrush = GameColor.BaseColor;
@@ -54,7 +54,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
             game.SavePath = dialog.SelectedPath;
             if (game.SavePath.Last() != '\\') game.SavePath += "\\";
-            labelPath.Content = game.SavePath + textBoxName.Text + "\\\t";
+            labelPath.Content = game.SavePath + textBoxName.Text + ".pad\t";
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -69,39 +69,16 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
                 textBoxName.BorderBrush = Brushes.Red;
                 return;
             }
-            var path = game.SavePath + textBoxName.Text;
-            if (Directory.Exists(path))
+            var filePath = game.SavePath + textBoxName.Text + ".pad";
+            if (File.Exists(filePath))
             {
-                Game.ErrorMessageBox("该路径已经存在！");
+                Game.ErrorMessageBox("该文件已经存在！");
                 return;
             }
-            Directory.CreateDirectory(path);
-            path += "\\";
             var formatter = new BinaryFormatter();
-            foreach (var c in game.Characters)
+            using (var writer = File.Create(filePath))
             {
-                var pathc = path + c.ID;
-                Directory.CreateDirectory(pathc);
-                pathc += "\\";
-                using (Stream writer = File.Create(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Data))
-                {
-                    formatter.Serialize(writer, Game.CharacterDataListShow.First(cd => cd.Name == c.Name));
-                }
-                using (Stream writer = File.Create(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Group))
-                {
-                    formatter.Serialize(writer, c.Group);
-                }
-                using (Stream writer = File.Create(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Position))
-                {
-                    formatter.Serialize(writer, c.Position);
-                }
-            }
-            using (var writer = new StreamWriter(path + textBoxName.Text + ".pad"))
-            {
-                writer.WriteLine("Name: {0}", textBoxName.Text);
-                writer.WriteLine("Number of Characters: {0}", game.Characters.Count);
-                writer.WriteLine("Save Time: {0}",
-                    DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("en-US")));
+                formatter.Serialize(writer, game.CInfos);
             }
             Thread.Sleep(2000);
             MessageBox.Show("保存成功！", "成功", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -41,6 +41,10 @@
     <Reference Include="Data">
       <HintPath>..\Data\bin\Release\Data.dll</HintPath>
     </Reference>
+    <Reference Include="ExceptionHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExceptionHelper\bin\Release\ExceptionHelper.dll</HintPath>
+    </Reference>
     <Reference Include="FileHelper">
       <HintPath>..\FileHelper\bin\Release\FileHelper.dll</HintPath>
     </Reference>

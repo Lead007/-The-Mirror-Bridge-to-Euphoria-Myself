@@ -133,6 +133,8 @@ namespace JLQ_GameBase
 
         /// <summary>游戏中所有角色列表</summary>
         public List<Character> Characters { get; } = new List<Character>();
+        /// <summary>游戏中所有角色的信息列表</summary>
+        public List<CharacterInfo> CInfos => Characters.Select(c => c.Info).ToList(); 
 
         /// <summary>加人模式上一个添加的角色</summary>
         public Character CharacterLastAdd { get; set; }

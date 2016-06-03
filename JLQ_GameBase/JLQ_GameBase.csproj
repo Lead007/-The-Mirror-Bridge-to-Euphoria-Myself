@@ -64,6 +64,7 @@
     <Compile Include="Buffs\BuffChildren.cs" />
     <Compile Include="Calculate.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="CharacterInfo.cs" />
     <Compile Include="Comparer.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="DelegateEvent.cs" />

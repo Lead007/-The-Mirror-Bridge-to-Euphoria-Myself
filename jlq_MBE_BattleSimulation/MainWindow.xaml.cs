@@ -21,6 +21,7 @@ using System.Xml;
 using System.Runtime.Serialization.Formatters.Binary;
 using Bitmap;
 using Data;
+using ExceptionHelper;
 using FileHelper;
 using JLQ_MBE_BattleSimulation.Dialogs;
 using JLQ_GameBase;
@@ -252,7 +253,9 @@ namespace JLQ_MBE_BattleSimulation
             var labelTemp = game.LabelsGroup[(int)group + 1];
             labelTemp.Content = Convert.ToInt32(labelTemp.Content) + 1;
         }
-
+        /// <summary>添加角色</summary>
+        /// <param name="info">添加的角色信息</param>
+        private void AddCharacter(CharacterInfo info) => AddCharacter(info.Position, info.CGroup, info.Display);
 
 
         /// <summary>网格单击事件</summary>
@@ -652,58 +655,31 @@ namespace JLQ_MBE_BattleSimulation
                 InitialDirectory = game.LoadPath,
                 Title = "选择棋盘文件(*.pad)",
                 Multiselect = false,
+                Filter = "棋盘文件|*.pad"
             };
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-            var result = MessageBox.Show("将清空棋盘，确定？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-            if (result != MessageBoxResult.OK) return;
-            ClearCharacters();
-            var index = dialog.FileName.LastIndexOf('\\');
-            game.LoadPath = dialog.FileName.Substring(0, index + 1);
-            var p = new Point(0, 0);
-            const Group g = Group.Friend;
-            var d = Game.CharacterDataListShow.First(cd => cd.Name == "Reimu");
-            var formatter = new BinaryFormatter();
-            for (var i = 1; Directory.Exists(game.LoadPath + i); i++)
+            if (game.Characters.Any())
             {
-                var pathc = game.LoadPath + i + "\\";
-                Point pp;
-                if (File.Exists(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Position))
+                var result = MessageBox.Show("将清空棋盘，确定？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (result != MessageBoxResult.OK) return;
+                ClearCharacters();
+            }
+            var formatter = new BinaryFormatter();
+            using (var reader = File.OpenRead(dialog.FileName))
+            {
+                try
                 {
-                    using (Stream reader = File.OpenRead(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Position))
+                    var infos = formatter.Deserialize(reader) as List<CharacterInfo>;
+                    foreach (var info in infos)
                     {
-                        pp = (Point)formatter.Deserialize(reader);
+                        AddCharacter(info);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    pp = p;
-                    p = p.Y == Game.Row - 1 ? new Point(p.X + 1, 0) : new Point(p.X, p.Y + 1);
+                    ex.Log();
+                    return;
                 }
-                Group gg;
-                if (File.Exists(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Group))
-                {
-                    using (Stream reader = File.OpenRead(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Group))
-                    {
-                        gg = (Group)formatter.Deserialize(reader);
-                    }
-                }
-                else
-                {
-                    gg = g;
-                }
-                CharacterData cd;
-                if (File.Exists(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Data))
-                {
-                    using (Stream reader = File.OpenRead(pathc + jlq_MBE_BattleSimulation.Properties.Resources.Data))
-                    {
-                        cd = (CharacterData)formatter.Deserialize(reader);
-                    }
-                }
-                else
-                {
-                    cd = d;
-                }
-                AddCharacter(pp, gg, cd.Display);
             }
             MessageBox.Show("载入成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
