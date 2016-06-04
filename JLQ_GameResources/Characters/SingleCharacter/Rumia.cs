@@ -7,6 +7,7 @@ using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
+using RandomHelper;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -52,7 +53,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 	    {
 	        _skillBeSymboled.Clear();
 	        var num = Math.Min(SkillNum, Enemies.Count());
-	        var cList = Enemies.OrderBy(c => c.Hp, new IntRandomComparer(random));
+            var cList = Enemies.OrderBy(c => c.Hp, new RandomComparer<int>(random));
 	        for (var i = 0; i < num; i++)
 	        {
 	            var c = cList.ElementAt(i);
