@@ -84,12 +84,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             }
         }
 
-        public override void EndSection()
-        {
-            base.EndSection();
-            game.ButtonSC[2].IsEnabled = true;
-        }
-
         public override string ToString()
             => (IsWhite ? "霍瓦特状态\n" : "布莱克状态\n") + base.ToString();
 

@@ -521,7 +521,7 @@ namespace JLQ_MBE_BattleSimulation
             menuBackout.IsEnabled = false;
             menuClear.IsEnabled = false;
             labelShow.Content = "战斗模式";
-            label2.Visibility = Visibility.Hidden;
+            labelStaticID.Visibility = Visibility.Hidden;
             game.LabelID.Visibility = Visibility.Hidden;
             comboBoxDisplay.Text = "";
             comboBoxDisplay.IsEnabled = false;

@@ -26,12 +26,6 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled
             game.ButtonSC.DoAction(b => b.IsEnabled = false);
         }
 
-        public override void EndSection()
-        {
-            base.EndSection();
-            game.ButtonSC.DoAction(b => b.IsEnabled = true);
-        }
-
         public override bool DoAttack(Character target, float times = 1)
         {
             var b = base.DoAttack(target, times);

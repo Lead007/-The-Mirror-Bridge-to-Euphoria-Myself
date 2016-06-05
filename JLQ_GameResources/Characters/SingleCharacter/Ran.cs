@@ -44,12 +44,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             }
         }
 
-        public override void EndSection()
-        {
-            base.EndSection();
-            game.ButtonSC[0].IsEnabled = true;
-        }
-
         //天赋
         protected override float HitBackGain => 0.1f;
 

@@ -69,7 +69,7 @@
             </Expander>
         </Grid>
         <StackPanel HorizontalAlignment="Stretch" Height="28" Margin="0" VerticalAlignment="Top" Grid.ColumnSpan="3">
-            <Menu x:Name="menu" Height="22">
+            <Menu Height="22">
                 <MenuItem Header="游戏">
                     <MenuItem Header="转为战斗模式" Name="menuPattern" Click="menuPattern_Click"/>
                     <MenuItem Header="撤销上一次加人" Name="menuBackout" IsEnabled="False" Click="menuBackout_Click"/>
@@ -87,7 +87,6 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <ComboBox x:Name="comboBoxDisplay" HorizontalAlignment="Left" Margin="22,60,0,0" VerticalAlignment="Top" Width="120"/>
         <Grid x:Name="gridGameInformation" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="239" Margin="36,0,0,8" Height="81" Loaded="gridGameInformation_Loaded">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -98,8 +97,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" FontSize="16" Foreground="Red" Grid.Column="1"/>
-            <Label x:Name="label" Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
-            <Label x:Name="label2" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
+            <Label Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
+            <Label x:Name="labelStaticID" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
         </Grid>
         <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Margin="0,0,0,8" Height="81">
             <Grid.RowDefinitions>
@@ -109,7 +108,6 @@
             <Button x:Name="buttonSave" Content="保存当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonSave_Click"/>
             <Button x:Name="buttonLoad" Content="载入棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonLoad_Click" Grid.Row="1"/>
         </Grid>
-        <Label x:Name="label4" Content="选择角色：" HorizontalAlignment="Left" Margin="22,30,0,0" VerticalAlignment="Top"/>
         <Grid HorizontalAlignment="Stretch" Height="40" Grid.Row="2" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
@@ -121,7 +119,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="label1" Content="当前阶段：" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28"/>
+            <Label Content="当前阶段：" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28"/>
         </Grid>
         <GroupBox Header="游戏信息" BorderBrush="Red" BorderThickness="2" Grid.Column="1" Grid.Row="2">
             <Grid>
@@ -146,11 +144,24 @@
                         <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="label3" Content="己方角色数量：" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                    <Label x:Name="label5" Content="中立角色数量:" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                    <Label x:Name="label7" Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <Label Content="己方角色数量：" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <Label Content="中立角色数量:" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <Label Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                 </Grid>
             </Grid>
         </GroupBox>
+        <Grid HorizontalAlignment="Stretch" Height="50" VerticalAlignment="Top" Margin="0,50,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ComboBox x:Name="comboBoxDisplay" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" Width="120"/>
+            <Label Content="选择角色：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" RenderTransformOrigin="0.576,0.4" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </Window>

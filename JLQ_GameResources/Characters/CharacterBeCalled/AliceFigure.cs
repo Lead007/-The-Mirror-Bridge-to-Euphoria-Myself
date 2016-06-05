@@ -24,12 +24,6 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled
             game.ButtonSC.DoAction(b => b.IsEnabled = false);
         }
 
-        public override void EndSection()
-        {
-            base.EndSection();
-            game.ButtonSC.DoAction(b => b.IsEnabled = true);
-        }
-
         #region SC
 
         public override void SC01()
