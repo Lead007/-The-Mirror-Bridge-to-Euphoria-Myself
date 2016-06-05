@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Bitmap;
 using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
 
@@ -36,7 +35,7 @@ namespace JLQ_GameResources.Buffs.SingleBuff
             }
             catch
             {
-                _imageShield.Source = BitmapConverter.BitmapToBitmapImage(Properties.Resources.Error);
+                _imageShield.Source = new BitmapImage(new Uri("Images\\Error.jpg", UriKind.Relative));
             }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
         }

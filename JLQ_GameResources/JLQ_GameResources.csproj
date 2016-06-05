@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bitmap">
-      <HintPath>..\Bitmap\bin\Release\Bitmap.dll</HintPath>
-    </Reference>
     <Reference Include="JLQ_BaseBuffs">
       <HintPath>..\JLQ_BaseBuffs\bin\Release\JLQ_BaseBuffs.dll</HintPath>
     </Reference>
@@ -146,6 +143,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Error.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

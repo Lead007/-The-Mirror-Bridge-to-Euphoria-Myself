@@ -525,6 +525,8 @@ namespace JLQ_MBE_BattleSimulation
             game.LabelID.Visibility = Visibility.Hidden;
             comboBoxDisplay.Text = "";
             comboBoxDisplay.IsEnabled = false;
+            expanderGenerate.IsExpanded = false;
+            expanderGenerate.IsEnabled = false;
             labelEnemy.IsEnabled = false;
             labelEnemy.Content = "";
             labelFriend.IsEnabled = false;
@@ -588,7 +590,8 @@ namespace JLQ_MBE_BattleSimulation
 
         private void menuMods_Click(object sender, RoutedEventArgs e)
         {
-            var mods = Assemblies.Aggregate("已加载的Mods：", (s, a) => s += ("\n" + a.GetName()));
+            var mods = Assemblies.Aggregate(string.Format("已加载的Mods：{0}个", Assemblies.Count),
+                (s, a) => s += ("\n" + a.GetName()));
             MessageBox.Show(mods, "已加载的Mods", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         #endregion

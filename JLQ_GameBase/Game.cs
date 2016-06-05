@@ -448,6 +448,11 @@ namespace JLQ_GameBase
         /// <param name="position">需要搜索角色的位置</param>
         /// <returns>在该位置的角色</returns>
         public Character this[Point position] => Characters.FirstOrDefault(c => c.Position == position);
+        
+        /// <summary>获取特定ID的角色，若没有则返回null</summary>
+        /// <param name="ID">需要搜索角色的ID</param>
+        /// <returns>该ID的角色</returns>
+        public Character this[int ID] => ID < 1 ? null : Characters.FirstOrDefault(c => c.ID == ID);
 
         #region 当前行动者属性
         /// <summary>当前行动者的位置</summary>

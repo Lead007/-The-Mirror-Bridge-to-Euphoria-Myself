@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JLQ_MBE_BattleSimulation"
         xmlns:system1="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="The Mirror Bridge to Euphoria" Height="602" Width="906" Closing="window_Closing" MinHeight="250" MinWidth="250" WindowStartupLocation="CenterScreen">
+        Title="The Mirror Bridge to Euphoria" Height="602" Width="906" Closing="window_Closing" MinHeight="602" MinWidth="906" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
     </Window.Resources>
@@ -45,23 +45,28 @@
             <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="4" CornerRadius="5">
                 <Grid x:Name="gridSC03"/>
             </Border>
-            <Grid Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="5" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="buttonGenerateFriend" Content="随机生成友军" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="27" Click="buttonGenerateFriend_Click" Margin="10,0,0,0"/>
-                <Button x:Name="buttonGenerateMiddle" Content="随机生成中立" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Width="75" Height="27" Click="buttonGenerateMiddle_Click" Margin="10,0,0,0"/>
-                <Button x:Name="buttonGenerateEnemy" Content="随机生成敌军" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Width="75" Height="27" Click="buttonGenerateEnemy_Click" Margin="10,0,0,0"/>
-                <Label x:Name="labelFriend" Content="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="27" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelFriend_MouseWheel"/>
-                <Label x:Name="labelMiddle" Content="1" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Stretch" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="27" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelMiddle_MouseWheel"/>
-                <Label x:Name="labelEnemy" Content="1" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Stretch" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="27" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelEnemy_MouseWheel"/>
-            </Grid>
+            <Expander x:Name="expanderGenerate" Header="随机生成角色" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsExpanded="True" Padding="0,5,0,0" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" Margin="0,5,0,-25">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="56*"/>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="89*"/>
+                        <ColumnDefinition Width="119*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="buttonGenerateFriend" Content="随机生成友军" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="buttonGenerateFriend_Click" Margin="10,0,0,4"/>
+                    <Button x:Name="buttonGenerateMiddle" Content="随机生成中立" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="buttonGenerateMiddle_Click" Margin="10,0,0,4"/>
+                    <Button x:Name="buttonGenerateEnemy" Content="随机生成敌军" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Click="buttonGenerateEnemy_Click" Margin="10,0,0,4"/>
+                    <Label x:Name="labelFriend" Content="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelFriend_MouseWheel" Margin="0,0,0,4" Grid.ColumnSpan="2"/>
+                    <Label x:Name="labelMiddle" Content="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelMiddle_MouseWheel" Margin="0,0,0,4" Grid.ColumnSpan="2"/>
+                    <Label x:Name="labelEnemy" Content="1" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelEnemy_MouseWheel" Margin="0,0,0,4" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="checkBox" Content="生成成功后提示 " HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" FontWeight="SemiBold" HorizontalContentAlignment="Right" Grid.Column="3" Grid.Row="2" Margin="5,8,0,8"/>
+                </Grid>
+            </Expander>
         </Grid>
         <StackPanel HorizontalAlignment="Stretch" Height="28" Margin="0" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <Menu x:Name="menu" Height="22">
@@ -83,20 +88,47 @@
             </Menu>
         </StackPanel>
         <ComboBox x:Name="comboBoxDisplay" HorizontalAlignment="Left" Margin="22,60,0,0" VerticalAlignment="Top" Width="120"/>
-        <Border BorderBrush="Red" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Padding="1" CornerRadius="5" Margin="2,5,2,2">
+        <Grid x:Name="gridGameInformation" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="239" Margin="36,0,0,8" Height="81" Loaded="gridGameInformation_Loaded">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" FontSize="16" Foreground="Red" Grid.Column="1"/>
+            <Label x:Name="label" Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
+            <Label x:Name="label2" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
+        </Grid>
+        <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Margin="0,0,0,8" Height="81">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button x:Name="buttonSave" Content="保存当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonSave_Click"/>
+            <Button x:Name="buttonLoad" Content="载入棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonLoad_Click" Grid.Row="1"/>
+        </Grid>
+        <Label x:Name="label4" Content="选择角色：" HorizontalAlignment="Left" Margin="22,30,0,0" VerticalAlignment="Top"/>
+        <Grid HorizontalAlignment="Stretch" Height="40" Grid.Row="2" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid x:Name="gridSection" HorizontalAlignment="Center" Height="40" Margin="0,0,0,30" Grid.Row="2" VerticalAlignment="Bottom" Width="180" Loaded="gridSection_Loaded" Panel.ZIndex="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="label1" Content="当前阶段：" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28"/>
+        </Grid>
+        <GroupBox Header="游戏信息" BorderBrush="Red" BorderThickness="2" Grid.Column="1" Grid.Row="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
                 <Grid x:Name="gridGame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Loaded="gridGame_Loaded">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -119,42 +151,6 @@
                     <Label x:Name="label7" Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                 </Grid>
             </Grid>
-        </Border>
-        <Grid x:Name="gridGameInformation" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="239" Margin="36,28,0,0" Height="81" Loaded="gridGameInformation_Loaded">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" FontSize="16" Foreground="Red" Grid.Column="1"/>
-            <Label x:Name="label" Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
-            <Label x:Name="label2" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
-        </Grid>
-        <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Margin="0,36,0,0" Height="81">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Button x:Name="buttonSave" Content="保存当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonSave_Click"/>
-            <Button x:Name="buttonLoad" Content="载入棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonLoad_Click" Grid.Row="1"/>
-        </Grid>
-        <Label x:Name="label4" Content="选择角色：" HorizontalAlignment="Left" Margin="22,30,0,0" VerticalAlignment="Top"/>
-        <Grid HorizontalAlignment="Stretch" Height="40" Grid.Row="2" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <CheckBox x:Name="checkBox" Content="生成成功后提示 " HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="True" FontWeight="SemiBold" Height="21" HorizontalContentAlignment="Right"/>
-        </Grid>
-        <Grid x:Name="gridSection" HorizontalAlignment="Center" Height="40" Margin="0,0,0,30" Grid.Row="2" VerticalAlignment="Bottom" Width="180" Loaded="gridSection_Loaded">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Label x:Name="label1" Content="当前阶段：" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28"/>
-        </Grid>
+        </GroupBox>
     </Grid>
 </Window>
