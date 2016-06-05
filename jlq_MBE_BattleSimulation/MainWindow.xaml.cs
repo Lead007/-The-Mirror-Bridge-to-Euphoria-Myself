@@ -251,7 +251,7 @@ namespace JLQ_MBE_BattleSimulation
             game.AddCharacter(point, group, type);
             menuBackout.IsEnabled = true;
             var labelTemp = game.LabelsGroup[(int)group + 1];
-            labelTemp.Content = Convert.ToInt32(labelTemp.ContentStringFormat) + 1;
+            labelTemp.Content = (Convert.ToInt32(labelTemp.Content as string) + 1).ToString();
         }
         /// <summary>添加角色</summary>
         /// <param name="info">添加的角色信息</param>

@@ -21,7 +21,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             //显示将被攻击的角色
             enterPad[0] = (s, ev) =>
             {
-                if (game.MousePoint.IsInRange(this, SC01Range)) return;
+                if (!game.MousePoint.IsInRange(this, SC01Range)) return;
                 game.DefaultButtonAndLabels();
                 var cs = Enemies.Where(c => game.MousePoint.IsIn33(c)).ToList();
                 if (cs.Count == 1)

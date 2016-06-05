@@ -432,7 +432,7 @@ namespace JLQ_GameBase
 
             this.ResourcePath = ApplicationPath + @"\Resources";
             this.SavePath = ApplicationPath;
-            this.LoadPath = ApplicationPath;
+            this.LoadPath = ApplicationPath + @"\Resources\Pads";
             if (this.SavePath.Last() != '\\') this.SavePath += "\\";
 
             #endregion
@@ -643,7 +643,7 @@ namespace JLQ_GameBase
         /// <summary>死亡结算</summary>
         public void IsDead()
         {
-            foreach (var model in CharactersMayDie.Where(m => m.Target.IsDead))
+            foreach (var model in CharactersMayDie.Where(m => m.Target.IsDead).Distinct(new AttackModelEqualityComparer()))
             {
                 var s = model.Attacker != null
                     ? string.Format("{0}号{1}{2}被{3}号{4}{5}杀死", model.Target.ID, Calculate.Convert(model.Target.Group),
