@@ -191,6 +191,12 @@ namespace JLQ_MBE_BattleSimulation
 
             #endregion
 
+            #region 样式
+            var roundStyle = buttonJump.Style;
+            game.ButtonAttack.Style = roundStyle;
+            game.ButtonMove.Style = roundStyle;
+            #endregion
+
             #region 加载mods
 
             var p = CurrentPath + "\\Resources\\Mods";
@@ -408,12 +414,6 @@ namespace JLQ_MBE_BattleSimulation
             MessageBox.Show("生成成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void ChangeAddNum(MouseWheelEventArgs e, Label sender)
-        {
-            var i = int.Parse(sender.Content as string);
-            sender.Content = (e.Delta > 0 ? Math.Min(10, i + 1) : Math.Max(1, i - 1)).ToString();
-        }
-
         /// <summary>清除所有角色</summary>
         private void ClearCharacters()
         {
@@ -548,14 +548,13 @@ namespace JLQ_MBE_BattleSimulation
         private void buttonGenerateMiddle_Click(object sender, RoutedEventArgs e)
             => RandomlyAddCharacters(Group.Middle, int.Parse(labelMiddle.Content as string));
 
-        private void labelFriend_MouseWheel(object sender, MouseWheelEventArgs e)
-            => ChangeAddNum(e, labelFriend);
+        private void LabelRandom_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var label = sender as Label;
+            var i = int.Parse(label.Content as string);
+            label.Content = (e.Delta > 0 ? Math.Min(10, i + 1) : Math.Max(1, i - 1)).ToString();
 
-        private void labelMiddle_MouseWheel(object sender, MouseWheelEventArgs e)
-            => ChangeAddNum(e, labelMiddle);
-
-        private void labelEnemy_MouseWheel(object sender, MouseWheelEventArgs e)
-            => ChangeAddNum(e, labelEnemy);
+        }
         #endregion
 
         #region Loaded

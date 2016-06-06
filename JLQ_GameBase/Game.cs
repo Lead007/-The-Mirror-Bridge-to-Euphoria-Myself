@@ -255,13 +255,7 @@ namespace JLQ_GameBase
             ButtonMove = new Button
             {
                 Content = "移动",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 2, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center,
-                Width = 115,
-                FontWeight = FontWeights.SemiBold,
-                Height = 25,
-                IsEnabled = false
+                IsEnabled = false,
             };
             ButtonMove.Click += (s, ev) =>
             {
@@ -277,12 +271,6 @@ namespace JLQ_GameBase
             ButtonAttack = new Button
             {
                 Content = "攻击",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 2, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center,
-                Width = 115,
-                FontWeight = FontWeights.SemiBold,
-                Height = 25,
                 IsEnabled = false
             };
             ButtonAttack.SetValue(Grid.ColumnProperty, 1);

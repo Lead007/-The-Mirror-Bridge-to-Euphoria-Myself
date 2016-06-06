@@ -9,7 +9,6 @@
         mc:Ignorable="d"
         Title="The Mirror Bridge to Euphoria" Height="602" Width="906" Closing="window_Closing" MinHeight="602" MinWidth="906" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="Command_New" CanExecute="Command_CanExecute"></CommandBinding>
@@ -33,6 +32,13 @@
         </Grid.RowDefinitions>
         <Border x:Name="borderPad" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" Grid.Row="1" VerticalAlignment="Stretch" Loaded="borderPad_Loaded"/>
         <Grid HorizontalAlignment="Stretch" Margin="0" Grid.Row="1" VerticalAlignment="Stretch">
+            <Grid.Resources>
+                <Style x:Key="BorderSC">
+                    <Setter Property="Border.BorderBrush" Value="Blue"></Setter>
+                    <Setter Property="Border.BorderThickness" Value="2"></Setter>
+                    <Setter Property="Border.CornerRadius" Value="5"></Setter>
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="3*"/>
@@ -46,16 +52,35 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
-            <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" CornerRadius="5">
+            <Border Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Style="{StaticResource BorderSC}">
                 <Grid x:Name="gridSC01" Loaded="gridSC01_Loaded"/>
             </Border>
-            <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="2" CornerRadius="5">
+            <Border Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="2" Style="{StaticResource BorderSC}">
                 <Grid x:Name="gridSC02"/>
             </Border>
-            <Border BorderBrush="Blue" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="4" CornerRadius="5">
+            <Border Grid.Column="1" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" Grid.Row="4" Style="{StaticResource BorderSC}">
                 <Grid x:Name="gridSC03"/>
             </Border>
             <Expander x:Name="expanderGenerate" Header="随机生成角色" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsExpanded="True" Padding="0,5,0,0" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" Margin="0,5,0,-25">
+                <Expander.Resources>
+                    <Style x:Key="LabelRandomAdd">
+                        <Setter Property="Label.BorderThickness" Value="1"></Setter>
+                        <Setter Property="Label.BorderBrush" Value="Blue"></Setter>
+                        <Setter Property="Label.HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Label.HorizontalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="Label.VerticalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Label.VerticalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Label.Margin" Value="0,0,0,4"></Setter>
+                        <Setter Property="Grid.ColumnSpan" Value="2"></Setter>
+                        <EventSetter Event="Label.MouseWheel" Handler="LabelRandom_MouseWheel"></EventSetter>
+                    </Style>
+                    <Style x:Key="ButtonRandomAdd">
+                        <Setter Property="Grid.Column" Value="2"></Setter>
+                        <Setter Property="Button.HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Button.VerticalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Button.Margin" Value="10,0,0,4"></Setter>
+                    </Style>
+                </Expander.Resources>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -68,12 +93,12 @@
                         <ColumnDefinition Width="89*"/>
                         <ColumnDefinition Width="119*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="buttonGenerateFriend" Content="随机生成友军" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="buttonGenerateFriend_Click" Margin="10,0,0,4"/>
-                    <Button x:Name="buttonGenerateMiddle" Content="随机生成中立" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="buttonGenerateMiddle_Click" Margin="10,0,0,4"/>
-                    <Button x:Name="buttonGenerateEnemy" Content="随机生成敌军" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Click="buttonGenerateEnemy_Click" Margin="10,0,0,4"/>
-                    <Label x:Name="labelFriend" Content="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelFriend_MouseWheel" Margin="0,0,0,4" Grid.ColumnSpan="2"/>
-                    <Label x:Name="labelMiddle" Content="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelMiddle_MouseWheel" Margin="0,0,0,4" Grid.ColumnSpan="2"/>
-                    <Label x:Name="labelEnemy" Content="1" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" BorderThickness="1" BorderBrush="Blue" MouseWheel="labelEnemy_MouseWheel" Margin="0,0,0,4" Grid.ColumnSpan="2"/>
+                    <Button x:Name="buttonGenerateFriend" Content="随机生成友军" Click="buttonGenerateFriend_Click" Style="{StaticResource ButtonRandomAdd}"/>
+                    <Button x:Name="buttonGenerateMiddle" Content="随机生成中立" Grid.Row="1" Click="buttonGenerateMiddle_Click" Style="{StaticResource ButtonRandomAdd}"/>
+                    <Button x:Name="buttonGenerateEnemy" Content="随机生成敌军" Grid.Row="2" Click="buttonGenerateEnemy_Click" Style="{StaticResource ButtonRandomAdd}"/>
+                    <Label x:Name="labelFriend" Content="1" Style="{StaticResource LabelRandomAdd}"/>
+                    <Label x:Name="labelMiddle" Content="1" Grid.Row="1" Style="{StaticResource LabelRandomAdd}"/>
+                    <Label x:Name="labelEnemy" Content="1" Grid.Row="2" Style="{StaticResource LabelRandomAdd}"/>
                     <CheckBox x:Name="checkBox" Content="生成成功后提示 " HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" FontWeight="SemiBold" HorizontalContentAlignment="Right" Grid.Column="3" Grid.Row="2" Margin="5,8,0,8"/>
                 </Grid>
             </Expander>
@@ -105,6 +130,11 @@
             </Menu>
         </StackPanel>
         <Grid x:Name="gridGameInformation" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="239" Margin="36,0,0,8" Height="81" Loaded="gridGameInformation_Loaded">
+            <Grid.Resources>
+                <Style x:Key="PatthernLabel">
+                    <Setter Property="Control.FontSize" Value="16"></Setter>
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -113,9 +143,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" FontSize="16" Foreground="Red" Grid.Column="1"/>
-            <Label Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
-            <Label x:Name="labelStaticID" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
+            <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" Foreground="Red" Grid.Column="1" Style="{StaticResource PatthernLabel}"/>
+            <Label Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Style="{StaticResource PatthernLabel}"/>
+            <Label x:Name="labelStaticID" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Right" Grid.Row="1" Style="{StaticResource PatthernLabel}"/>
         </Grid>
         <Grid HorizontalAlignment="Stretch" Height="40" Grid.Row="2" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -137,14 +167,29 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid x:Name="gridGame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Loaded="gridGame_Loaded">
+                    <Grid.Resources>
+                        <Style x:Key="ButtonRound">
+                            <Setter Property="Button.HorizontalAlignment" Value="Center"></Setter>
+                            <Setter Property="Button.VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="Button.FontWeight" Value="SemiBold"></Setter>
+                            <Setter Property="Button.Height" Value="25"></Setter>
+                            <Setter Property="Button.Width" Value="115"></Setter>
+                        </Style>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="buttonJump" Content="跳过回合" HorizontalAlignment="Center" VerticalAlignment="Center" Width="115" Click="buttonJump_Click" IsEnabled="False" Height="25" Grid.Column="2" FontWeight="SemiBold" ToolTip="放弃未执行的移动和攻击次数，直接进入结束阶段。"/>
+                    <Button x:Name="buttonJump" Content="跳过回合" Click="buttonJump_Click" IsEnabled="False" Grid.Column="2" ToolTip="放弃未执行的移动和攻击次数，直接进入结束阶段。" Style="{StaticResource ButtonRound}"/>
                 </Grid>
                 <Grid x:Name="gridCount" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="6" Grid.Row="1" Loaded="gridCount_Loaded">
+                    <Grid.Resources>
+                        <Style x:Key="LabelCount">
+                            <Setter Property="Button.HorizontalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="Button.VerticalAlignment" Value="Top"></Setter>
+                        </Style>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="3*"/>
@@ -153,9 +198,9 @@
                         <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="己方角色数量：" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                    <Label Content="中立角色数量:" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                    <Label Content="敌方角色数量:" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    <Label Content="己方角色数量：" Style="{StaticResource LabelCount}"/>
+                    <Label Content="中立角色数量:" Grid.Column="2" Style="{StaticResource LabelCount}"/>
+                    <Label Content="敌方角色数量:" Grid.Column="4" Style="{StaticResource LabelCount}"/>
                 </Grid>
             </Grid>
         </GroupBox>
@@ -174,15 +219,22 @@
         </Grid>
         <Expander x:Name="expanderSaveLoad" Grid.Column="2" Header="棋盘文件" HorizontalAlignment="Left" Margin="5,19,0,0" VerticalAlignment="Top" Width="100" Height="140" IsExpanded="True" Grid.RowSpan="2">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.Resources>
+                    <Style x:Key="ButtonFile">
+                        <Setter Property="Button.HorizontalAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Button.VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="Button.Height" Value="25"></Setter>
+                    </Style>
+                </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button Content="新建棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="New"/>
-                <Button Content="载入棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="Open" Grid.Row="1"/>
-                <Button Content="保存当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="Save" Grid.Row="2"/>
+                <Button Content="新建棋盘文件" Command="New" Style="{StaticResource ButtonFile}"/>
+                <Button Content="载入棋盘文件" Command="Open" Grid.Row="1" Style="{StaticResource ButtonFile}"/>
+                <Button Content="保存当前棋盘" Command="Save" Grid.Row="2" Style="{StaticResource ButtonFile}"/>
                 <Button Content="另存为当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="SaveAs" Grid.Row="3"/>
             </Grid>
         </Expander>
