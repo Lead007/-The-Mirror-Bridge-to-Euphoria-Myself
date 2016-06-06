@@ -20,7 +20,7 @@ using JLQ_GameBase;
 namespace JLQ_MBE_BattleSimulation.Dialogs
 {
     /// <summary>
-    /// Window1.xaml 的交互逻辑
+    /// Dialog_ChoosePath.xaml 的交互逻辑
     /// </summary>
     public partial class Dialog_ChoosePath : Window
     {
@@ -34,6 +34,8 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
         }
 
         private Game game;
+
+        public string FileSavePath { get; set; }
 
         private void textBoxName_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -59,6 +61,7 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             this.Close();
         }
 
@@ -76,12 +79,14 @@ namespace JLQ_MBE_BattleSimulation.Dialogs
                 return;
             }
             var formatter = new BinaryFormatter();
+            FileSavePath = filePath;
             using (var writer = File.Create(filePath))
             {
                 formatter.Serialize(writer, game.CInfos);
             }
             Thread.Sleep(2000);
             MessageBox.Show("保存成功！", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+            DialogResult = true;
             this.Close();
         }
 

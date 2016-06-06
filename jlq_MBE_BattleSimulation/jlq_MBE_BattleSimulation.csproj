@@ -98,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\GameCommands.cs" />
     <Compile Include="Dialogs\Dialog_ChoosePath.xaml.cs">
       <DependentUpon>Dialog_ChoosePath.xaml</DependentUpon>
     </Compile>

@@ -222,7 +222,16 @@ namespace JLQ_MBE_BattleSimulation
         private Section? GameSection => game.GameSection;
 
         /// <summary>外置程序集</summary>
-        private List<Assembly> Assemblies { get; } = new List<Assembly>(); 
+        private List<Assembly> Assemblies { get; } = new List<Assembly>();
+
+        /// <summary>当前加载的棋盘地址</summary>
+        private string PadLoadedNow { get; set; }
+
+        /// <summary>是否保存当前棋盘</summary>
+        private bool HasSaved { get; set; }
+        
+        /// <summary>是否可撤销添加角色</summary>
+        private bool CanBackout { get; set; }
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -249,9 +258,10 @@ namespace JLQ_MBE_BattleSimulation
                 }
             }
             game.AddCharacter(point, group, type);
-            menuBackout.IsEnabled = true;
+            CanBackout = true;
             var labelTemp = game.LabelsGroup[(int)group + 1];
             labelTemp.Content = (Convert.ToInt32(labelTemp.Content as string) + 1).ToString();
+            HasSaved = false;
         }
         /// <summary>添加角色</summary>
         /// <param name="info">添加的角色信息</param>
@@ -410,10 +420,11 @@ namespace JLQ_MBE_BattleSimulation
             game.Characters.SelectMany(c => c.ListControls).DoAction(c => game.GridPad.Children.Remove(c));
             game.Characters.Clear();
             game.CharacterLastAdd = null;
-            menuBackout.IsEnabled = false;
+            CanBackout = false;
             game.ID = 1;
             game.LabelID.Content = "1";
             game.LabelsGroup.DoAction(l => l.Content = "0");
+            HasSaved = false;
         }
 
         private void SC(int index)
@@ -486,81 +497,12 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         #region Menus
-        private void menuExit_Click(object sender, RoutedEventArgs e) => this.Close();
-
         private void menuClear_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show("确认清除所有角色？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             if (result == MessageBoxResult.OK)
             {
                 ClearCharacters();
-            }
-        }
-
-        private void menuPattern_Click(object sender, RoutedEventArgs e)
-        {
-            #region 合法性
-            if (game.Characters.Count == 0)
-            {
-                Game.ErrorMessageBox("还未加人！");
-                return;
-            }
-            if (!game.FriendCharacters.Any())
-            {
-                Game.ErrorMessageBox("还未加己方角色！");
-                return;
-            }
-            if (!game.EnemyCharacters.Any())
-            {
-                Game.ErrorMessageBox("还未加敌方角色！");
-                return;
-            }
-            #endregion
-            #region 控件操作
-            menuPattern.IsEnabled = false;
-            menuBackout.IsEnabled = false;
-            menuClear.IsEnabled = false;
-            labelShow.Content = "战斗模式";
-            labelStaticID.Visibility = Visibility.Hidden;
-            game.LabelID.Visibility = Visibility.Hidden;
-            comboBoxDisplay.Text = "";
-            comboBoxDisplay.IsEnabled = false;
-            expanderGenerate.IsExpanded = false;
-            expanderGenerate.IsEnabled = false;
-            labelEnemy.IsEnabled = false;
-            labelEnemy.Content = "";
-            labelFriend.IsEnabled = false;
-            labelFriend.Content = "";
-            labelMiddle.IsEnabled = false;
-            labelMiddle.Content = "";
-            buttonGenerateFriend.IsEnabled = false;
-            buttonGenerateEnemy.IsEnabled = false;
-            buttonGenerateMiddle.IsEnabled = false;
-            buttonSave.IsEnabled = false;
-            buttonLoad.IsEnabled = false;
-            game.ButtonAttack.IsEnabled = true;
-            game.ButtonMove.IsEnabled = true;
-            buttonJump.IsEnabled = true;
-            game.ButtonSC.DoAction(b => b.IsEnabled = true);
-            labelShow.Foreground = Brushes.Black;
-            game.TurnToBattle();
-            game.PreparingSection();
-            #endregion
-        }
-
-        private void menuBackout_Click(object sender, RoutedEventArgs e)
-        {
-            if (game.CharacterLastAdd == null) return;
-            game.RemoveCharacter(game.CharacterLastAdd);
-            game.ID--;
-            if (game.Characters.Count == 0)
-            {
-                game.CharacterLastAdd = null;
-                menuBackout.IsEnabled = false;
-            }
-            else
-            {
-                game.CharacterLastAdd = game.Characters.Last();
             }
         }
 
@@ -654,8 +596,42 @@ namespace JLQ_MBE_BattleSimulation
 
         private void gridSection_Loaded(object sender, RoutedEventArgs e) => gridSection.Children.Add(game.LabelSection);
         #endregion
+        #endregion
 
-        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        #region 命令
+
+        private void Command_New(object sender, RoutedEventArgs e)
+        {
+            if (!game.Characters.Any()) return;
+            if (!HasSaved)
+            {
+                var result = MessageBox.Show("将清空棋盘，确定？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (result != MessageBoxResult.OK) return;
+            }
+            ClearCharacters();
+        }
+
+        private void Command_Save(object sender, RoutedEventArgs e)
+        {
+            if (PadLoadedNow == null)
+            {
+                Command_SaveAs(sender, e);
+            }
+            else
+            {
+                if (HasSaved) return;
+                var formatter = new BinaryFormatter();
+                using (var writer = File.OpenWrite(PadLoadedNow))
+                {
+                    formatter.Serialize(writer, game.CInfos);
+                }
+                Thread.Sleep(2000);
+                MessageBox.Show("保存成功！", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                HasSaved = true;
+            }
+        }
+
+        private void Command_SaveAs(object sender, RoutedEventArgs e)
         {
             if (!game.Characters.Any())
             {
@@ -663,10 +639,13 @@ namespace JLQ_MBE_BattleSimulation
                 return;
             }
             var pathChoosing = new Dialog_ChoosePath(game);
-            pathChoosing.ShowDialog();
+            var result = pathChoosing.ShowDialog();
+            if (result != true) return;
+            HasSaved = true;
+            PadLoadedNow = pathChoosing.FileSavePath;
         }
 
-        private void buttonLoad_Click(object sender, RoutedEventArgs e)
+        private void Command_Open(object sender, RoutedEventArgs e)
         {
             var dialog = new System.Windows.Forms.OpenFileDialog
             {
@@ -676,7 +655,7 @@ namespace JLQ_MBE_BattleSimulation
                 Filter = "棋盘文件|*.pad"
             };
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-            if (game.Characters.Any())
+            if (game.Characters.Any() && !HasSaved)
             {
                 var result = MessageBox.Show("将清空棋盘，确定？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                 if (result != MessageBoxResult.OK) return;
@@ -692,6 +671,10 @@ namespace JLQ_MBE_BattleSimulation
                     {
                         AddCharacter(info);
                     }
+                    game.LoadPath = dialog.FileName;
+                    PadLoadedNow = dialog.FileName;
+                    HasSaved = true;
+                    MessageBox.Show("载入成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
@@ -699,8 +682,82 @@ namespace JLQ_MBE_BattleSimulation
                     return;
                 }
             }
-            MessageBox.Show("载入成功", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void Command_Exit(object sender, RoutedEventArgs e) => this.Close();
+
+        private void Command_TurnBattle(object seder, RoutedEventArgs e)
+        {
+            #region 合法性
+            if (game.Characters.Count == 0)
+            {
+                Game.ErrorMessageBox("还未加人！");
+                return;
+            }
+            if (!game.FriendCharacters.Any())
+            {
+                Game.ErrorMessageBox("还未加己方角色！");
+                return;
+            }
+            if (!game.EnemyCharacters.Any())
+            {
+                Game.ErrorMessageBox("还未加敌方角色！");
+                return;
+            }
+            #endregion
+            #region 控件操作
+            CanBackout = false;
+            menuClear.IsEnabled = false;
+            labelShow.Content = "战斗模式";
+            labelStaticID.Visibility = Visibility.Hidden;
+            game.LabelID.Visibility = Visibility.Hidden;
+            comboBoxDisplay.Text = "";
+            comboBoxDisplay.IsEnabled = false;
+            expanderGenerate.IsExpanded = false;
+            expanderGenerate.IsEnabled = false;
+            expanderSaveLoad.IsExpanded = false;
+            expanderSaveLoad.IsEnabled = false;
+            labelEnemy.IsEnabled = false;
+            labelEnemy.Content = "";
+            labelFriend.IsEnabled = false;
+            labelFriend.Content = "";
+            labelMiddle.IsEnabled = false;
+            labelMiddle.Content = "";
+            buttonGenerateFriend.IsEnabled = false;
+            buttonGenerateEnemy.IsEnabled = false;
+            buttonGenerateMiddle.IsEnabled = false;
+            game.ButtonAttack.IsEnabled = true;
+            game.ButtonMove.IsEnabled = true;
+            buttonJump.IsEnabled = true;
+            game.ButtonSC.DoAction(b => b.IsEnabled = true);
+            labelShow.Foreground = Brushes.Black;
+            game.TurnToBattle();
+            game.PreparingSection();
+            #endregion
+        }
+
+        private void Command_Undo(object seder, RoutedEventArgs e)
+        {
+            if (game.CharacterLastAdd == null) return;
+            game.RemoveCharacter(game.CharacterLastAdd);
+            game.ID--;
+            if (!game.Characters.Any())
+            {
+                game.CharacterLastAdd = null;
+                CanBackout = false;
+            }
+            else
+            {
+                game.CharacterLastAdd = game.Characters.Last();
+            }
+        }
+
+        private void Command_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = !game.IsBattle;
+
+        private void Command_AllCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+        private void Command_CanBackout(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanBackout;
+
         #endregion
     }
 }

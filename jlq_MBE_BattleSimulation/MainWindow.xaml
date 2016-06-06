@@ -5,16 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JLQ_MBE_BattleSimulation"
         xmlns:system1="clr-namespace:System;assembly=mscorlib"
+        xmlns:commands="clr-namespace:jlq_MBE_BattleSimulation.Commands"
         mc:Ignorable="d"
         Title="The Mirror Bridge to Euphoria" Height="602" Width="906" Closing="window_Closing" MinHeight="602" MinWidth="906" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="Command_New" CanExecute="Command_CanExecute"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="Command_Open" CanExecute="Command_CanExecute"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="Command_Save" CanExecute="Command_CanExecute"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="Command_SaveAs" CanExecute="Command_CanExecute"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Undo" Executed="Command_Undo" CanExecute="Command_CanBackout"></CommandBinding>
+        <CommandBinding Command="commands:GameCommands.Exit" Executed="Command_Exit" CanExecute="Command_AllCanExecute"></CommandBinding>
+        <CommandBinding Command="commands:GameCommands.TurnBattle" Executed="Command_TurnBattle" CanExecute="Command_CanExecute"></CommandBinding>
+    </Window.CommandBindings>
     <Grid x:Name="gridWindow">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1.3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -70,14 +80,21 @@
         </Grid>
         <StackPanel HorizontalAlignment="Stretch" Height="28" Margin="0" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <Menu Height="22">
+                <MenuItem Header="文件">
+                    <MenuItem Command="New"/>
+                    <MenuItem Command="Open"/>
+                    <Separator/>
+                    <MenuItem Command="Save"/>
+                    <MenuItem Command="SaveAs"/>
+                </MenuItem>
                 <MenuItem Header="游戏">
-                    <MenuItem Header="转为战斗模式" Name="menuPattern" Click="menuPattern_Click"/>
-                    <MenuItem Header="撤销上一次加人" Name="menuBackout" IsEnabled="False" Click="menuBackout_Click"/>
+                    <MenuItem Command="commands:GameCommands.TurnBattle"/>
+                    <MenuItem Header="撤销上一次加人" Command="Undo"/>
                     <MenuItem Header="清除所有单位" Name="menuClear" Click="menuClear_Click"/>
                     <Separator/>
                     <MenuItem Header="Mods" Name="menuMods" Click="menuMods_Click" />
                     <Separator/>
-                    <MenuItem Header="退出" Name="menuExit" Click="menuExit_Click"/>
+                    <MenuItem Command="commands:GameCommands.Exit"/>
                 </MenuItem>
                 <MenuItem Header="帮助">
                     <MenuItem Header="操作" Name="menuHelp" Click="menuHelp_Click"/>
@@ -99,14 +116,6 @@
             <Label x:Name="labelShow" Content="加人模式" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontWeight="SemiBold" FontSize="16" Foreground="Red" Grid.Column="1"/>
             <Label Content="当前模式：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right"/>
             <Label x:Name="labelStaticID" Content="当前添加ID：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="16" HorizontalContentAlignment="Right" Grid.Row="1"/>
-        </Grid>
-        <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Margin="0,0,0,8" Height="81">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Button x:Name="buttonSave" Content="保存当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonSave_Click"/>
-            <Button x:Name="buttonLoad" Content="载入棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Click="buttonLoad_Click" Grid.Row="1"/>
         </Grid>
         <Grid HorizontalAlignment="Stretch" Height="40" Grid.Row="2" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -163,5 +172,19 @@
             <ComboBox x:Name="comboBoxDisplay" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" Width="120"/>
             <Label Content="选择角色：" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" RenderTransformOrigin="0.576,0.4" Grid.Column="1"/>
         </Grid>
+        <Expander x:Name="expanderSaveLoad" Grid.Column="2" Header="棋盘文件" HorizontalAlignment="Left" Margin="5,19,0,0" VerticalAlignment="Top" Width="100" Height="140" IsExpanded="True" Grid.RowSpan="2">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Content="新建棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="New"/>
+                <Button Content="载入棋盘文件" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="Open" Grid.Row="1"/>
+                <Button Content="保存当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="Save" Grid.Row="2"/>
+                <Button Content="另存为当前棋盘" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="25" Command="SaveAs" Grid.Row="3"/>
+            </Grid>
+        </Expander>
     </Grid>
 </Window>
