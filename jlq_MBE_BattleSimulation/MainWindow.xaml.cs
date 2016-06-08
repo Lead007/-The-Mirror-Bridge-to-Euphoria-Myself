@@ -98,6 +98,7 @@ namespace JLQ_MBE_BattleSimulation
 
             #endregion
 
+            #region 界面初始化
             #region 生成棋盘按钮事件
 
             foreach (var button in game.Buttons)
@@ -190,6 +191,10 @@ namespace JLQ_MBE_BattleSimulation
             }
 
             #endregion
+            labelFriend.Content = 1;
+            labelMiddle.Content = 1;
+            labelEnemy.Content = 1;
+            #endregion
 
             #region 样式
             var roundStyle = buttonJump.Style;
@@ -230,6 +235,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <summary>外置程序集</summary>
         private List<Assembly> Assemblies { get; } = new List<Assembly>();
 
+        #region SaveLoad相关
         /// <summary>当前加载的棋盘地址</summary>
         private string PadLoadedNow { get; set; }
 
@@ -238,6 +244,7 @@ namespace JLQ_MBE_BattleSimulation
         
         /// <summary>是否可撤销添加角色</summary>
         private bool CanBackout { get; set; }
+        #endregion
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
@@ -266,7 +273,7 @@ namespace JLQ_MBE_BattleSimulation
             game.AddCharacter(point, group, type);
             CanBackout = true;
             var labelTemp = game.LabelsGroup[(int)group + 1];
-            labelTemp.Content = (Convert.ToInt32(labelTemp.Content as string) + 1).ToString();
+            labelTemp.Content = (int)labelTemp.Content + 1;
             HasSaved = false;
         }
         /// <summary>添加角色</summary>
@@ -422,8 +429,7 @@ namespace JLQ_MBE_BattleSimulation
             game.CharacterLastAdd = null;
             CanBackout = false;
             game.ID = 1;
-            game.LabelID.Content = "1";
-            game.LabelsGroup.DoAction(l => l.Content = "0");
+            game.LabelsGroup.DoAction(l => l.Content = 0);
             HasSaved = false;
         }
 
@@ -497,15 +503,6 @@ namespace JLQ_MBE_BattleSimulation
         }
 
         #region Menus
-        private void menuClear_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show("确认清除所有角色？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.OK)
-            {
-                ClearCharacters();
-            }
-        }
-
         private void menuHelp_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -529,31 +526,23 @@ namespace JLQ_MBE_BattleSimulation
                 Game.ErrorMessageBox(jlq_MBE_BattleSimulation.Properties.Resources.HelpError);
             }
         }
-
-        private void menuMods_Click(object sender, RoutedEventArgs e)
-        {
-            var mods = Assemblies.Aggregate(string.Format("已加载的Mods：{0}个", Assemblies.Count),
-                (s, a) => s += ("\n" + a.GetName()));
-            MessageBox.Show(mods, "已加载的Mods", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
         #endregion
 
         #region 随机生成
         private void buttonGenerateFriend_Click(object sender, RoutedEventArgs e)
-            => RandomlyAddCharacters(Group.Friend, int.Parse(labelFriend.Content as string));
+            => RandomlyAddCharacters(Group.Friend, (int)labelFriend.Content);
 
         private void buttonGenerateEnemy_Click(object sender, RoutedEventArgs e)
-            => RandomlyAddCharacters(Group.Enemy, int.Parse(labelEnemy.Content as string));
+            => RandomlyAddCharacters(Group.Enemy, (int)labelEnemy.Content);
 
         private void buttonGenerateMiddle_Click(object sender, RoutedEventArgs e)
-            => RandomlyAddCharacters(Group.Middle, int.Parse(labelMiddle.Content as string));
+            => RandomlyAddCharacters(Group.Middle, (int)labelMiddle.Content);
 
         private void LabelRandom_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             var label = sender as Label;
-            var i = int.Parse(label.Content as string);
-            label.Content = (e.Delta > 0 ? Math.Min(10, i + 1) : Math.Max(1, i - 1)).ToString();
-
+            var i = (int)label.Content;
+            label.Content = e.Delta > 0 ? Math.Min(10, i + 1) : Math.Max(1, i - 1);
         }
         #endregion
 
@@ -598,7 +587,7 @@ namespace JLQ_MBE_BattleSimulation
         #endregion
 
         #region 命令
-
+        #region Execute
         private void Command_New(object sender, RoutedEventArgs e)
         {
             if (!game.Characters.Any()) return;
@@ -706,7 +695,6 @@ namespace JLQ_MBE_BattleSimulation
             #endregion
             #region 控件操作
             CanBackout = false;
-            menuClear.IsEnabled = false;
             labelShow.Content = "战斗模式";
             labelStaticID.Visibility = Visibility.Hidden;
             game.LabelID.Visibility = Visibility.Hidden;
@@ -751,12 +739,30 @@ namespace JLQ_MBE_BattleSimulation
             }
         }
 
+        private void Command_Clear(object seder, RoutedEventArgs e)
+        {
+            if (!game.Characters.Any()) return;
+            var result = MessageBox.Show("确认清除所有角色？", "确认", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK)
+            {
+                ClearCharacters();
+            }
+        }
+
+        private void Command_Mods(object seder, RoutedEventArgs e)
+        {
+            var mods = Assemblies.Aggregate(string.Format("已加载的Mods：{0}个。", Assemblies.Count),
+                (s, a) => s += ("\n" + a.GetName()));
+            MessageBox.Show(mods, "已加载的Mods", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        #endregion
+        #region CanExecute
         private void Command_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = !game.IsBattle;
 
         private void Command_AllCanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
 
         private void Command_CanBackout(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = CanBackout;
-
+        #endregion
         #endregion
     }
 }

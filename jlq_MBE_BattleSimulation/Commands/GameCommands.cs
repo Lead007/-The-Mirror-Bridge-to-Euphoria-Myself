@@ -16,17 +16,29 @@ namespace jlq_MBE_BattleSimulation.Commands
         /// <summary>转为战斗模式命令</summary>
         public static RoutedUICommand TurnBattle { get; }
 
+        /// <summary>清空棋盘命令</summary>
+        public static RoutedUICommand Clear { get; }
+
+        /// <summary>查看Mods命令</summary>
+        public static RoutedUICommand Mods { get; }
+
         static GameCommands()
         {
             #region 退出命令
-            var inputs = new InputGestureCollection();
-            inputs.Add(new KeyGesture(Key.Escape));
+            var inputs = new InputGestureCollection {new KeyGesture(Key.Escape)};
             Exit = new RoutedUICommand("退出", "退出", typeof (GameCommands), inputs);
             #endregion
             #region 转为战斗模式命令
-            var inputs2 = new InputGestureCollection();
-            inputs2.Add(new KeyGesture(Key.T, ModifierKeys.Control, "Ctrl+T"));
+            var inputs2 = new InputGestureCollection {new KeyGesture(Key.T, ModifierKeys.Control, "Ctrl+T")};
             TurnBattle = new RoutedUICommand("转为战斗模式", "转为战斗模式", typeof(GameCommands), inputs2);
+            #endregion
+            #region 清空棋盘命令
+            var inputs3 = new InputGestureCollection {new KeyGesture(Key.C, ModifierKeys.Alt, "Alt+C")};
+            Clear = new RoutedUICommand("清除所有单位", "清除所有单位", typeof (GameCommands), inputs3);
+            #endregion
+            #region 查看Mods命令
+            var inputs4 = new InputGestureCollection {new KeyGesture(Key.M, ModifierKeys.Alt, "Alt+M")};
+            Mods = new RoutedUICommand("Mods", "Mods", typeof (GameCommands), inputs4);
             #endregion
         }
     }

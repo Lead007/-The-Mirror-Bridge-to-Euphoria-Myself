@@ -18,6 +18,8 @@
         <CommandBinding Command="ApplicationCommands.Undo" Executed="Command_Undo" CanExecute="Command_CanBackout"></CommandBinding>
         <CommandBinding Command="commands:GameCommands.Exit" Executed="Command_Exit" CanExecute="Command_AllCanExecute"></CommandBinding>
         <CommandBinding Command="commands:GameCommands.TurnBattle" Executed="Command_TurnBattle" CanExecute="Command_CanExecute"></CommandBinding>
+        <CommandBinding Command="commands:GameCommands.Clear" Executed="Command_Clear" CanExecute="Command_CanExecute"></CommandBinding>
+        <CommandBinding Command="commands:GameCommands.Mods" Executed="Command_Mods" CanExecute="Command_AllCanExecute"></CommandBinding>
     </Window.CommandBindings>
     <Grid x:Name="gridWindow">
         <Grid.ColumnDefinitions>
@@ -96,9 +98,9 @@
                     <Button x:Name="buttonGenerateFriend" Content="随机生成友军" Click="buttonGenerateFriend_Click" Style="{StaticResource ButtonRandomAdd}"/>
                     <Button x:Name="buttonGenerateMiddle" Content="随机生成中立" Grid.Row="1" Click="buttonGenerateMiddle_Click" Style="{StaticResource ButtonRandomAdd}"/>
                     <Button x:Name="buttonGenerateEnemy" Content="随机生成敌军" Grid.Row="2" Click="buttonGenerateEnemy_Click" Style="{StaticResource ButtonRandomAdd}"/>
-                    <Label x:Name="labelFriend" Content="1" Style="{StaticResource LabelRandomAdd}"/>
-                    <Label x:Name="labelMiddle" Content="1" Grid.Row="1" Style="{StaticResource LabelRandomAdd}"/>
-                    <Label x:Name="labelEnemy" Content="1" Grid.Row="2" Style="{StaticResource LabelRandomAdd}"/>
+                    <Label x:Name="labelFriend" Style="{StaticResource LabelRandomAdd}"/>
+                    <Label x:Name="labelMiddle" Grid.Row="1" Style="{StaticResource LabelRandomAdd}"/>
+                    <Label x:Name="labelEnemy" Grid.Row="2" Style="{StaticResource LabelRandomAdd}"/>
                     <CheckBox x:Name="checkBox" Content="生成成功后提示 " HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" FontWeight="SemiBold" HorizontalContentAlignment="Right" Grid.Column="3" Grid.Row="2" Margin="5,8,0,8"/>
                 </Grid>
             </Expander>
@@ -112,12 +114,12 @@
                     <MenuItem Command="Save"/>
                     <MenuItem Command="SaveAs"/>
                 </MenuItem>
-                <MenuItem Header="游戏">
+                <MenuItem Header="棋盘">
                     <MenuItem Command="commands:GameCommands.TurnBattle"/>
                     <MenuItem Header="撤销上一次加人" Command="Undo"/>
-                    <MenuItem Header="清除所有单位" Name="menuClear" Click="menuClear_Click"/>
+                    <MenuItem Command="commands:GameCommands.Clear"/>
                     <Separator/>
-                    <MenuItem Header="Mods" Name="menuMods" Click="menuMods_Click" />
+                    <MenuItem Command="commands:GameCommands.Mods"/>
                     <Separator/>
                     <MenuItem Command="commands:GameCommands.Exit"/>
                 </MenuItem>

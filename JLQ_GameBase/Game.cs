@@ -96,7 +96,7 @@ namespace JLQ_GameBase
             set
             {
                 _id = value;
-                LabelID.Content = value.ToString();
+                LabelID.Content = value;
             }
         }
 
@@ -539,7 +539,7 @@ namespace JLQ_GameBase
         public void RemoveCharacter(Character target)
         {
             var labelTemp = LabelsGroup[(int)target.Group + 1];
-            labelTemp.Content = Convert.ToInt32(labelTemp.Content) - 1;
+            labelTemp.Content = (int)labelTemp.Content - 1;
             target.ListControls.DoAction(c => GridPad.Children.Remove(c));
             Characters.Remove(target);
         }
