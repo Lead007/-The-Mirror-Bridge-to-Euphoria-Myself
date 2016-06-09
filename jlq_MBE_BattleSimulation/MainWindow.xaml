@@ -20,6 +20,7 @@
         <CommandBinding Command="commands:GameCommands.TurnBattle" Executed="Command_TurnBattle" CanExecute="Command_CanExecute"></CommandBinding>
         <CommandBinding Command="commands:GameCommands.Clear" Executed="Command_Clear" CanExecute="Command_CanExecute"></CommandBinding>
         <CommandBinding Command="commands:GameCommands.Mods" Executed="Command_Mods" CanExecute="Command_AllCanExecute"></CommandBinding>
+        <CommandBinding Command="commands:GameCommands.Settings" Executed="Command_Settings" CanExecute="Command_AllCanExecute"></CommandBinding>
     </Window.CommandBindings>
     <Grid x:Name="gridWindow">
         <Grid.ColumnDefinitions>
@@ -120,6 +121,8 @@
                     <MenuItem Command="commands:GameCommands.Clear"/>
                     <Separator/>
                     <MenuItem Command="commands:GameCommands.Mods"/>
+                    <Separator/>
+                    <MenuItem Command="commands:GameCommands.Settings"/>
                     <Separator/>
                     <MenuItem Command="commands:GameCommands.Exit"/>
                 </MenuItem>

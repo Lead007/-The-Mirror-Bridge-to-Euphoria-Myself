@@ -23,6 +23,7 @@ using Bitmap;
 using Data;
 using ExceptionHelper;
 using FileHelper;
+using jlq_MBE_BattleSimulation.Dialogs;
 using JLQ_MBE_BattleSimulation.Dialogs;
 using JLQ_GameBase;
 using JLQ_GameResources.Characters.SingleCharacter;
@@ -754,6 +755,15 @@ namespace JLQ_MBE_BattleSimulation
             var mods = Assemblies.Aggregate(string.Format("已加载的Mods：{0}个。", Assemblies.Count),
                 (s, a) => s += ("\n" + a.GetName()));
             MessageBox.Show(mods, "已加载的Mods", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void Command_Settings(object seder, RoutedEventArgs e)
+        {
+            return;
+            var dialog = new Dialog_Settings(game);
+            var result = dialog.ShowDialog();
+            if (result != true) return;
+            //TODO Options
         }
         #endregion
         #region CanExecute

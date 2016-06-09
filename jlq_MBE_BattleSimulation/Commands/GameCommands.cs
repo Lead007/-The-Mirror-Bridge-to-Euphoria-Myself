@@ -22,6 +22,9 @@ namespace jlq_MBE_BattleSimulation.Commands
         /// <summary>查看Mods命令</summary>
         public static RoutedUICommand Mods { get; }
 
+        /// <summary>设置命令</summary>
+        public static RoutedUICommand Settings { get; }
+
         static GameCommands()
         {
             #region 退出命令
@@ -39,6 +42,10 @@ namespace jlq_MBE_BattleSimulation.Commands
             #region 查看Mods命令
             var inputs4 = new InputGestureCollection {new KeyGesture(Key.M, ModifierKeys.Alt, "Alt+M")};
             Mods = new RoutedUICommand("Mods", "Mods", typeof (GameCommands), inputs4);
+            #endregion
+            #region 设置命令
+            var inputs5 = new InputGestureCollection {new KeyGesture(Key.O, ModifierKeys.Alt, "Alt+O")};
+            Settings = new RoutedUICommand("设置", "设置", typeof (GameCommands), inputs5);
             #endregion
         }
     }

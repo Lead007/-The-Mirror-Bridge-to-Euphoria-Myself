@@ -150,6 +150,9 @@ namespace JLQ_GameBase
         /// <summary>结束阶段是否继续或需等待单击</summary>
         public bool IsEndSectionContinue { get; set; } = true;
 
+        /// <summary>游戏设置</summary>
+        public GameSettings Settings { get; } = new GameSettings();
+
         #region Save与Load相关
         /// <summary>应用路径</summary>
         public string ApplicationPath { get; } = Directory.GetCurrentDirectory();
