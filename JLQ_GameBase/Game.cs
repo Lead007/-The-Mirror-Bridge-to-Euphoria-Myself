@@ -42,13 +42,19 @@ namespace JLQ_GameBase
         /// <summary>不显示在ComboBox中的角色数据列表</summary>
         public static IEnumerable<CharacterData> CharacterDataListUnshow { get; set; } = new List<CharacterData>();
         /// <summary>所有角色列表</summary>
-        public static IEnumerable<CharacterData> CharacterDatas => CharacterDataListShow.Concat(CharacterDataListUnshow); 
+        public static IEnumerable<CharacterData> CharacterDatas => CharacterDataListShow.Concat(CharacterDataListUnshow);
+        /// <summary>两排列属性都被设为Stretch的样式</summary>
+        public static Style StretchStyle { get; } = new Style();
         static Game()
         {
             #region PadPoints
             for (var i = 0; i < Column; i++)
                 for (var j = 0; j < Row; j++)
                     PadPoints.Add(new Point(i, j));
+            #endregion
+            #region StretchStyle
+            StretchStyle.Setters.Add(new Setter(Control.HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+            StretchStyle.Setters.Add(new Setter(Control.VerticalAlignmentProperty, VerticalAlignment.Stretch));
             #endregion
         }
         #endregion
@@ -295,8 +301,7 @@ namespace JLQ_GameBase
                     Buttons[i, j] = new Button
                     {
                         Margin = new Thickness(1),
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        VerticalAlignment = VerticalAlignment.Stretch,
+                        Style = StretchStyle,
                         Background = PadBackground,
                         Opacity = 0
                     };
@@ -331,8 +336,7 @@ namespace JLQ_GameBase
                     Foreground = Brushes.White,
                     FontSize = 18,
                     IsEnabled = false,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch
+                    Style = StretchStyle,
                 };
             }
 
@@ -364,8 +368,7 @@ namespace JLQ_GameBase
                     {
                         BorderBrush = new SolidColorBrush(Colors.Black),
                         BorderThickness = new Thickness(1),
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        VerticalAlignment = VerticalAlignment.Stretch,
+                        Style = StretchStyle,
                     };
                     borders[i, j].SetValue(Grid.ColumnProperty, i);
                     borders[i, j].SetValue(Grid.RowProperty, j);
@@ -382,8 +385,7 @@ namespace JLQ_GameBase
             LabelID = new Label
             {
                 Content = "1",
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
+                Style = StretchStyle,
                 FontSize = 16,
                 FontWeight = FontWeights.SemiBold
             };

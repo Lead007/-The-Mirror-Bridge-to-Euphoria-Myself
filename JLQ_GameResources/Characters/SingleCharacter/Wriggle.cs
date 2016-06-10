@@ -119,8 +119,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     var label = new Label
                     {
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Top,
+                        Style = StateStyle,
                         HorizontalContentAlignment = HorizontalAlignment.Center,
                         VerticalContentAlignment = VerticalAlignment.Center,
                         Background = Brushes.PaleGoldenrod,

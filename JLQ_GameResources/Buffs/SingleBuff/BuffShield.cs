@@ -24,8 +24,7 @@ namespace JLQ_GameResources.Buffs.SingleBuff
         {
             _imageShield = new Image
             {
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Top,
+                Style = Character.StateStyle,
                 Width = 10,
                 Height = 10
             };
@@ -36,6 +35,7 @@ namespace JLQ_GameResources.Buffs.SingleBuff
             catch
             {
                 _imageShield.Source = new BitmapImage(new Uri("Images\\Error.jpg", UriKind.Relative));
+                _imageShield.ToolTip = "找不到图片资源，请联系开发者。";
             }
             _imageShield.SetValue(Panel.ZIndexProperty, 6);
         }

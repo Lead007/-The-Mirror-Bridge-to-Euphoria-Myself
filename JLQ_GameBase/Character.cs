@@ -17,7 +17,18 @@ namespace JLQ_GameBase
     /// <summary>角色类</summary>
     public abstract class Character
     {
-        //以下为字段
+        #region 静态属性
+        /// <summary>表示状态的控件样式</summary>
+        public static Style StateStyle { get; } = new Style();
+
+        static Character()
+        {
+            #region StateStyle
+            StateStyle.Setters.Add(new Setter(Control.HorizontalAlignmentProperty, HorizontalAlignment.Right));
+            StateStyle.Setters.Add(new Setter(Control.VerticalAlignmentProperty, VerticalAlignment.Top));
+            #endregion
+        }
+        #endregion
         #region 只读属性
         /// <summary>ID</summary>
         public int ID { get; }
@@ -343,8 +354,7 @@ namespace JLQ_GameBase
             this.LabelDisplay = new Label
             {
                 Margin = new Thickness(2, 2, 2, 11),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
+                Style = Game.StretchStyle,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Top,
                 Content = this.Display,
