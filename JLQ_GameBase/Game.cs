@@ -596,30 +596,7 @@ namespace JLQ_GameBase
         /// <summary>更新下个行动的角色,取currentTime最小的角色中Interval最大的角色中的随机一个</summary>
         public void GetNextRoundCharacter()
         {
-            var stack = new Stack<Character>();
-            stack.Push(Characters.First());
-            foreach (var character in Characters)
-            {
-                var temp = stack.Peek();
-                if (character.CurrentTime < temp.CurrentTime)
-                {
-                    stack.Clear();
-                    stack.Push(character);
-                }
-                else if (character.CurrentTime == temp.CurrentTime)
-                {
-                    if (character.Interval > temp.Interval)
-                    {
-                        stack.Clear();
-                        stack.Push(character);
-                    }
-                    else if (character.Interval == temp.Interval)
-                    {
-                        stack.Push(character);
-                    }
-                }
-            }
-            CurrentCharacter = random.RandomElement(stack);
+            CurrentCharacter = Characters.Min();
             UpdateLabelBackground();
 
             var ct = CurrentCharacter.CurrentTime;

@@ -42,7 +42,7 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled.AliceFigures
             => string.Format("HP: {0} / {1}\n防御： {2}\n闪避率： {3}\n绑定角色：{4}号{5}", Hp, MaxHp, Defence, DodgeRate,
                 CharacterBind.ID, CharacterBind.GetType().Name);
 
-        public override void AddBuff(Buff buff)
+        protected override void AddBuff(Buff buff)
         {
             
         }

@@ -50,7 +50,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private const int SC03Range = 2;
         public bool SC03IsBuffing = false;
 
-        public override void AddBuff(Buff buff)
+        protected override void AddBuff(Buff buff)
         {
             var b = Attribute.GetCustomAttributes(buff.GetType(), typeof (BuffKindAttribute))
                 .OfType<BuffKindAttribute>()

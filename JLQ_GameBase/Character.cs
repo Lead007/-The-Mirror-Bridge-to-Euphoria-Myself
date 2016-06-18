@@ -15,7 +15,7 @@ using RandomHelper;
 namespace JLQ_GameBase
 {
     /// <summary>角色类</summary>
-    public abstract class Character
+    public abstract class Character : IComparable<Character>
     {
         #region 静态属性
         /// <summary>表示状态的控件样式</summary>
@@ -243,26 +243,26 @@ namespace JLQ_GameBase
         /// <summary>显示状态的控件</summary>
         private List<FrameworkElement> StateControls { get; } = new List<FrameworkElement>();
         /// <summary>显示状态的控件</summary>
-        public IEnumerable<FrameworkElement> StatesControls => StateControls; 
+        public IEnumerable<FrameworkElement> StatesControls => StateControls;
         #endregion
 
 
         #region 只读属性
         #region 游戏内角色数据
         /// <summary>攻击</summary>
-        public int Attack => Math.Max(0, (Data.Attack*_attackX).Floor() + _attackAdd);
+        public int Attack => Math.Max(0, (Data.Attack * _attackX).Floor() + _attackAdd);
         /// <summary>防御</summary>
-        public virtual int Defence => Math.Max(0, (Data.Defence*_defenceX).Floor() + _defenceAdd);
+        public virtual int Defence => Math.Max(0, (Data.Defence * _defenceX).Floor() + _defenceAdd);
         /// <summary>命中率</summary>
-        public int HitRate => Math.Max(0, (Data.HitRate*_hitRateX).Floor() + _hitRateAdd);
+        public int HitRate => Math.Max(0, (Data.HitRate * _hitRateX).Floor() + _hitRateAdd);
         /// <summary>闪避率</summary>
-        public int DodgeRate => Math.Max(0, (Data.DodgeRate*_dodgeRateX).Floor() + _dodgeRateAdd);
+        public int DodgeRate => Math.Max(0, (Data.DodgeRate * _dodgeRateX).Floor() + _dodgeRateAdd);
         /// <summary>近战补正</summary>
-        public double CloseAmendment => Math.Max(0, Data.CloseAmendment*_closeAmendmentX + _clostAmendmentAdd);
+        public double CloseAmendment => Math.Max(0, Data.CloseAmendment * _closeAmendmentX + _clostAmendmentAdd);
         /// <summary>行动间隔</summary>
-        public int Interval => Math.Max(1, (Data.Interval*_intervalX + _intervalAdd).Floor());
+        public int Interval => Math.Max(1, (Data.Interval * _intervalX + _intervalAdd).Floor());
         /// <summary>默认Buff时间（3*Interval）</summary>
-        public int BuffTime => 3*Interval;
+        public int BuffTime => 3 * Interval;
         /// <summary>机动</summary>
         public int MoveAbility => Math.Max(0, Data.MoveAbility + _moveAbilityAdd);
         /// <summary>攻击范围</summary>
@@ -286,7 +286,7 @@ namespace JLQ_GameBase
         /// <summary>阻挡行动的敌人列表</summary>
         public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemies.Select(c => c.Position));
         /// <summary>符卡的灵力消耗</summary>
-        public virtual int[] SCMpUse { get; } = new[] {0, 0, 0};//TODO SC Mp Use
+        public virtual int[] SCMpUse { get; } = new[] { 0, 0, 0 };//TODO SC Mp Use
 
         /// <summary>用于保存的角色信息</summary>
         internal CharacterInfo Info => new CharacterInfo
@@ -322,7 +322,7 @@ namespace JLQ_GameBase
 
         #region 符卡相关委托
         /// <summary>进入符卡按钮01的委托</summary>
-        protected MouseEventHandler[] enterButton { get; set; } = new MouseEventHandler[] {null, null, null};
+        protected MouseEventHandler[] enterButton { get; set; } = new MouseEventHandler[] { null, null, null };
         /// <summary>离开符卡按钮01的委托</summary>
         protected MouseEventHandler[] leaveButton { get; set; } = new MouseEventHandler[] { null, null, null };
         /// <summary>单击符卡按钮01后进入棋盘按钮的委托</summary>
@@ -466,7 +466,7 @@ namespace JLQ_GameBase
 
         /// <summary>治疗最大体力值的一定比值</summary>
         /// <param name="x">治疗量与最大体力值的比值</param>
-        public void Cure(RationalNumber x) => Cure(x.Value*MaxHp);
+        public void Cure(RationalNumber x) => Cure(x.Value * MaxHp);
         #endregion
 
         /// <summary>被攻击</summary>
@@ -490,7 +490,7 @@ namespace JLQ_GameBase
             //计算近战补正
             var closeGain = HandleCloseGain(target);
             //造成伤害
-            return HandleDoingAttack(target, times*closeGain);
+            return HandleDoingAttack(target, times * closeGain);
         }
 
         /// <summary>弹幕攻击</summary>
@@ -542,7 +542,7 @@ namespace JLQ_GameBase
         /// <returns></returns>
         public string Tip(Character target)
             => string.Format("命中几率： {0}%\n平均伤害值： {1}\n<按下Shift查看详细信息>",
-                (this.HitRate(target)*100).Floor(),
+                (this.HitRate(target) * 100).Floor(),
                 Calculate.Damage(this.Attack, target.Defence));
         #endregion
 
@@ -559,8 +559,8 @@ namespace JLQ_GameBase
         /// <param name="relativeX">移动的列向相对坐标</param>
         /// <param name="relativeY">移动的行向相对坐标</param>
         public virtual void Move(int relativeX, int relativeY)
-            => Move(new Point(GetValidPosition((int) this.X + relativeX, Game.Column),
-                GetValidPosition((int) this.Y + relativeY, Game.Row)));
+            => Move(new Point(GetValidPosition((int)this.X + relativeX, Game.Column),
+                GetValidPosition((int)this.Y + relativeY, Game.Row)));
         #endregion
 
         #region 显示更新
@@ -579,7 +579,7 @@ namespace JLQ_GameBase
         public void AddStateControl(FrameworkElement item)
         {
             var count = StateControls.Count;
-            item.Margin = new Thickness(0, 2 + 12*count, 2, 0);
+            item.Margin = new Thickness(0, 2 + 12 * count, 2, 0);
             this.StateControls.Add(item);
             this.Set();
             game.GridPad.Children.Add(item);
@@ -593,7 +593,7 @@ namespace JLQ_GameBase
             this.StateControls.Remove(item);
             for (int i = 0, count = StateControls.Count; i < count; i++)
             {
-                StateControls[i].Margin = new Thickness(0, 2 + 12*i, 2, 0);
+                StateControls[i].Margin = new Thickness(0, 2 + 12 * i, 2, 0);
             }
         }
         #endregion
@@ -653,7 +653,7 @@ namespace JLQ_GameBase
         /// <returns>是否符合</returns>
         public bool IsInRangeAndEnemy(int range, Character c) => IsInRangeAndEnemy(this.Position, range, c);
 
-        public virtual void AddBuff(Buff buff) => this.BuffList.Add(buff);
+        protected internal virtual void AddBuff(Buff buff) => this.BuffList.Add(buff);
 
 
         #region 符卡
@@ -690,6 +690,17 @@ namespace JLQ_GameBase
         }
         #endregion
 
+        /// <summary>用于判断下个行动角色的接口实现</summary>
+        /// <param name="other">另一个角色</param>
+        /// <returns>比较结果</returns>
+        public int CompareTo(Character other)
+        {
+            var cx = this.CurrentTime.CompareTo(other.CurrentTime);
+            if (cx != 0) return cx;
+            var ix = this.Interval.CompareTo(other.Interval);
+            if (ix != 0) return -ix;
+            return (random.Next(2) << 1) - 1;
+        }
 
 
         #region 私有或受保护函数
@@ -760,7 +771,7 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>伤害浮动</summary>
-        protected double FloatDamage => (2*random.NextDouble() - 1)*this.DamageFloat + 1;
+        protected double FloatDamage => (2 * random.NextDouble() - 1) * this.DamageFloat + 1;
         #endregion
 
         /// <summary>结束符卡结算</summary>
@@ -891,7 +902,6 @@ namespace JLQ_GameBase
         /// <param name="range">范围</param>
         /// <returns>在范围内的敌人</returns>
         protected IEnumerable<Character> EnemyInRange(int range) => Enemies.Where(c => this.IsInRange(c, range));
-
         #endregion
     }
 }
