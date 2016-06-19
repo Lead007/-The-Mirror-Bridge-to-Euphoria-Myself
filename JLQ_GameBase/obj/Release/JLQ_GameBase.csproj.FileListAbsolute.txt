@@ -13,3 +13,5 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameBase\ob
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameBase\obj\Release\JLQ_GameBase.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameBase\bin\Release\ExceptionHelper.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameBase\bin\Release\ExceptionHelper.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameBase\obj\Release\JLQ_GameBase.Properties.Resources.resources
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameBase\obj\Release\JLQ_GameBase.csproj.GenerateResource.Cache
