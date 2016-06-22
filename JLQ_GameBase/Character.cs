@@ -15,7 +15,7 @@ using RandomHelper;
 namespace JLQ_GameBase
 {
     /// <summary>角色类</summary>
-    public abstract class Character : IComparable<Character>
+    public abstract class Character
     {
         #region 静态属性
         /// <summary>表示状态的控件样式</summary>
@@ -689,18 +689,6 @@ namespace JLQ_GameBase
             }
         }
         #endregion
-
-        /// <summary>用于判断下个行动角色的接口实现</summary>
-        /// <param name="other">另一个角色</param>
-        /// <returns>比较结果</returns>
-        public int CompareTo(Character other)
-        {
-            var cx = this.CurrentTime.CompareTo(other.CurrentTime);
-            if (cx != 0) return cx;
-            var ix = this.Interval.CompareTo(other.Interval);
-            if (ix != 0) return -ix;
-            return (random.Next(2) << 1) - 1;
-        }
 
 
         #region 私有或受保护函数

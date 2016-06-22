@@ -140,7 +140,7 @@ namespace JLQ_GameBase
         /// <summary>游戏中所有角色列表</summary>
         public List<Character> Characters { get; } = new List<Character>();
         /// <summary>游戏中所有角色的信息列表</summary>
-        public List<CharacterInfo> CInfos => Characters.Select(c => c.Info).ToList(); 
+        public List<CharacterInfo> CInfos => Characters.Select(c => c.Info).ToList();
 
         /// <summary>加人模式上一个添加的角色</summary>
         public Character CharacterLastAdd { get; set; }
@@ -196,7 +196,7 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>生成可到达点矩阵</summary>
-        public Action<Point,int> HandleAssignPointCanReach { get; set; }
+        public Action<Point, int> HandleAssignPointCanReach { get; set; }
         /// <summary>判断是否死亡</summary>
         public DIsDead HandleIsDead { get; set; }
 
@@ -216,7 +216,7 @@ namespace JLQ_GameBase
         #region 符卡相关
         /// <summary>所有符卡相关的委托</summary>
         public Delegate[] ScDelegates
-            => new Delegate[] {HandleIsLegalClick, HandleIsTargetLegal, HandleSelf, HandleTarget};
+            => new Delegate[] { HandleIsLegalClick, HandleIsTargetLegal, HandleSelf, HandleTarget };
         /// <summary>传递参数，判断单击位置是否有效</summary>
         public Func<Point, bool> HandleIsLegalClick { get; set; }
         /// <summary>传递参数，如何获取目标以及所需参数列表</summary>
@@ -352,7 +352,7 @@ namespace JLQ_GameBase
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Top
                 };
-                LabelsGroup[i].SetValue(Grid.ColumnProperty, 5 - 2*i);
+                LabelsGroup[i].SetValue(Grid.ColumnProperty, 5 - 2 * i);
             }
 
             #endregion
@@ -441,7 +441,7 @@ namespace JLQ_GameBase
         /// <param name="position">需要搜索角色的位置</param>
         /// <returns>在该位置的角色</returns>
         public Character this[Point position] => Characters.FirstOrDefault(c => c.Position == position);
-        
+
         /// <summary>获取特定ID的角色，若没有则返回null</summary>
         /// <param name="ID">需要搜索角色的ID</param>
         /// <returns>该ID的角色</returns>
@@ -480,10 +480,10 @@ namespace JLQ_GameBase
             get
             {
                 var result = new Button[Column * Row];
-                for(var i = 0; i < Column; i++) 
+                for (var i = 0; i < Column; i++)
                     for (var j = 0; j < Row; j++)
                     {
-                        result[j*Column + i] = Buttons[i, j];
+                        result[j * Column + i] = Buttons[i, j];
                     }
                 return result;
             }
@@ -498,7 +498,7 @@ namespace JLQ_GameBase
             #region 调用对应的构造函数创建角色对象而已
             try
             {
-                object[] parameters = {ID, point, group, this};
+                object[] parameters = { ID, point, group, this };
                 CharacterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
                 ID++;
             }
@@ -596,13 +596,12 @@ namespace JLQ_GameBase
         /// <summary>更新下个行动的角色,取currentTime最小的角色中Interval最大的角色中的随机一个</summary>
         public void GetNextRoundCharacter()
         {
-            CurrentCharacter = Characters.Min();
+            CurrentCharacter = Characters.Select(c => new CharacterTimeComparable(c, random)).Min().Character;
             UpdateLabelBackground();
 
             var ct = CurrentCharacter.CurrentTime;
-            Characters.DoAction(c => c.CurrentTime -= ct);
-            var tempList = (from l in Characters.Select(c => c.BuffList) from b in l where b.Round(ct) select b).ToList();
-            tempList.DoAction(b => b.BuffEnd());
+            Characters.DoAction(c => c.CurrentTime -= ct);//结算剩余冷却时间
+            Characters.SelectMany(c => c.BuffList).Where(b => b.Round(ct)).DoAction(b => b.BuffEnd());//结算buff
             CurrentCharacter.CurrentTime = CurrentCharacter.Interval;
 
             Generate_CanReachPoint();
@@ -668,7 +667,7 @@ namespace JLQ_GameBase
                 }
             }
             HandleAssignPointCanReach(CurrentCharacter.Position, CurrentCharacter.MoveAbility);
-            Characters.Where(c => c.Position != CurrentCharacter.Position).DoAction(c=> CanReachPoint[c.X, c.Y] = false);
+            Characters.Where(c => c.Position != CurrentCharacter.Position).DoAction(c => CanReachPoint[c.X, c.Y] = false);
         }
 
         /// <summary>将所有可以到达的点在bool二维数组中置为true</summary>
