@@ -15,7 +15,7 @@ using RandomHelper;
 namespace JLQ_GameBase
 {
     /// <summary>角色类</summary>
-    public abstract class Character
+    public abstract class Character : CharacterBase
     {
         #region 静态属性
         /// <summary>表示状态的控件样式</summary>
@@ -174,26 +174,24 @@ namespace JLQ_GameBase
         #endregion
 
         #region 与ProgressBar绑定的属性
-        private int _hp;
         /// <summary>血量</summary>
-        public int Hp
+        public override int Hp
         {
-            get { return _hp; }
+            get { return base.Hp; }
             set
             {
-                _hp = value;
+                base.Hp = value;
                 BarHp.Value = value;
             }
         }
 
-        private int _mp;
         /// <summary>灵力</summary>
-        public virtual int Mp
+        public override int Mp
         {
-            get { return _mp; }
+            get { return base.Mp; }
             set
             {
-                _mp = value;
+                base.Mp = value;
                 BarMp.Value = value;
                 if (!game.IsBattle || game.CurrentCharacter != this) return;
                 for (var i = 0; i < 3; i++)
@@ -203,14 +201,13 @@ namespace JLQ_GameBase
             }
         }
 
-        private int _currentTime;
         /// <summary>当前剩余冷却时间</summary>
-        public virtual int CurrentTime
+        public override int CurrentTime
         {
-            get { return _currentTime; }
+            get { return base.CurrentTime; }
             set
             {
-                _currentTime = value;
+                base.CurrentTime = value;
                 BarTime.Value = value;
             }
         }
@@ -559,8 +556,11 @@ namespace JLQ_GameBase
         /// <param name="relativeX">移动的列向相对坐标</param>
         /// <param name="relativeY">移动的行向相对坐标</param>
         public virtual void Move(int relativeX, int relativeY)
-            => Move(new Point(GetValidPosition((int)this.X + relativeX, Game.Column),
-                GetValidPosition((int)this.Y + relativeY, Game.Row)));
+        {
+            var end = new Point(GetValidPosition(this.X + relativeX, Game.Column),
+                GetValidPosition(this.Y + relativeY, Game.Row));
+            if (game[end] != null) Move(end);
+        }
         #endregion
 
         #region 显示更新

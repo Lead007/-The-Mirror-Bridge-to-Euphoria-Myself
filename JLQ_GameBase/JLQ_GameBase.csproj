@@ -65,6 +65,7 @@
     <Compile Include="Buffs\BuffChildren.cs" />
     <Compile Include="Calculate.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="CharacterBase.cs" />
     <Compile Include="CharacterInfo.cs" />
     <Compile Include="CharacterTimeComparable.cs" />
     <Compile Include="Comparer.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="DelegateEvent.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameBase.cs" />
     <Compile Include="GameColor.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="Paint.cs" />

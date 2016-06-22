@@ -21,7 +21,7 @@ using static JLQ_GameBase.GameColor;
 namespace JLQ_GameBase
 {
     /// <summary>游戏类</summary>
-    public class Game
+    public class Game : GameBase
     {
         #region 静态只读属性或常量
         /// <summary>棋盘列数</summary>
@@ -81,27 +81,24 @@ namespace JLQ_GameBase
         /// <summary>鼠标网格位置的角色</summary>
         public Character MouseCharacter => this[this.MousePoint];
 
-        private Section? _section;
-
         /// <summary>当前回合所在的阶段</summary>
-        public Section? GameSection
+        public override Section? GameSection
         {
-            get { return _section; }
-            private set
+            get { return base.GameSection; }
+            protected set
             {
-                _section = value;
+                base.GameSection = value;
                 LabelSection.Content = Calculate.Convert(value);
             }
         }
 
-        private int _id = 1;
         /// <summary>加人模式的当前ID</summary>
-        public int ID
+        public override int ID
         {
-            get { return _id; }
+            get { return base.ID; }
             set
             {
-                _id = value;
+                base.ID = value;
                 LabelID.Content = value;
             }
         }
@@ -596,7 +593,7 @@ namespace JLQ_GameBase
         /// <summary>更新下个行动的角色,取currentTime最小的角色中Interval最大的角色中的随机一个</summary>
         public void GetNextRoundCharacter()
         {
-            CurrentCharacter = Characters.Select(c => new CharacterTimeComparable(c, random)).Min().Character;
+            CurrentCharacter = Characters.Min(c => new CharacterTimeComparable(c, random)).Character;
             UpdateLabelBackground();
 
             var ct = CurrentCharacter.CurrentTime;
