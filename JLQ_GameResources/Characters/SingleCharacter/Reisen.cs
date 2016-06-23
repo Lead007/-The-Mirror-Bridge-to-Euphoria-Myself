@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
 
@@ -12,14 +11,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>铃仙·优昙华院·因幡</summary>
     public class Reisen : Character
 	{
-		public Reisen(int id, Point position, Group group, Game game)
+		public Reisen(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    enterPad[0] = (s, ev) =>
 		    {
 		        if (!IsInRangeAndEnemy(SC01Range, game.MousePoint)) return;
 		        game.DefaultButtonAndLabels();
-		        Enemies.Where(c => c.X == game.MouseColumn || c.Y == game.MouseRow).SetLabelBackground();
+		        Enemies.Where(c => c.Column == game.MouseColumn || c.Row == game.MouseRow).SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
 		    enterPad[1] = (s, ev) =>
@@ -47,7 +46,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC01()
         {
             game.HandleIsLegalClick = point => IsInRangeAndEnemy(SC01Range, point);
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && (SCee.X == point.X || SCee.Y == point.Y);
+            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && (SCee.Column == point.Column || SCee.Row == point.Row);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
             AddPadButtonEvent(0);
             game.HandleResetShow = () =>

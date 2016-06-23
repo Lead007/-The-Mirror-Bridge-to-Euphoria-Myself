@@ -33,9 +33,6 @@
     <Reference Include="JLQ_GameBase">
       <HintPath>..\JLQ_GameBase\bin\Release\JLQ_GameBase.dll</HintPath>
     </Reference>
-    <Reference Include="RationalNumber">
-      <HintPath>..\RationalNumber\bin\Release\RationalNumber.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

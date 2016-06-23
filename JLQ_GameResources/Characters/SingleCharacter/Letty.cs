@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Add.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using MoreEnumerable;
-using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>蕾蒂</summary>
     public class Letty : Character
 	{
-		public Letty(int id, Point position, Group group, Game game)
+		public Letty(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    enterPad[0] = (s, ev) =>
@@ -31,7 +29,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private const float skillGain = 0.3f;
         private const int SC01Range = 4;
         private const int SC01Range2 = 1;
-        private static RationalNumber SC02Gain { get; } = new RationalNumber(2, 5, true, false);
+        private static PercentOfMaxHp SC02Gain { get; } = new PercentOfMaxHp(0.4f);
 
         public override void PreparingSection()
         {

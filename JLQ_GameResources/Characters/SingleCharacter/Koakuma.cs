@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 
@@ -12,7 +11,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>小恶魔</summary>
     public class Koakuma : Character
 	{
-		public Koakuma(int id, Point position, Group group, Game game)
+		public Koakuma(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01

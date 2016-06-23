@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace JLQ_GameBase
 {
@@ -35,13 +34,13 @@ namespace JLQ_GameBase
         /// <param name="point1">点1</param>
         /// <param name="point2">点2</param>
         /// <returns>距离值</returns>
-        public static int Distance(this Point point1, Point point2)
-            => (int)(Math.Abs(point1.X - point2.X) + Math.Abs(point1.Y - point2.Y));
+        public static int Distance(this PadPoint point1, PadPoint point2)
+            => Math.Abs(point1.Column - point2.Column) + Math.Abs(point1.Row - point2.Row);
         /// <summary>求一点和一角色的距离</summary>
         /// <param name="point1">点1</param>
         /// <param name="character1">角色1</param>
         /// <returns></returns>
-        public static int Distance(this Point point1, Character character1) => point1.Distance(character1.Position);
+        public static int Distance(this PadPoint point1, Character character1) => point1.Distance(character1.Position);
         /// <summary>求两角色的距离</summary>
         /// <param name="character1">角色1</param>
         /// <param name="character2">角色2</param>
@@ -54,7 +53,7 @@ namespace JLQ_GameBase
         /// <param name="point2">点2</param>
         /// <param name="distance">距离</param>
         /// <returns>是否在距离内</returns>
-        public static bool IsInRange(this Point point1, Point point2, int distance)
+        public static bool IsInRange(this PadPoint point1, PadPoint point2, int distance)
             => point1.Distance(point2) <= distance;
 
         /// <summary>某角色是否在一点范围内</summary>
@@ -62,7 +61,7 @@ namespace JLQ_GameBase
         /// <param name="character1">角色</param>
         /// <param name="distance">距离</param>
         /// <returns>是否在距离内</returns>
-        public static bool IsInRange(this Point point1, Character character1, int distance)
+        public static bool IsInRange(this PadPoint point1, Character character1, int distance)
             => point1.IsInRange(character1.Position, distance);
 
         /// <summary>某角色是否在一角色范围内</summary>
@@ -120,33 +119,33 @@ namespace JLQ_GameBase
         /// <param name="origin">源点</param>
         /// <param name="point">待测点</param>
         /// <returns>是否在范围内</returns>
-        public static bool IsIn33(this Point origin, Point point) => origin.IsInSquare(point, 3);
+        public static bool IsIn33(this PadPoint origin, PadPoint point) => origin.IsInSquare(point, 3);
 
         /// <summary>目标角色是否在源点3*3范围内</summary>
         /// <param name="origin">源点</param>
         /// <param name="c">待测角色</param>
         /// <returns>是否在范围内</returns>
-        public static bool IsIn33(this Point origin, Character c) => origin.IsIn33(c.Position);
+        public static bool IsIn33(this PadPoint origin, Character c) => origin.IsIn33(c.Position);
 
         /// <summary>目标点是否在以源点为中心的正方形内</summary>
         /// <param name="origin">源点</param>
         /// <param name="point">待测点</param>
         /// <param name="length">正方形边长</param>
         /// <returns>是否在范围内</returns>
-        public static bool IsInSquare(this Point origin, Point point, int length)
+        public static bool IsInSquare(this PadPoint origin, PadPoint point, int length)
         {
             var i = (length - 1)/2;
-            return Math.Abs(origin.X - point.X) <= i && Math.Abs(origin.Y - point.Y) <= i;
+            return Math.Abs(origin.Column - point.Column) <= i && Math.Abs(origin.Row - point.Row) <= i;
         }
         /// <summary>说中的面前</summary>
         /// <param name="origin">源点</param>
         /// <param name="target">目标点</param>
         /// <returns>面前</returns>
-        public static Point FacePoint(this Point origin, Point target)
+        public static PadPoint FacePoint(this PadPoint origin, PadPoint target)
         {
-            return origin.Y == target.Y
-                ? new Point(origin.X + (origin.X > target.X ? -1 : 1), origin.Y)
-                : new Point(origin.X, origin.Y + (origin.Y > target.Y ? -1 : 1));
+            return origin.Row == target.Row
+                ? new PadPoint(origin.Column + (origin.Column > target.Column ? -1 : 1), origin.Row)
+                : new PadPoint(origin.Column, origin.Row + (origin.Row > target.Row ? -1 : 1));
         }
     }
 }

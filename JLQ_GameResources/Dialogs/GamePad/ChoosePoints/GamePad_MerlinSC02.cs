@@ -17,7 +17,7 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChoosePoints
 
         }
 
-        protected override IEnumerable<Character> LegalCharacters(Point point)
+        protected override IEnumerable<Character> LegalCharacters(PadPoint point)
         {
             return game.Characters.Where(c => point.Distance(c) <= 2);
         }

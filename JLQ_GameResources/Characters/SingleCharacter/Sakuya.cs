@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using MoreEnumerable;
@@ -13,7 +12,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>十六夜咲夜</summary>
     public class Sakuya : Character, IHuman
     {
-		public Sakuya(int id, Point position, Group group, Game game)
+		public Sakuya(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    enterPad[1] = (s, ev) =>
@@ -134,7 +133,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC03();
         }
 
-	    private bool SC02IsLegalClick(Point point)
+	    private bool SC02IsLegalClick(PadPoint point)
 	    {
 	        return point.IsInRange(this, 2*this.AttackRange) && game[point] != null;
 	    }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_GameBase;
@@ -15,7 +14,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>爱丽丝·玛格特洛依德</summary>
 	public class Alice : Character
 	{
-		public Alice(int id, Point position, Group group, Game game)
+		public Alice(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    enterPad[1] = (s, ev) =>

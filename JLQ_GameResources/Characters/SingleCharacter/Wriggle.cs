@@ -15,7 +15,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>莉格露·奈特巴格</summary>
     public class Wriggle : Character
 	{
-		public Wriggle(int id, Point position, Group group, Game game)
+		public Wriggle(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -170,13 +170,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
-        private bool IsInLine(Character SCee, Point point)
+        private bool IsInLine(Character SCee, PadPoint point)
         {
-            if (point.X == this.X) return (point.Y > this.Y) == (SCee.Y > this.Y);
-            return (point.X > this.X) == (SCee.X > this.X);
+            if (point.Column == this.Column) return (point.Row > this.Row) == (SCee.Row > this.Row);
+            return (point.Column > this.Column) == (SCee.Column > this.Column);
         }
 
-        private bool SC01IsTargetLegal(Character SCee, Point point)
+        private bool SC01IsTargetLegal(Character SCee, PadPoint point)
         {
             var cs = Enemies.Where(c => IsInLine(SCee, point)).ToList();
             if (!cs.Any()) return false;

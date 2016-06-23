@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
-using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>蕾米</summary>
     public class Reimiria : CharacterMayRepeatedlyDoDamage
 	{
-		public Reimiria(int id, Point position, Group group, Game game)
+		public Reimiria(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡02
@@ -68,7 +66,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 if (HandleIsHit(SCee)) return;
                 //造成伤害
                 DoingAttack(SCee, SC02Gain);
-                this.Cure(new RationalNumber(1, 20, true, false));
+                this.Cure(new PercentOfMaxHp(0.5f));
                 if (SCee.IsDead) this.DamageTimes++;
             };
         }
@@ -93,21 +91,21 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
-        private bool SC03IsTargetLegal(Character SCee, Point point)
+        private bool SC03IsTargetLegal(Character SCee, PadPoint point)
         {
-            if (point.X == this.X)
+            if (point.Column == this.Column)
             {
-                if (point.Y > this.Y)
+                if (point.Row > this.Row)
                 {
-                    return SCee.X == this.X && SCee.Y > this.Y;
+                    return SCee.Column == this.Column && SCee.Row > this.Row;
                 }
-                return SCee.X == this.X && SCee.Y < this.Y;
+                return SCee.Column == this.Column && SCee.Row < this.Row;
             }
-            if (point.X > this.X)
+            if (point.Column > this.Column)
             {
-                return SCee.Y == this.Y && SCee.X > this.X;
+                return SCee.Row == this.Row && SCee.Column > this.Column;
             }
-            return SCee.Y == this.Y && SCee.X < this.X;
+            return SCee.Row == this.Row && SCee.Column < this.Column;
         }
 	}
 }

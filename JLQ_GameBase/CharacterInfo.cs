@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace JLQ_GameBase
 {
@@ -12,7 +11,7 @@ namespace JLQ_GameBase
     public class CharacterInfo
     {
         /// <summary>角色位置</summary>
-        public Point Position { get; set; }
+        public PadPoint Position { get; set; }
         /// <summary>角色阵营</summary>
         public Group CGroup { get; set; }
         /// <summary>角色显示</summary>

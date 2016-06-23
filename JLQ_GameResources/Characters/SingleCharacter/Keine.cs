@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
@@ -16,7 +15,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>上白泽慧音</summary>
     public class Keine : Character, IHuman
 	{
-		public Keine(int id, Point position, Group group, Game game)
+		public Keine(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    enterButton[0] = (s, ev) =>
@@ -42,7 +41,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        if (IsBaize)
 		        {
 		            game.DefaultButtonAndLabels();
-		            Enemies.Where(c => Math.Abs(c.X - this.X) <= 1).SetLabelBackground();
+		            Enemies.Where(c => Math.Abs(c.Column - this.Column) <= 1).SetLabelBackground();
 		        }
 		    };
             SetDefaultLeaveSCButtonDelegate(1);
@@ -156,7 +155,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             if (IsBaize)
             {
-                game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && Math.Abs(SCee.X - this.X) <= 1;
+                game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && Math.Abs(SCee.Column - this.Column) <= 1;
                 game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 2);
             }
             else

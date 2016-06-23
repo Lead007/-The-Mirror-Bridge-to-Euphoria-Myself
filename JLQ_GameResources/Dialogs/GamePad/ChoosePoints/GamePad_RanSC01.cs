@@ -17,12 +17,12 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChoosePoints
             
         }
 
-        protected override bool IsLegalClick(Point point)
+        protected override bool IsLegalClick(PadPoint point)
         {
             return base.IsLegalClick(point) && game[point] == null;
         }
 
-        protected override IEnumerable<Character> LegalCharacters(Point point)
+        protected override IEnumerable<Character> LegalCharacters(PadPoint point)
         {
             return game.CurrentCharacter.Enemies.Where(c => point.Distance(c) == 1);
         }

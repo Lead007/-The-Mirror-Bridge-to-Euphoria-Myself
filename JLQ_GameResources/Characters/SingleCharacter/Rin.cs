@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -12,7 +11,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>冴月麟</summary>
     public class Rin : CharacterHitBack
 	{
-		public Rin(int id, Point position, Group group, Game game)
+		public Rin(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01

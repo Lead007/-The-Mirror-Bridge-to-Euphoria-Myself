@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_GameBase;
-using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>蕾拉·普莉兹姆利巴</summary>
     public class Leira : CharacterPrismriver, IHuman
     {
-		public Leira(int id, Point position, Group group, Game game)
+		public Leira(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡02
@@ -30,7 +28,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         public Human HumanKind => Human.FullHuman;
 
-        private static RationalNumber SC02Gain => new RationalNumber(1, 5, true, false);
+        private static PercentOfMaxHp SC02Gain { get; } = new PercentOfMaxHp(0.2f);
 
         public override void PreparingSection()
         {

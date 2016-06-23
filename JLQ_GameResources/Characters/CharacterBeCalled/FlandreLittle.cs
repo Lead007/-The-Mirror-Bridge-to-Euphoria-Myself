@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
 using JLQ_GameResources.Characters.SingleCharacter;
@@ -14,7 +13,7 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled
     /// <summary>芙兰 召唤出的分身</summary>
     public class FlandreLittle : Flandre
     {
-        public FlandreLittle(Point position, Group group, Game game)
+        public FlandreLittle(PadPoint position, Group group, Game game)
             : base(0, position, group, game)
         {
             

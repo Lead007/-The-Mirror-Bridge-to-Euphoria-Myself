@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Add.Sealed;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
-using Number;
 using RandomHelper;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -17,7 +15,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>红美铃</summary>
     public class Meirin : Character
 	{
-		public Meirin(int id, Point position, Group group, Game game)
+		public Meirin(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -39,7 +37,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
-        private static RationalNumber SC03Gain = new RationalNumber(1, 10, true, false);
+        private static PercentOfMaxHp SC03Gain = new PercentOfMaxHp(0.1f);
 
         //TODO 天赋
 	    public override void BeAttacked(int damage, Character attacker)

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.CharacterBeCalled.AliceFigures
@@ -11,7 +10,7 @@ namespace JLQ_GameResources.Characters.CharacterBeCalled.AliceFigures
     /// <summary>爱丽丝·玛格特洛依德 符卡02召唤出的人偶 蓬莱</summary>
     public class AliceFigure2 : AliceFigure
     {
-        public AliceFigure2(Point position, Game game, Character binding, int maxHp, int defence)
+        public AliceFigure2(PadPoint position, Game game, Character binding, int maxHp, int defence)
             : base(position, Group.Middle, game)
         {
             CharacterBind = binding;

@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Data;
 using MoreEnumerable;
-using Number;
 using RandomHelper;
 
 namespace JLQ_GameBase
@@ -214,7 +213,7 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>位置，X为Grid.Column，Y为Grid.Row</summary>
-        public Point Position { get; private set; }
+        public PadPoint Position { get; private set; }
 
         /// <summary>是否已移动</summary>
         public virtual bool HasMoved { get; set; }
@@ -274,14 +273,14 @@ namespace JLQ_GameBase
         /// <summary>是否死亡</summary>
         public bool IsDead => 0 >= Hp;
         /// <summary>Column坐标</summary>
-        public int X => (int)this.Position.X;
+        public int Column => this.Position.Column;
         /// <summary>Row坐标</summary>
-        public int Y => (int)this.Position.Y;
+        public int Row => this.Position.Row;
 
         /// <summary>对此角色而言的敌人列表</summary>
         public IEnumerable<Character> Enemies => game.Characters.Where(IsEnemy);
         /// <summary>阻挡行动的敌人列表</summary>
-        public virtual IEnumerable<Point> EnemyBlock => HandleEnemyBlock(Enemies.Select(c => c.Position));
+        public virtual IEnumerable<PadPoint> EnemyBlock => HandleEnemyBlock(Enemies.Select(c => c.Position));
         /// <summary>符卡的灵力消耗</summary>
         public virtual int[] SCMpUse { get; } = new[] { 0, 0, 0 };//TODO SC Mp Use
 
@@ -334,7 +333,7 @@ namespace JLQ_GameBase
         /// <param name="position">角色位置</param>
         /// <param name="group">角色阵营</param>
         /// <param name="game">游戏对象</param>
-        protected Character(int id, Point position, Group group, Game game)
+        protected Character(int id, PadPoint position, Group group, Game game)
         {
             this.ID = id;
             this.Position = position;
@@ -431,7 +430,7 @@ namespace JLQ_GameBase
             #endregion
 
             this.Hp = this.MaxHp;
-            this.Mp = MaxMp;
+            this.Mp = this.MaxMp;
             this.CurrentTime = this.Data.Interval;
 
             this.random = game.random;
@@ -461,9 +460,9 @@ namespace JLQ_GameBase
         /// <param name="hp">治疗的体力值</param>
         public void Cure(double hp) => Cure((int)hp);
 
-        /// <summary>治疗最大体力值的一定比值</summary>
+        /// <summary>治疗最大体力值的一定比例</summary>
         /// <param name="x">治疗量与最大体力值的比值</param>
-        public void Cure(RationalNumber x) => Cure(x.Value * MaxHp);
+        public void Cure(PercentOfMaxHp x) => Cure(x.Percent * MaxHp);
         #endregion
 
         /// <summary>被攻击</summary>
@@ -546,7 +545,7 @@ namespace JLQ_GameBase
         #region 移动
         /// <summary>移动至指定坐标</summary>
         /// <param name="end">移动的目标坐标</param>
-        public virtual void Move(Point end)
+        public virtual void Move(PadPoint end)
         {
             this.Position = end;
             Set();
@@ -557,8 +556,8 @@ namespace JLQ_GameBase
         /// <param name="relativeY">移动的行向相对坐标</param>
         public virtual void Move(int relativeX, int relativeY)
         {
-            var end = new Point(GetValidPosition(this.X + relativeX, Game.Column),
-                GetValidPosition(this.Y + relativeY, Game.Row));
+            var end = new PadPoint(GetValidPosition(this.Column + relativeX, Game.Column),
+                GetValidPosition(this.Row + relativeY, Game.Row));
             if (game[end] != null) Move(end);
         }
         #endregion
@@ -569,8 +568,8 @@ namespace JLQ_GameBase
         {
             foreach (var c in ListControls)
             {
-                c.SetValue(Grid.ColumnProperty, this.X);
-                c.SetValue(Grid.RowProperty, this.Y);
+                c.SetValue(Grid.ColumnProperty, this.Column);
+                c.SetValue(Grid.RowProperty, this.Row);
             }
         }
 
@@ -831,7 +830,7 @@ namespace JLQ_GameBase
         /// <param name="range">范围</param>
         /// <param name="c">待判断的角色</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndEnemy(Point origin, int range, Character c)
+        protected bool IsInRangeAndEnemy(PadPoint origin, int range, Character c)
             => IsEnemy(c) && origin.IsInRange(c, range);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
@@ -839,14 +838,14 @@ namespace JLQ_GameBase
         /// <param name="range">范围</param>
         /// <param name="p">待判断的点</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndEnemy(Point origin, int range, Point p)
+        protected bool IsInRangeAndEnemy(PadPoint origin, int range, PadPoint p)
             => origin.IsInRange(p, range) && IsEnemy(game[p]);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的敌人</summary>
         /// <param name="range">范围</param>
         /// <param name="p">待判断的点</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndEnemy(int range, Point p) => p.IsInRange(this, range) && IsEnemy(game[p]);
+        protected bool IsInRangeAndEnemy(int range, PadPoint p) => p.IsInRange(this, range) && IsEnemy(game[p]);
 
         /// <summary>是否是在自己周围某范围内的队友</summary>
         /// <param name="range">范围</param>
@@ -862,7 +861,7 @@ namespace JLQ_GameBase
         /// <param name="p">待判断的点</param>
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndFriend(Point origin, int range, Point p, bool containThis = true)
+        protected bool IsInRangeAndFriend(PadPoint origin, int range, PadPoint p, bool containThis = true)
             => origin.IsInRange(p, range) && IsFriend(game[p], containThis);
 
         /// <summary>某点处的角色是否是在某点周围某范围内的队友</summary>
@@ -870,14 +869,14 @@ namespace JLQ_GameBase
         /// <param name="p">待判断的点</param>
         /// <param name="containThis">自己是否返回true</param>
         /// <returns>是否符合</returns>
-        protected bool IsInRangeAndFriend(int range, Point p, bool containThis = true)
+        protected bool IsInRangeAndFriend(int range, PadPoint p, bool containThis = true)
             => p.IsInRange(this, range) && IsFriend(game[p], containThis);
 
         /// <summary>在范围内的敌人</summary>
         /// <param name="origin">起始点</param>
         /// <param name="range">范围</param>
         /// <returns>在范围内的敌人</returns>
-        protected IEnumerable<Character> EnemyInRange(Point origin, int range)
+        protected IEnumerable<Character> EnemyInRange(PadPoint origin, int range)
             => Enemies.Where(c => origin.IsInRange(c, range));
 
         /// <summary>在鼠标点范围内的敌人</summary>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
@@ -15,7 +14,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>梅露兰·普莉兹姆利巴</summary>
     public class Merlin : CharacterPoltergeist
 	{
-		public Merlin(int id, Point position, Group group, Game game)
+		public Merlin(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -48,7 +47,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = SC01IsTargetLegal;
             game.HandleTarget = SCee =>
             {
-                var d = Math.Max(Math.Abs(SCee.X - this.X), Math.Abs(SCee.Y - this.Y));
+                var d = Math.Max(Math.Abs(SCee.Column - this.Column), Math.Abs(SCee.Row - this.Row));
                 HandleDoDanmakuAttack(SCee, 1.6f - 0.1f*d);
             };
             AddPadButtonEvent(0);
@@ -95,26 +94,26 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC02();
         }
 
-        private bool IsInLine(Character SCee, Point point)
+        private bool IsInLine(Character SCee, PadPoint point)
         {
-            if (point.X == this.X)
+            if (point.Column == this.Column)
             {
-                return SCee.X == this.X && ((point.Y > this.Y) == (SCee.Y > this.Y));
+                return SCee.Column == this.Column && ((point.Row > this.Row) == (SCee.Row > this.Row));
             }
-            if (point.Y == this.Y)
+            if (point.Row == this.Row)
             {
-                return SCee.Y == this.Y && ((point.X > this.X) == (SCee.X > this.X));
+                return SCee.Row == this.Row && ((point.Column > this.Column) == (SCee.Column > this.Column));
             }
-            return Math.Abs(SCee.X - this.X) == Math.Abs(SCee.Y - this.Y) &&
-                   ((point.Y > this.Y) == (SCee.Y > this.Y)) && (point.X > this.X) == (SCee.X > this.X);
+            return Math.Abs(SCee.Column - this.Column) == Math.Abs(SCee.Row - this.Row) &&
+                   ((point.Row > this.Row) == (SCee.Row > this.Row)) && (point.Column > this.Column) == (SCee.Column > this.Column);
         }
 
-        private bool SC01IsLegalClick(Point point)
+        private bool SC01IsLegalClick(PadPoint point)
         {
-            return Math.Abs(point.X - this.X) <= 1 && Math.Abs(point.Y - this.Y) <= 1 && point != this.Position;
+            return Math.Abs(point.Column - this.Column) <= 1 && Math.Abs(point.Row - this.Row) <= 1 && point != this.Position;
         }
 
-        private bool SC01IsTargetLegal(Character SCee, Point point)
+        private bool SC01IsTargetLegal(Character SCee, PadPoint point)
         {
             var cInLine = Enemies.Where(c => IsInLine(c, point)).ToList();
             if (!cInLine.Any()) return false;

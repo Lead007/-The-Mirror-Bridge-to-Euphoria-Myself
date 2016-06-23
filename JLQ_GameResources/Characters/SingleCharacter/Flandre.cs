@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
 using JLQ_GameResources.Characters.CharacterBeCalled;
@@ -14,7 +13,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>芙兰</summary>
     public class Flandre : Character
 	{
-		public Flandre(int id, Point position, Group group, Game game)
+		public Flandre(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    enterButton[0] = (s, ev) =>
@@ -43,7 +42,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private List<FlandreLittle> FList { get; } = new List<FlandreLittle>();
 
-        private IEnumerable<Point> SC02points
+        private IEnumerable<PadPoint> SC02points
             => Game.PadPoints.Where(p => p.Distance(this) <= SC02Range && game[p] == null);
 
         public override void PreparingSection()
@@ -96,7 +95,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC03()
         {
             game.HandleIsLegalClick =
-                point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
+                point => point.Column > 0 && point.Column < Game.Column - 1 && point.Row > 0 && point.Row < Game.Row - 1;
             game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee) && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
             AddPadButtonEvent(2);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
@@ -14,7 +13,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>魂魄妖梦</summary>
     public class Youmu : Character, IHuman
     {
-		public Youmu(int id, Point position, Group group, Game game)
+		public Youmu(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -138,10 +137,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
-        private bool SC01IsLegalClick(Point point)
+        private bool SC01IsLegalClick(PadPoint point)
         {
-            return (point.X == this.X && Math.Abs(point.Y - this.Y) >= SC01Range) ||
-                   (point.Y == this.Y && Math.Abs(point.X - this.X) >= SC01Range);
+            return (point.Column == this.Column && Math.Abs(point.Row - this.Row) >= SC01Range) ||
+                   (point.Row == this.Row && Math.Abs(point.Column - this.Column) >= SC01Range);
         }
 
     }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
@@ -13,7 +12,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 {
     public class LilyWhite : Character
 	{
-		public LilyWhite(int id, Point position, Group group, Game game)
+		public LilyWhite(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 		    this.LabelDisplay.Content = "莉吹";

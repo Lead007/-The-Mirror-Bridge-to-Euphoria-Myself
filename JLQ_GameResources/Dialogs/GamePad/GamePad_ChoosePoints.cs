@@ -13,10 +13,10 @@ namespace JLQ_GameResources.Dialogs.GamePad
 {
     public abstract class GamePad_ChoosePoints : Dialog_GamePad
     {
-        public ArrayQueue<Point> PointsChoose { get; } 
+        public ArrayQueue<PadPoint> PointsChoose { get; } 
         protected GamePad_ChoosePoints(int pointNum, Game game) : base(game)
         {
-            PointsChoose = new ArrayQueue<Point>(pointNum);
+            PointsChoose = new ArrayQueue<PadPoint>(pointNum);
             #region Queue Events
             PointsChoose.ItemDequeue += p =>
             {
@@ -62,7 +62,7 @@ namespace JLQ_GameResources.Dialogs.GamePad
                             var button = sender as Button;
                             var column = (int)button.GetValue(Grid.ColumnProperty);
                             var row = (int)button.GetValue(Grid.RowProperty);
-                            var point = new Point(column, row);
+                            var point = new PadPoint(column, row);
                             if (!IsLegalClick(point)) return;
                             PointsChoose.Enqueue(point);
                         };
@@ -106,22 +106,22 @@ namespace JLQ_GameResources.Dialogs.GamePad
             #endregion
         }
 
-        protected Border GetBorder(Point p)
+        protected Border GetBorder(PadPoint p)
             => GridPad.Children.OfType<Border>().FirstOrDefault(
-                b => (int) b.GetValue(Grid.ColumnProperty) == p.X && (int) b.GetValue(Grid.RowProperty) == p.Y);
+                b => (int) b.GetValue(Grid.ColumnProperty) == p.Column && (int) b.GetValue(Grid.RowProperty) == p.Row);
 
-        protected Point GetMousePoint(Button sender)
-            => new Point((int) sender.GetValue(Grid.ColumnProperty), (int) sender.GetValue(Grid.RowProperty));
+        protected PadPoint GetMousePoint(Button sender)
+            => new PadPoint((int) sender.GetValue(Grid.ColumnProperty), (int) sender.GetValue(Grid.RowProperty));
 
         /// <summary>选择的点是否合法</summary>
         /// <param name="point">选择的点</param>
         /// <returns>是否合法</returns>
-        protected virtual bool IsLegalClick(Point point) => !PointsChoose.Contains(point);
+        protected virtual bool IsLegalClick(PadPoint point) => !PointsChoose.Contains(point);
 
         /// <summary>合法的角色列表</summary>
         /// <param name="point">选择的点</param>
         /// <returns>合法的角色列表</returns>
-        protected abstract IEnumerable<Character> LegalCharacters(Point point);
+        protected abstract IEnumerable<Character> LegalCharacters(PadPoint point);
         /// <summary>设置选中的角色的标签颜色</summary>
         /// <param name="c">角色</param>
         protected abstract void SetLabelBackground(Character c);

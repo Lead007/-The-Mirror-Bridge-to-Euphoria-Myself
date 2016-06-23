@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -11,7 +10,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>蓬莱山辉夜</summary>
     public class Kaguya : Character
 	{
-		public Kaguya(int id, Point position, Group group, Game game)
+		public Kaguya(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡02

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Add.Sealed;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_GameBase;
@@ -15,7 +14,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>八云蓝</summary>
     public class Ran : CharacterHitBack
 	{
-		public Ran(int id, Point position, Group group, Game game)
+		public Ran(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡03
@@ -99,7 +98,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC03()
         {
             game.HandleIsLegalClick =
-                point => point.X > 1 && point.X < Game.Column - 1 && point.Y > 1 && point.Y < Game.Row - 1;
+                point => point.Column > 1 && point.Column < Game.Column - 1 && point.Row > 1 && point.Row < Game.Row - 1;
             game.HandleIsTargetLegal =
                 (SCee, point) => point.IsInSquare(SCee.Position, 5);
             game.HandleTarget = SCee =>
@@ -108,10 +107,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 buff1.BuffTrigger();
                 var buff2 = new BuffGainDodgeRate(SCee, this, this.BuffTime, -0.2f, game);
                 buff2.BuffTrigger();
-                Func<Point, Point, bool> handle = (origin, point) =>
+                Func<PadPoint, PadPoint, bool> handle = (origin, point) =>
                 {
-                    var rx = Math.Abs(point.X - origin.X);
-                    var ry = Math.Abs(point.Y - origin.Y);
+                    var rx = Math.Abs(point.Column - origin.Column);
+                    var ry = Math.Abs(point.Row - origin.Row);
                     return (rx == 3 && ry <= 3) || (ry == 3 && rx <= 3);
                 };
                 var buff3 = new BuffLimit(SCee, this, this.BuffTime, game.MousePoint, handle, game);

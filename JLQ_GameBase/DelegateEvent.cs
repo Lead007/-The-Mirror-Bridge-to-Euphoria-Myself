@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace JLQ_GameBase
@@ -45,5 +44,5 @@ namespace JLQ_GameBase
     /// <summary>修改阻挡的敌人列表</summary>
     /// <param name="enemies">原敌人列表</param>
     /// <returns>修改后的敌人列表</returns>
-    public delegate IEnumerable<Point> DEnemyBlock(IEnumerable<Point> enemies);
+    public delegate IEnumerable<PadPoint> DEnemyBlock(IEnumerable<PadPoint> enemies);
 }

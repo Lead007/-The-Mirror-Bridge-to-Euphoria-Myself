@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
@@ -14,7 +13,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>灵梦</summary>
     public class Reimu : CharacterTeleportMoving, IHuman
     {
-        public Reimu(int id, Point position, Group group, Game game)
+        public Reimu(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
             //符卡01
@@ -90,16 +89,16 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void SC02()
         {
             game.HandleIsLegalClick =
-                point => point.X > 0 && point.X < Game.Column - 1 && point.Y > 0 && point.Y < Game.Row - 1;
+                point => point.Column > 0 && point.Column < Game.Column - 1 && point.Row > 0 && point.Row < Game.Row - 1;
             game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee) && IsEnemy(SCee);
             game.HandleTarget = SCee =>
             {
                 var buff1 = new BuffSlowDown(SCee, this, this.BuffTime, SC02Gain, game);
                 buff1.BuffTrigger();
-                Func<Point, Point, bool> handle = (origin, point) =>
+                Func<PadPoint, PadPoint, bool> handle = (origin, point) =>
                 {
-                    var rx = Math.Abs(point.X - origin.X);
-                    var ry = Math.Abs(point.Y - origin.Y);
+                    var rx = Math.Abs(point.Column - origin.Column);
+                    var ry = Math.Abs(point.Row - origin.Row);
                     return (rx == 2 && ry <= 2) || (ry == 2 && rx <= 2);
                 };
                 var buff2 = new BuffLimit(SCee, this, this.BuffTime, game.MousePoint, handle, game);

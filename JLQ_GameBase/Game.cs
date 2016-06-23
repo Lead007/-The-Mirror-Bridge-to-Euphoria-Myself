@@ -30,12 +30,12 @@ namespace JLQ_GameBase
         public const int Row = 9;
 
         /// <summary>默认点</summary>
-        public static Point DefaultPoint { get; } = new Point(-1, -1);
+        public static PadPoint DefaultPoint { get; } = new PadPoint(-1, -1);
         /// <summary>棋盘中心</summary>
-        public static Point CenterPoint { get; } = new Point(4, 4);
+        public static PadPoint CenterPoint { get; } = new PadPoint(4, 4);
 
         /// <summary>棋盘点集</summary>
-        public static List<Point> PadPoints { get; } = new List<Point>();
+        public static List<PadPoint> PadPoints { get; } = new List<PadPoint>();
 
         /// <summary>显示在ComboBox中的角色数据列表</summary>
         public static IEnumerable<CharacterData> CharacterDataListShow { get; set; } = new List<CharacterData>();
@@ -50,7 +50,7 @@ namespace JLQ_GameBase
             #region PadPoints
             for (var i = 0; i < Column; i++)
                 for (var j = 0; j < Row; j++)
-                    PadPoints.Add(new Point(i, j));
+                    PadPoints.Add(new PadPoint(i, j));
             #endregion
             #region StretchStyle
             StretchStyle.Setters.Add(new Setter(Control.HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
@@ -66,16 +66,16 @@ namespace JLQ_GameBase
         public Character CurrentCharacter { get; set; } = null;
 
         /// <summary>是否为战斗模式</summary>
-        public bool IsBattle { get; private set; }
+        public bool IsBattle { get; private set; } = false;
 
         #region 鼠标位置相关
         /// <summary>鼠标的网格位置</summary>
-        public Point MousePoint { get; set; } = Game.DefaultPoint;
+        public PadPoint MousePoint { get; set; } = Game.DefaultPoint;
 
         /// <summary>鼠标网格位置的Column值</summary>
-        public int MouseColumn => (int)MousePoint.X;
+        public int MouseColumn => MousePoint.Column;
         /// <summary>鼠标网格位置的Row值</summary>
-        public int MouseRow => (int)MousePoint.Y;
+        public int MouseRow => MousePoint.Row;
         #endregion
 
         /// <summary>鼠标网格位置的角色</summary>
@@ -193,7 +193,7 @@ namespace JLQ_GameBase
         #endregion
 
         /// <summary>生成可到达点矩阵</summary>
-        public Action<Point, int> HandleAssignPointCanReach { get; set; }
+        public Action<PadPoint, int> HandleAssignPointCanReach { get; set; }
         /// <summary>判断是否死亡</summary>
         public DIsDead HandleIsDead { get; set; }
 
@@ -215,9 +215,9 @@ namespace JLQ_GameBase
         public Delegate[] ScDelegates
             => new Delegate[] { HandleIsLegalClick, HandleIsTargetLegal, HandleSelf, HandleTarget };
         /// <summary>传递参数，判断单击位置是否有效</summary>
-        public Func<Point, bool> HandleIsLegalClick { get; set; }
+        public Func<PadPoint, bool> HandleIsLegalClick { get; set; }
         /// <summary>传递参数，如何获取目标以及所需参数列表</summary>
-        public Func<Character, Point, bool> HandleIsTargetLegal { get; set; }
+        public Func<Character, PadPoint, bool> HandleIsTargetLegal { get; set; }
         /// <summary>传递参数，如何处理自己</summary>
         public Action HandleSelf { get; set; }
         /// <summary>传递参数，如何处理目标</summary>
@@ -437,16 +437,16 @@ namespace JLQ_GameBase
         /// <summary>确定在某位置的角色，若没有则返回null</summary>
         /// <param name="position">需要搜索角色的位置</param>
         /// <returns>在该位置的角色</returns>
-        public Character this[Point position] => Characters.FirstOrDefault(c => c.Position == position);
+        public Character this[PadPoint position] => Characters.FirstOrDefault(c => c.Position == position);
 
         /// <summary>获取特定ID的角色，若没有则返回null</summary>
-        /// <param name="ID">需要搜索角色的ID</param>
+        /// <param name="Id">需要搜索角色的ID</param>
         /// <returns>该ID的角色</returns>
-        public Character this[int ID] => ID < 1 ? null : Characters.FirstOrDefault(c => c.ID == ID);
+        public Character this[int id] => id < 1 ? null : Characters.FirstOrDefault(c => c.ID == id);
 
         #region 当前行动者属性
         /// <summary>当前行动者的位置</summary>
-        public Point CurrentPosition => CurrentCharacter.Position;
+        public PadPoint CurrentPosition => CurrentCharacter.Position;
         /// <summary>当前行动者的scName</summary>
         public string[] ScName => CurrentCharacter.ScName;
         /// <summary>当前行动者的scDisc</summary>
@@ -467,7 +467,7 @@ namespace JLQ_GameBase
             EnemyAsCurrent.Where(c => CurrentCharacter.Distance(c) <= CurrentCharacter.AttackRange);
 
         /// <summary>对当前行动者的阻挡列表</summary>
-        public IEnumerable<Point> EnemyBlock => CurrentCharacter.EnemyBlock;
+        public IEnumerable<PadPoint> EnemyBlock => CurrentCharacter.EnemyBlock;
         /// <summary>对当前行动者的敌人列表</summary>
         public IEnumerable<Character> EnemyAsCurrent => CurrentCharacter.Enemies;
 
@@ -490,30 +490,15 @@ namespace JLQ_GameBase
         /// <param name="point">添加的位置</param>
         /// <param name="group">角色的阵营</param>
         /// <param name="cType">添加的角色类型</param>
-        public void AddCharacter(Point point, Group group, Type cType)
-        {
-            #region 调用对应的构造函数创建角色对象而已
-            try
-            {
-                object[] parameters = { ID, point, group, this };
-                CharacterLastAdd = cType.GetConstructors()[0].Invoke(parameters) as Character;
-                ID++;
-            }
-            catch (Exception ex)
-            {
-                ex.Log();
-                return;
-            }
-            #endregion
-            AddCharacterToList(CharacterLastAdd);
-        }
+        public void AddCharacter(PadPoint point, Group group, Type cType) =>
+            AddCharacter(point, group, cType, ID, point, group, this);
 
         /// <summary>添加角色</summary>
         /// <param name="point">添加的位置</param>
         /// <param name="group">角色的阵营</param>
         /// <param name="cType">添加的角色类型</param>
         /// <param name="parameters">该角色的构造函数的参数列表</param>
-        public void AddCharacter(Point point, Group group, Type cType, params object[] parameters)
+        public void AddCharacter(PadPoint point, Group group, Type cType, params object[] parameters)
         {
             #region 调用对应的构造函数创建角色对象而已
             try
@@ -634,11 +619,11 @@ namespace JLQ_GameBase
         /// <summary>格子的文字显示</summary>
         /// <param name="position">格子</param>
         /// <returns>文字显示</returns>
-        public string StringShow(Point position) => this[position]?.ToString() ?? null;
+        public string StringShow(PadPoint position) => this[position]?.ToString() ?? null;
         /// <summary>格子的信息提示</summary>
         /// <param name="position">格子</param>
         /// <returns>信息提示</returns>
-        public string TipShow(Point position)
+        public string TipShow(PadPoint position)
         {
             if (CurrentCharacter == null) return null;
             return this[position]?.Tip(CurrentCharacter) ?? null;
@@ -664,32 +649,32 @@ namespace JLQ_GameBase
                 }
             }
             HandleAssignPointCanReach(CurrentCharacter.Position, CurrentCharacter.MoveAbility);
-            Characters.Where(c => c.Position != CurrentCharacter.Position).DoAction(c => CanReachPoint[c.X, c.Y] = false);
+            Characters.Where(c => c.Position != CurrentCharacter.Position).DoAction(c => CanReachPoint[c.Column, c.Row] = false);
         }
 
         /// <summary>将所有可以到达的点在bool二维数组中置为true</summary>
         /// <param name="origin">起点</param>
         /// <param name="step">步数</param>
-        private void AssignPointCanReach(Point origin, int step)
+        private void AssignPointCanReach(PadPoint origin, int step)
         {
-            CanReachPoint[(int)origin.X, (int)origin.Y] = true;
+            CanReachPoint[origin.Column, origin.Row] = true;
             if (step == 0) return;
             var enm = this.EnemyBlock.ToList();
-            if (origin.Y < Row - 1 && !enm.Contains(new Point(origin.X, origin.Y + 1)))
+            if (origin.Row < Row - 1 && !enm.Contains(new PadPoint(origin.Column, origin.Row + 1)))
             {
-                AssignPointCanReach(new Point(origin.X, origin.Y + 1), step - 1);
+                AssignPointCanReach(new PadPoint(origin.Column, origin.Row + 1), step - 1);
             }
-            if (origin.Y > 0 && !enm.Contains(new Point(origin.X, origin.Y - 1)))
+            if (origin.Row > 0 && !enm.Contains(new PadPoint(origin.Column, origin.Row - 1)))
             {
-                AssignPointCanReach(new Point(origin.X, origin.Y - 1), step - 1);
+                AssignPointCanReach(new PadPoint(origin.Column, origin.Row - 1), step - 1);
             }
-            if (origin.X < Column - 1 && !enm.Contains(new Point(origin.X + 1, origin.Y)))
+            if (origin.Column < Column - 1 && !enm.Contains(new PadPoint(origin.Column + 1, origin.Row)))
             {
-                AssignPointCanReach(new Point(origin.X + 1, origin.Y), step - 1);
+                AssignPointCanReach(new PadPoint(origin.Column + 1, origin.Row), step - 1);
             }
-            if (origin.X > 0 && !enm.Contains(new Point(origin.X - 1, origin.Y)))
+            if (origin.Column > 0 && !enm.Contains(new PadPoint(origin.Column - 1, origin.Row)))
             {
-                AssignPointCanReach(new Point(origin.X - 1, origin.Y), step - 1);
+                AssignPointCanReach(new PadPoint(origin.Column - 1, origin.Row), step - 1);
             }
         }
 
@@ -708,7 +693,7 @@ namespace JLQ_GameBase
         /// <summary>获得对应点的按钮</summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public Button GetButton(Point point) => Buttons[(int)point.X, (int)point.Y];
+        public Button GetButton(PadPoint point) => Buttons[point.Column, point.Row];
 
         /// <summary>改为战斗模式</summary>
         public void TurnToBattle() => IsBattle = true;
@@ -725,7 +710,7 @@ namespace JLQ_GameBase
         /// <summary>生成与起始点距离小于等于范围的按钮的颜色</summary>
         /// <param name="origin">起始点</param>
         /// <param name="range">范围</param>
-        public void SetButtonBackground(Point origin, int range)
+        public void SetButtonBackground(PadPoint origin, int range)
             => PadPoints.Where(point => origin.IsInRange(point, range) && this[point] == null)
                 .Select(GetButton)
                 .SetButtonColor();
@@ -738,7 +723,7 @@ namespace JLQ_GameBase
             {
                 for (var j = 0; j < Row; j++)
                 {
-                    if ((!CanReachPoint[i, j]) || CurrentPosition == new Point(i, j)) continue;
+                    if ((!CanReachPoint[i, j]) || CurrentPosition == new PadPoint(i, j)) continue;
                     Buttons[i, j].SetButtonColor();
                 }
             }

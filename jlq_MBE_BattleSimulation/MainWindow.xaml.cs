@@ -113,11 +113,11 @@ namespace JLQ_MBE_BattleSimulation
                 {
                     if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                     {
-                        button.ToolTip = game.StringShow(new Point(column, row));
+                        button.ToolTip = game.StringShow(new PadPoint(column, row));
                     }
                     else
                     {
-                        button.ToolTip = game.TipShow(new Point(column, row));
+                        button.ToolTip = game.TipShow(new PadPoint(column, row));
                     }
                 };
 
@@ -127,7 +127,7 @@ namespace JLQ_MBE_BattleSimulation
 
                 button.MouseEnter += (s, ev) =>
                 {
-                    game.MousePoint = new Point(column, row);
+                    game.MousePoint = new PadPoint(column, row);
                 };
 
                 #endregion
@@ -136,7 +136,7 @@ namespace JLQ_MBE_BattleSimulation
 
                 button.MouseLeave += (s, ev) =>
                 {
-                    game.MousePoint = new Point(-1, -1);
+                    game.MousePoint = new PadPoint(-1, -1);
                 };
 
                 #endregion
@@ -148,7 +148,7 @@ namespace JLQ_MBE_BattleSimulation
                     //如果shift和ctrl都没被按下或不在行动阶段或不在棋盘内或该点无角色或该点角色为当前角色则无效
                     if ((!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift) ||
                            Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) ||
-                        GameSection != Section.Round || game.MousePoint == new Point(-1, -1) ||
+                        GameSection != Section.Round || game.MousePoint == new PadPoint(-1, -1) ||
                         game.Characters.All(c => c.Position != game.MousePoint) ||
                         game.MousePoint == game.CurrentPosition) return;
                     //如果shift被按下
@@ -251,7 +251,7 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="point">添加的位置</param>
         /// <param name="group">角色的阵营</param>
         /// <param name="display">显示的字符串</param>
-        private void AddCharacter(Point point, Group group, string display)
+        private void AddCharacter(PadPoint point, Group group, string display)
         {
             var name = Game.CharacterDataListShow.First(c => c.Display == display).Name;
             Type type;
@@ -402,12 +402,12 @@ namespace JLQ_MBE_BattleSimulation
         /// <param name="number">添加数量</param>
         private void RandomlyAddCharacters(Group group, int number)
         {
-            var points = new List<Point>();
+            var points = new List<PadPoint>();
             for (var i = 0; i < Game.Column; i++)
             {
                 for (var j = 0; j < Game.Row; j++)
                 {
-                    points.Add(new Point(i, j));
+                    points.Add(new PadPoint(i, j));
                 }
             }
             var pointsCanAdd = points.Where(p => game[p] == null).ToList();

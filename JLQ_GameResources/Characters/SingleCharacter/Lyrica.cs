@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Dialogs.GamePad.ChooseLines;
@@ -14,7 +13,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>莉莉卡·普莉兹姆利巴</summary>
     public class Lyrica : CharacterPoltergeist
 	{
-		public Lyrica(int id, Point position, Group group, Game game)
+		public Lyrica(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -22,7 +21,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		    enterButton[0] = (s, ev) =>
 		    {
                 game.DefaultButtonAndLabels();
-		        Enemies.Where(c => c.Y > this.Y).SetLabelBackground();
+		        Enemies.Where(c => c.Row > this.Row).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
 		}
@@ -39,7 +38,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee.Y > this.Y && IsEnemy(SCee);
+            game.HandleIsTargetLegal = (SCee, point) => SCee.Row > this.Row && IsEnemy(SCee);
             game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01Gain);
         }
 
@@ -56,7 +55,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                game.HandleIsTargetLegal = (SCee, point) => dialog.LinesChoose.Contains(SCee.Y);
+                game.HandleIsTargetLegal = (SCee, point) => dialog.LinesChoose.Contains(SCee.Row);
                 game.HandleTarget = SCee =>
                 {
                     if (IsFriend(SCee))

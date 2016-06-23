@@ -25,7 +25,7 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChooseLines
                     {
                         var j = (int)(s as Button).GetValue(Grid.ColumnProperty);
                         if (LinesChoose.Contains(j)) return;
-                        game.Characters.Where(c => c.X == j && c != game.CurrentCharacter)
+                        game.Characters.Where(c => c.Column == j && c != game.CurrentCharacter)
                             .DoAction(this.SetLabelBackground);
                     };
                     #endregion
@@ -34,7 +34,7 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChooseLines
                     {
                         var j = (int)(s as Button).GetValue(Grid.ColumnProperty);
                         if (LinesChoose.Contains(j)) return;
-                        game.Characters.Where(c => c.X == j && c != game.CurrentCharacter)
+                        game.Characters.Where(c => c.Column == j && c != game.CurrentCharacter)
                             .SetLabelBackground(GameColor.LabelDefalutBackground);
                     };
                     #endregion

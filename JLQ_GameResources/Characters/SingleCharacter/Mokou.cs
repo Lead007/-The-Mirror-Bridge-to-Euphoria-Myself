@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
-using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>藤原妹红</summary>
     public class Mokou : Character, IHuman
     {
-        public Mokou(int id, Point position, Group group, Game game)
+        public Mokou(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -41,13 +39,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         public Human HumanKind => Human.Mokou;
 
-        private Point pointTemp1 = Game.DefaultPoint;
+        private PadPoint pointTemp1 = Game.DefaultPoint;
 
         //TODO 天赋
         public override void PreparingSection()
         {
             base.PreparingSection();
-            this.Cure(new RationalNumber(1, 10, true, true));
+            this.Cure(new PercentOfMaxHp(0.1f));
         }
 
         //符卡
@@ -94,13 +92,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         }
 
-        private bool SC01IsLegalClick(Point point)
+        private bool SC01IsLegalClick(PadPoint point)
         {
             var c = game[point];
             if (!IsInRangeAndEnemy(3, c)) return false;
-            pointTemp1 = c.Y == this.Y
-                ? new Point(c.X + (c.X > this.X ? -1 : 1), c.Y)
-                : new Point(c.X, c.Y + (c.Y > this.Y ? -1 : 1));
+            pointTemp1 = c.Row == this.Row
+                ? new PadPoint(c.Column + (c.Column > this.Column ? -1 : 1), c.Row)
+                : new PadPoint(c.Column, c.Row + (c.Row > this.Row ? -1 : 1));
             if (this.Position == pointTemp1 || game[pointTemp1] == null) return true;
             pointTemp1 = Game.DefaultPoint;
             return false;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -11,7 +10,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>八意永琳</summary>
     public class Eirin : Character
 	{
-		public Eirin(int id, Point position, Group group, Game game)
+		public Eirin(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
 

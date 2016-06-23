@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
@@ -15,7 +14,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>露娜萨·普莉兹姆利巴</summary>
     public class Lunasa : CharacterPoltergeist
 	{
-		public Lunasa(int id, Point position, Group group, Game game)
+		public Lunasa(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -65,7 +64,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                game.HandleIsTargetLegal = (SCee, point) => dialog.LinesChoose.Contains(SCee.X);
+                game.HandleIsTargetLegal = (SCee, point) => dialog.LinesChoose.Contains(SCee.Column);
                 game.HandleTarget = SCee =>
                 {
                     if (IsFriend(SCee))

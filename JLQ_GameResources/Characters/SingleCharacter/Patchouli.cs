@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Add.Sealed;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
@@ -14,7 +13,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>帕秋莉</summary>
     public class Patchouli : Character
 	{
-		public Patchouli(int id, Point position, Group group, Game game)
+		public Patchouli(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡02

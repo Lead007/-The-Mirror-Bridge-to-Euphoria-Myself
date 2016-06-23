@@ -8,13 +8,11 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResourc
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\JLQ_GameBase.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\MoreEnumerable.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\RandomHelper.dll
-D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\RationalNumber.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\Data.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\JLQ_BaseBuffs.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\JLQ_GameBase.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\MoreEnumerable.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\RandomHelper.pdb
-D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\RationalNumber.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\bin\Release\Data.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\obj\Release\Dialogs\Dialog_GamePad.baml
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\JLQ_GameResources\obj\Release\JLQ_GameResources.g.resources

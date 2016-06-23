@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -11,14 +10,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>八云紫</summary>
     public class Yukari : CharacterTeleportMoving
 	{
-		public Yukari(int id, Point position, Group group, Game game)
+		public Yukari(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //天赋
 		    _skillMove = (l, m) =>
 		    {
 		        if (!game.IsMoving) return;
-		        if ((game.MouseColumn + this.X == Game.Column || game.MouseRow + this.Y == Game.Row) &&
+		        if ((game.MouseColumn + this.Column == Game.Column || game.MouseRow + this.Row == Game.Row) &&
 		            !game.CanReachPoint[game.MouseColumn, game.MouseRow])
 		        {
 		            //移动
@@ -105,7 +104,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee);
             game.HandleTarget = SCee =>
             {
-                var d = Math.Max(Math.Abs(SCee.X - 4), Math.Abs(SCee.Y - 4));
+                var d = Math.Max(Math.Abs(SCee.Column - 4), Math.Abs(SCee.Row - 4));
                 HandleDoDanmakuAttack(SCee, d*0.5f);
             };
         }
@@ -115,10 +114,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC03();
         }
 
-        private bool SC02IsTargetLegal(Character SCee, Point point)
+        private bool SC02IsTargetLegal(Character SCee, PadPoint point)
         {
-            return (point.X == this.X && SCee.X == this.X && ((SCee.Y > this.Y) == (point.Y > this.Y))) ||
-                   (point.Y == this.Y && SCee.Y == this.Y && ((SCee.X > this.X) == (point.X > this.X)));
+            return (point.Column == this.Column && SCee.Column == this.Column && ((SCee.Row > this.Row) == (point.Row > this.Row))) ||
+                   (point.Row == this.Row && SCee.Row == this.Row && ((SCee.Column > this.Column) == (point.Column > this.Column)));
         }
     }
 }

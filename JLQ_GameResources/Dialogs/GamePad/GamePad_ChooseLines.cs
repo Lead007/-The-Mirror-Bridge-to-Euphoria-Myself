@@ -38,14 +38,14 @@ namespace JLQ_GameResources.Dialogs.GamePad
             {
                 buttons[i].Content = string.Empty;
                 game.Characters.Where(
-                    c => (direction > Direction.Right ? c.X : c.Y) == i && c != game.CurrentCharacter)
+                    c => (direction > Direction.Right ? c.Column : c.Row) == i && c != game.CurrentCharacter)
                     .SetLabelBackground(GameColor.LabelDefalutBackground);
             };
             this.LinesChoose.ItemEnqueue += i =>
             {
                 buttons[i].Content = tick;
                 game.Characters.Where(
-                    c => (direction > Direction.Right ? c.X : c.Y) == i && c != game.CurrentCharacter)
+                    c => (direction > Direction.Right ? c.Column : c.Row) == i && c != game.CurrentCharacter)
                     .DoAction(this.SetLabelBackground);
             };
             #endregion

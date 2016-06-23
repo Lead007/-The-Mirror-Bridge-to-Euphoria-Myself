@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
@@ -18,9 +17,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <param name="id">ID</param>
         /// <param name="position">位置</param>
         /// <param name="group">阵营</param>
-        /// <param name="random">随机数对象</param>
         /// <param name="game">游戏对象</param>
-		public Rumia(int id, Point position, Group group, Game game)
+		public Rumia(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //显示将被攻击的角色

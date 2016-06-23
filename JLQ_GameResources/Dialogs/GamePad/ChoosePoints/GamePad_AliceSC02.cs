@@ -19,10 +19,10 @@ namespace JLQ_GameResources.Dialogs.GamePad.ChoosePoints
 
         private Alice Sender { get; }
 
-        protected override bool IsLegalClick(Point point)
+        protected override bool IsLegalClick(PadPoint point)
             => base.IsLegalClick(point) && point.IsInRange(Sender, 4) && game[point] == null;
 
-        protected override IEnumerable<Character> LegalCharacters(Point point) => new List<Character>();
+        protected override IEnumerable<Character> LegalCharacters(PadPoint point) => new List<Character>();
 
         protected override void SetLabelBackground(Character c)
         {

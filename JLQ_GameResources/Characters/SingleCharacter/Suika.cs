@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Attributes;
 using JLQ_BaseBuffs.Gain.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
@@ -15,7 +14,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>伊吹萃香</summary>
     public class Suika : Character
 	{
-		public Suika(int id, Point position, Group group, Game game)
+		public Suika(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_BaseBuffs.Add.Sealed;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
@@ -13,7 +12,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>橙</summary>
     public class Chen : Character
 	{
-		public Chen(int id, Point position, Group group, Game game)
+		public Chen(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //天赋
@@ -22,9 +21,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        if (!game.IsMoving) return;
 		        var c = this.game.MouseCharacter;
 		        if (!IsEnemy(c)) return;
-		        var p = this.X == c.X
-		            ? new Point(c.X, c.Y + (this.Y > c.Y ? 1 : -1))
-		            : new Point(c.X + (this.X > c.X ? 1 : -1), c.Y);
+		        var p = this.Column == c.Column
+		            ? new PadPoint(c.Column, c.Row + (this.Row > c.Row ? 1 : -1))
+		            : new PadPoint(c.Column + (this.Column > c.Column ? 1 : -1), c.Row);
 		        if (game[p] != null) return;
 		        this.Move(p);
 		        HandleDoAttack(c, 0.5f);

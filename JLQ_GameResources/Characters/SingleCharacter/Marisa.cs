@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -11,7 +10,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
     /// <summary>魔理沙</summary>
     public class Marisa : Character, IHuman
     {
-        public Marisa(int id, Point position, Group group, Game game)
+        public Marisa(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
             //符卡01
@@ -28,20 +27,20 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                if (game.MouseColumn == this.X)
+                if (game.MouseColumn == this.Column)
                 {
-                    Enemies.Where(c => c.X == this.X && ((game.MouseRow > this.Y) == (c.Y > this.Y)))
+                    Enemies.Where(c => c.Column == this.Column && ((game.MouseRow > this.Row) == (c.Row > this.Row)))
                         .SetLabelBackground();
                     Enemies.Where(c =>
-                        Math.Abs(c.X - this.X) == 1 && ((game.MouseRow > this.Y) == (c.Y > this.Y)) && c.Y != this.Y)
+                        Math.Abs(c.Column - this.Column) == 1 && ((game.MouseRow > this.Row) == (c.Row > this.Row)) && c.Row != this.Row)
                         .SetLabelBackground(GameColor.LabelBackground2);
                 }
                 else
                 {
-                    Enemies.Where(c => c.Y == this.Y && ((game.MouseColumn > this.X) == (c.X > this.X)))
+                    Enemies.Where(c => c.Row == this.Row && ((game.MouseColumn > this.Column) == (c.Column > this.Column)))
                         .SetLabelBackground();
                     Enemies.Where(c =>
-                        Math.Abs(c.Y - this.Y) == 1 && ((game.MouseColumn > this.X) == (c.X > this.X)) && c.X != this.X)
+                        Math.Abs(c.Row - this.Row) == 1 && ((game.MouseColumn > this.Column) == (c.Column > this.Column)) && c.Column != this.Column)
                         .SetLabelBackground(GameColor.LabelBackground2);
                 }
             };
@@ -108,7 +107,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleTarget =
                 SCee => HandleDoDanmakuAttack(SCee,
                     (float)
-                        ((Math.Min(Math.Abs(SCee.X - this.X), Math.Abs(SCee.Y - this.Y)) == 0
+                        ((Math.Min(Math.Abs(SCee.Column - this.Column), Math.Abs(SCee.Row - this.Row)) == 0
                             ? SC02Gain1
                             : SC02Gain2)*SCGain));
             AddPadButtonEvent(1);
@@ -159,31 +158,31 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(2);
         }
 
-        private bool SC02IsTargetLegal(Character SCee, Point point)
+        private bool SC02IsTargetLegal(Character SCee, PadPoint point)
         {
-            if (point.X == this.X)
+            if (point.Column == this.Column)
             {
-                return Math.Abs(SCee.X - this.X) <= 1 && ((point.Y > this.Y) == (SCee.Y > this.Y)) && SCee.Y != this.Y;
+                return Math.Abs(SCee.Column - this.Column) <= 1 && ((point.Row > this.Row) == (SCee.Row > this.Row)) && SCee.Row != this.Row;
             }
-            return Math.Abs(SCee.Y - this.Y) <= 1 && ((point.X > this.X) == (SCee.X > this.X)) && SCee.X != this.X;
+            return Math.Abs(SCee.Row - this.Row) <= 1 && ((point.Column > this.Column) == (SCee.Column > this.Column)) && SCee.Column != this.Column;
         }
 
-        private bool SC03IsLegalClick(Point point) =>
-            IsInRangeAndEnemy(SC03Const1, point) && (point.X == this.X || point.Y == this.Y) &&
+        private bool SC03IsLegalClick(PadPoint point) =>
+            IsInRangeAndEnemy(SC03Const1, point) && (point.Column == this.Column || point.Row == this.Row) &&
             IsCurrentOrNull(game[this.Position.FacePoint(point)]);
 
-        private Point Destination(Character SCee)
+        private PadPoint Destination(Character SCee)
         {
-            return SCee.X == this.X
-                ? new Point(SCee.X,
-                    SCee.Y > this.Y
-                        ? Math.Min(SCee.Y + SC03Const2, Game.Row - 1)
-                        : Math.Max(SCee.Y - SC03Const2, 0))
-                : new Point(
-                    SCee.X > this.X
-                        ? Math.Min(SCee.X + 2, Game.Column - 1)
-                        : Math.Max(SCee.X - SC03Const2, 0),
-                    SCee.Y);
+            return SCee.Column == this.Column
+                ? new PadPoint(SCee.Column,
+                    SCee.Row > this.Row
+                        ? Math.Min(SCee.Row + SC03Const2, Game.Row - 1)
+                        : Math.Max(SCee.Row - SC03Const2, 0))
+                : new PadPoint(
+                    SCee.Column > this.Column
+                        ? Math.Min(SCee.Column + 2, Game.Column - 1)
+                        : Math.Max(SCee.Column - SC03Const2, 0),
+                    SCee.Row);
         }
 
         private bool IsCurrentOrNull(Character c)

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 using MoreEnumerable;
-using Number;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>大妖精</summary>
     public class Daiyousei : Character
 	{
-		public Daiyousei(int id, Point position, Group group, Game game)
+		public Daiyousei(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
             //符卡01
@@ -51,13 +49,13 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		}
 
         private const int skillRange = 2;
-        private static RationalNumber skillGain { get; } = new RationalNumber(1, 20, true, false);
+        private static PercentOfMaxHp skillGain { get; } = new PercentOfMaxHp(0.05f);
         private const int SC01Range = 4;
         private const int SC02Range = 4;
         private const float SC02Gain = 1.5f;
         private const int SC03Range = 2;
 
-        private Point pointTemp1 = Game.DefaultPoint;
+        private PadPoint pointTemp1 = Game.DefaultPoint;
 
         /// <summary>天赋：雾之湖的恩惠</summary>
         public override void PreparingSection()
@@ -124,7 +122,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC03();
         }
 
-        private bool SC01IsLegalClick(Point point)
+        private bool SC01IsLegalClick(PadPoint point)
         {
             if (!point.IsInRange(this, SC01Range) || game[point] == null) return false;
             if (point == this.Position)
@@ -132,32 +130,32 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 pointTemp1 = point;
                 return true;
             }
-            if (point.Y == this.Y)
+            if (point.Row == this.Row)
             {
-                if (point.X > this.X)
+                if (point.Column > this.Column)
                 {
-                    if (point.X == 8) return false;
-                    pointTemp1 = new Point(point.X + 1, point.Y);
+                    if (point.Column == 8) return false;
+                    pointTemp1 = new PadPoint(point.Column + 1, point.Row);
                     if (game[pointTemp1] == null) return true;
                     pointTemp1 = Game.DefaultPoint;
                     return false;
                 }
-                if (point.X == 0) return false;
-                pointTemp1 = new Point(point.X - 1, point.Y);
+                if (point.Column == 0) return false;
+                pointTemp1 = new PadPoint(point.Column - 1, point.Row);
                 if (game[pointTemp1] == null) return true;
                 pointTemp1 = Game.DefaultPoint;
                 return false;
             }
-            if (point.Y > this.Y)
+            if (point.Row > this.Row)
             {
-                if (point.Y == 8) return false;
-                pointTemp1 = new Point(point.X, point.Y + 1);
+                if (point.Row == 8) return false;
+                pointTemp1 = new PadPoint(point.Column, point.Row + 1);
                 if (game[pointTemp1] == null) return true;
                 pointTemp1 = Game.DefaultPoint;
                 return false;
             }
-            if (point.Y == 0) return false;
-            pointTemp1 = new Point(point.X, point.Y - 1);
+            if (point.Row == 0) return false;
+            pointTemp1 = new PadPoint(point.Column, point.Row - 1);
             if (game[pointTemp1] == null) return true;
             pointTemp1 = Game.DefaultPoint;
             return false;

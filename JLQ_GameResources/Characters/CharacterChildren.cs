@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using JLQ_GameBase;
 using MoreEnumerable;
 using RandomHelper;
@@ -14,19 +13,19 @@ namespace JLQ_GameResources.Characters
     /// <summary>移动无视敌方角色的碰撞箱的角色</summary>
     public abstract class CharacterTeleportMoving : Character
     {
-        protected CharacterTeleportMoving(int id, Point position, Group group, Game game)
+        protected CharacterTeleportMoving(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
 
         }
 
         /// <summary>重写基类的阻挡的敌人位置，返回一个空列表</summary>
-        public override IEnumerable<Point> EnemyBlock => new List<Point>();
+        public override IEnumerable<PadPoint> EnemyBlock => new List<PadPoint>();
     }
 
     public abstract class CharacterHitBack : Character
     {
-        protected CharacterHitBack(int id, Point position, Group group, Game game)
+        protected CharacterHitBack(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
 
@@ -52,7 +51,7 @@ namespace JLQ_GameResources.Characters
     /// <summary>可能有多次普通的角色</summary>
     public abstract class CharacterMayRepeatedlyDoDamage : Character
     {
-        protected CharacterMayRepeatedlyDoDamage(int id, Point position, Group group, Game game)
+        protected CharacterMayRepeatedlyDoDamage(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
 
@@ -79,7 +78,7 @@ namespace JLQ_GameResources.Characters
     /// <summary>普莉兹姆利巴角色</summary>
     public abstract class CharacterPrismriver : Character
     {
-        protected CharacterPrismriver(int id, Point position, Group group, Game game)
+        protected CharacterPrismriver(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
 
@@ -90,7 +89,7 @@ namespace JLQ_GameResources.Characters
     /// <summary>骚灵角色</summary>
     public abstract class CharacterPoltergeist : CharacterPrismriver
     {
-        protected CharacterPoltergeist(int id, Point position, Group group, Game game)
+        protected CharacterPoltergeist(int id, PadPoint position, Group group, Game game)
             : base(id, position, group, game)
         {
             //符卡03
