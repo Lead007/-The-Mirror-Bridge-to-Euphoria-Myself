@@ -276,6 +276,7 @@ namespace JLQ_MBE_BattleSimulation
             var labelTemp = game.LabelsGroup[(int)group + 1];
             labelTemp.Content = (int)labelTemp.Content + 1;
             HasSaved = false;
+            game.ID++;
         }
         /// <summary>添加角色</summary>
         /// <param name="info">添加的角色信息</param>

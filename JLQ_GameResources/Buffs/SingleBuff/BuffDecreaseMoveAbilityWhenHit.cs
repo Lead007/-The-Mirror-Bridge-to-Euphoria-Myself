@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Add.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
 
@@ -33,7 +33,8 @@ namespace JLQ_GameResources.Buffs.SingleBuff
             Buffee.HandleDoingAttack = (target, times) =>
             {
                 var b = _temp(target, times);
-                var buff = new BuffAddMoveAbility(target, Buffee, Buffee.Interval, -_moveAbilityDecrease, game);
+                var buff = BuffAddProperty.BuffAddMoveAbility(target, Buffee, Buffee.Interval, -_moveAbilityDecrease,
+                    game);
                 buff.BuffTrigger();
                 return b;
             };

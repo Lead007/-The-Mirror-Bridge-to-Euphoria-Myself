@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Add.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using MoreEnumerable;
@@ -49,7 +49,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee);
-                var buff = new BuffAddMoveAbility(SCee, this, this.BuffTime, -1, game);
+                var buff = BuffAddProperty.BuffAddMoveAbility(SCee, this, this.BuffTime, -1, game);
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);

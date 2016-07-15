@@ -193,7 +193,7 @@ namespace JLQ_GameBase
         /// <summary>生成可到达点矩阵</summary>
         public Action<PadPoint, int> HandleAssignPointCanReach { get; set; }
         /// <summary>判断是否死亡</summary>
-        public DIsDead HandleIsDead { get; set; }
+        public Action HandleIsDead { get; set; }
 
         private Action _handleResetShow;
         /// <summary>重置显示</summary>
@@ -438,7 +438,7 @@ namespace JLQ_GameBase
         public Character this[PadPoint position] => Characters.FirstOrDefault(c => c.Position == position);
 
         /// <summary>获取特定ID的角色，若没有则返回null</summary>
-        /// <param name="Id">需要搜索角色的ID</param>
+        /// <param name="id">需要搜索角色的ID</param>
         /// <returns>该ID的角色</returns>
         public Character this[int id] => id < 1 ? null : Characters.FirstOrDefault(c => c.ID == id);
 

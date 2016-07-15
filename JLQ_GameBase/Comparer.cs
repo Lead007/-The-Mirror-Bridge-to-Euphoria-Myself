@@ -11,9 +11,6 @@ namespace JLQ_GameBase
     {
         public bool Equals(AttackModel x, AttackModel y) => x.Target == y.Target;
 
-        public int GetHashCode(AttackModel obj)
-        {
-            throw new NotImplementedException();
-        }
+        public int GetHashCode(AttackModel obj) => obj.Target.ID;
     }
 }

@@ -2,3 +2,4 @@ D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Data\bin\Debug\
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Data\bin\Debug\Data.pdb
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Data\obj\Debug\Data.dll
 D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Data\obj\Debug\Data.pdb
+D:\Program\C#程序\GitHub\-The-Mirror-Bridge-to-Euphoria-Myself\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache

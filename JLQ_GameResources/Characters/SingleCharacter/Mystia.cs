@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Add.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using RandomHelper;
@@ -67,7 +67,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     HandleDoDanmakuAttack(SCee, 2);
                 }
-                var buff = new BuffAddMoveAbility(SCee, this, SCee.Interval, -1, game);
+                var buff = BuffAddProperty.BuffAddMoveAbility(SCee, this, SCee.Interval, -1, game);
                 buff.BuffTrigger();
             };
             AddPadButtonEvent(0);
@@ -87,9 +87,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffAddHitRate(SCee, this, BuffTime, -10, game);
+                var buff1 = BuffAddProperty.BuffAddHitRate(SCee, this, BuffTime, -10, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffAddDodgeRate(SCee, this, BuffTime, -10, game);
+                var buff2 = BuffAddProperty.BuffAddDodgeRate(SCee, this, BuffTime, -10, game);
                 buff2.BuffTrigger();
                 var buffs = SCee.BuffList.Where(b => b.IsPositive == true).ToList();
                 if (!buffs.Any()) return;

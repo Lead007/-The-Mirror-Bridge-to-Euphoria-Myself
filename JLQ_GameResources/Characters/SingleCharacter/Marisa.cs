@@ -27,18 +27,54 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 if (game.MousePoint.Distance(this) != 1) return;
                 game.DefaultButtonAndLabels();
-                Enemies.Where(c => SC02IsTargetLegal(c, this.Position)).SetLabelBackground();
+                Enemies.Where(c => SC02IsTargetLegal(c, game.MousePoint)).SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
             //符卡03
+            //当合法目标仅有一名时显示将瞬移到的点（若存在）、将被受影响的角色和其将被移动至的位置（若存在）
+            enterButton[2] = (s, ev) =>
+            {
+                var minDistance = EnemiesInLine.Min(c => c.Distance(this));
+                var legals = EnemiesInLine.Where(c => c.Distance(this) == minDistance).ToArray();
+                if (legals.Length != 1) return;
+                var legal = legals.First();
+                legal.SetLabelBackground();
+                var point1 = this.Position.FacePoint(legal.Position);
+                if (game[point1] == null) game.GetButton(point1).SetButtonColor();
+                var point2 = this.Position.BackPoint(legal.Position, 2);
+                if (point2 == null) return;
+                var point3 = (PadPoint) point2;
+                if (game[point3] == null) game.GetButton(point3).SetButtonColor();
+            };
+            SetDefaultLeaveSCButtonDelegate(2);
             //显示将瞬移到的点、将被受影响的角色和其将被移动至的位置（若存在）
             enterPad[2] = (s, ev) =>
             {
+                var minDistance = EnemiesInLine.Min(c => c.Distance(this));
+                var legals = EnemiesInLine.Where(c => c.Distance(this) == minDistance);
+                if (legals.Count() != 1) legals.SetLabelBackground();
+                if (!legals.Select(c => c.Position).Contains(game.MousePoint)) return;
+                game.DefaultButtonAndLabels();
+                var legal = game.MouseCharacter;
+                legal.SetLabelBackground();
+                var point1 = this.Position.FacePoint(legal.Position);
+                if (game[point1] == null) game.GetButton(point1).SetButtonColor();
+                var point2 = this.Position.BackPoint(legal.Position, 2);
+                if (point2 == null) return;
+                var point3 = (PadPoint)point2;
+                if (game[point3] == null) game.GetButton(point3).SetButtonColor();
             };
             SetDefaultLeavePadButtonDelegate(2);
         }
 
         public Human HumanKind => Human.FullHuman;
+
+        public override void PreparingSection()
+        {
+            base.PreparingSection();
+            var minDistance = Enemies.Min(c => c.Distance(this));
+            if (minDistance > SC03Range) game.ButtonSC[2].IsEnabled = false;
+        }
 
         //天赋
         /// <summary>天赋参数</summary>
@@ -119,29 +155,37 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-            game.HandleSelf = () => Move(this.Position.FacePoint(game.MousePoint));
-            //TODO No Defence
+            var minDistance = EnemiesInLine.Min(c => c.Distance(this));
+            if (Enemies.Count(c => c.Distance(this) == minDistance) != 1)
+            {
+                game.HandleIsLegalClick = point =>
+                    point.Distance(this) == minDistance && IsEnemy(game[point]) && IsInLine(point);
+                game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+                game.HandleResetShow = () =>
+                {
+                    game.DefaultButtonAndLabels();
+                    EnemiesInLine.Where(c => c.Distance(c) == minDistance).SetLabelBackground();
+                };
+            }
+            else
+            {
+                game.HandleIsTargetLegal = (SCee, point) => SCee.Distance(this) == minDistance && IsInLine(point);
+            }
+            game.HandleSelf = () =>
+            {
+                var p = this.Position.FacePoint(game.MousePoint);
+                if (game[p] == null) Move(p);
+            };
             game.HandleTarget = SCee =>
             {
-                //判断是否命中
-                if (HandleIsHit(SCee)) return;
-                //判断是否近战
-                var closeGain = HandleCloseGain(SCee);
-                //计算基础伤害
-                var damage = /*基础伤害*/ Calculate.Damage(this.Attack, SCee.Defence)* /*近战补正*/closeGain*FloatDamage*SC03Gain;
-                //判断是否暴击
-                var isCriticalHit = HandleIsCriticalHit(SCee);
-                if (isCriticalHit)
-                {
-                    damage *= this.CriticalHitGain;
-                }
+                if (!HandleIsHit(SCee)) return;
+                var point1 = this.Position.BackPoint(SCee.Position, 2);
+                if (point1 == null) return;
+                var point2 = (PadPoint) point1;
+                if (game[point2] == null) SCee.Move(point2);
+                HandleDoingAttack(SCee, SC03Gain*SkillSCDamageGain);
             };
             AddPadButtonEvent(2);
-            game.HandleResetShow = () =>
-            {
-                game.DefaultButtonAndLabels();
-            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
@@ -149,5 +193,21 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC03();
             RemovePadButtonEvent(2);
         }
+
+        #region SC03相关函数
+        /// <summary>在同一直线内的敌人</summary>
+        private IEnumerable<Character> EnemiesInLine
+            => Enemies.Where(IsInLine);
+
+        /// <summary>是否在同一直线内</summary>
+        /// <param name="p">待判断点</param>
+        /// <returns>是否</returns>
+        private bool IsInLine(PadPoint p) => p.Column == this.Column || p.Row == this.Row;
+        
+        /// <summary>是否在同一直线内</summary>
+        /// <param name="c">待判断角色</param>
+        /// <returns>是否</returns>
+        private bool IsInLine(Character c) => c.Column == this.Column || c.Row == this.Row;
+        #endregion
     }
 }

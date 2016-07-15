@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_GameBase;
 using JLQ_GameResources.Characters.CharacterBeCalled.AliceFigures;
 using JLQ_GameResources.Dialogs.GamePad.ChoosePoints;
@@ -13,43 +13,43 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 {
     /// <summary>爱丽丝·玛格特洛依德</summary>
 	public class Alice : Character
-	{
-		public Alice(int id, PadPoint position, Group group, Game game)
-			: base(id, position, group, game)
-		{
-		    enterPad[1] = (s, ev) =>
-		    {
-		        var c = game.MouseCharacter;
-		        if (!IsEnemy(c)) return;
-		        game.DefaultButtonAndLabels();
-		        c.SetLabelBackground();
-		    };
+    {
+        public Alice(int id, PadPoint position, Group group, Game game)
+            : base(id, position, group, game)
+        {
+            enterPad[1] = (s, ev) =>
+            {
+                var c = game.MouseCharacter;
+                if (!IsEnemy(c)) return;
+                game.DefaultButtonAndLabels();
+                c.SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(1);
-		    enterPad[2] = (s, ev) =>
-		    {
-		        if (!game.MousePoint.IsInRange(this, SC03Range1)) return;
-		        game.DefaultButtonAndLabels();
-		        EnemyInMouseRange(SC03Range2).SetLabelBackground();
-		    };
+            enterPad[2] = (s, ev) =>
+            {
+                if (!game.MousePoint.IsInRange(this, SC03Range1)) return;
+                game.DefaultButtonAndLabels();
+                EnemyInMouseRange(SC03Range2).SetLabelBackground();
+            };
             SetDefaultLeavePadButtonDelegate(2);
-		}
+        }
 
         private const int SC03Range1 = 5;
         private const int SC03Range2 = 2;
 
-		//TODO 天赋
+        //TODO 天赋
 
-		//符卡
-		/// <summary>符卡01</summary>
-		public override void SC01()
-		{
-			//TODO SC01
-		}
+        //符卡
+        /// <summary>符卡01</summary>
+        public override void SC01()
+        {
+            //TODO SC01
+        }
 
         /// <summary>结束符卡01</summary>
         public override void EndSC01()
         {
-            
+
         }
 
         /// <summary>符卡02</summary>
@@ -64,7 +64,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 game.HandleSelf = () =>
                 {
                     var point = dialog.PointsChoose.Peek();
-                    game.AddCharacter(point, Group.Middle, typeof (AliceFigure2), point, game, game.MouseCharacter,
+                    game.AddCharacter(point, Group.Middle, typeof(AliceFigure2), point, game, game.MouseCharacter,
                         this.Attack, this.Defence);
                     FigureBuff();
                 };
@@ -100,9 +100,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private void FigureBuff()
         {
-            var buff1 = new BuffGainAttack(this, this, 5*this.Interval, 0.1, game);
+            var buff1 = BuffGainProperty.BuffGainAttack(this, this, 5 * this.Interval, 0.1f, game);
             buff1.BuffTrigger();
-            var buff2 = new BuffGainDefence(this, this, 5*this.Interval, -0.05, game);
+            var buff2 = BuffGainProperty.BuffGainDefence(this, this, 5 * this.Interval, -0.05f, game);
             buff2.BuffTrigger();
         }
     }

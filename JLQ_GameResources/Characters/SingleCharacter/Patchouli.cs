@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Add.Sealed;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 
@@ -69,7 +68,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.3f);
-                var buff1 = new BuffAddAttackRange(SCee, this, this.BuffTime, -1, game);
+                var buff1 = BuffAddProperty.BuffAddAttackRange(SCee, this, this.BuffTime, -1, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffSlowDown(SCee, this, this.BuffTime, 5, game);
                 buff2.BuffTrigger();
@@ -92,7 +91,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, 1.7f);
-                var buff1 = new BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);
+                var buff1 = BuffGainProperty.BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);
                 buff1.BuffTrigger();
                 
             };

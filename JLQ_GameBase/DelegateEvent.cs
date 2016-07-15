@@ -39,8 +39,6 @@ namespace JLQ_GameBase
     /// <param name="attacker">伤害来源</param>
     public delegate void DBeAttacked(int damage, Character attacker);
     //回合制相关
-    /// <summary>判断死亡角色的委托</summary>
-    public delegate void DIsDead();
     /// <summary>修改阻挡的敌人列表</summary>
     /// <param name="enemies">原敌人列表</param>
     /// <returns>修改后的敌人列表</returns>

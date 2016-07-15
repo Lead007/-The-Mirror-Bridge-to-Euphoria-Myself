@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Add.Sealed;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
@@ -79,9 +78,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffGainAttack(this, this, this.BuffTime, 0.25f, game);
+                var buff1 = BuffGainProperty.BuffGainAttack(this, this, this.BuffTime, 0.25f, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffAddAttackRange(this, this, this.BuffTime, 1, game);
+                var buff2 = BuffAddProperty.BuffAddAttackRange(this, this, this.BuffTime, 1, game);
                 buff2.BuffTrigger();
             };
         }

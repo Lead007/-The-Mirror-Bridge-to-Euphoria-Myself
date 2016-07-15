@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
@@ -106,7 +106,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     if (IsFriend(SCee))
                     {
-                        var buff1 = new BuffGainAttack(SCee, this, int.MaxValue, 0.5, game);
+                        var buff1 = BuffGainProperty.BuffGainAttack(SCee, this, int.MaxValue, 0.5f, game);
                         buff1.BuffTrigger();
                         SC01Buffs.Add(buff1);
                         var buff2 = new BuffSlowDownGain(SCee, this, int.MaxValue, -1.0/3, game);
@@ -115,7 +115,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                     }
                     else
                     {
-                        var buff1 = new BuffGainAttack(SCee, this, int.MaxValue, -0.5, game);
+                        var buff1 = BuffGainProperty.BuffGainAttack(SCee, this, int.MaxValue, -0.5f, game);
                         buff1.BuffTrigger();
                         SC01Buffs.Add(buff1);
                         var buff2 = new BuffSlowDownGain(SCee, this, int.MaxValue, 1.0/3, game);

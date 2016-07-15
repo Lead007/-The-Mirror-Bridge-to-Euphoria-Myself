@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Add.Sealed;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
 using JLQ_GameResources.Dialogs.GamePad.ChoosePoints;
@@ -82,9 +81,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffAddMoveAbility(this, this, this.BuffTime, 1, game);
+                var buff1 = BuffAddProperty.BuffAddMoveAbility(this, this, this.BuffTime, 1, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffGainDefence(this, this, this.BuffTime, 0.2f, game);
+                var buff2 = BuffGainProperty.BuffGainDefence(this, this, this.BuffTime, 0.2f, game);
                 buff2.BuffTrigger();
             };
         }
@@ -103,9 +102,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 (SCee, point) => point.IsInSquare(SCee.Position, 5);
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);
+                var buff1 = BuffGainProperty.BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffGainDodgeRate(SCee, this, this.BuffTime, -0.2f, game);
+                var buff2 = BuffGainProperty.BuffGainDodgeRate(SCee, this, this.BuffTime, -0.2f, game);
                 buff2.BuffTrigger();
                 Func<PadPoint, PadPoint, bool> handle = (origin, point) =>
                 {

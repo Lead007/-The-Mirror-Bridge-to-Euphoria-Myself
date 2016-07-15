@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using MoreEnumerable;
@@ -98,7 +98,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 this.BuffList.RemoveAll(b => b.IsPositive == false);
                 var buff1 = new BuffGainBeDamaged(this, this, this.Interval + 1, -0.25f, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffGainAttack(this, this, this.Interval + 1, 0.5f, game);
+                var buff2 = BuffGainProperty.BuffGainAttack(this, this, this.Interval + 1, 0.5f, game);
                 buff2.BuffTrigger();
                 game.ButtonSC.DoAction(b => b.IsEnabled = false);
                 _attackTime++;

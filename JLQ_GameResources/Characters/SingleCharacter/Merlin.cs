@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Dialogs.GamePad.ChoosePoints;
@@ -72,12 +72,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 {
                     if (IsFriend(SCee))
                     {
-                        var buff = new BuffGainAttack(SCee, this, 2 * this.Interval, 0.1, game);
+                        var buff = BuffGainProperty.BuffGainAttack(SCee, this, 2 * this.Interval, 0.1f, game);
                         buff.BuffTrigger();
                     }
                     else if (IsEnemy(SCee))
                     {
-                        var buff = new BuffGainHitRate(SCee, this, 2 * this.Interval, -0.1, game);
+                        var buff = BuffGainProperty.BuffGainHitRate(SCee, this, 2 * this.Interval, -0.1f, game);
                         buff.BuffTrigger();
                     }
                 };

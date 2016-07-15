@@ -117,6 +117,7 @@
     <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_AliceSC02.cs" />
     <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_MerlinSC02.cs" />
     <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_RanSC01.cs" />
+    <Compile Include="Dialogs\GamePad\ChoosePoints\GamePad_RinSC02.cs" />
     <Compile Include="Dialogs\GamePad\GamePad_ChooseLines.cs" />
     <Compile Include="Dialogs\GamePad\GamePad_ChoosePoints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

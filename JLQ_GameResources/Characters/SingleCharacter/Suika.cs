@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JLQ_BaseBuffs.Attributes;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
 using JLQ_GameResources.Buffs.SingleBuff;
@@ -72,7 +72,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffGainHitRate(SCee, this, this.Interval, -0.2f, game);
+                var buff1 = BuffGainProperty.BuffGainHitRate(SCee, this, this.Interval, -0.2f, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffSlowDownGain(SCee, this, this.Interval, 0.2, game);
                 buff2.BuffTrigger();
@@ -106,7 +106,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC03Range, SCee);
             game.HandleSelf = () =>
             {
-                var buff1 = new BuffGainDefence(this, this, this.Interval, -0.2f, game);
+                var buff1 = BuffGainProperty.BuffGainDefence(this, this, this.Interval, -0.2f, game);
                 buff1.BuffTrigger();
                 var buff2 = new BuffSuikaUncontrolable(this, 2*this.Interval, game);
                 buff2.BuffTrigger();

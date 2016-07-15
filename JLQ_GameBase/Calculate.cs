@@ -141,7 +141,8 @@ namespace JLQ_GameBase
             var i = (length - 1) / 2;
             return Math.Abs(origin.Column - point.Column) <= i && Math.Abs(origin.Row - point.Row) <= i;
         }
-        /// <summary>说中的面前</summary>
+
+        /// <summary>传说中的面前</summary>
         /// <param name="origin">源点</param>
         /// <param name="target">目标点</param>
         /// <returns>面前</returns>
@@ -150,6 +151,20 @@ namespace JLQ_GameBase
             return origin.Row == target.Row
                 ? new PadPoint(origin.Column + (origin.Column > target.Column ? -1 : 1), origin.Row)
                 : new PadPoint(origin.Column, origin.Row + (origin.Row > target.Row ? -1 : 1));
+        }
+
+        /// <summary>传说中的背后</summary>
+        /// <param name="origin">源点</param>
+        /// <param name="target">目标点</param>
+        /// <param name="distance">距离</param>
+        /// <returns>背后，若超出边界则为null</returns>
+        public static PadPoint? BackPoint(this PadPoint origin, PadPoint target, int distance = 1)
+        {
+            var relativeColumn = target.Column - origin.Column;
+            return relativeColumn != 0
+                ? PadPoint.CreatePadPoint(target.Column + (relativeColumn > 0 ? distance : -distance), target.Row)
+                : PadPoint.CreatePadPoint(target.Column,
+                    target.Row + (target.Row - origin.Row > 0 ? distance : -distance));
         }
 
         /// <summary>目标点与原点的相对方向</summary>

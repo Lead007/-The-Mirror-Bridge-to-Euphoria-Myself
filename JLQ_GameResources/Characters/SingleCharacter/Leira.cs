@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs.Gain.Sealed;
+using JLQ_BaseBuffs;
 using JLQ_GameBase;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -37,9 +37,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             var count = ps.Count;
             foreach (var c in ps)
             {
-                var buff1 = new BuffGainAttack(c, this, this.Interval, 0.5f*count, game);
+                var buff1 = BuffGainProperty.BuffGainAttack(c, this, this.Interval, 0.5f*count, game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffGainDefence(c, this, this.Interval, 0.5f*count, game);
+                var buff2 = BuffGainProperty.BuffGainDefence(c, this, this.Interval, 0.5f*count, game);
                 buff2.BuffTrigger();
             }
         }
