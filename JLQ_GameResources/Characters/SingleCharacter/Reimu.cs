@@ -50,31 +50,35 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(1);
         }
 
-        /// <summary>符卡01的参数</summary>
-        private const int SC01Range = 4;
-        private float SC01Gain;
-        /// <summary>符卡02的参数</summary>
-        private const int SC02Gain = 10;
-
         private List<Character> SC02CharactersBeSlowed = new List<Character>();
 
         public Human HumanKind => Human.FullHuman;
 
-        /// <summary>天赋：1.2倍灵力获取</summary>
-        /// <param name="mp">获得的灵力量</param>
+        //天赋
+        /// <summary>天赋增益</summary>
+        private float SkillGain => 1.1f + (int)CharacterLevel*0.05f;
         public override void MpGain(int mp)
         {
-            base.MpGain((1.2*mp).Floor());
+            base.MpGain((SkillGain*mp).Floor());
         }
 
-        /// <summary>符卡01：梦想封印，对所有4格内的敌人造成1.0倍率的弹幕攻击</summary>
+        //符卡
+        /// <summary>符卡01距离</summary>
+        private const int SC01Range = 4;
+        /// <summary>符卡01真实增益</summary>
+        private float _SC01Gain;
+        /// <summary>符卡01增益1</summary>
+        private float SC01Gain1 => this.CharacterLevel == Level.Easy ? 1.5f : 2;
+        /// <summary>符卡01增益2</summary>
+        private int SC01Gain2 => this.CharacterLevel == Level.Easy ? 6 : 8;
+        /// <summary>符卡01</summary>
         public override void SC01()
         {
             game.HandleIsLegalClick = point => point.IsInRange(this, SC01Range);
             game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
-            game.HandleSelf = () => SC01Gain =
-                game.Characters.Count(c => game.HandleIsTargetLegal(c, game.MousePoint)) == 1 ? 6 : 1.5f;
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01Gain);
+            game.HandleSelf = () => _SC01Gain =
+                game.Characters.Count(c => game.HandleIsTargetLegal(c, game.MousePoint)) == 1 ? SC01Gain2 : SC01Gain1;
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, _SC01Gain);
             AddPadButtonEvent(0);
         }
 
@@ -85,6 +89,24 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(0);
         }
 
+        /// <summary>符卡02增量</summary>
+        private int SC02Increment
+        {
+            get
+            {
+                switch (this.CharacterLevel)
+                {
+                    case Level.Easy:
+                        return 8;
+                    case Level.Normal:
+                        return 10;
+                    case Level.Hard:
+                        return 12;
+                    default:
+                        return 15;
+                }
+            }
+        }
         /// <summary>符卡02</summary>
         public override void SC02()
         {
@@ -93,7 +115,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => point.IsIn33(SCee) && IsEnemy(SCee);
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffSlowDown(SCee, this, this.BuffTime, SC02Gain, game);
+                var buff1 = new BuffSlowDown(SCee, this, this.BuffTime, SC02Increment, game);
                 buff1.BuffTrigger();
                 Func<PadPoint, PadPoint, bool> handle = (origin, point) =>
                 {
@@ -114,6 +136,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(1);
         }
 
+        /// <summary>符卡03持续回合数</summary>
+        private int SC03CountOfRound => this.CharacterLevel == Level.Easy ? 1 : 2;
         /// <summary>符卡03</summary>
         public override void SC03()
         {

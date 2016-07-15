@@ -212,7 +212,7 @@ namespace JLQ_GameBase
         }
         #endregion
 
-        /// <summary>位置，X为Grid.Column，Y为Grid.Row</summary>
+        /// <summary>位置</summary>
         public PadPoint Position { get; private set; }
 
         /// <summary>是否已移动</summary>
@@ -222,6 +222,8 @@ namespace JLQ_GameBase
 
         /// <summary>作为buff承受者的buff列表</summary>
         public List<Buff> BuffList { get; } = new List<Buff>();
+
+        public Level CharacterLevel { get; set; } = Level.Easy;
 
         #region 显示
         /// <summary>所有在GUI上显示的控件</summary>
@@ -609,6 +611,11 @@ namespace JLQ_GameBase
         /// <summary>结束阶段</summary>
         public virtual void EndSection() => game.ButtonSC.DoAction(b => b.IsEnabled = true);
 
+        /// <summary>攻击后的执行代码</summary>
+        public virtual void ActionWhileAttacked() { }
+
+        /// <summary>移动后的执行代码</summary>
+        public virtual void ActionWhileMoved() { }
 
 
         /// <summary>检测灵力是否足够</summary>

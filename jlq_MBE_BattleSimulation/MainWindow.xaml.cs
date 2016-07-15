@@ -336,6 +336,7 @@ namespace JLQ_MBE_BattleSimulation
                     CurrentCharacter.Move(game.MousePoint);
                     game.HasMoved = true;
                     game.IsMoving = false;
+                    CurrentCharacter.ActionWhileMoved();
                     #region 绘制屏幕
                     game.DefaultButtonAndLabels();
                     if (game.HasMoved)
@@ -372,6 +373,7 @@ namespace JLQ_MBE_BattleSimulation
                     }
                     game.HasAttacked = true;
                     game.IsAttacking = false;
+                    CurrentCharacter.ActionWhileAttacked();
                     #region 绘制屏幕
                     if (game.HasAttacked)
                     {
@@ -470,6 +472,7 @@ namespace JLQ_MBE_BattleSimulation
                 .ToList().DoAction(c => game.HandleTarget(c));
             game.EndSC();
             game.HasAttacked = true;
+            CurrentCharacter.ActionWhileAttacked();
             game.HandleIsDead();
 
             game.DefaultButtonAndLabels();

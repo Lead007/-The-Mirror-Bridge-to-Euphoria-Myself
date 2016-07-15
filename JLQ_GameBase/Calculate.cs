@@ -13,7 +13,7 @@ namespace JLQ_GameBase
         /// <param name="distance">攻击者对防御者的相对距离</param>
         /// <returns>命中率</returns>
         private static double HitRate(int relativeHitRate, int distance)
-            => 1/(1 + Math.Pow(0.93, relativeHitRate - Math.Max(0, 4*(distance - 2))));
+            => 1 / (1 + Math.Pow(0.93, relativeHitRate - Math.Max(0, 4 * (distance - 2))));
 
         /// <summary>计算命中率</summary>
         /// <param name="attacker">攻击者</param>
@@ -27,7 +27,7 @@ namespace JLQ_GameBase
         /// <param name="attack">攻击者的攻击值</param>
         /// <param name="defence">防御者的防御值</param>
         /// <returns>伤害值</returns>
-        public static int Damage(int attack, int defence) => attack*attack/(attack + defence);
+        public static int Damage(int attack, int defence) => attack * attack / (attack + defence);
 
         #region Distance
         /// <summary>求两点距离，参数可交换</summary>
@@ -114,6 +114,10 @@ namespace JLQ_GameBase
         /// <param name="number">待取整的值</param>
         /// <returns>取整结果</returns>
         public static int Floor(this double number) => (int)Math.Floor(number);
+        /// <summary>向下取整</summary>
+        /// <param name="number">待取整的值</param>
+        /// <returns>取整结果</returns>
+        public static int Floor(this float number) => (int)Math.Floor(number);
 
         /// <summary>目标点是否在源点3*3范围内</summary>
         /// <param name="origin">源点</param>
@@ -134,7 +138,7 @@ namespace JLQ_GameBase
         /// <returns>是否在范围内</returns>
         public static bool IsInSquare(this PadPoint origin, PadPoint point, int length)
         {
-            var i = (length - 1)/2;
+            var i = (length - 1) / 2;
             return Math.Abs(origin.Column - point.Column) <= i && Math.Abs(origin.Row - point.Row) <= i;
         }
         /// <summary>说中的面前</summary>
@@ -146,6 +150,30 @@ namespace JLQ_GameBase
             return origin.Row == target.Row
                 ? new PadPoint(origin.Column + (origin.Column > target.Column ? -1 : 1), origin.Row)
                 : new PadPoint(origin.Column, origin.Row + (origin.Row > target.Row ? -1 : 1));
+        }
+
+        /// <summary>目标点与原点的相对方向</summary>
+        /// <param name="origin">原点</param>
+        /// <param name="target">目标点</param>
+        /// <param name="IsOnlyFourDirection">是否仅四个方向</param>
+        /// <returns>相对方向</returns>
+        public static Direction? RelativeDirection(this PadPoint origin, PadPoint target, bool IsOnlyFourDirection = false)
+        {
+            if (IsOnlyFourDirection)
+            {
+                if (origin.Distance(target) != 1) return null;
+                if (origin.Column == target.Column) return target.Row > origin.Row ? Direction.Down : Direction.Up;
+                return target.Column > origin.Column ? Direction.Right : Direction.Left;
+            }
+            if (Math.Abs(origin.Column - target.Column) > 1 || Math.Abs(origin.Row - target.Row) > 1) return null;
+            if (target.Column > origin.Column)
+                return target.Row > origin.Row
+                    ? Direction.DownRight
+                    : (target.Row == origin.Row ? Direction.Right : Direction.UpRight);
+            if (target.Column == origin.Column) return target.Row > origin.Row ? Direction.Down : Direction.Up;
+            return target.Row > origin.Row
+                ? Direction.DownLeft
+                : (target.Row == origin.Row ? Direction.Left : Direction.UpLeft);
         }
     }
 }
