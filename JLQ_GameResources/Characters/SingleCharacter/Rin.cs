@@ -23,16 +23,15 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 game.DefaultButtonAndLabels();
                 var direction = (Direction)d;
                 var point = this.Position;
-                while (IsSuccess(NextPoint(point,direction)) == true)
+                while (IsSuccess(NextPoint(point, direction)) == true)
                 {
                     point = NextPoint(point, direction);
                 }
-                game.GetButton(point).SetButtonColor();
+                if (this.Position != point) game.GetButton(point).SetButtonColor();
                 point = NextPoint(point, direction);
                 if (IsSuccess(point) == null) return;
                 game[point].SetLabelBackground();
-                var c = game[NextPoint(point, direction)];
-                if (IsEnemy(c)) c.SetLabelBackground(GameColor.LabelBackground2);
+                NextEnemy(point, direction)?.SetLabelBackground(GameColor.LabelBackground2);
             };
             SetDefaultLeavePadButtonDelegate(0);
             //符卡02
@@ -124,8 +123,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 if (MoveNext(direction) != false) return;
                 var p = NextPoint(this.Position, direction);
                 HandleDoDanmakuAttack(game[p], SC01Gain1);
-                var c = game[NextPoint(p, direction)];
-                if (IsEnemy(c)) HandleDoDanmakuAttack(c, SC01Gain2);
+                var c = NextEnemy(p, direction);
+                if (c == null) return;
+                HandleDoDanmakuAttack(c, SC01Gain2);
             };
             AddPadButtonEvent(0);
         }
@@ -202,6 +202,20 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             if (IsEnemy(c)) return false;
             return null;
         }
+
+        /// <summary>指定方向的下一个敌人</summary>
+        /// <param name="origin">起点</param>
+        /// <param name="direction">方向</param>
+        /// <returns>敌人，若不存在则返回null</returns>
+        private Character NextEnemy(PadPoint origin, Direction direction)
+        {
+            var p = NextPoint(origin, direction);
+            while (IsSuccess(p) == true || (IsSuccess(p) == null && game[p] != null))
+            {
+                p = NextPoint(p, direction);
+            }
+            return game[p];
+        }
         #endregion
 
         /// <summary>麟之印记</summary>
@@ -239,9 +253,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override string ToString()
         {
             if (SC02Point == Game.DefaultPoint) return base.ToString();
-            return base.ToString() + string.Format("\n麟之印记：（{0},{1}）", SC02Point.Column, SC02Point.Row);
+            return base.ToString() + string.Format("\n麟之印记：{0}", SC02Point);
         }
-        
+
         private const int SC03Range = 2;
         private const float SC03Parameter = 0.3f;
         private Character _cAttack;
@@ -252,7 +266,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                HandleDoDanmakuAttack(SCee, 1 + SC03Parameter*(SCee.MaxHp - SCee.Hp));
+                HandleDoDanmakuAttack(SCee, 1 + SC03Parameter * (SCee.MaxHp - SCee.Hp));
                 _cAttack = SCee;
             };
             AddPadButtonEvent(2);

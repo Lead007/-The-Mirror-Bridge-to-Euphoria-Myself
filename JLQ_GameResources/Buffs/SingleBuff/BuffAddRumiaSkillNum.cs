@@ -14,23 +14,26 @@ namespace JLQ_GameResources.Buffs.SingleBuff
     {
         /// <summary>构造函数</summary>
         /// <param name="buffer">buff发出者</param>
+        /// <param name="num">增加量</param>
         /// <param name="game">游戏对象</param>
-        public BuffAddRumiaSkillNum(Rumia buffer, Game game)
-            : base(buffer, buffer, buffer.BuffTime, "月光：天赋标记数+2", true, game)
+        public BuffAddRumiaSkillNum(Rumia buffer, int num, Game game)
+            : base(buffer, buffer, buffer.BuffTime, string.Format("月光：天赋标记数+{0}", num), true, game)
         {
             BuffeeTurn = buffer;
         }
 
         private Rumia BuffeeTurn { get; }
 
+        private int Num { get; }
+
         protected override void BuffAffect()
         {
-            BuffeeTurn.SkillNum += 2;
+            BuffeeTurn.SkillNum += Num;
         }
 
         protected override void Cancel()
         {
-            BuffeeTurn.SkillNum -= 2;
+            BuffeeTurn.SkillNum -= Num;
             base.Cancel();
         }
     }

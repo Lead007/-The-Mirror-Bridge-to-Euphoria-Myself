@@ -10,10 +10,10 @@ namespace JLQ_GameBase
     {
         #region 与ProgressBar绑定的属性
         /// <summary>血量</summary>
-        public virtual int Hp { get; set; }
+        public virtual int Hp { get; protected set; }
 
         /// <summary>灵力</summary>
-        public virtual int Mp { get; set; }
+        public virtual int Mp { get; protected set; }
 
         public virtual int CurrentTime { get; set; }
         #endregion

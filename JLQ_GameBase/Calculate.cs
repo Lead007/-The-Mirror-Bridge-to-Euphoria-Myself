@@ -180,7 +180,8 @@ namespace JLQ_GameBase
                 if (origin.Column == target.Column) return target.Row > origin.Row ? Direction.Down : Direction.Up;
                 return target.Column > origin.Column ? Direction.Right : Direction.Left;
             }
-            if (Math.Abs(origin.Column - target.Column) > 1 || Math.Abs(origin.Row - target.Row) > 1) return null;
+            if (Math.Abs(origin.Column - target.Column) > 1 || Math.Abs(origin.Row - target.Row) > 1 || origin == target)
+                return null;
             if (target.Column > origin.Column)
                 return target.Row > origin.Row
                     ? Direction.DownRight

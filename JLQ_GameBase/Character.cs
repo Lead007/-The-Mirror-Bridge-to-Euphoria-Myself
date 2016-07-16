@@ -177,7 +177,7 @@ namespace JLQ_GameBase
         public override int Hp
         {
             get { return base.Hp; }
-            set
+            protected set
             {
                 base.Hp = value;
                 BarHp.Value = value;
@@ -188,7 +188,7 @@ namespace JLQ_GameBase
         public override int Mp
         {
             get { return base.Mp; }
-            set
+            protected set
             {
                 base.Mp = value;
                 BarMp.Value = value;

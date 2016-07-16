@@ -47,5 +47,7 @@ namespace JLQ_GameBase
             => point1.Column == point2.Column && point1.Row == point2.Row;
 
         public static bool operator !=(PadPoint point1, PadPoint point2) => !(point1 == point2);
+
+        public override string ToString() => string.Format("({0},{1})", Column, Row);
     }
 }
