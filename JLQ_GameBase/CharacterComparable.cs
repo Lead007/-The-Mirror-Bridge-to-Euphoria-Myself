@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RandomHelper;
 
 namespace JLQ_GameBase
 {
-    /// <summary>用于比较时间计算下个行动角色的结构</summary>
-    internal struct CharacterTimeComparable : IComparable<CharacterTimeComparable>
+    public abstract class CharacterComparableBase
     {
-        internal Character Character { get; }
+        public Character Character { get; }
 
-        private Random random { get; }
-
-        public CharacterTimeComparable(Character c, Random random)
+        protected CharacterComparableBase(Character c)
         {
             this.Character = c;
+        }
+    }
+
+    /// <summary>用于比较时间计算下个行动角色的对象</summary>
+    internal class CharacterTimeComparable : CharacterComparableBase, IComparable<CharacterTimeComparable>
+    {
+        private Random random { get; }
+
+        public CharacterTimeComparable(Character c, Random random) : base(c)
+        {
             this.random = random;
         }
 
@@ -28,7 +36,7 @@ namespace JLQ_GameBase
             if (cx != 0) return cx;
             var ix = this.Character.Interval.CompareTo(other.Character.Interval);
             if (ix != 0) return -ix;
-            return (random.Next(2) << 1) - 1;
+            return random.NextCompareResult();
         }
     }
 }

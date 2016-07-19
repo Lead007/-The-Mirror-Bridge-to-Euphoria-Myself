@@ -64,7 +64,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="CharacterBase.cs" />
     <Compile Include="CharacterInfo.cs" />
-    <Compile Include="CharacterTimeComparable.cs" />
+    <Compile Include="CharacterComparable.cs" />
     <Compile Include="Comparer.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="DelegateEvent.cs" />

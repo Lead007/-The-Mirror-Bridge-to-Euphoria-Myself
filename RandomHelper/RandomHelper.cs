@@ -53,5 +53,7 @@ namespace RandomHelper
         /// <param name="probability">返回值为true概率</param>
         /// <returns>是否符合概率</returns>
         public static bool NextBool(this Random random, double probability) => random.NextDouble() < probability;
+
+        public static int NextCompareResult(this Random random) => (random.Next(2) << 1) - 1;
     }
 }

@@ -7,7 +7,7 @@ using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
 using JLQ_GameResources.Characters.SingleCharacter;
 
-namespace JLQ_GameResources.Buffs.SingleBuff
+namespace JLQ_GameResources.Buffs.BuffAboutCharacter
 {
     /// <summary>针对Rumia的buff，增加其天赋标记数</summary>
     public class BuffAddRumiaSkillNum : BuffExecuteImmediately

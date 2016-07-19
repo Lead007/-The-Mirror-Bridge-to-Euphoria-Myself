@@ -69,7 +69,17 @@ namespace JLQ_GameResources.Characters
             var temp = false;
             for (var i = 0; i < DamageTimes; i++)
             {
-                if (DoAttack(target, times)) temp = true;
+                if (base.DoAttack(target, times)) temp = true;
+            }
+            return temp;
+        }
+
+        public override bool DoDanmakuAttack(Character target, float times = 1)
+        {
+            var temp = false;
+            for (var i = 0; i < DamageTimes; i++)
+            {
+                if (base.DoDanmakuAttack(target, times)) temp = true;
             }
             return temp;
         }

@@ -546,7 +546,8 @@ namespace JLQ_GameBase
             #region 跳转阶段
             GameSection = Section.Preparing;
             BuffSettle(Section.Preparing);
-            CurrentCharacter.HandlePreparingSection();
+            CurrentCharacter.PreparingSection();
+            //CurrentCharacter.HandlePreparingSection();
             if (!IsPreparingSectionContinue) return;
             //Thread.Sleep(500);
             GameSection = Section.Round;
@@ -580,8 +581,9 @@ namespace JLQ_GameBase
             UpdateLabelBackground();
 
             var ct = CurrentCharacter.CurrentTime;
-            Characters.DoAction(c => c.CurrentTime -= ct);//结算剩余冷却时间
-            Characters.SelectMany(c => c.BuffList).Where(b => b.Round(ct)).DoAction(b => b.BuffEnd());//结算buff
+            Characters.DoAction(c => c.CurrentTime -= ct); //结算剩余冷却时间
+            var list = Characters.SelectMany(c => c.BuffList).Where(b => b.Round(ct)).ToList();
+            list.DoAction(b => b.BuffEnd()); //结算buff
             CurrentCharacter.CurrentTime = CurrentCharacter.Interval;
 
             Generate_CanReachPoint();
@@ -693,8 +695,14 @@ namespace JLQ_GameBase
         /// <returns></returns>
         public Button GetButton(PadPoint point) => Buttons[point.Column, point.Row];
 
+        /// <summary>改为战斗模式事件</summary>
+        public event Action ETurnToBattle;
         /// <summary>改为战斗模式</summary>
-        public void TurnToBattle() => IsBattle = true;
+        public void TurnToBattle()
+        {
+            IsBattle = true;
+            ETurnToBattle?.Invoke();
+        }
 
         #region 棋盘绘制相关
         /// <summary>恢复棋盘和角色正常颜色</summary>

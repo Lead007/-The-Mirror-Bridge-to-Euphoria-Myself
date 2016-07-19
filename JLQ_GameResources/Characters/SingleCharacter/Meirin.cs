@@ -26,26 +26,39 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        game.MouseCharacter.SetLabelBackground();
 		    };
             SetDefaultLeavePadButtonDelegate(0);
+            //符卡02
+            //显示将被攻击的角色
+            enterPad[1] = (s, ev) =>
+            {
+                if (!IsInRangeAndEnemy(this.AttackRange, game.MousePoint)) return;
+                game.DefaultButtonAndLabels();
+                game.MouseCharacter.SetLabelBackground();
+            };
+            SetDefaultLeavePadButtonDelegate(1);
             //符卡03
-            //显示所有己方角色
-		    enterButton[2] = (s, ev) =>
+            //显示所有将被攻击的角色
+            enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
-                game.Characters.Where(c => IsFriend(c, false)).SetLabelBackground();
+		        Enemies.Where(c => this.IsInRange(c, SC03Range)).SetLabelBackground();
 		    };
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
-        private static PercentOfMaxHp SC03Gain = new PercentOfMaxHp(0.1f);
+        protected override bool IsHit(Character target)
+        {
+            if (random.NextBool(0.2)) return true;
+            return base.IsHit(target);
+        }
 
-        //TODO 天赋
-	    public override void BeAttacked(int damage, Character attacker)
+        public override void BeAttacked(int damage, Character attacker)
 	    {
 	        if (random.NextBool(0.2)) return;
-	        base.BeAttacked((int)(damage*0.8), attacker);
+	        base.BeAttacked(damage, attacker);
 	    }
 
 	    //符卡
+        private const float SC01Gain = 1.3f;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
@@ -56,7 +69,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 var buff = new BuffShield(this, this, this.BuffTime, game);
                 buff.BuffTrigger();
             };
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 1.3f);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC01Gain);
             AddPadButtonEvent(0);
             game.HandleResetShow = () =>
             {
@@ -72,16 +85,18 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             RemovePadButtonEvent(0);
         }
 
+        private const float SC02Gain = 1.5f;
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleTarget = SCee =>
+            game.HandleIsLegalClick = point => IsInRangeAndEnemy(this.AttackRange, point);
+            game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC02Gain);
+            AddPadButtonEvent(1);
+            game.HandleResetShow = () =>
             {
-                var buff1 = BuffGainProperty.BuffGainAttack(this, this, this.BuffTime, 0.25f, game);
-                buff1.BuffTrigger();
-                var buff2 = BuffAddProperty.BuffAddAttackRange(this, this, this.BuffTime, 1, game);
-                buff2.BuffTrigger();
+                game.DefaultButtonAndLabels();
+                game.UpdateLabelBackground();
             };
         }
 
@@ -89,17 +104,18 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void EndSC02()
         {
             base.EndSC02();
+            RemovePadButtonEvent(1);
         }
+
+        private const int SC03Range = 2;
+        private const float SC03Gain = 1.5f;
+        private PercentOfMaxHp SC03Parameter => new PercentOfMaxHp((2 + (int) this.CharacterLevel)*0.03f);
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsTargetLegal = (SCee, point) => IsFriend(SCee);
-            game.HandleTarget = SCee =>
-            {
-                SCee.Cure(SC03Gain);
-                var buff = new BuffGainDoDamage(SCee, this, this.BuffTime, 0.1f, game);
-                buff.BuffTrigger();
-            };
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC03Range, point);
+            game.HandleSelf = () => Cure(SC03Parameter);
+            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain);
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

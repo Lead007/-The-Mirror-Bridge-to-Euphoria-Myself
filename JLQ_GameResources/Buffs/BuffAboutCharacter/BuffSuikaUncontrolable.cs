@@ -7,17 +7,17 @@ using JLQ_GameBase;
 using JLQ_GameBase.Buffs;
 using JLQ_GameResources.Characters.SingleCharacter;
 
-namespace JLQ_GameResources.Buffs.SingleBuff
+namespace JLQ_GameResources.Buffs.BuffAboutCharacter
 {
     public class BuffSuikaUncontrolable : BuffExecuteImmediately
     {
         public BuffSuikaUncontrolable(Suika buffer, int time, Game game)
             : base(buffer, buffer, time, "不可控：免疫控制类buff", true, game)
         {
-            
+            BuffeeSuika = buffer;
         }
 
-        private Suika BuffeeSuika => Buffee as Suika;
+        private Suika BuffeeSuika { get; }
 
         protected override void BuffAffect()
         {

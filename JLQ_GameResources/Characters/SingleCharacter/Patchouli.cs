@@ -35,22 +35,45 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(2);
         }
 
+        //天赋
         private int _attackTimes = 0;
-	    private const int SC02Range = 5;
-        private const int SC03Range = 5;
-
-        public override bool DoingAttack(Character target, float times = 1)
+        private int AttackTimes
         {
-            if (_attackTimes != 2) _attackTimes++;
-            return base.DoingAttack(target, times);
+            get { return _attackTimes; }
+            set { _attackTimes = Math.Min(SkillParameter, value); }
+        }
+        private const int SkillParameter = 3;
+        public override bool HasAttacked
+        {
+            get { return base.HasAttacked; }
+            set
+            {
+                base.HasAttacked = value;
+                if (value)
+                {
+                    AttackTimes++;
+                }
+            }
         }
 
+        public override bool MpUse(int mp)
+        {
+            if (AttackTimes != SkillParameter) return base.MpUse(mp);
+            AttackTimes = 0;
+            return true;
+        }
+
+        public override string ToString() =>
+            base.ToString() +
+            string.Format("\n已攻击/符卡次数：{0}。{1}", AttackTimes, AttackTimes == 3 ? "\n下一次符卡不消耗灵力。" : string.Empty);
+
         //符卡
+        private float SC01Parameter => (5 + (int)this.CharacterLevel)*0.02f;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
             game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleSelf = () => MpGain(this.Mp/10);
+            game.HandleSelf = () => MpGain((int)(this.MaxMp*SC01Parameter));
         }
 
         /// <summary>结束符卡01</summary>
@@ -59,6 +82,25 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC01();
         }
 
+        private const int SC02Range = 5;
+        private const float SC02Gain = 1.5f;
+        private int SC02Parameter1 => this.CharacterLevel > Level.Normal ? -2 : -1;
+        private int SC02Parameter2
+        {
+            get
+            {
+                switch (this.CharacterLevel)
+                {
+                    case Level.Easy:
+                        return 0;
+                    case Level.Lunatic:
+                        return 10;
+                    default:
+                        return 5;
+                }
+            }
+        }
+        private int SC02Parameter3 => this.CharacterLevel == Level.Lunatic ? 2 : 1;
         /// <summary>符卡02</summary>
         public override void SC02()
         {
@@ -67,10 +109,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
-                HandleDoDanmakuAttack(SCee, 1.3f);
-                var buff1 = BuffAddProperty.BuffAddAttackRange(SCee, this, this.BuffTime, -1, game);
+                HandleDoDanmakuAttack(SCee, SC02Gain);
+                var buff1 = BuffAddProperty.BuffAddAttackRange(SCee, this, this.Interval*SC02Parameter3, SC02Parameter1,
+                    game);
                 buff1.BuffTrigger();
-                var buff2 = new BuffSlowDown(SCee, this, this.BuffTime, 5, game);
+                var buff2 = new BuffSlowDown(SCee, this, this.Interval*SC02Parameter3, SC02Parameter2, game);
                 buff2.BuffTrigger();
             };
             AddPadButtonEvent(1);
@@ -82,6 +125,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC02();
             RemovePadButtonEvent(1);
         }
+
+        private const int SC03Range = 5;
+        private const float SC03Gain = 1.7f;
+        private int SC03Parameter => 1 + (int)this.CharacterLevel;
         /// <summary>符卡03</summary>
         public override void SC03()
         {
@@ -90,10 +137,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 (SCee, point) => IsEnemy(SCee) && point.IsIn33(SCee);
             game.HandleTarget = SCee =>
             {
-                HandleDoDanmakuAttack(SCee, 1.7f);
-                var buff1 = BuffGainProperty.BuffGainDefence(SCee, this, this.BuffTime, -0.2f, game);
-                buff1.BuffTrigger();
-                
+                HandleDoDanmakuAttack(SCee, SC03Gain);
+                var buff = new BuffBeAttacked(SCee, this, this.Interval*SC03Parameter, (int) (0.25f*this.Attack), this,
+                    game);
             };
             AddPadButtonEvent(2);
         }

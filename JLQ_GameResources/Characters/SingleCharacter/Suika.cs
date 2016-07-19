@@ -7,7 +7,7 @@ using JLQ_BaseBuffs.Attributes;
 using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
-using JLQ_GameResources.Buffs.SingleBuff;
+using JLQ_GameResources.Buffs.BuffAboutCharacter;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {

@@ -34,16 +34,16 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
             SetDefaultLeavePadButtonDelegate(1);
 		}
-
-	    private const int SC01Range = 4;
-
+        
 	    public override void PreparingSection()
 	    {
+            base.PreparingSection();
 	        MpGain(this.Mp/10);
-            Cure(this.Hp/10);
 	    }
 
-	    //符卡
+        //符卡
+        private const int SC01Range = 4;
+        private float SC01Parameter => (1 + (int)this.CharacterLevel)*0.1f;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
@@ -51,10 +51,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                var buff = new BuffGainBeDamaged(SCee, this, this.BuffTime, 0.2f, game);
+                var buff = new BuffGainBeDamaged(SCee, this, this.BuffTime, SC01Range, game);
                 buff.BuffTrigger();
             };
-            //显示可攻击目标
+            //显示可指定目标
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
@@ -75,8 +75,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
             game.HandleTarget = SCee =>
             {
-                var buff1 = new BuffCure(SCee, this, this.BuffTime, SCee.MaxHp/10, game);
-                var buff2 = new BuffMpGain(SCee, this, this.BuffTime, SCee.MaxMp/10, game);
+                var buff1 = new BuffCure(SCee, this, this.BuffTime, SCee.MaxHp/20, game);
+                var buff2 = new BuffMpGain(SCee, this, this.BuffTime, SCee.MaxMp/20, game);
             };
             AddPadButtonEvent(1);
             game.HandleResetShow = () =>

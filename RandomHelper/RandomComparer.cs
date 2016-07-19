@@ -22,7 +22,7 @@ namespace RandomHelper
         public int Compare(T x, T y)
         {
             var c = x.CompareTo(y);
-            return c != 0 ? c : ((random.Next(2) << 1) - 1);
+            return c != 0 ? c : random.NextCompareResult();
         }
     }
 }

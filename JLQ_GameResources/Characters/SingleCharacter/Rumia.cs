@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JLQ_BaseBuffs;
 using JLQ_GameBase;
-using JLQ_GameResources.Buffs.SingleBuff;
+using JLQ_GameResources.Buffs.BuffAboutCharacter;
 using RandomHelper;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
@@ -120,8 +120,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             game.HandleIsTargetLegal =
                 (SCee, point) => IsInRangeAndEnemy(SC03Range, SCee);
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, SC03Gain1);
-            //TODO back mp
+            game.HandleTarget = SCee =>
+            {
+                HandleDoDanmakuAttack(SCee, SC03Gain1);
+                //TODO back mp
+            };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()

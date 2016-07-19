@@ -17,19 +17,15 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		{
 		    enterPad[1] = (s, ev) =>
 		    {
-		        if (!SC02IsLegalClick(game.MousePoint)) return;
+		        if (!game.MousePoint.IsInRange(this, SC02Range1) || game.MouseCharacter == null) return;
 		        game.DefaultButtonAndLabels();
-		        EnemyInMouseRange(SC02Range).SetLabelBackground();
+		        EnemyInMouseRange(SC02Range2).SetLabelBackground();
                 game.MouseCharacter.SetLabelBackground(GameColor.LabelBackground2);
 		    };
             SetDefaultLeavePadButtonDelegate(1);
 		}
 
         public Human HumanKind => Human.FullHuman;
-
-        private Character _cChange;
-	    private const int SC02Range = 2;
-        private const float SC02Gain = 0.2f;
 
         private int _moveTime = 1;
         private int _attackTime = 1;
@@ -85,16 +81,20 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         }
 
+        private Character _cChange;
+        private int SC02Range1 => this.AttackRange << 1;
+        private const int SC02Range2 = 2;
+        private const float SC02Gain = 0.2f;
         /// <summary>符卡02</summary>
         public override void SC02()
         {
             game.HandleIsLegalClick = point =>
             {
-                if (!SC02IsLegalClick(point)) return false;
+                if (!point.IsInRange(this, SC02Range1) || game[point] == null) return false;
                 _cChange = game[point];
                 return true;
             };
-            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC02Range, SCee);
+            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC02Range2, SCee);
             game.HandleSelf = () =>
             {
                 var p = this.Position;
@@ -106,7 +106,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleResetShow = () =>
             {
                 game.DefaultButtonAndLabels();
-                EnemyInRange(2*this.AttackRange).SetLabelBackground();
+                game.Characters.Where(c => this.IsInRange(c, SC02Range1)).SetLabelBackground();
             };
         }
 
@@ -132,10 +132,5 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             base.EndSC03();
         }
-
-	    private bool SC02IsLegalClick(PadPoint point)
-	    {
-	        return point.IsInRange(this, 2*this.AttackRange) && game[point] != null;
-	    }
     }
 }

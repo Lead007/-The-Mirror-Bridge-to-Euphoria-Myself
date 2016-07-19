@@ -173,6 +173,8 @@ namespace JLQ_GameBase
         #endregion
 
         #region 与ProgressBar绑定的属性
+        /// <summary>将死事件</summary>
+        public event Action EWillDie;
         /// <summary>血量</summary>
         public override int Hp
         {
@@ -181,6 +183,7 @@ namespace JLQ_GameBase
             {
                 base.Hp = value;
                 BarHp.Value = value;
+                if (value <= 0) EWillDie?.Invoke();
             }
         }
 
@@ -477,6 +480,10 @@ namespace JLQ_GameBase
         }
 
         #region 造成伤害
+        /// <summary>造成伤害事件</summary>
+        public event Action<Character, int> EAttackDone;
+        /// <summary>暴击事件</summary>
+        public event Action<Character> ECriticalHitted;
         /// <summary>攻击</summary>
         /// <param name="target">攻击目标</param>
         /// <param name="times">伤害值增益</param>
@@ -513,8 +520,10 @@ namespace JLQ_GameBase
             if (isCriticalHit)
             {
                 damage *= this.CriticalHitGain;
+                ECriticalHitted?.Invoke(target);
             }
             target.HandleBeAttacked((int)damage, this);
+            EAttackDone?.Invoke(target, (int)damage);
             return isCriticalHit;
         }
         #endregion
@@ -626,7 +635,7 @@ namespace JLQ_GameBase
         /// <summary>灵力消耗</summary>
         /// <param name="mp">消耗的灵力量</param>
         /// <returns>灵力是否足够</returns>
-        public bool MpUse(int mp)
+        public virtual bool MpUse(int mp)
         {
             if (!IsMpEnough(mp)) return false;
             Mp -= mp;
