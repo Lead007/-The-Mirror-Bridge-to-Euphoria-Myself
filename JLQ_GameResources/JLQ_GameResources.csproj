@@ -66,7 +66,6 @@
     <Compile Include="Buffs\SingleBuff\BuffCannotAttackAndBeAttacked.cs" />
     <Compile Include="Buffs\SingleBuff\BuffCannotMove.cs" />
     <Compile Include="Buffs\SingleBuff\BuffDecreaseMoveAbilityWhenHit.cs" />
-    <Compile Include="Buffs\SingleBuff\BuffLetBloodingWhenBeAttacked.cs" />
     <Compile Include="Buffs\SingleBuff\BuffLimit.cs" />
     <Compile Include="Buffs\SingleBuff\BuffShield.cs" />
     <Compile Include="Buffs\BuffAboutCharacter\BuffSuikaUncontrolable.cs" />

@@ -16,12 +16,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		public Flandre(int id, PadPoint position, Group group, Game game)
 			: base(id, position, group, game)
 		{
-		    enterButton[0] = (s, ev) =>
-		    {
-		        game.DefaultButtonAndLabels();
-                FList.SetLabelBackground();
-		    };
-            SetDefaultLeaveSCButtonDelegate(0);
 		    enterButton[1] = (s, ev) =>
 		    {
 		        SC02points.Select(game.GetButton).SetButtonColor();
@@ -36,34 +30,26 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(2);
 		}
 
-        private const int SC02Range = 2;
-        private const int SC02Num = 3;
-        private const float SC03Gain = 1.7f;
-
-        private List<FlandreLittle> FList { get; } = new List<FlandreLittle>();
-
-        private IEnumerable<PadPoint> SC02points
-            => Game.PadPoints.Where(p => p.Distance(this) <= SC02Range && game[p] == null);
-
         public override void PreparingSection()
         {
             base.PreparingSection();
-            if (SC02points.Count() < SC02Num)
-            {
-                game.ButtonSC[1].IsEnabled = false;
-            }
+            game.ButtonSC[0].IsEnabled = false;
+        }
+
+        //天赋
+        public override void BeAttacked(int damage, Character attacker)
+        {
+            base.BeAttacked(damage, attacker);
+            if (attacker == null) return;
+            var buff = new BuffBlooding(attacker, this, SC01Parameter*this.Interval, game);
         }
 
         //符卡
+        private int SC01Parameter => 3 + (int)this.CharacterLevel;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee == this || FList.Contains(SCee);
-            game.HandleTarget = SCee =>
-            {
-                var buff = new BuffLetBloodingWhenBeAttacked(SCee, this, this.BuffTime, this.BuffTime, game);
-                buff.BuffTrigger();
-            };
+            throw new NotImplementedException();
         }
 
         /// <summary>结束符卡01</summary>
@@ -72,6 +58,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC01();
         }
 
+        private const int SC02Range = 2;
+        private int SC02Num => Math.Min(SC02points.Count, this.CharacterLevel > Level.Normal ? 3 : 2);
+        private List<FlandreLittle> FList { get; } = new List<FlandreLittle>();
+        private List<PadPoint> SC02points
+            => Game.PadPoints.Where(p => p.Distance(this) <= SC02Range && game[p] == null).ToList();
+        private float SC02Parameter => (1 + (int) this.CharacterLevel)*0.1f;
         /// <summary>符卡02</summary>
         public override void SC02()
         {
@@ -80,7 +72,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 foreach (var p in random.RandomElements(SC02Num, SC02points))
                 {
-                    game.AddCharacter(p, this.Group, typeof (FlandreLittle), p, this.Group, this.game);
+                    game.AddCharacter(p, this.Group, typeof (FlandreLittle), p, this.Group, SC02Parameter, this.game);
                     this.FList.Add(game.Characters.Last() as FlandreLittle);
                 }
             };
@@ -91,6 +83,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             base.EndSC02();
         }
+
+        private const float SC03Gain = 1.7f;
         /// <summary>符卡03</summary>
         public override void SC03()
         {

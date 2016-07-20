@@ -484,6 +484,7 @@ namespace JLQ_GameBase
         public event Action<Character, int> EAttackDone;
         /// <summary>暴击事件</summary>
         public event Action<Character> ECriticalHitted;
+        protected void HandleEAttackDone(Character target, int damage) => EAttackDone?.Invoke(target, damage);
         /// <summary>攻击</summary>
         /// <param name="target">攻击目标</param>
         /// <param name="times">伤害值增益</param>

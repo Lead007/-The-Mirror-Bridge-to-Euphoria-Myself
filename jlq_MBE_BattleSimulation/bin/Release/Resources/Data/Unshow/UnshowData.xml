@@ -4,9 +4,9 @@
   <datas>
     <charc id="FlandreLittle">
       <display>Ü½·Ö</display>
-      <maxHp>75</maxHp>
-      <att>65</att>
-      <def>45</def>
+      <maxHp>150</maxHp>
+      <att>130</att>
+      <def>90</def>
       <hit>80</hit>
       <dod>60</dod>
       <clo>1.2</clo>

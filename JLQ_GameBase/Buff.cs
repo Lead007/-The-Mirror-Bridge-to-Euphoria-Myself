@@ -86,8 +86,6 @@ namespace JLQ_GameBase
         public override string ToString() => string.Format("{0} By:{1} 剩余时间：{2}", Name, Buffer.Name, Time);
 
         /// <summary>从buff列表中删除buff</summary>
-        /// <param name="buffee">buff承受者</param>
-        /// <param name="buffer">buff发出者</param>
         protected virtual void Cancel()
         {
             Buffee.BuffList.Remove(this);

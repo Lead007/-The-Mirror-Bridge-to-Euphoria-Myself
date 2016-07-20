@@ -33,19 +33,25 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(2);
         }
 
-        private const float SC02Gain = 0.7f;
-        private const float SC03Gain = 2.0f;
+        //天赋
+        public override bool DoingAttack(Character target, float times = 1)
+        {
+            if (!(((float)target.Hp)/target.MaxHp <= 0.1f)) return base.DoingAttack(target, times);
+            target.BeAttacked(9999, this);
+            HandleEAttackDone(target, 9999);
+            return false;
+        }
 
-        //TODO 天赋
-
-	    //符卡
+        //符卡
+        private int SC01Parameter1 => this.CharacterLevel > Level.Normal ? 2 : 1;
+        private int SC01Parameter2 => 2 + (int) this.CharacterLevel;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleTarget = SCee =>
+            game.HandleIsTargetLegal = (SCee, point) => false;
+            game.HandleSelf = () =>
             {
-                var buff = new BuffAddDamageTimes(this, this.BuffTime, 1, game);
+                var buff = new BuffAddDamageTimes(this, this.Interval*SC01Parameter2, SC01Parameter1, game);
                 buff.BuffTrigger();
             };
         }
@@ -56,6 +62,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC01();
         }
 
+        private const float SC02Gain = 0.7f;
+        private PercentOfMaxHp SC02Pamameter { get; } = new PercentOfMaxHp(0.5f);
         /// <summary>符卡02</summary>
         public override void SC02()
         {
@@ -66,7 +74,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 if (HandleIsHit(SCee)) return;
                 //造成伤害
                 DoingAttack(SCee, SC02Gain);
-                this.Cure(new PercentOfMaxHp(0.5f));
+                this.Cure(SC02Pamameter);
                 if (SCee.IsDead) this.DamageTimes++;
             };
         }
@@ -76,6 +84,8 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         {
             base.EndSC02();
         }
+
+        private const float SC03Gain = 2.0f;
         /// <summary>符卡03</summary>
         public override void SC03()
         {
