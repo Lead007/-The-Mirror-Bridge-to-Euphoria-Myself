@@ -55,7 +55,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             };
         }
 
-        private float HpPercent(Character c) => ((float)c.Hp) / c.MaxHp;
+        private static float HpPercent(Character c) => ((float)c.Hp) / c.MaxHp;
 
         private const int skillRange = 2;
         private static PercentOfMaxHp skillGain { get; } = new PercentOfMaxHp(0.05f);

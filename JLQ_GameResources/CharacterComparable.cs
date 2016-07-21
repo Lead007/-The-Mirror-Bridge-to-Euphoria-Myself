@@ -24,6 +24,6 @@ namespace JLQ_GameResources
             return c != 0 ? c : random.NextCompareResult();
         }
 
-        private float HpPercent(Character c) => ((float)c.Hp) / c.MaxHp;
+        private static float HpPercent(Character c) => ((float)c.Hp) / c.MaxHp;
     }
 }

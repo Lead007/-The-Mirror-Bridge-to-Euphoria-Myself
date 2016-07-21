@@ -198,7 +198,7 @@ namespace JLQ_GameBase
                 if (!game.IsBattle || game.CurrentCharacter != this) return;
                 for (var i = 0; i < 3; i++)
                 {
-                    game.ButtonSC[i].IsEnabled = IsMpEnough(SCMpUse[i]);
+                    game.ButtonSC[i].IsEnabled = IsMpEnough(SCMpUse[i]());
                 }
             }
         }
@@ -286,8 +286,14 @@ namespace JLQ_GameBase
         public IEnumerable<Character> Enemies => game.Characters.Where(IsEnemy);
         /// <summary>阻挡行动的敌人列表</summary>
         public virtual IEnumerable<PadPoint> EnemyBlock => HandleEnemyBlock(Enemies.Select(c => c.Position));
+
         /// <summary>符卡的灵力消耗</summary>
-        public virtual int[] SCMpUse { get; } = new[] { 0, 0, 0 };//TODO SC Mp Use
+        public virtual Func<int>[] SCMpUse { get; } = new Func<int>[]
+        {
+            () => 0,
+            () => 0,
+            () => 0
+        };//TODO SC Mp Use
 
         /// <summary>用于保存的角色信息</summary>
         internal CharacterInfo Info => new CharacterInfo
@@ -614,7 +620,7 @@ namespace JLQ_GameBase
         {
             for (var i = 0; i < 3; i++)
             {
-                if (!IsMpEnough(SCMpUse[i])) game.ButtonSC[i].IsEnabled = false;
+                if (!IsMpEnough(SCMpUse[i]())) game.ButtonSC[i].IsEnabled = false;
             }
         }
 

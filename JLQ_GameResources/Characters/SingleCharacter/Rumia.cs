@@ -115,6 +115,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private const int SC03Range = 2;
         private const float SC03Gain1 = 1.5f;
         private float SC03Gain2 => 0.2f*(1 + (int)this.CharacterLevel);
+        private bool _sc03Flag = false;
         /// <summary>符卡03</summary>
         public override void SC03()
         {
@@ -123,13 +124,18 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             game.HandleTarget = SCee =>
             {
                 HandleDoDanmakuAttack(SCee, SC03Gain1);
-                //TODO back mp
+                if (SCee.IsDead) _sc03Flag = true;
             };
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
             base.EndSC03();
+            if (_sc03Flag)
+            {
+                //TODO back mp
+                _sc03Flag = false;
+            }
         }
     }
 }

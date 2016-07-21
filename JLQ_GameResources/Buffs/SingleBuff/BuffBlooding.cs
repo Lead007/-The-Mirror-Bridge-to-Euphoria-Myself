@@ -19,7 +19,7 @@ namespace JLQ_GameResources.Buffs.SingleBuff
         /// <param name="buffer">buff发出者</param>
         /// <param name="time">持续时间</param>
         /// <param name="game">游戏对象</param>
-        public BuffBlooding(Character buffee, Flandre buffer, int time, Game game)
+        public BuffBlooding(Character buffee, Character buffer, int time, Game game)
             : base(buffee, buffer, time, (int) (buffer.Attack*bloodGain), null, game)
         {
             

@@ -442,7 +442,7 @@ namespace JLQ_MBE_BattleSimulation
             if (GameSection != Section.Round) return;
             if (!game.IsSCing)
             {
-                if (!CurrentCharacter.IsMpEnough(CurrentCharacter.SCMpUse[index - 1]))
+                if (!CurrentCharacter.IsMpEnough(CurrentCharacter.SCMpUse[index - 1]()))
                 {
                     Game.IllegalMessageBox("灵力不足！");
                     return;

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JLQ_BaseBuffs;
 using JLQ_BaseBuffs.SingleBuff;
 using JLQ_GameBase;
+using JLQ_GameResources.Buffs.SingleBuff;
+using MoreEnumerable;
 
 namespace JLQ_GameResources.Characters.SingleCharacter
 {
@@ -36,13 +37,6 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        //Thread.Sleep(500);
 		        game.EndSection();
 		    };
-            enterPad[1] = (s, ev) =>
-            {
-                if (!game.MousePoint.IsInRange(this, SC02Range)) return;
-                game.DefaultButtonAndLabels();
-                EnemyInMouseRange(SC02Range2).SetLabelBackground();
-            };
-            SetDefaultLeavePadButtonDelegate(1);
 		    enterButton[2] = (s, ev) =>
 		    {
 		        game.DefaultButtonAndLabels();
@@ -51,20 +45,46 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeaveSCButtonDelegate(2);
 		}
 
-        private const int SC02Range = 4;
-        private const int SC02Range2 = 1;
         private readonly DGridPadClick _skillMove;
+        private float _maxHpGain = 1;
+        private float MaxHpGain
+        {
+            get { return _maxHpGain;}
+            set
+            {
+                _maxHpGain = value;
+                this.BarHp.Maximum = this.MaxHp;
+            }
+        }
 
         //天赋
         public override void PreparingSection()
         {
             base.PreparingSection();
-            if (game[Game.CenterPoint] != null)
+            if (_sc02Flag)
+            {
+                game.ButtonSC[1].IsEnabled = false;
+                EnemyInRange(SC02Range).DoAction(c => this.HandleDoDanmakuAttack(c, SC02Gain2));
+            }
+            if (_sc03Flag)
             {
                 game.ButtonSC[2].IsEnabled = false;
+                switch (random.Next(3))
+                {
+                    case 0:
+                        SC03Action1();
+                        break;
+                    case 1:
+                        SC03Action2();
+                        break;
+                    case 2:
+                        SC03Action3();
+                        break;
+                }
             }
             game.EventGridPadClick += _skillMove;
         }
+
         public override void EndSection()
         {
             base.EndSection();
@@ -72,15 +92,14 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         }
 
         //符卡
+        private int SC01Parameter2 => (2 + (int) this.CharacterLevel)*2;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
-            game.HandleIsTargetLegal = (SCee, point) => SCee == this;
-            game.HandleTarget = SCee =>
+            game.HandleIsTargetLegal = (SCee, point) => false;
+            game.HandleSelf = () =>
             {
-                var buff1 = BuffAddProperty.BuffAddMoveAbility(this, this, this.BuffTime, 1, game);
-                buff1.BuffTrigger();
-                var buff2 = new BuffSlowDownGain(this, this, this.BuffTime, -0.2, game);
+                var buff2 = new BuffSlowDown(this, this, this.BuffTime, SC01Parameter2, game);
                 buff2.BuffTrigger();
             };
         }
@@ -91,32 +110,67 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC01();
         }
 
+        private bool _sc02Flag = false;
+        private float SC02Gain1 => 0.5f + 0.2f*(int)this.CharacterLevel;
+        private const int SC02Range = 1;
+        private float SC02Gain2 => (4 + (int)this.CharacterLevel)*0.05f;
         /// <summary>符卡02</summary>
         public override void SC02()
         {
-            game.HandleIsLegalClick = point => point.IsInRange(this, SC02Range);
-            game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(point, SC02Range2, SCee);
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee);
-            AddPadButtonEvent(1);
+            game.HandleIsTargetLegal = (SCee, point) => false;
+            game.HandleSelf = () =>
+            {
+                _sc02Flag = true;
+                var maxHpOld = this.MaxHp;
+                this.MaxHpGain = 1 + SC02Gain1;
+                this.Cure(this.MaxHp - maxHpOld);
+            };
         }
-
+        
         /// <summary>结束符卡02</summary>
         public override void EndSC02()
         {
             base.EndSC02();
-            RemovePadButtonEvent(1);
         }
+
+        public override int MaxHp => (int)(base.MaxHp*MaxHpGain);
+
+        private bool _sc03Flag = false;
         /// <summary>符卡03</summary>
         public override void SC03()
         {
-            game.HandleIsTargetLegal = (SCee, point) => IsEnemy(SCee);
-            game.HandleSelf = () => Move(Game.CenterPoint);
-            game.HandleTarget = SCee => HandleDoDanmakuAttack(SCee, 0.25f * (9 - SCee.Distance(this)));
+            game.HandleIsTargetLegal = (SCee, point) => false;
+            game.HandleSelf = () => _sc03Flag = true;
         }
         /// <summary>结束符卡03</summary>
         public override void EndSC03()
         {
             base.EndSC03();
         }
-	}
+
+        #region 符卡03相关函数
+        private void SC03Action1()
+        {
+            Enemies.Select(c => new BuffBlooding(c, this, this.Interval, game)).DoAction(b => { });
+        }
+
+        private void SC03Action2()
+        {
+            //TODO
+        }
+
+        private void SC03Action3()
+        {
+            Enemies.Select(c => new BuffSlowDown(c, this, this.Interval, 5, game)).DoAction(b => b.BuffTrigger());
+        }
+        #endregion
+
+        public override string ToString()
+        {
+            var s = base.ToString();
+            if (_sc02Flag) s += "\n符卡02已使用";
+            if (_sc03Flag) s += "\n符卡03已使用";
+            return s;
+        }
+    }
 }
