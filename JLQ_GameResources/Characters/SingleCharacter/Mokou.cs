@@ -45,7 +45,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         public override void PreparingSection()
         {
             base.PreparingSection();
-            this.Cure(new PercentOfMaxHp(0.1f));
+            this.Cure(new Tuple<float>(0.1f));
         }
 
         //符卡

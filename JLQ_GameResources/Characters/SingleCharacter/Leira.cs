@@ -28,7 +28,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         public Human HumanKind => Human.FullHuman;
 
-        private static PercentOfMaxHp SC02Gain { get; } = new PercentOfMaxHp(0.2f);
+        private static Tuple<float> SC02Gain { get; } = new Tuple<float>(0.2f);
 
         public override void PreparingSection()
         {

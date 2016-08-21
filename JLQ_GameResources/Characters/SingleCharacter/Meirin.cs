@@ -109,7 +109,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private const int SC03Range = 2;
         private const float SC03Gain = 1.5f;
-        private PercentOfMaxHp SC03Parameter => new PercentOfMaxHp((2 + (int) this.CharacterLevel)*0.03f);
+        private Tuple<float> SC03Parameter => new Tuple<float>((2 + (int) this.CharacterLevel)*0.03f);
         /// <summary>符卡03</summary>
         public override void SC03()
         {

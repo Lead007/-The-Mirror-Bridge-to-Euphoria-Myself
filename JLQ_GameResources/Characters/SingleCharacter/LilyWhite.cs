@@ -25,7 +25,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        }
 		        else
 		        {
-		            game.Characters.Where(c => IsInRangeAndEnemy(SC01Range, c)).SetLabelBackground();
+		            game.Characters.Where(c => IsInRangeAndEnemy(SC01BlackRange, c)).SetLabelBackground();
 		        }
 		    };
             SetDefaultLeaveSCButtonDelegate(0);
@@ -37,6 +37,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 		        game.MouseCharacter.SetLabelBackground();
             };
             SetDefaultLeavePadButtonDelegate(1);
+		    enterButton[2] = (s, ev) =>
+		    {
+		        game.DefaultButtonAndLabels();
+		        Enemies.SetLabelBackground();
+		    };
 		}
 
         private bool _isWhite = true;
@@ -58,20 +63,12 @@ namespace JLQ_GameResources.Characters.SingleCharacter
 
         private bool HasBlack { get; set; } = false;
         private int BlackRound { get; set; } = 0;
-        private const int skillNum = 100;
-        private const int SC01Range = 3;
-        private const int SC01Num = 50;
-        private const float SC02Gain = -0.25f;
-        private const float SC02BlackGain = 1.5f;
-        private const float SC02BlackGain2 = 0.2f;
-        private const int SC02Range = 2;
-        private const int SC03BlackRound = 3;
-        private const float SC03BlackGain = 0.6f;
+        private const int skillParameter = 100;
 
         public override void PreparingSection()
         {
             base.PreparingSection();
-            MpGain(IsWhite ? skillNum : (skillNum/2));
+            MpGain(IsWhite ? skillParameter : (skillParameter / 2));
             if (!IsWhite)
             {
                 BlackRound--;
@@ -87,21 +84,25 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             => (IsWhite ? "霍瓦特状态\n" : "布莱克状态\n") + base.ToString();
 
         //符卡
+        private int SC01Range => this.CharacterLevel == Level.Lunatic ? 4 : 3;
+        private const int SC01Parameter = 50;
+        private const int SC01BlackRange = 3;
+        private float SC01BlackParameter => (-4 - (int)this.CharacterLevel)*0.05f;
         /// <summary>符卡01</summary>
         public override void SC01()
         {
             if (IsWhite)
             {
                 game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndFriend(SC01Range, SCee, false);
-                game.HandleTarget = SCee => SCee.MpGain(SC01Num);
+                game.HandleTarget = SCee => SCee.MpGain(SC01Parameter);
             }
             else
             {
-                game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC01Range, SCee);
+                game.HandleIsTargetLegal = (SCee, point) => IsInRangeAndEnemy(SC01BlackRange, SCee);
                 game.HandleTarget = SCee =>
                 {
                     HandleDoDanmakuAttack(SCee);
-                    var buff = new BuffGainDoDamage(SCee, this, this.Interval, SC02Gain, game);
+                    var buff = new BuffGainDoDamage(SCee, this, this.Interval << 1, SC01BlackParameter, game);
                     buff.BuffTrigger();
                 };
             }
@@ -113,6 +114,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC01();
         }
 
+        private float SC02Gain => (8 + (int)this.CharacterLevel) * 0.05f;
+        private const float SC02BlackGain = 1.5f;
+        private float SC02BlackGain2 => (-3 - (int)this.CharacterLevel)*0.05f;
+        private const int SC02Range = 2;
         /// <summary>符卡02</summary>
         public override void SC02()
         {
@@ -120,7 +125,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             {
                 game.HandleIsLegalClick = point => IsInRangeAndFriend(SC02Range, point);
                 game.HandleIsTargetLegal = (SCee, point) => SCee.Position == point;
-                game.HandleTarget = SCee => SCee.MpGain(2*SCee.Attack);
+                game.HandleTarget = SCee => SCee.Cure(SC02Gain*(SCee.MaxHp - SCee.Hp));
                 game.HandleResetShow = () =>
                 {
                     game.DefaultButtonAndLabels();
@@ -152,6 +157,10 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             base.EndSC02();
             RemovePadButtonEvent(1);
         }
+
+        private float SC03Parameter => (6 + (int)this.CharacterLevel)*0.05f;
+        private const int SC03BlackRound = 3;
+        private const int SC03BlackGain = 1;
         /// <summary>符卡03</summary>
         public override void SC03()
         {
@@ -161,9 +170,9 @@ namespace JLQ_GameResources.Characters.SingleCharacter
                 game.HandleSelf = () =>
                 {
                     IsWhite = false;
-                    var buff1 = BuffGainProperty.BuffGainAttack(this, this, BuffTime, 0.3f, game);
+                    var buff1 = BuffGainProperty.BuffGainAttack(this, this, BuffTime, SC03Parameter, game);
                     buff1.BuffTrigger();
-                    var buff2 = BuffGainProperty.BuffGainDefence(this, this, BuffTime, 0.3f, game);
+                    var buff2 = BuffGainProperty.BuffGainDefence(this, this, BuffTime, SC03Parameter, game);
                     buff2.BuffTrigger();
                 };
             }

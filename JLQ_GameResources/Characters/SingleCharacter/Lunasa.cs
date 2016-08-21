@@ -28,10 +28,11 @@ namespace JLQ_GameResources.Characters.SingleCharacter
             SetDefaultLeavePadButtonDelegate(0);
 		}
 
+        private int SC01Parameter => 3 + ((int)this.CharacterLevel << 1);
         public override void PreparingSection()
         {
             base.PreparingSection();
-            EnemyInRange(skillRange).Select(c => new BuffSlowDownGain(c, this, this.Interval, 0.1f, game))
+            EnemyInRange(skillRange).Select(c => new BuffSlowDown(c, this, this.Interval, SC01Parameter, game))
                 .DoAction(b => b.BuffTrigger());
         }
 

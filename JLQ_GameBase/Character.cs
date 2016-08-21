@@ -473,7 +473,7 @@ namespace JLQ_GameBase
 
         /// <summary>治疗最大体力值的一定比例</summary>
         /// <param name="x">治疗量与最大体力值的比值</param>
-        public void Cure(PercentOfMaxHp x) => Cure(x.Percent * MaxHp);
+        public void Cure(Tuple<float> x) => Cure(x.Item1 * MaxHp);
         #endregion
 
         /// <summary>被攻击</summary>

@@ -58,7 +58,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         private static float HpPercent(Character c) => ((float)c.Hp) / c.MaxHp;
 
         private const int skillRange = 2;
-        private static PercentOfMaxHp skillGain { get; } = new PercentOfMaxHp(0.05f);
+        private static Tuple<float> skillGain { get; } = new Tuple<float>(0.05f);
 
         /// <summary>天赋</summary>
         public override void PreparingSection()
@@ -132,7 +132,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         #endregion
 
         private bool SC03HasUsed { get; set; } = false;
-        private PercentOfMaxHp SC03Parameter => new PercentOfMaxHp((2 + (int) this.CharacterLevel)*0.1f);
+        private Tuple<float> SC03Parameter => new Tuple<float>((2 + (int) this.CharacterLevel)*0.1f);
         /// <summary>符卡03</summary>
         public override void SC03()
         {

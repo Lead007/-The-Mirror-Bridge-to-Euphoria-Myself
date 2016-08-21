@@ -63,7 +63,7 @@ namespace JLQ_GameResources.Characters.SingleCharacter
         }
 
         private const float SC02Gain = 0.7f;
-        private PercentOfMaxHp SC02Pamameter { get; } = new PercentOfMaxHp(0.5f);
+        private Tuple<float> SC02Pamameter { get; } = new Tuple<float>(0.5f);
         /// <summary>符卡02</summary>
         public override void SC02()
         {
